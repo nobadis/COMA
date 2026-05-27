@@ -52,6 +52,21 @@ test.describe("Clon comunicacionenmallorca.com", () => {
     await expect(page.getByText("Comercio Electrónico").first()).toBeAttached();
   });
 
+  test("textos legales con datos corporativos actualizados", async ({ page }) => {
+    const banned = [/Jaime/i, /Mora\s+Bosch/i, /son\s+Catlaret/i, /659\s*47/i, /659477715/];
+    for (const path of ["/aviso-legal/", "/cookies/", "/privacidad/"]) {
+      await page.goto(path);
+      for (const pattern of banned) {
+        await expect(page.getByText(pattern)).toHaveCount(0);
+      }
+      await expect(page.getByText("Publicom Marketing 2000 SL").first()).toBeVisible();
+      await expect(page.getByText(/PASEO MALLORCA,\s*16/i).first()).toBeVisible();
+      await expect(
+        page.locator('a[href^="mailto:info@comunicacionenmallorca.com"]').first()
+      ).toBeVisible();
+    }
+  });
+
   test("contacto y footer correctos", async ({ page }) => {
     await page.goto("/");
     await page.locator("#contacto").scrollIntoViewIfNeeded();
@@ -60,7 +75,9 @@ test.describe("Clon comunicacionenmallorca.com", () => {
         name: /¿Necesitas alguna información sobre nosotros o algún servicio\?/i,
       })
     ).toBeVisible();
-    await expect(page.getByText("info@comunicacionenmallorca.com")).toBeVisible();
+    await expect(
+      page.locator('a[href^="mailto:info@comunicacionenmallorca.com"]').first()
+    ).toBeVisible();
     await expect(page.locator(".elementor-element-422b94f3 iframe")).toBeVisible();
 
     const footer = page.locator(".elementor-location-footer");

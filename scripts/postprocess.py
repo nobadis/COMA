@@ -5,6 +5,23 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
+from urllib.parse import quote
+
+COMPANY = "Publicom Marketing 2000 SL"
+CIF = "B07949647"
+ADDRESS = "PASEO MALLORCA, 16, 07012 PALMA (Balears, Illes)"
+EMAIL = "info@comunicacionenmallorca.com"
+
+
+def mailto_link(subject: str) -> str:
+    return (
+        f'<a href="mailto:{EMAIL}?subject={quote(subject)}">{EMAIL}</a>'
+    )
+
+
+MAILTO_GENERAL = mailto_link("Consulta desde comunicacionenmallorca.com")
+MAILTO_PRIVACY = mailto_link("Ejercicio de derechos RGPD - comunicacionenmallorca.com")
+MAILTO_COOKIES = mailto_link("Consulta sobre cookies - comunicacionenmallorca.com")
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -194,11 +211,114 @@ def inject_assets(html: str, depth: int) -> str:
     return html
 
 
+def sanitize_legal_content(html: str) -> str:
+    """Remove legacy personal data; enforce Publicom Marketing 2000 SL details."""
+    html = re.sub(r"Jaime\s+Mora\s+Bosch", COMPANY, html, flags=re.I)
+    html = re.sub(
+        r"Calle\s+son\s+Catl?a?r?e?t\s+6\s+A\s+BajosA,?\s*código postal\s+07014[^.<]*",
+        ADDRESS,
+        html,
+        flags=re.I,
+    )
+    html = re.sub(r",?\s*el\s+teléfono\s*,?", " ", html, flags=re.I)
+    html = re.sub(r"\+34\s*659[\s\d]{0,12}", "", html)
+    html = re.sub(r"659\s*47\s*77\s*15", "", html)
+    html = re.sub(r"659477715", "", html)
+    html = re.sub(
+        r'<a href="mailto:(?!info@comunicacionenmallorca\.com)[^"]*"[^>]*>[^<]*</a>',
+        MAILTO_GENERAL,
+        html,
+        flags=re.I,
+    )
+    html = re.sub(r"&#106;\s*aime[^<]{0,120}", EMAIL, html, flags=re.I)
+    html = re.sub(r"j\s*a\s*i\s*m\s*e\s*@", f"{EMAIL}", html, flags=re.I)
+
+    aviso_identity = (
+        "<p>En cumplimiento del deber de información estipulado en el artículo 10 "
+        "de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la "
+        "Información y del Comercio Electrónico (LSSI-CE), el titular del sitio web "
+        "<strong>comunicacionenmallorca.com</strong> es "
+        f"<strong>{COMPANY}</strong>, con CIF {CIF}, inscrita en el Registro "
+        "Mercantil de Palma de Mallorca (Illes Balears), que opera comercialmente "
+        'bajo la denominación <strong>Comunicación en Mallorca</strong>, con '
+        f"domicilio social en {ADDRESS}, y correo electrónico de contacto "
+        f"{MAILTO_GENERAL}. La presente información regula las condiciones de uso "
+        "de esta página, las limitaciones de responsabilidad y las obligaciones que "
+        "los usuarios del sitio asumen y se comprometen a respetar.</p>"
+    )
+    html = re.sub(
+        r"<p>En cumplimiento del deber de información[\s\S]*?respetar\.</p>",
+        aviso_identity,
+        html,
+        count=1,
+    )
+
+    privacy_responsible = (
+        "<p>El responsable del tratamiento de los datos personales recabados a "
+        "través de este sitio web es "
+        f"<strong>{COMPANY}</strong>, con CIF {CIF}, con domicilio en {ADDRESS}. "
+        f"Puede contactar en {MAILTO_PRIVACY}.</p>"
+    )
+    html = re.sub(
+        r"<p>El (?:titular del sitio y )?responsable del tratamiento[\s\S]*?"
+        r"(?:Baleares|Illes)\)\.</p>",
+        privacy_responsible,
+        html,
+        count=1,
+    )
+    html = re.sub(
+        r"(Tienes el derecho de acceder[\s\S]*?correo electrónico )"
+        r'<a href="mailto:[^"]*"[^>]*>[^<]*</a>',
+        rf"\1{MAILTO_PRIVACY}",
+        html,
+        count=1,
+    )
+
+    html = re.sub(
+        r"<p>Para resolver cualquier duda sobre cómo utilizamos las cookies,[\s\S]*?</p>",
+        f"<p>Para resolver cualquier duda sobre cómo utilizamos las cookies, "
+        f"escríbenos a {MAILTO_COOKIES}.</p>",
+        html,
+        count=1,
+    )
+
+    html = re.sub(
+        r"(<strong>Comunicación en Mallorca</strong> utiliza cookies\.</p>)",
+        r"\1\n"
+        f"<p>El responsable del sitio es <strong>{COMPANY}</strong> (CIF {CIF}), "
+        f"con domicilio en {ADDRESS}.</p>",
+        html,
+        count=1,
+    )
+
+    html = re.sub(
+        r"https://www\.agpd\.es/",
+        "https://www.aepd.es/",
+        html,
+    )
+    html = re.sub(
+        r">Agencia de Protección de Datos<",
+        ">Agencia Española de Protección de Datos (AEPD)<",
+        html,
+    )
+
+    html = re.sub(
+        r"(<p class=\"elementor-icon-box-description\">\s*\n?\s*)"
+        r"info@comunicacionenmallorca\.com",
+        rf"\1{MAILTO_GENERAL}",
+        html,
+        count=1,
+    )
+
+    return html
+
+
 def process_html(path: Path) -> None:
     rel = str(path.relative_to(SITE))
     depth = len(path.relative_to(SITE).parts) - 1
     html = path.read_text(encoding="utf-8", errors="ignore")
     html = strip_wp_noise(html)
+    html = sanitize_legal_content(html)
     html = fix_seo(html, rel)
     html = fix_links(html, depth)
     html = inject_assets(html, depth)

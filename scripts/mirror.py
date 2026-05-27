@@ -168,10 +168,18 @@ def rewrite_html(html: str, page_rel: str) -> str:
         html,
     )
 
-    # Remove phone mentions in legal copy
+    # Remove phone mentions and legacy personal data in legal copy
     html = re.sub(r",?\s*y teléfono\s*659477715", "", html, flags=re.I)
+    html = re.sub(r",?\s*el\s+teléfono\s*659477715", "", html, flags=re.I)
     html = re.sub(r"\+34\s*659\s*47\s*77\s*15", "", html)
     html = re.sub(r"659477715", "", html)
+    html = re.sub(r"Jaime\s+Mora\s+Bosch", "Publicom Marketing 2000 SL", html, flags=re.I)
+    html = re.sub(
+        r"Calle\s+son\s+Catl?a?r?e?t\s+6\s+A\s+BajosA[^.<]*",
+        "PASEO MALLORCA, 16, 07012 PALMA (Balears, Illes)",
+        html,
+        flags=re.I,
+    )
 
     # Dynamic year
     html = html.replace("Copyright © 2023", 'Copyright © <span class="coma-year"></span>')
