@@ -25,5 +25,5 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
-      - name: Run validations and tests
+      - name: Run lint and E2E tests
         run: npm run validate

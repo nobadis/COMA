@@ -1,10 +1,14 @@
 module.exports = [
   {
-    files: ["**/*.js"],
+    files: ["scripts/**/*.js", "site/coma-year.js"],
     languageOptions: {
       ecmaVersion: 2023,
-      sourceType: "script",
-      globals: {},
+      sourceType: "commonjs",
+      globals: {
+        module: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
+      },
     },
     rules: {
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
@@ -12,18 +16,18 @@ module.exports = [
     },
   },
   {
-    files: ["script.js"],
+    files: ["site/coma-year.js"],
     languageOptions: {
       globals: {
-        window: "readonly",
         document: "readonly",
-        localStorage: "readonly",
       },
     },
   },
   {
-    files: ["eslint.config.js", "playwright.config.js", "tests/**/*.js"],
+    files: ["playwright.config.js", "tests/**/*.js"],
     languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "commonjs",
       globals: {
         module: "readonly",
         require: "readonly",
