@@ -1,6 +1,6 @@
 module.exports = [
   {
-    files: ["scripts/**/*.js", "site/coma-year.js"],
+    files: ["scripts/**/*.js", "site/coma-static.js"],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: "commonjs",
@@ -16,10 +16,11 @@ module.exports = [
     },
   },
   {
-    files: ["site/coma-year.js"],
+    files: ["site/coma-static.js"],
     languageOptions: {
       globals: {
         document: "readonly",
+        localStorage: "readonly",
       },
     },
   },

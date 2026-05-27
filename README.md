@@ -1,29 +1,34 @@
-# Comunicación en Mallorca — clon estático
+# Comunicación en Mallorca — sitio estático
 
-Clon fiel de [comunicacionenmallorca.com](https://comunicacionenmallorca.com) migrado desde WordPress/Elementor a hosting estático con control total del código.
+Clon fiel de [comunicacionenmallorca.com](https://comunicacionenmallorca.com) migrado desde WordPress/Elementor.
 
-## Contenido
+## Estructura
 
-- Sitio espejado en `site/` (HTML, CSS, JS, imágenes, fuentes y carruseles Swiper).
-- Páginas: inicio, aviso legal, cookies y privacidad.
-- Sin teléfono en la web (solicitado).
-- Año del copyright dinámico (`coma-year.js`).
-- Eliminados popups de plantilla demo (Barky).
+- `site/` — sitio publicable (HTML, assets, legal, cookies).
+- `scripts/mirror.py` — descarga desde WordPress.
+- `scripts/postprocess.py` — SEO, seguridad, responsive y fixes estáticos.
 
 ## Comandos
 
 ```bash
 npm install
 npm run dev          # http://127.0.0.1:4173
-npm run mirror       # re-sincronizar desde WordPress
+npm run postprocess  # aplicar fixes sin re-descargar
+npm run mirror       # re-clonar + postprocesar
 npm run validate     # lint + tests E2E
 ```
 
+## Calidad
+
+- Layout Elementor + Swiper conservado.
+- CSS con rutas locales (sin dependencias rotas a WordPress).
+- SEO: canonical, meta description, Open Graph.
+- Seguridad: cabeceras HSTS/CSP en `site/vercel.json` y `site/_headers`.
+- Sin teléfono, año dinámico, cookies funcionales en estático.
+- Tests Playwright automatizados.
+
 ## Despliegue
 
-- **Vercel**: `outputDirectory` = `site` (ver `vercel.json` raíz).
-- **Cloudflare Pages / GitHub Pages**: publicar carpeta `site/`.
+Publicar carpeta `site/` en Vercel, Cloudflare Pages o GitHub Pages.
 
-## Repositorio
-
-https://github.com/nobadis/COMA
+Repositorio: https://github.com/nobadis/COMA

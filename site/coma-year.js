@@ -1,1 +1,0 @@
-document.querySelectorAll(".coma-year").forEach((el)=>{el.textContent=new Date().getFullYear();});

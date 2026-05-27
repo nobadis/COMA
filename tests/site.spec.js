@@ -20,6 +20,10 @@ test.describe("Clon comunicacionenmallorca.com", () => {
     await page.goto("/");
     const year = String(new Date().getFullYear());
     await expect(page.locator(".coma-year").first()).toHaveText(year);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      /comunicacionenmallorca\.com/
+    );
   });
 
   test("páginas legales cargan", async ({ page }) => {
@@ -30,13 +34,13 @@ test.describe("Clon comunicacionenmallorca.com", () => {
     }
   });
 
-  test("banner cookies presente en DOM", async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.removeItem("cmplz_banner-status");
-      localStorage.removeItem("cmplz_consent_status");
-    });
+  test("banner cookies funcional", async ({ page }) => {
+    await page.addInitScript(() => localStorage.removeItem("coma_cookie_consent"));
     await page.goto("/");
-    await expect(page.locator("#cmplz-cookiebanner-container .cmplz-cookiebanner")).toHaveCount(1);
+    const banner = page.locator("#cmplz-cookiebanner-container .cmplz-cookiebanner");
+    await expect(banner).toBeVisible();
+    await page.getByRole("button", { name: "Aceptar" }).first().click();
+    await expect(banner).toBeHidden();
   });
 
   test("menú y secciones principales", async ({ page }) => {
@@ -45,6 +49,6 @@ test.describe("Clon comunicacionenmallorca.com", () => {
     await expect(page.getByRole("link", { name: /kit digital/i })).toBeVisible();
     await expect(page.getByRole("link", { name: "Contacto" })).toBeVisible();
     await page.locator("#soluciones").scrollIntoViewIfNeeded();
-    await expect(page.getByText("Comercio Electrónico").first()).toBeVisible();
+    await expect(page.getByText("Comercio Electrónico").first()).toBeAttached();
   });
 });

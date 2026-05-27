@@ -185,18 +185,6 @@ def rewrite_html(html: str, page_rel: str) -> str:
     html = html.replace(f"{BASE}/", "/")
     html = html.replace('href="https://comunicacionenmallorca.com"', 'href="/"')
 
-    # Disable WP/complianz API dependencies – keep banner UI, stub consent JS
-    html = re.sub(
-        r'var complianz = \{[\s\S]*?\};',
-        'var complianz = {"banner_version":"3","categories":{}};',
-        html,
-        count=1,
-    )
-
-    year_js = rewrite_url("/coma-year.js", page_rel)
-    if "coma-year.js" not in html:
-        html = html.replace("</body>", f'<script src="{year_js}" defer></script></body>')
-
     return html
 
 
@@ -228,13 +216,8 @@ def main() -> int:
         download_asset(url)
         time.sleep(0.05)
 
-    # Year script
-    (SITE / "coma-year.js").write_text(
-        'document.querySelectorAll(".coma-year").forEach((el)=>{el.textContent=new Date().getFullYear();});',
-        encoding="utf-8",
-    )
-
     print("DONE")
+    print("Run: python3 scripts/postprocess.py")
     return 0
 
 
