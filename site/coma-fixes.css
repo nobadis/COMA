@@ -22,6 +22,48 @@ img, video, iframe {
 .elementor-image-carousel .swiper-slide-image {
   height: auto;
 }
+.elementor-invisible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: none !important;
+}
+.elementor-location-footer {
+  clear: both;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.elementor-element-6a0a3ee6 > .elementor-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.elementor-element-6a0a3ee6 .elementor-column.elementor-col-50 {
+  width: 50%;
+}
+.elementor-element-422b94f3 .elementor-widget-google_maps iframe {
+  min-height: 300px;
+  width: 100%;
+  border: 0;
+}
+#cmplz-cookiebanner-container {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+}
+#cmplz-cookiebanner-container .cmplz-cookiebanner {
+  pointer-events: auto;
+}
+#cmplz-cookiebanner-container .cmplz-close svg {
+  width: 16px;
+  height: 16px;
+}
+#cmplz-cookiebanner-container .cmplz-cookiebanner.cmplz-show {
+  display: block !important;
+}
+.cmplz-links.cmplz-documents {
+  display: none;
+}
 @media (max-width: 767px) {
   .elementor-162 .elementor-element.elementor-element-3bf364a1 {
     margin-top: 0 !important;
@@ -30,7 +72,7 @@ img, video, iframe {
   .elementor-heading-title {
     word-break: break-word;
   }
-}
-#cmplz-cookiebanner-container .cmplz-cookiebanner.cmplz-show {
-  display: block !important;
+  .elementor-element-6a0a3ee6 .elementor-column.elementor-col-50 {
+    width: 100%;
+  }
 }

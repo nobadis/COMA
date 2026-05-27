@@ -51,4 +51,23 @@ test.describe("Clon comunicacionenmallorca.com", () => {
     await page.locator("#soluciones").scrollIntoViewIfNeeded();
     await expect(page.getByText("Comercio Electrónico").first()).toBeAttached();
   });
+
+  test("contacto y footer correctos", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#contacto").scrollIntoViewIfNeeded();
+    await expect(
+      page.getByRole("heading", {
+        name: /¿Necesitas alguna información sobre nosotros o algún servicio\?/i,
+      })
+    ).toBeVisible();
+    await expect(page.getByText("info@comunicacionenmallorca.com")).toBeVisible();
+    await expect(page.locator(".elementor-element-422b94f3 iframe")).toBeVisible();
+
+    const footer = page.locator(".elementor-location-footer");
+    await footer.scrollIntoViewIfNeeded();
+    await expect(footer.locator('a[href="/aviso-legal/"]').first()).toBeVisible();
+    await expect(footer.locator('a[href="/cookies/"]').first()).toBeVisible();
+    await expect(footer.locator('a[href="/privacidad/"]').first()).toBeVisible();
+    await expect(page.locator(".coma-year").first()).toHaveText(String(new Date().getFullYear()));
+  });
 });

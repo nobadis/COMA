@@ -153,9 +153,9 @@ def rewrite_html(html: str, page_rel: str) -> str:
         html,
     )
 
-    # Remove phone icon box widget
+    # Remove phone icon box widget (exactly 3 closing divs: wrapper, container, widget)
     html = re.sub(
-        r'<div class="elementor-element elementor-element-4cc9fe05[\s\S]*?</div>\s*</div>\s*</div>',
+        r'<div class="elementor-element elementor-element-4cc9fe05[\s\S]*?</div>\s*</div>\s*</div>\s*</div>\s*',
         "",
         html,
         count=1,

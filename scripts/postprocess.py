@@ -70,6 +70,21 @@ def strip_wp_noise(html: str) -> str:
     html = re.sub(r"<link rel=\"alternate\" type=\"application/json\+oembed\"[^>]*>\s*", "", html)
     html = re.sub(r"<link rel=\"alternate\" type=\"text/xml\+oembed\"[^>]*>\s*", "", html)
     html = re.sub(r"<link rel='dns-prefetch'[^>]*>\s*", "", html)
+    html = re.sub(
+        r"<script id='cmplz-cookiebanner-js-extra'>[\s\S]*?</script>\s*",
+        "",
+        html,
+    )
+    html = re.sub(
+        r"<script[^>]*complianz-gdpr/cookiebanner/js/complianz\.min\.js[^>]*></script>\s*",
+        "",
+        html,
+    )
+    html = re.sub(
+        r'<link rel="stylesheet" href="[^"]*complianz/css/banner-[^"]*" />\s*',
+        "",
+        html,
+    )
     return html
 
 
@@ -121,6 +136,10 @@ def fix_links(html: str, depth: int) -> str:
     html = html.replace('href="/aviso-legal"', 'href="/aviso-legal/"')
     html = html.replace('href="/cookies"', 'href="/cookies/"')
     html = html.replace('href="/privacidad"', 'href="/privacidad/"')
+    for slug in ("aviso-legal", "cookies", "privacidad"):
+        target = f"/{slug}/" if depth == 0 else f"{prefix}{slug}/"
+        html = html.replace(f'href="{slug}/"', f'href="{target}"')
+        html = html.replace(f'href="{slug}"', f'href="{target}"')
     # Elementor asset paths in inline JSON
     html = html.replace(
         f'"ajaxurl":"https:\\/\\/comunicacionenmallorca.com\\/wp-admin\\/admin-ajax.php"',
@@ -141,8 +160,18 @@ def inject_assets(html: str, depth: int) -> str:
     prefix = "../" * depth if depth else ""
     fixes_css = f'{prefix}coma-fixes.css'
     static_js = f'{prefix}coma-static.js'
+    cmplz_css = f"{prefix}wp-content/plugins/complianz-gdpr/cookiebanner/css/cookiebanner.css"
     if fixes_css not in html:
-        html = html.replace("</head>", f'\t<link rel="stylesheet" href="{fixes_css}" />\n</head>')
+        html = html.replace(
+            "</head>",
+            f'\t<link rel="stylesheet" href="{cmplz_css}" />\n'
+            f'\t<link rel="stylesheet" href="{fixes_css}" />\n</head>',
+        )
+    elif cmplz_css not in html:
+        html = html.replace(
+            f'<link rel="stylesheet" href="{fixes_css}" />',
+            f'<link rel="stylesheet" href="{cmplz_css}" />\n\t<link rel="stylesheet" href="{fixes_css}" />',
+        )
     if "coma-static.js" not in html:
         html = re.sub(
             r'<script src="[^"]*coma-year\.js"[^>]*></script>\s*',
@@ -203,6 +232,48 @@ img, video, iframe {
 .elementor-image-carousel .swiper-slide-image {
   height: auto;
 }
+.elementor-invisible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: none !important;
+}
+.elementor-location-footer {
+  clear: both;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.elementor-element-6a0a3ee6 > .elementor-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.elementor-element-6a0a3ee6 .elementor-column.elementor-col-50 {
+  width: 50%;
+}
+.elementor-element-422b94f3 .elementor-widget-google_maps iframe {
+  min-height: 300px;
+  width: 100%;
+  border: 0;
+}
+#cmplz-cookiebanner-container {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+}
+#cmplz-cookiebanner-container .cmplz-cookiebanner {
+  pointer-events: auto;
+}
+#cmplz-cookiebanner-container .cmplz-close svg {
+  width: 16px;
+  height: 16px;
+}
+#cmplz-cookiebanner-container .cmplz-cookiebanner.cmplz-show {
+  display: block !important;
+}
+.cmplz-links.cmplz-documents {
+  display: none;
+}
 @media (max-width: 767px) {
   .elementor-162 .elementor-element.elementor-element-3bf364a1 {
     margin-top: 0 !important;
@@ -211,9 +282,9 @@ img, video, iframe {
   .elementor-heading-title {
     word-break: break-word;
   }
-}
-#cmplz-cookiebanner-container .cmplz-cookiebanner.cmplz-show {
-  display: block !important;
+  .elementor-element-6a0a3ee6 .elementor-column.elementor-col-50 {
+    width: 100%;
+  }
 }
 """,
         encoding="utf-8",
@@ -224,6 +295,10 @@ img, video, iframe {
   var year = String(new Date().getFullYear());
   document.querySelectorAll(".coma-year").forEach(function (el) {
     el.textContent = year;
+  });
+
+  document.querySelectorAll(".elementor-invisible").forEach(function (el) {
+    el.classList.remove("elementor-invisible");
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -238,28 +313,52 @@ img, video, iframe {
   });
 
   var banner = document.querySelector("#cmplz-cookiebanner-container .cmplz-cookiebanner");
-  if (banner) {
-    var key = "coma_cookie_consent";
-    var stored = localStorage.getItem(key);
-    if (!stored) {
-      banner.classList.remove("cmplz-hidden");
-      banner.classList.add("cmplz-show");
-    }
-    document.querySelectorAll(".cmplz-accept, .cmplz-btn.cmplz-accept").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        localStorage.setItem(key, "accepted");
-        banner.classList.add("cmplz-hidden");
-        banner.classList.remove("cmplz-show");
-      });
-    });
-    document.querySelectorAll(".cmplz-deny, .cmplz-btn.cmplz-deny").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        localStorage.setItem(key, "rejected");
-        banner.classList.add("cmplz-hidden");
-        banner.classList.remove("cmplz-show");
-      });
-    });
+  if (!banner) return;
+
+  var key = "coma_cookie_consent";
+  var hideBanner = function () {
+    banner.classList.add("cmplz-hidden");
+    banner.classList.remove("cmplz-show");
+  };
+
+  if (!localStorage.getItem(key)) {
+    banner.classList.remove("cmplz-hidden");
+    banner.classList.add("cmplz-show");
   }
+
+  document.querySelectorAll(".cmplz-accept, .cmplz-btn.cmplz-accept").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      localStorage.setItem(key, "accepted");
+      hideBanner();
+    });
+  });
+  document.querySelectorAll(".cmplz-deny, .cmplz-btn.cmplz-deny").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      localStorage.setItem(key, "rejected");
+      hideBanner();
+    });
+  });
+  document.querySelectorAll(".cmplz-close").forEach(function (btn) {
+    btn.addEventListener("click", hideBanner);
+  });
+  document.querySelectorAll(".cmplz-save-preferences").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      localStorage.setItem(key, "preferences");
+      hideBanner();
+    });
+  });
+
+  var legalPrefix = /^\\/?$/.test(location.pathname) ? "" : "../";
+  document.querySelectorAll(".cmplz-link.cookie-statement").forEach(function (link) {
+    if (link.getAttribute("href") === "#" || !link.getAttribute("href")) {
+      link.setAttribute("href", legalPrefix + "cookies/");
+    }
+  });
+  document.querySelectorAll(".cmplz-link.privacy-statement").forEach(function (link) {
+    if (link.getAttribute("href") === "#" || !link.getAttribute("href")) {
+      link.setAttribute("href", legalPrefix + "privacidad/");
+    }
+  });
 })();
 """,
         encoding="utf-8",

@@ -21,6 +21,8 @@ module.exports = [
       globals: {
         document: "readonly",
         localStorage: "readonly",
+        window: "readonly",
+        location: "readonly",
       },
     },
   },
