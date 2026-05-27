@@ -99,6 +99,11 @@ def fix_seo(html: str, rel: str) -> str:
         )
     html = html.replace('property="og:url" content="/"', f'property="og:url" content="{canonical}"')
     html = re.sub(
+        r'property="og:image" content="/([^"]+)"',
+        rf'property="og:image" content="{DOMAIN}/\1"',
+        html,
+    )
+    html = re.sub(
         r'https:\\/\\/comunicacionenmallorca\.com',
         DOMAIN.replace("/", "\\/"),
         html,

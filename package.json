@@ -6,6 +6,7 @@
   "scripts": {
     "mirror": "python3 scripts/mirror.py && python3 scripts/postprocess.py",
     "postprocess": "python3 scripts/postprocess.py",
+    "pack:dinahosting": "bash scripts/pack-dinahosting.sh",
     "dev": "serve -l 4173 site",
     "lint:js": "eslint site/coma-static.js tests playwright.config.js --max-warnings=0",
     "lint:html": "html-validate \"site/index.html\" \"site/aviso-legal/index.html\" \"site/cookies/index.html\" \"site/privacidad/index.html\"",
