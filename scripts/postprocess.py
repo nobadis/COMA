@@ -26,6 +26,7 @@ MAILTO_COOKIES = mailto_link("Consulta sobre cookies - comunicacionenmallorca.co
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 DOMAIN = "https://comunicacionenmallorca.com"
+SITE_TITLE = "COMA - Comunicación en Mallorca"
 
 HTML_PAGES = [
     SITE / "index.html",
@@ -128,6 +129,23 @@ def fix_seo(html: str, rel: str) -> str:
             "<title>",
             f'<meta name="description" content="{desc}" />\n\t<title>',
             1,
+        )
+    if rel.replace("\\", "/") == "index.html":
+        html = re.sub(
+            r"<title>[^<]*</title>",
+            f"<title>{SITE_TITLE}</title>",
+            html,
+            count=1,
+        )
+        html = re.sub(
+            r'property="og:title" content="[^"]*"',
+            f'property="og:title" content="{SITE_TITLE}"',
+            html,
+            count=1,
+        )
+        html = html.replace(
+            '"name":"kit digital - Comunicación en Mallorca"',
+            f'"name":"{SITE_TITLE}"',
         )
     html = html.replace('property="og:url" content="/"', f'property="og:url" content="{canonical}"')
     html = re.sub(

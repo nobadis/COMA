@@ -3,7 +3,7 @@ const { test, expect } = require("@playwright/test");
 test.describe("Clon comunicacionenmallorca.com", () => {
   test("home carga con branding y carrusel", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/kit digital/i);
+    await expect(page).toHaveTitle(/COMA - Comunicación en Mallorca/i);
     await expect(page.locator(".elementor-image-carousel")).toBeVisible();
     await expect(page.locator('img[src*="logo-alta"]').first()).toBeVisible();
     await expect(page.getByRole("heading", { name: /Kit digital para Pymes/i })).toBeVisible();
