@@ -508,6 +508,9 @@ def main() -> None:
     fix_css_files()
     for page in HTML_PAGES:
         process_html(page)
+    from inject_clarity import inject_all
+
+    inject_all()
     print("POSTPROCESS DONE")
 
 

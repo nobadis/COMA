@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+dist
+test-results
+playwright-report
+docs
+tests
+*.md
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__
+*.pyc
+.vercel

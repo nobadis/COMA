@@ -29,6 +29,12 @@ npm run validate     # lint + tests E2E
 
 ## Despliegue
 
-Publicar carpeta `site/` en Vercel, Cloudflare Pages o GitHub Pages.
+- **Railway** (recomendado si usas variables de entorno): ver [docs/DEPLOY-RAILWAY.md](docs/DEPLOY-RAILWAY.md). Clarity se activa solo con `CLARITY_PROJECT_ID`.
+- **Dinahosting**: ver [docs/DEPLOY-DINAHOSTING.md](docs/DEPLOY-DINAHOSTING.md) (`npm run pack:dinahosting`).
+- También puedes publicar `site/` en Vercel, Cloudflare Pages o GitHub Pages.
+
+### Clarity (opcional)
+
+Variable: `CLARITY_PROJECT_ID`. Si no está definida, no se carga el script.
 
 Repositorio: https://github.com/nobadis/COMA

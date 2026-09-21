@@ -1,8 +1,7 @@
 {
-  "trailingSlash": true,
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "**/*",
       "headers": [
         {
           "key": "Strict-Transport-Security",
@@ -35,7 +34,7 @@
       ]
     },
     {
-      "source": "/wp-content/(.*)",
+      "source": "/wp-content/**",
       "headers": [
         {
           "key": "Cache-Control",

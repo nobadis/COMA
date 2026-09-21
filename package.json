@@ -7,6 +7,8 @@
     "mirror": "python3 scripts/mirror.py && python3 scripts/postprocess.py",
     "postprocess": "python3 scripts/postprocess.py",
     "pack:dinahosting": "bash scripts/pack-dinahosting.sh",
+    "build": "node scripts/inject_clarity.js",
+    "start": "bash scripts/railway-start.sh",
     "dev": "serve -l 4173 site",
     "lint:js": "eslint site/coma-static.js tests playwright.config.js --max-warnings=0",
     "lint:html": "html-validate \"site/index.html\" \"site/aviso-legal/index.html\" \"site/cookies/index.html\" \"site/privacidad/index.html\"",
@@ -18,12 +20,17 @@
   },
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "serve": "^14.2.6"
+  },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "eslint": "^10.4.0",
     "html-validate": "^11.4.0",
     "playwright": "^1.60.0",
-    "prettier": "^3.8.3",
-    "serve": "^14.2.6"
+    "prettier": "^3.8.3"
   }
 }
