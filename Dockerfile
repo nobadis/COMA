@@ -12,7 +12,7 @@ COPY site ./site
 RUN chmod +x scripts/railway-start.sh
 
 # Project ID de Clarity (sobreescribible en Variables de Railway).
-ENV CLARITY_PROJECT_ID=yltviknta6
+ENV CLARITY_PROJECT_ID=ylu80felfk
 ENV NODE_ENV=production
 ENV PORT=3000
 
