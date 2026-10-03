@@ -4,17 +4,17 @@
  * - `once`: pago único (€ + IVA).
  * - `month`: cuota mensual (€ + IVA).
  * - `custom`: se presupuesta a medida (IA, automatizaciones, medios...). No suma al total.
- * - `qty`: si existe, el cliente elige cuántas unidades (páginas, idiomas, buzones...).
+ * - `qty`: si existe, el cliente elige cuántas unidades (idiomas, buzones...).
  */
 export const basePlan = {
   name: "Web Esencial",
   price: 99,
   suffix: "+ IVA",
   pitch:
-    "Tu web profesional, lista para captar clientes. Tú te dedicas a tu negocio; nosotros, a que se vea.",
+    "Abaratamos el coste de tener una web profesional para que tú te dediques a lo importante: tu negocio. Nosotros, a que se vea.",
   includes: [
     "Diseño profesional adaptado a tu marca",
-    "Web de una página, perfecta en móvil",
+    "Web de hasta 4 páginas clásicas (Inicio, Servicios, Nosotros y Contacto), perfecta en móvil",
     "Formulario de contacto y botones de llamada a la acción",
     "SEO básico: títulos, descripciones y velocidad",
     "Publicación con certificado SSL",
@@ -39,22 +39,12 @@ export interface Extra {
 
 export const extras: Extra[] = [
   {
-    id: "paginas",
-    group: "web",
-    name: "Más páginas",
-    text: "Servicios, equipo, galería, contacto… las secciones que necesites.",
-    billing: "once",
-    price: 45,
-    unit: "página",
-    qty: { min: 1, max: 12, label: "páginas" },
-  },
-  {
     id: "idiomas",
     group: "web",
     name: "Multiidioma",
     text: "Español, catalán, inglés, alemán… para clientes de cualquier lugar.",
     billing: "once",
-    price: 60,
+    price: 49,
     unit: "idioma",
     qty: { min: 1, max: 5, label: "idiomas" },
   },
@@ -64,7 +54,7 @@ export const extras: Extra[] = [
     name: "Tienda online",
     text: "Catálogo, carrito y pago online. Hasta 50 productos.",
     billing: "once",
-    price: 390,
+    price: 349,
   },
   {
     id: "reservas",
@@ -72,7 +62,7 @@ export const extras: Extra[] = [
     name: "Reservas o citas online",
     text: "Tus clientes reservan solos, con aviso por email.",
     billing: "once",
-    price: 190,
+    price: 149,
   },
   {
     id: "alojamiento",
@@ -80,7 +70,7 @@ export const extras: Extra[] = [
     name: "Alojamiento y mantenimiento",
     text: "Hosting rápido, copias de seguridad y actualizaciones cada mes.",
     billing: "month",
-    price: 15,
+    price: 9,
   },
   {
     id: "correo",
@@ -88,7 +78,7 @@ export const extras: Extra[] = [
     name: "Correo corporativo",
     text: "tu@tuempresa.com configurado en el móvil y el ordenador.",
     billing: "month",
-    price: 4,
+    price: 3,
     unit: "buzón",
     qty: { min: 1, max: 10, label: "buzones" },
   },
@@ -98,7 +88,7 @@ export const extras: Extra[] = [
     name: "Contenido propio",
     text: "Pack de textos y fotos creados para tu marca.",
     billing: "once",
-    price: 150,
+    price: 99,
   },
   {
     id: "blog",
@@ -106,7 +96,7 @@ export const extras: Extra[] = [
     name: "Blog",
     text: "Blog integrado y primeros artículos que posicionan.",
     billing: "once",
-    price: 90,
+    price: 79,
   },
   {
     id: "seo",
@@ -114,7 +104,7 @@ export const extras: Extra[] = [
     name: "SEO local",
     text: "Google, Google Maps y reseñas: que te encuentren cerca.",
     billing: "month",
-    price: 120,
+    price: 99,
   },
   {
     id: "geo",
@@ -122,7 +112,7 @@ export const extras: Extra[] = [
     name: "GEO: posicionamiento en IA",
     text: "Aparece en las respuestas de ChatGPT, Gemini y Perplexity.",
     billing: "month",
-    price: 150,
+    price: 99,
   },
   {
     id: "automatizaciones",

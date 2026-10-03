@@ -221,12 +221,11 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
   .brief {
     display: grid;
     gap: 1.75rem;
-    padding: clamp(1.5rem, 4vw, 2.75rem);
-    border-radius: 28px;
-    background: var(--ink);
-    color: var(--paper);
-    --line: var(--night-line);
-    box-shadow: 0 50px 100px -50px rgb(0 0 0 / 0.5);
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background: #fff;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--ink);
   }
   fieldset {
     border: 0;
@@ -234,7 +233,7 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
     min-width: 0;
   }
   legend {
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 0.9rem;
     font-variation-settings: "wdth" 115;
   }
@@ -251,33 +250,36 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
     position: absolute;
     opacity: 0;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
     cursor: pointer;
   }
   .pick span {
     display: inline-block;
     padding: 0.6rem 1rem;
-    border-radius: 999px;
-    border: 1px solid var(--night-line);
+    border: 2px solid var(--ink);
+    background: #fff;
     font-size: var(--fs-sm);
+    font-weight: 600;
     transition:
       background 0.3s var(--ease),
-      border-color 0.3s var(--ease),
+      color 0.3s var(--ease),
       transform 0.3s var(--ease);
   }
   .pick:hover span {
-    border-color: var(--night-muted);
+    background: var(--paper-2);
   }
   .pick input:checked + span {
-    background: var(--red);
-    border-color: var(--red);
+    background: var(--ink);
     color: #fff;
   }
   .pick input:focus-visible + span {
-    outline: 2px solid var(--paper);
+    outline: 3px solid var(--red);
     outline-offset: 2px;
   }
   .pick input:active + span {
-    transform: scale(0.96);
+    transform: scale(0.97);
   }
   .brief__row {
     display: grid;
@@ -290,35 +292,46 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
   }
   .field {
     display: grid;
-    gap: 0.4rem;
+    gap: 0.45rem;
   }
   .field span {
     font-size: var(--fs-sm);
-    color: var(--night-muted);
+    font-weight: 700;
+    color: var(--ink);
   }
   .field input,
   .field textarea {
     width: 100%;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid var(--night-line);
-    padding: 0.6rem 0;
-    font-size: var(--fs-lg);
-    color: var(--paper);
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 0;
+    padding: 0.85rem 1rem;
+    font-size: var(--fs-md);
+    color: var(--ink);
     resize: vertical;
-    transition: border-color 0.3s;
+    transition:
+      border-color 0.3s,
+      background 0.3s,
+      box-shadow 0.3s;
   }
   .field input:focus,
   .field textarea:focus {
     outline: none;
+    background: #fff;
     border-color: var(--red);
+    box-shadow: 0 0 0 3px rgb(225 17 45 / 0.25);
   }
+  .field input::placeholder,
   .field textarea::placeholder {
-    color: rgb(243 240 234 / 0.35);
+    color: #6b665f;
+    opacity: 1;
   }
   .brief__error {
-    color: #ff8a9a;
+    color: var(--red-ink);
+    font-weight: 600;
     font-size: var(--fs-sm);
+    border-left: 4px solid var(--red);
+    padding-left: 0.75rem;
   }
   .brief__foot {
     display: grid;
@@ -327,9 +340,9 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
   }
   .brief__legal {
     font-size: var(--fs-xs);
-    color: var(--night-muted);
+    color: var(--muted);
   }
   .brief__legal a:hover {
-    color: var(--paper);
+    color: var(--red);
   }
 </style>

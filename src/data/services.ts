@@ -101,7 +101,7 @@ export const services: Service[] = [
     faq: [
       {
         title: "¿Qué incluye la web de 99 €?",
-        text: "Una web profesional de una página con diseño adaptado a tu marca, versión móvil, formulario de contacto, SEO básico y publicación con SSL. Si necesitas más páginas, idiomas, blog o tienda, los añades como extras con presupuesto cerrado.",
+        text: "Una web profesional de hasta 4 páginas clásicas (Inicio, Servicios, Nosotros y Contacto) con diseño adaptado a tu marca, versión móvil, formulario de contacto, SEO básico y publicación con SSL. Si necesitas algo más, como tienda online, reservas, idiomas o blog, lo añades aparte con precio cerrado.",
       },
       {
         title: "¿El dominio, el alojamiento y el correo están incluidos?",

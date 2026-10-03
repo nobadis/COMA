@@ -18,7 +18,7 @@ import { basePlan } from "../data/pricing";
 const faq = [
   {
     title: `¿De verdad hacéis una web por ${basePlan.price} €?`,
-    text: `Sí. La ${basePlan.name} cuesta ${basePlan.price} € ${basePlan.suffix}: una web profesional de una página, adaptada a móvil, con formulario de contacto, SEO básico y SSL. Si necesitas más (páginas, idiomas, blog, tienda, alojamiento, correo corporativo, IA…), lo añades como extra con presupuesto cerrado.`,
+    text: `Sí. La ${basePlan.name} cuesta ${basePlan.price} € ${basePlan.suffix}: una web profesional de hasta 4 páginas clásicas (Inicio, Servicios, Nosotros y Contacto), adaptada a móvil, con formulario de contacto, SEO básico y SSL. Si necesitas más (tienda, reservas, idiomas, blog, alojamiento, correo corporativo, IA…), lo añades aparte con presupuesto cerrado.`,
   },
   {
     title: "¿Trabajáis solo en Mallorca?",
@@ -31,6 +31,10 @@ const faq = [
   {
     title: "¿Con qué tipo de empresas trabajáis?",
     text: `Con autónomos y pymes de cualquier sector: farmacias, clínicas dentales, despachos profesionales, consultorías, restauración, turismo, comercio y eventos como ${trust.headline}. Más de ${trust.pymes} pymes ya confían en nosotros.`,
+  },
+  {
+    title: "¿Por qué sois tan baratos?",
+    text: "Porque queremos que autónomos y pymes dejen de ver la web como un gasto y se dediquen a lo importante: su negocio. Abaratamos costes con un proceso propio, sin plantillas ni intermediarios, y te damos el precio cerrado desde el primer día.",
   },
   {
     title: "¿Qué diferencia a COMA de otras agencias?",
@@ -63,7 +67,7 @@ const schema = [
   <Trust />
   <Manifesto
     eyebrow="Cómo pensamos"
-    text="Una web espectacular no es la que más se mueve. Es la que se entiende a la primera, se recuerda y te trae clientes. Diseño con carácter, estructura sencilla y un único objetivo: que te contacten."
+    text="Una web espectacular no tiene por qué ser cara. Abaratamos costes para que los autónomos y las pymes se dediquen a lo importante: su negocio. Diseño con carácter, estructura sencilla y un único objetivo: que te contacten."
   />
   <ServicesStack />
   <PriceExpand />

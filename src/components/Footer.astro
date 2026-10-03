@@ -7,11 +7,11 @@ import { navServices, site, mailto } from "../data/site";
 <footer class="ftr night" data-dark data-hide-sticky>
   <div class="wrap">
     <div class="ftr__top">
-      <p class="ftr__claim display" data-reveal>
-        Seguimos escribiendo<span class="comma">,</span><br />
-        <span class="muted">¿escribimos juntos el siguiente capítulo?</span>
-      </p>
-      <a class="btn btn--red" href={mailto("Nuevo proyecto")} data-reveal style="--d:1">
+      <div class="ftr__brand">
+        <a href="/" class="ftr__logo" aria-label="COMA, ir al inicio"><Logo /></a>
+        <p>Hacemos que tu empresa se note<span class="comma">,</span> sin que te cueste una fortuna.</p>
+      </div>
+      <a class="btn btn--red" href={mailto("Nuevo proyecto")}>
         {site.email}
         <Arrow />
       </a>
@@ -21,31 +21,19 @@ import { navServices, site, mailto } from "../data/site";
       <div>
         <p class="ftr__h">Servicios</p>
         <ul>
-          {
-            [...navServices, { href: "/precios/", label: "Precios" }, { href: "/kit-digital/", label: "Kit Digital" }].map((n) => (
-              <li>
-                <a href={n.href}>{n.label}</a>
-              </li>
-            ))
-          }
+          {navServices.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="/precios/">Precios</a></li>
+          <li><a href="/kit-digital/">Kit Digital</a></li>
         </ul>
       </div>
       <div>
-        <p class="ftr__h">Estudio · Mallorca y toda España</p>
+        <p class="ftr__h">Estudio</p>
         <address>
           {site.address.street}<br />
           {site.address.postalCode}
           {site.address.city}, {site.address.region}<br />
           <a href={site.mapsUrl} target="_blank" rel="noopener">Ver en el mapa ↗</a>
         </address>
-      </div>
-      <div>
-        <p class="ftr__h">Contacto</p>
-        <ul>
-          <li><a href={mailto()}>{site.email}</a></li>
-          <li><a href="/contacto/">Pedir propuesta</a></li>
-          <li><a href="/precios/">Web desde 99 € + IVA</a></li>
-        </ul>
       </div>
       <div>
         <p class="ftr__h">Legal</p>
@@ -58,8 +46,6 @@ import { navServices, site, mailto } from "../data/site";
       </div>
     </div>
 
-    <div class="ftr__mark" aria-hidden="true" data-kinetic><Logo /></div>
-
     <div class="ftr__bottom">
       <span>© <span class="coma-year">{new Date().getFullYear()}</span> {site.brand}. Todos los derechos reservados.</span>
       <span>{site.legalName} · CIF {site.cif}</span>
@@ -69,50 +55,59 @@ import { navServices, site, mailto } from "../data/site";
 
 <style>
   .ftr {
-    padding-top: clamp(4rem, 9vw, 8rem);
-    padding-bottom: 1.5rem;
-    overflow: hidden;
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: 1.25rem;
   }
   .ftr__top {
     display: grid;
-    gap: 2rem;
-    align-items: end;
-    padding-bottom: clamp(3rem, 6vw, 5rem);
+    gap: 1.5rem;
+    align-items: center;
+    padding-bottom: 2.5rem;
     border-bottom: 1px solid var(--line);
   }
-  @media (min-width: 900px) {
+  @media (min-width: 800px) {
     .ftr__top {
       grid-template-columns: 1fr auto;
     }
   }
-  .ftr__claim {
-    font-size: var(--fs-2xl);
-    line-height: 1.02;
+  .ftr__brand {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .ftr__logo {
+    text-decoration: none;
+    justify-self: start;
+  }
+  .ftr__logo :global(.logo) {
+    font-size: 2rem;
+  }
+  .ftr__brand p {
+    color: var(--muted);
+    max-width: 40ch;
   }
   .ftr__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem 1.5rem;
-    padding-block: 3rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-block: 2.5rem;
     font-size: var(--fs-sm);
   }
-  @media (min-width: 800px) {
+  @media (min-width: 600px) {
     .ftr__grid {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
   .ftr__h {
     font-size: var(--fs-xs);
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 1rem;
+    margin-bottom: 0.9rem;
   }
   .ftr ul {
-    list-style: none;
-    padding: 0;
     display: grid;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
   .ftr address {
     font-style: normal;
@@ -133,27 +128,19 @@ import { navServices, site, mailto } from "../data/site";
     padding: 0;
     cursor: pointer;
     text-align: left;
+    font-size: inherit;
   }
   .ftr .btn {
     color: #fff;
-  }
-  .ftr nav a { display: inline-block; }
-  .ftr__mark {
-    color: var(--paper);
-    line-height: 0.8;
-    user-select: none;
-  }
-  .ftr__mark :global(.logo) {
-    font-size: clamp(4rem, 23vw, 20rem);
-    letter-spacing: -0.04em;
-    display: flex;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
   .ftr__bottom {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0.5rem 2rem;
-    padding-top: 1.5rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--line);
     font-size: var(--fs-xs);
     color: var(--muted);

@@ -1,0 +1,215 @@
+---
+const channels = ["Web", "WhatsApp", "Email", "Teléfono"];
+const hours = ["Mañana", "Tarde", "Noche", "Madrugada"];
+---
+
+<section class="ao section night" data-dark aria-labelledby="ao-title">
+  <div class="wrap ao__grid">
+    <div class="ao__copy">
+      <p class="eyebrow" data-reveal>Siempre disponible</p>
+      <h2 id="ao-title" data-split>Tu agente nunca se va de vacaciones<span class="comma">.</span></h2>
+      <p class="lead" data-reveal style="--d:2">
+        Atiende por todos los canales a la vez, a cualquier hora y en el idioma del cliente. Tú
+        recibes el resumen; el cliente, la respuesta al instante.
+      </p>
+      <ul class="ao__hours" data-reveal style="--d:3">
+        {hours.map((h) => <li>{h}</li>)}
+      </ul>
+    </div>
+
+    <div class="ao__stage" aria-hidden="true" data-reveal style="--d:1">
+      <span class="ao__ring ao__ring--1"></span>
+      <span class="ao__ring ao__ring--2"></span>
+      <div class="ao__orbit">
+        {
+          channels.map((c, i) => (
+            <span class="ao__node" style={`--a:${i * 90}deg`}>
+              <span class="ao__chip">{c}</span>
+            </span>
+          ))
+        }
+      </div>
+      <div class="ao__core">
+        <span class="ao__pulse"></span>
+        <span class="ao__pulse ao__pulse--2"></span>
+        <strong>IA</strong>
+        <small>24/7</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ao {
+    overflow-x: clip;
+  }
+  .ao__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .ao__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+  .ao__copy {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .ao__hours {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ao__hours li {
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--line);
+    font-size: var(--fs-sm);
+    animation: hr 8s infinite;
+  }
+  .ao__hours li:nth-child(2) {
+    animation-delay: 2s;
+  }
+  .ao__hours li:nth-child(3) {
+    animation-delay: 4s;
+  }
+  .ao__hours li:nth-child(4) {
+    animation-delay: 6s;
+  }
+  @keyframes hr {
+    0%,
+    22% {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+    28%,
+    100% {
+      background: transparent;
+    }
+  }
+
+  .ao__stage {
+    position: relative;
+    container-type: inline-size;
+    width: min(100%, 26rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+    display: grid;
+    place-items: center;
+  }
+  .ao__ring {
+    position: absolute;
+    border: 1px dashed var(--night-muted);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .ao__ring--1 {
+    inset: 8%;
+  }
+  .ao__ring--2 {
+    inset: 28%;
+    border-style: solid;
+    border-color: var(--line);
+  }
+  .ao__orbit {
+    position: absolute;
+    inset: 0;
+    animation: spin 24s linear infinite;
+  }
+  .ao__node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: rotate(var(--a)) translateY(-34cqw);
+  }
+  .ao__chip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    translate: -50% -50%;
+    padding: 0.4rem 0.7rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    white-space: nowrap;
+    animation: unspin 24s linear infinite;
+  }
+  .ao__node:nth-child(odd) .ao__chip {
+    background: var(--red);
+    color: #fff;
+  }
+  /* contra-giro: el texto se mantiene derecho mientras la órbita gira */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes unspin {
+    from {
+      transform: rotate(calc(var(--a) * -1));
+    }
+    to {
+      transform: rotate(calc(var(--a) * -1 - 360deg));
+    }
+  }
+  .ao__core {
+    position: relative;
+    width: 34%;
+    aspect-ratio: 1;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    background: var(--red);
+    color: #fff;
+    border-radius: 50%;
+  }
+  .ao__core strong {
+    font-variation-settings: "wdth" 125;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .ao__core small {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+  .ao__pulse {
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--red);
+    border-radius: 50%;
+    animation: pulse 3s var(--ease) infinite;
+  }
+  .ao__pulse--2 {
+    animation-delay: 1.5s;
+  }
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ao__orbit,
+    .ao__chip,
+    .ao__pulse,
+    .ao__hours li {
+      animation: none;
+    }
+    .ao__chip {
+      transform: rotate(calc(var(--a) * -1));
+    }
+  }
+</style>

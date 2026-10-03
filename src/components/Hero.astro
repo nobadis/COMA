@@ -4,7 +4,7 @@ import Marquee from "./Marquee.astro";
 import { site, trust } from "../data/site";
 import { basePlan } from "../data/pricing";
 
-const words = ["note", "encuentren", "elijan", "recuerden"];
+const words = ["note", "vea", "encuentre", "elija", "recuerde"];
 ---
 
 <section class="hero" data-progress="exit">
@@ -36,8 +36,8 @@ const words = ["note", "encuentren", "elijan", "recuerden"];
     <div class="hero__row">
       <div class="hero__copy" data-reveal style="--d:4">
         <p class="lead">
-          Diseñamos webs espectaculares que se leen sin esfuerzo: claras, rápidas y pensadas para que
-          te contacten. Y las hacemos visibles en Google y en la IA.
+          Abaratamos el coste de tener una web espectacular para que autónomos y pymes se dediquen a
+          lo importante: su negocio. Claras, rápidas y visibles en Google y en la IA.
         </p>
         <p class="hero__trust">
           Confían en nosotros <strong>{trust.headline}</strong> y más de <strong>{trust.pymes} pymes</strong>.
@@ -139,14 +139,14 @@ const words = ["note", "encuentren", "elijan", "recuerden"];
     grid-area: 1 / 1;
     font-style: normal;
     color: var(--red);
-    transform: translateY(105%);
+    transform: translateY(135%);
     transition: transform 0.8s var(--ease);
   }
   .rot :global(em.is-on) {
     transform: none;
   }
   .rot :global(em.is-out) {
-    transform: translateY(-105%);
+    transform: translateY(-135%);
   }
   .rot :global(i) {
     font-style: normal;

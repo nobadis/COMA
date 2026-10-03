@@ -106,15 +106,22 @@ function initRotate(reduced: boolean) {
     let i = 0;
     words[0].classList.add("is-on");
     if (reduced) return;
+    // Sin transición, la palabra que sale volvería a su sitio cruzando el hueco por segunda vez.
+    const snap = (w: HTMLElement) => {
+      w.style.transition = "none";
+      w.classList.remove("is-out");
+      void w.offsetWidth;
+      w.style.transition = "";
+    };
     window.setInterval(() => {
       if (document.hidden) return;
-      words[i].classList.remove("is-on");
-      words[i].classList.add("is-out");
-      const prev = words[i];
-      window.setTimeout(() => prev.classList.remove("is-out"), 700);
+      const leaving = words[i];
       i = (i + 1) % words.length;
+      leaving.classList.remove("is-on");
+      leaving.classList.add("is-out");
       words[i].classList.add("is-on");
-    }, 2400);
+      window.setTimeout(() => snap(leaving), 900);
+    }, 2600);
   });
 }
 

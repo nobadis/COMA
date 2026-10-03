@@ -53,15 +53,19 @@ if (curtain && root.classList.contains("curtain-open")) {
   } catch {
     /* nada */
   }
+  const resetCurtain = () => {
+    curtain.style.transition = "none";
+    curtain.classList.remove("is-in", "is-out");
+    root.classList.remove("curtain-open");
+    void curtain.offsetWidth;
+    curtain.style.transition = "";
+  };
+  // La cortina sube y sale por arriba; después se recoloca abajo SIN animar.
   requestAnimationFrame(() =>
     requestAnimationFrame(() => {
+      curtain.classList.add("is-out");
       root.classList.remove("curtain-open");
-      curtain.classList.add("is-in");
-      requestAnimationFrame(() => {
-        curtain.classList.remove("is-in");
-        curtain.classList.add("is-out");
-        window.setTimeout(() => curtain.classList.remove("is-out"), 800);
-      });
+      window.setTimeout(resetCurtain, 900);
     })
   );
 }
@@ -89,8 +93,13 @@ if (curtain && !reduced) {
 // Volver con el botón «atrás» (bfcache): quitar la cortina.
 window.addEventListener("pageshow", (e) => {
   if (e.persisted) {
-    curtain?.classList.remove("is-in", "is-out");
-    root.classList.remove("curtain-open");
+    if (curtain) {
+      curtain.style.transition = "none";
+      curtain.classList.remove("is-in", "is-out");
+      root.classList.remove("curtain-open");
+      void curtain.offsetWidth;
+      curtain.style.transition = "";
+    }
   }
 });
 

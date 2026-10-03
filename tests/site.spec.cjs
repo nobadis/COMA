@@ -133,33 +133,37 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.locator("[data-once]")).toHaveText("99");
     await page.locator(".opt", { hasText: "Multiidioma" }).locator("label").click();
     await page.locator(".opt", { hasText: "Blog" }).locator("label").click();
-    await expect(page.locator("[data-once]")).toHaveText("249");
+    await expect(page.locator("[data-once]")).toHaveText("227");
     await expect(page.locator("[data-sum]")).toContainText("Multiidioma, Blog");
     await page.locator(".opt", { hasText: "SEO local" }).locator("label").click();
-    await expect(page.locator("[data-month]")).toHaveText("120");
+    await expect(page.locator("[data-month]")).toHaveText("99");
     await page.locator(".opt", { hasText: "Agente de IA" }).locator("label").click();
     await expect(page.locator("[data-custom]")).toContainText("Agente de IA");
-    await expect(page.locator("[data-once]")).toHaveText("249"); // la IA no suma: es a medida
+    await expect(page.locator("[data-once]")).toHaveText("227"); // la IA no suma: es a medida
     await page.getByRole("button", { name: /Pedir presupuesto/ }).click();
     await expect(page).toHaveURL(/\/contacto\/\?plan=web&extras=/);
     await expect(page.locator('input[value^="Web desde"]')).toBeChecked();
     const msg = page.locator("textarea[name=mensaje]");
     await expect(msg).toHaveValue(/Multiidioma, Blog/);
-    await expect(msg).toHaveValue(/249 € \+ IVA/);
+    await expect(msg).toHaveValue(/227 € \+ IVA/);
   });
 
-  test("las cantidades (páginas, idiomas) multiplican el precio", async ({ page }) => {
+  test("las cantidades (idiomas) multiplican el precio y no hay extra de más páginas", async ({
+    page,
+  }) => {
     await page.goto("/precios/");
-    const opt = page.locator(".opt", { hasText: "Más páginas" });
-    await opt.getByRole("button", { name: /Más páginas/ }).click();
-    await opt.getByRole("button", { name: /Más páginas/ }).click();
-    await expect(page.locator("[data-once]")).toHaveText("189"); // 99 + 2 × 45
+    await expect(page.locator(".opt", { hasText: "Más páginas" })).toHaveCount(0);
+    const opt = page.locator(".opt", { hasText: "Multiidioma" });
+    await opt.getByRole("button", { name: /Más idiomas/ }).click();
+    await expect(page.locator("[data-once]")).toHaveText("148"); // 99 + 1 × 49
+    await opt.getByRole("button", { name: /Más idiomas/ }).click();
+    await expect(page.locator("[data-once]")).toHaveText("197"); // 99 + 2 × 49
   });
 
   test("SEO tiene presupuesto dinámico y la IA se presupuesta a medida", async ({ page }) => {
     await page.goto("/seo-geo/");
     await page.locator(".opt", { hasText: "SEO local" }).locator("label").click();
-    await expect(page.locator("[data-month]")).toHaveText("120");
+    await expect(page.locator("[data-month]")).toHaveText("99");
     await page.goto("/agentes-ia/");
     await expect(page.getByRole("heading", { name: /a medida/i })).toBeVisible();
     await expect(page.locator(".opt")).toHaveCount(0);
