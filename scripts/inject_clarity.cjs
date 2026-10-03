@@ -47,10 +47,8 @@ function clarityBlock(projectId) {
 function applyToHtml(html, projectId) {
   let out = html.replace(BLOCK_RE, "");
   if (!projectId) return out;
-  if (!out.includes("</head>")) {
-    console.error("HTML sin </head>; no se puede inyectar Clarity");
-    process.exit(1);
-  }
+  // Las redirecciones de Astro (p. ej. /trabajos/) son stubs sin <head>: no se miden.
+  if (!out.includes("</head>")) return out;
   return out.replace("</head>", `${clarityBlock(projectId)}</head>`);
 }
 
