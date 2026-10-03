@@ -1,33 +1,48 @@
 ---
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
-import Marquee from "../components/Marquee.astro";
+import Trust from "../components/Trust.astro";
 import ServicesIndex from "../components/ServicesIndex.astro";
+import PriceStatement from "../components/PriceStatement.astro";
+import Showcase from "../components/Showcase.astro";
 import Manifesto from "../components/Manifesto.astro";
+import GeoDemo from "../components/GeoDemo.astro";
 import AgentDemo from "../components/AgentDemo.astro";
 import FlowDemo from "../components/FlowDemo.astro";
+import Timeline from "../components/Timeline.astro";
+import Sectors from "../components/Sectors.astro";
 import Process from "../components/Process.astro";
 import KitBanner from "../components/KitBanner.astro";
 import Faq from "../components/Faq.astro";
 import Cta from "../components/Cta.astro";
-import { site } from "../data/site";
+import Marquee from "../components/Marquee.astro";
+import { site, trust, years } from "../data/site";
+import { basePlan } from "../data/pricing";
 
 const faq = [
   {
-    title: "¿Con qué tipo de empresas trabajáis?",
-    text: "Sobre todo con pymes, autónomos y marcas de Mallorca y Baleares: turismo, restauración, comercio, servicios profesionales, salud o industria. Si tu empresa quiere crecer y hacerse notar, hablamos el mismo idioma.",
+    title: `¿De verdad hacéis una web por ${basePlan.price} €?`,
+    text: `Sí. La ${basePlan.name} cuesta ${basePlan.price} € ${basePlan.suffix}: una web profesional de una página, adaptada a móvil, con formulario de contacto, SEO básico y SSL. Si necesitas más (páginas, idiomas, blog, tienda, alojamiento, correo corporativo, IA…), lo añades como extra con presupuesto cerrado.`,
   },
   {
-    title: "¿Puedo contratar solo un servicio?",
-    text: "Sí. Puedes empezar por lo que más te urge —una campaña, un agente de IA o una automatización— y ampliar cuando lo necesites. Todo encaja porque lo diseñamos con la misma visión.",
+    title: "¿Trabajáis solo en Mallorca?",
+    text: `No. Nacimos en Mallorca en ${site.since} y desde ${site.spainSince} trabajamos con empresas de toda España, en remoto y con la misma cercanía.`,
+  },
+  {
+    title: "¿Qué es el GEO y por qué le importa a mi negocio?",
+    text: "GEO (Generative Engine Optimization) es posicionar tu empresa en las respuestas de asistentes de IA como ChatGPT, Gemini o Perplexity. Cada vez más clientes preguntan a la IA antes de elegir; si no apareces, eligen a otro.",
+  },
+  {
+    title: "¿Con qué tipo de empresas trabajáis?",
+    text: `Con autónomos y pymes de cualquier sector: farmacias, clínicas dentales, despachos profesionales, consultorías, restauración, turismo, comercio y eventos como ${trust.headline}. Más de ${trust.pymes} pymes ya confían en nosotros.`,
   },
   {
     title: "¿Qué diferencia a COMA de otras agencias?",
-    text: `Llevamos en la comunicación desde ${site.since}, cuando todo era radio, prensa y papel, y hoy trabajamos con inteligencia artificial y automatización. Unimos criterio de marca y tecnología en un único equipo local.`,
+    text: `Llevamos ${years()} años comunicando: revistas, radio, programas de televisión, webs, marketing digital y ahora IA. Unimos criterio de marca, tecnología y precios pensados para pymes en un único equipo.`,
   },
   {
     title: "¿Cómo empezamos?",
-    text: "Escríbenos contándonos tu situación. Te proponemos una primera reunión para entender tu negocio y, a partir de ahí, una propuesta clara con objetivos, plazos y presupuesto.",
+    text: "Escríbenos o rellena el brief de contacto. Te respondemos personalmente con una propuesta clara, con objetivos, plazos y precio cerrado.",
   },
 ];
 
@@ -45,24 +60,30 @@ const schema = [
 ---
 
 <Base
-  description="Agencia de marketing en Mallorca desde 1999: notoriedad de marca, agentes de IA, automatizaciones y Kit Digital para pymes y autónomos."
+  description={`Diseño web desde ${basePlan.price} € + IVA, SEO y posicionamiento en IA (GEO), agentes de IA y automatizaciones para autónomos y pymes. Agencia en Mallorca desde ${site.since}, ahora en toda España.`}
   schema={schema}
 >
   <Hero />
-  <Marquee items={["Branding", "Agentes de IA", "Prensa y radio", "Automatización", "Redes sociales", "Kit Digital", "Publicidad digital", "Webs"]} />
+  <Trust />
   <ServicesIndex />
+  <PriceStatement />
+  <Showcase />
   <Manifesto
-    text={`Desde ${site.since} ayudamos a empresas de Mallorca a contar lo que hacen. Empezamos en la radio, la prensa y el papel. Hoy sumamos datos, automatización e inteligencia artificial. Lo que no ha cambiado: que tu marca se entienda, se recuerde y se elija.`}
+    text={`Desde ${site.since} contamos historias de empresas. Empezamos con revistas, seguimos con la radio y la televisión, y llevamos más de ${trust.pymes} pymes a internet. Hoy sumamos SEO, inteligencia artificial y automatización. Lo que no ha cambiado: que tu marca se entienda, se recuerde y se elija.`}
   />
+  <GeoDemo />
   <AgentDemo />
   <FlowDemo />
+  <Timeline />
+  <Marquee items={["Diseño web", "SEO", "GEO", "Agentes de IA", "Automatización", "Branding", "Radio y TV", "Kit Digital"]} />
+  <Sectors />
   <Process
-    title="Un método claro, de la primera charla a los resultados"
+    title="De la primera llamada a tu web publicada"
     steps={[
-      { title: "Escuchamos", text: "Entendemos tu negocio, tus clientes y lo que quieres conseguir. Sin plantillas." },
-      { title: "Diseñamos", text: "Estrategia, creatividad y tecnología en una propuesta con objetivos medibles." },
-      { title: "Lanzamos", text: "Campañas, agentes y automatizaciones en marcha, con tu equipo a bordo." },
-      { title: "Medimos y mejoramos", text: "Informes claros y ajustes continuos. Lo que no se mide, no mejora." },
+      { title: "Nos cuentas", text: "Tu negocio, tus clientes y lo que quieres conseguir. Sin tecnicismos ni compromiso." },
+      { title: "Diseñamos", text: "Te enseñamos una propuesta visual y la ajustamos contigo hasta que te encante." },
+      { title: "Publicamos", text: "Web online, rápida y lista para Google y la IA. Con SSL y formulario funcionando." },
+      { title: "Creces", text: "Añade SEO, idiomas, tienda, agentes de IA o automatizaciones cuando lo necesites." },
     ]}
   />
   <KitBanner />

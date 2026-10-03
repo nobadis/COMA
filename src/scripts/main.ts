@@ -1,4 +1,5 @@
 import Lenis from "lenis";
+import { initScrollFx } from "./scrollfx";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -70,7 +71,10 @@ if (header) {
 
 /* ----------------------------------------------------------- split titles */
 document.querySelectorAll<HTMLElement>("[data-split]").forEach((el) => {
-  const label = (el.textContent ?? "").replace(/\s+/g, " ").trim();
+  // Texto accesible sin los elementos decorativos (aria-hidden), p. ej. las palabras rotativas.
+  const clone = el.cloneNode(true) as HTMLElement;
+  clone.querySelectorAll("[aria-hidden=true]").forEach((n) => n.remove());
+  const label = (clone.textContent ?? "").replace(/\s+/g, " ").trim();
   let i = 0;
   const wrap = (node: Node): Node => {
     const w = document.createElement("span");
@@ -184,6 +188,9 @@ if (finePointer && !reduced) {
     el.addEventListener("pointerleave", () => (el.style.transform = ""));
   });
 }
+
+/* --------------------------------------------------------- scroll effects */
+initScrollFx(reduced);
 
 /* ------------------------------------------------------------------- year */
 const year = String(new Date().getFullYear());

@@ -4,8 +4,8 @@ Web de [comunicacionenmallorca.com](https://comunicacionenmallorca.com) (Publico
 
 ## Estructura
 
-- `src/pages/` — páginas: inicio, notoriedad, agentes de IA, automatizaciones (`[service].astro`), Kit Digital, contacto y legales.
-- `src/data/` — contenido editable: datos de empresa (`site.ts`), servicios (`services.ts`) y textos legales (`legal/*.html`).
+- `src/pages/` — inicio, servicios (`[service].astro`: diseño web, SEO y GEO, agentes de IA, automatizaciones, notoriedad), precios, trabajos, Kit Digital, contacto, legales y `llms.txt`.
+- `src/data/` — contenido editable: empresa, clientes y sectores (`site.ts`), servicios (`services.ts`), precios (`pricing.ts`), trabajos (`work.ts`) y textos legales (`legal/*.html`).
 - `src/components/` — secciones reutilizables (hero, servicios, demo de agente IA, flujo de automatización, FAQ, CTA…).
 - `src/styles/global.css` — sistema de diseño (tokens, tipografía, botones, animaciones).
 - `src/scripts/main.ts` — scroll suave (Lenis), cabecera, menú móvil, animaciones y banner de cookies.
@@ -24,8 +24,16 @@ npm run validate     # formato + tipos + lint + build + tests E2E (escritorio y 
 ## Editar contenidos
 
 - Textos de servicios: `src/data/services.ts`.
-- Email, dirección y datos legales: `src/data/site.ts`.
+- Precio base (99 € + IVA), lo que incluye y extras: `src/data/pricing.ts`. Para mostrar el precio de un extra, rellena su campo `price`.
+- Trabajos de la galería: `src/data/work.ts` (ahora son conceptos de diseño por sector; sustitúyelos por proyectos reales cuando quieras).
+- Email, dirección, clientes, referencias y sectores: `src/data/site.ts`.
+- Imagen para redes sociales: `node scripts/og-image.cjs` regenera `public/og-coma.png`.
 - Estado del Kit Digital (fecha y convocatoria): `src/pages/kit-digital.astro`. Revísalo cuando Red.es publique una nueva convocatoria.
+
+## SEO y GEO
+
+- Datos estructurados (Organization/MarketingAgency, Offer 99 €, Service, FAQPage, BreadcrumbList, Product) en todas las páginas.
+- `sitemap-index.xml`, `robots.txt` con los bots de IA permitidos y `/llms.txt` (resumen de la empresa para asistentes de IA) generado desde los datos.
 
 ## Analítica y cookies
 

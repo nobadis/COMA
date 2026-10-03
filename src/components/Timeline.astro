@@ -1,0 +1,122 @@
+---
+import { site } from "../data/site";
+
+const items = [
+  { y: String(site.since), t: "Nacemos editando revistas", d: "Contar historias de empresas de Mallorca en papel fue el primer capítulo." },
+  { y: "Radio", t: "Programas y campañas en antena", d: "Aprendimos a comunicar con voz, ritmo y cercanía." },
+  { y: "TV", t: "Programas de televisión", d: "Producción audiovisual y formatos que llegan a toda la isla." },
+  { y: "Digital", t: "Webs, redes y marketing online", d: "Más de 100 pymes en internet con webs que funcionan y venden." },
+  { y: "IA", t: "Agentes, automatización y GEO", d: "Inteligencia artificial aplicada a lo que de verdad le importa a una pyme." },
+  { y: String(site.spainSince), t: "De Mallorca a toda España", d: "El mismo equipo y la misma cercanía, ahora para empresas de todo el país." },
+];
+---
+
+<section class="section tl" data-progress="view">
+  <div class="wrap tl__grid">
+    <div class="tl__head">
+      <p class="eyebrow" data-reveal>Nuestra historia</p>
+      <h2 data-split>De las revistas a la inteligencia artificial<span class="comma">,</span></h2>
+      <p class="lead" data-reveal style="--d:2">
+        Revistas, radio, televisión, webs, marketing digital e IA. Lo hemos hecho todo, por eso
+        podemos hacer cualquier cosa por tu empresa.
+      </p>
+    </div>
+    <ol class="tl__list">
+      {
+        items.map((it, i) => (
+          <li class="tl__item" data-reveal style={`--d:${i % 2}`}>
+            <span class="tl__y">{it.y}</span>
+            <div>
+              <h3>{it.t}</h3>
+              <p>{it.d}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .tl {
+    --p: 0;
+  }
+  .tl__grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .tl__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: start;
+    }
+    .tl__head {
+      position: sticky;
+      top: 8rem;
+    }
+  }
+  .tl__head {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .tl__list {
+    list-style: none;
+    padding: 0 0 0 2rem;
+    position: relative;
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+  .tl__list::before,
+  .tl__list::after {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: var(--line);
+  }
+  .tl__list::after {
+    background: var(--red);
+    transform-origin: top;
+    transform: scaleY(clamp(0, calc(var(--p) * 1.7 - 0.35), 1));
+  }
+  .tl__item {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .tl__item::before {
+    content: "";
+    position: absolute;
+    left: -2rem;
+    top: 0.35rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--red);
+    z-index: 1;
+  }
+  .tl__y {
+    font-variation-settings: "wdth" 125;
+    font-weight: 600;
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--red);
+  }
+  .tl__item h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.25rem;
+  }
+  .tl__item p {
+    color: var(--muted);
+    max-width: 48ch;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tl__list::after {
+      transform: none;
+    }
+  }
+</style>

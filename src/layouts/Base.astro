@@ -1,34 +1,50 @@
 ---
 import "../styles/global.css";
+import fontUrl from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
+import StickyCta from "../components/StickyCta.astro";
 import { site } from "../data/site";
+import { services } from "../data/services";
+import { basePlan } from "../data/pricing";
 
+interface Crumb {
+  name: string;
+  path: string;
+}
 interface Props {
   title?: string;
   description: string;
   noindex?: boolean;
   schema?: Record<string, unknown>[];
+  crumbs?: Crumb[];
+  stickyCta?: boolean;
 }
 
-const { title, description, noindex = false, schema = [] } = Astro.props;
-const fullTitle = title ? `${title} | COMA` : site.title;
+const { title, description, noindex = false, schema = [], crumbs = [], stickyCta = true } = Astro.props;
+const fullTitle = title ? `${title} | COMA` : `${site.title} · Diseño web desde ${basePlan.price} €, SEO e IA`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL("/og-coma.png", site.url).href;
+const orgId = `${site.url}/#org`;
 
 const org = {
   "@context": "https://schema.org",
-  "@type": "MarketingAgency",
-  "@id": `${site.url}/#org`,
+  "@type": ["MarketingAgency", "ProfessionalService"],
+  "@id": orgId,
   name: site.brand,
-  alternateName: "COMA",
+  alternateName: ["COMA", "Comunicación en Mallorca"],
   legalName: site.legalName,
+  taxID: site.cif,
   url: site.url,
-  logo: ogImage,
+  logo: new URL("/favicon.svg", site.url).href,
+  image: ogImage,
   email: site.email,
   foundingDate: String(site.since),
-  areaServed: ["Mallorca", "Illes Balears", "España"],
+  slogan: "Hacemos que tu empresa se note",
+  description:
+    "Agencia de diseño web y marketing en Mallorca desde 1997. Webs desde 99 € + IVA, SEO y posicionamiento en IA (GEO), agentes de IA y automatizaciones para autónomos y pymes de toda España.",
+  priceRange: "€",
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,
@@ -37,21 +53,95 @@ const org = {
     addressRegion: site.address.region,
     addressCountry: site.address.country,
   },
+  geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Mallorca" },
+    { "@type": "AdministrativeArea", name: "Illes Balears" },
+    { "@type": "Country", name: "España" },
+  ],
+  knowsAbout: [
+    "Diseño web",
+    "Desarrollo web",
+    "SEO local",
+    "Generative Engine Optimization (GEO)",
+    "Agentes de inteligencia artificial",
+    "Automatización de procesos",
+    "Marketing digital",
+    "Branding",
+    "Publicidad en radio, prensa y televisión",
+    "Kit Digital",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Servicios",
+    itemListElement: services.map((s) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: s.label, url: `${site.url}/${s.slug}/` },
+    })),
+  },
+  makesOffer: {
+    "@type": "Offer",
+    name: `${basePlan.name}: web profesional`,
+    price: basePlan.price,
+    priceCurrency: "EUR",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      price: basePlan.price,
+      priceCurrency: "EUR",
+      valueAddedTaxIncluded: false,
+    },
+    url: `${site.url}/precios/`,
+  },
 };
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${site.url}/#web`,
+  url: site.url,
+  name: site.title,
+  inLanguage: "es-ES",
+  publisher: { "@id": orgId },
+};
+
+const breadcrumb = crumbs.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [{ name: "Inicio", path: "/" }, ...crumbs].map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        item: new URL(c.path, site.url).href,
+      })),
+    }
+  : null;
+
+const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta
+      name="robots"
+      content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"}
+    />
     <meta name="theme-color" content="#f3f0ea" />
+    <meta name="author" content={site.brand} />
+    <meta name="geo.region" content="ES-IB" />
+    <meta name="geo.placename" content="Palma de Mallorca" />
+    <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
+    <meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Resumen para modelos de IA" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
 
     <meta property="og:locale" content="es_ES" />
     <meta property="og:type" content="website" />
@@ -60,12 +150,18 @@ const org = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="COMA - Comunicación en Mallorca. Webs desde 99 €, SEO e IA." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <script is:inline>
       document.documentElement.classList.add("js");
     </script>
-    <script type="application/ld+json" set:html={JSON.stringify([org, ...schema])} />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   </head>
   <body>
     <a class="skip" href="#main">Saltar al contenido</a>
@@ -74,6 +170,7 @@ const org = {
       <slot />
     </main>
     <Footer />
+    {stickyCta && <StickyCta />}
     <CookieBanner />
     <div class="grain" aria-hidden="true"></div>
     <script>

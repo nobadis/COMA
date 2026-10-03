@@ -2,6 +2,10 @@ const { test, expect } = require("@playwright/test");
 
 const PAGES = [
   "/",
+  "/diseno-web/",
+  "/seo-geo/",
+  "/precios/",
+  "/trabajos/",
   "/notoriedad-de-marca/",
   "/agentes-ia/",
   "/automatizaciones/",
@@ -24,9 +28,13 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       /Hacemos que tu empresa se note/i
     );
+    await expect(page.getByRole("link", { name: /Quiero mi web por 99/ }).first()).toBeVisible();
+    await expect(page.getByText(/Mallorca Live Festival/).first()).toBeVisible();
     const servicios = page.locator("#servicios");
     for (const name of [
-      "Notoriedad de empresa",
+      "Diseño web",
+      "SEO y posicionamiento en IA",
+      "Notoriedad y medios",
       "Agentes de IA",
       "Automatizaciones",
       "Kit Digital",
@@ -116,6 +124,33 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await page.goto("/kit-digital/");
     await expect(page.getByText(/Orden TDF\/39\/2026/).first()).toBeVisible();
     await expect(page.getByRole("img", { name: /Kit Digital cofinanciado/i })).toBeAttached();
+  });
+
+  test("configurador de precios lleva los extras al contacto", async ({ page }) => {
+    await page.goto("/precios/");
+    await expect(page.locator("main h1")).toContainText("99");
+    await page.locator("label.opt", { hasText: "Multiidioma" }).click();
+    await page.locator("label.opt", { hasText: "Blog" }).click();
+    await expect(page.locator("[data-sum]")).toContainText("Multiidioma, Blog");
+    await page.getByRole("button", { name: /Pedir presupuesto/ }).click();
+    await expect(page).toHaveURL(/\/contacto\/\?plan=web&extras=/);
+    await expect(page.locator('input[value^="Web desde"]')).toBeChecked();
+    await expect(page.locator("textarea[name=mensaje]")).toHaveValue(/Multiidioma, Blog/);
+  });
+
+  test("SEO/GEO: datos estructurados válidos, llms.txt y robots", async ({ page, request }) => {
+    for (const path of PAGES) {
+      await page.goto(path);
+      const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+      expect(blocks.length, path).toBeGreaterThan(0);
+      for (const b of blocks) expect(() => JSON.parse(b), path).not.toThrow();
+    }
+    const llms = await request.get("/llms.txt");
+    expect(llms.status()).toBe(200);
+    expect(await llms.text()).toMatch(/99 €/);
+    const robots = await (await request.get("/robots.txt")).text();
+    expect(robots).toMatch(/GPTBot/);
+    expect(robots).toMatch(/sitemap-index\.xml/);
   });
 
   test("brief de contacto valida campos obligatorios", async ({ page }) => {

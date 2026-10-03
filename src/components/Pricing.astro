@@ -1,0 +1,334 @@
+---
+import Arrow from "./Arrow.astro";
+import { basePlan, extras, extraGroups } from "../data/pricing";
+import { site } from "../data/site";
+
+interface Props {
+  heading?: boolean;
+}
+const { heading = true } = Astro.props;
+const groups = Object.entries(extraGroups) as [keyof typeof extraGroups, string][];
+---
+
+<section class="section pc" id="precios" data-hide-sticky>
+  <div class="wrap">
+    {
+      heading && (
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Precios claros</p>
+          <h2 data-split>
+            Empieza por {basePlan.price} €. Añade solo lo que necesites<span class="comma">,</span>
+          </h2>
+          <p class="lead" data-reveal style="--d:2">
+            Precios sencillos y muy competitivos para autónomos y pymes. Marca los extras que te
+            interesan y te enviamos un presupuesto cerrado.
+          </p>
+        </div>
+      )
+    }
+
+    <form class="pc__grid" data-configurator data-email={site.email}>
+      <div class="pc__base" data-reveal>
+        <span class="pc__badge">Lo más pedido</span>
+        <p class="pc__name">{basePlan.name}</p>
+        <p class="pc__price">
+          <span class="pc__num">{basePlan.price}</span><span class="pc__cur">€</span>
+          <span class="pc__iva">{basePlan.suffix}</span>
+        </p>
+        <p class="pc__pitch">{basePlan.pitch}</p>
+        <ul class="pc__inc">
+          {
+            basePlan.includes.map((i) => (
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="pc__extras" data-reveal style="--d:1">
+        <p class="pc__xtitle">Extras a la carta</p>
+        {
+          groups.map(([key, label]) => (
+            <fieldset class="pc__group">
+              <legend>{label}</legend>
+              <div class="pc__opts">
+                {extras
+                  .filter((x) => x.group === key)
+                  .map((x) => (
+                    <label class="opt">
+                      <input type="checkbox" name="extra" value={x.name} />
+                      <span class="opt__box" aria-hidden="true" />
+                      <span class="opt__txt">
+                        <strong>{x.name}</strong>
+                        <small>{x.text}</small>
+                      </span>
+                      {x.price && <span class="opt__price">{x.price}</span>}
+                    </label>
+                  ))}
+              </div>
+            </fieldset>
+          ))
+        }
+
+        <div class="pc__sum" aria-live="polite">
+          <p>
+            <strong>{basePlan.name} · {basePlan.price} € {basePlan.suffix}</strong>
+            <span data-sum>Sin extras por ahora</span>
+          </p>
+          <p class="pc__note">Los extras se presupuestan a medida, con precio cerrado antes de empezar.</p>
+          <button class="btn btn--red btn--lg" type="submit" data-magnetic>
+            Pedir presupuesto <Arrow />
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-configurator]").forEach((form) => {
+    const sum = form.querySelector<HTMLElement>("[data-sum]");
+    const chosen = () =>
+      Array.from(form.querySelectorAll<HTMLInputElement>("input[name=extra]:checked")).map((i) => i.value);
+    form.addEventListener("change", () => {
+      const list = chosen();
+      if (sum)
+        sum.textContent = list.length
+          ? `+ ${list.length} extra${list.length > 1 ? "s" : ""}: ${list.join(", ")}`
+          : "Sin extras por ahora";
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const list = chosen();
+      const params = new URLSearchParams({ plan: "web" });
+      if (list.length) params.set("extras", list.join("|"));
+      window.location.href = `/contacto/?${params.toString()}`;
+    });
+  });
+</script>
+
+<style>
+  .pc__grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 1000px) {
+    .pc__grid {
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: start;
+    }
+    .pc__base {
+      position: sticky;
+      top: 7rem;
+    }
+  }
+  .pc__base {
+    position: relative;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border-radius: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    display: grid;
+    gap: 1.25rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .pc__base::after {
+    content: "";
+    position: absolute;
+    inset: auto -30% -40% auto;
+    width: 26rem;
+    height: 26rem;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(225 17 45 / 0.45), transparent);
+    z-index: -1;
+  }
+  .pc__badge {
+    justify-self: start;
+    background: var(--red);
+    color: #fff;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+  }
+  .pc__name {
+    font-variation-settings: "wdth" 125;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+  .pc__price {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    line-height: 0.85;
+  }
+  .pc__num {
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+    font-size: clamp(5rem, 4rem + 5vw, 8rem);
+    letter-spacing: -0.06em;
+  }
+  .pc__cur {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--red);
+  }
+  .pc__iva {
+    align-self: flex-end;
+    color: var(--night-muted);
+    margin-left: 0.5rem;
+    padding-bottom: 0.6rem;
+  }
+  .pc__pitch {
+    color: var(--night-muted);
+  }
+  .pc__inc {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .pc__inc li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .pc__inc svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: none;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+  }
+
+  .pc__extras {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: 28px;
+    background: #fff;
+    border: 1px solid var(--line);
+    display: grid;
+    gap: 1.5rem;
+  }
+  .pc__xtitle {
+    font-variation-settings: "wdth" 125;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+  .pc__group {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .pc__group legend {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .pc__opts {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .opt {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition:
+      border-color 0.3s,
+      background 0.3s,
+      transform 0.3s var(--ease);
+  }
+  .opt:hover {
+    border-color: rgb(18 18 18 / 0.35);
+  }
+  .opt input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .opt__box {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 7px;
+    border: 1.5px solid rgb(18 18 18 / 0.35);
+    display: grid;
+    place-items: center;
+    transition: all 0.3s var(--ease);
+  }
+  .opt__box::after {
+    content: "";
+    width: 0.4rem;
+    height: 0.7rem;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    margin-top: -2px;
+    transition: transform 0.3s var(--ease);
+  }
+  .opt:has(input:checked) {
+    border-color: var(--red);
+    background: rgb(225 17 45 / 0.05);
+  }
+  .opt input:checked ~ .opt__box {
+    background: var(--red);
+    border-color: var(--red);
+  }
+  .opt input:checked ~ .opt__box::after {
+    transform: rotate(45deg) scale(1);
+  }
+  .opt input:focus-visible ~ .opt__box {
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
+  }
+  .opt__txt {
+    display: grid;
+    gap: 0.1rem;
+    line-height: 1.35;
+  }
+  .opt__txt small {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+  }
+  .opt__price {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .pc__sum {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .pc__sum p {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .pc__sum span {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .pc__note {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+  .pc__sum .btn {
+    justify-self: start;
+  }
+</style>

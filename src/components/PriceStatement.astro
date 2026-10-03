@@ -1,0 +1,159 @@
+---
+import Arrow from "./Arrow.astro";
+import { basePlan } from "../data/pricing";
+---
+
+<section class="ps" data-progress="view" data-dark id="precio">
+  <div class="ps__card">
+    <div class="wrap ps__inner">
+      <p class="ps__eyebrow" data-reveal>Precio cerrado · Sin letra pequeña</p>
+      <h2 class="ps__title">
+        <span class="ps__small" data-reveal>Tu web profesional por</span>
+        <span class="sr-only">{basePlan.price} €</span>
+        <span class="ps__num" aria-hidden="true">
+          <span class="ps__digits">{basePlan.price}</span><span class="ps__eur">€</span>
+        </span>
+        <span class="ps__iva" data-reveal>{basePlan.suffix}</span>
+      </h2>
+      <div class="ps__grid">
+        <p class="ps__pitch" data-reveal>{basePlan.pitch}</p>
+        <ul class="ps__list">
+          {
+            basePlan.includes.map((i, n) => (
+              <li data-reveal style={`--d:${n}`}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="ps__ctas" data-reveal>
+        <a class="btn btn--light btn--lg" href="/contacto/?plan=web" data-magnetic>La quiero <Arrow /></a>
+        <a class="link-arrow" href="/precios/">Ver extras: idiomas, tienda, blog, IA… <Arrow /></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ps {
+    --p: 0.5;
+    padding-inline: clamp(0rem, calc((0.5 - var(--p)) * 12vw), 4rem);
+    overflow: clip;
+  }
+  .ps__card {
+    background: var(--red);
+    color: #fff;
+    border-radius: clamp(0px, calc((0.5 - var(--p)) * 140px), 48px);
+    padding-block: clamp(4.5rem, 10vw, 9rem);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .ps__card::before {
+    content: "";
+    position: absolute;
+    inset: -30% -10% auto auto;
+    width: 70vmax;
+    height: 70vmax;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(0 0 0 / 0.28), transparent);
+    z-index: -1;
+    transform: translate3d(calc(var(--p) * -20vw), calc(var(--p) * 30vh), 0);
+  }
+  .ps__inner {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+  .ps__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .ps__title {
+    display: grid;
+    line-height: 0.85;
+  }
+  .ps__small {
+    font-size: var(--fs-2xl);
+  }
+  .ps__num {
+    display: flex;
+    align-items: flex-start;
+    font-size: clamp(9rem, 4rem + 26vw, 26rem);
+    letter-spacing: -0.07em;
+    line-height: 0.85;
+    margin-block: 0.05em;
+    transform: translate3d(calc((0.5 - var(--p)) * 30vw), 0, 0);
+  }
+  .ps__eur {
+    font-size: 0.4em;
+    margin-top: 0.15em;
+    margin-left: 0.05em;
+    color: var(--ink);
+  }
+  .ps__iva {
+    font-size: var(--fs-xl);
+    opacity: 0.85;
+  }
+  .ps__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .ps__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+  .ps__pitch {
+    font-size: var(--fs-lg);
+    line-height: 1.45;
+    max-width: 34ch;
+  }
+  .ps__list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .ps__list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .ps__list svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex: none;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--red);
+  }
+  .ps__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+  .ps .btn--light::before {
+    background: var(--ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ps {
+      padding-inline: 0;
+    }
+    .ps__card {
+      border-radius: 0;
+    }
+    .ps__num {
+      transform: none;
+    }
+  }
+</style>

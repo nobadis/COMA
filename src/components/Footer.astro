@@ -1,10 +1,10 @@
 ---
 import Logo from "./Logo.astro";
 import Arrow from "./Arrow.astro";
-import { nav, site, mailto } from "../data/site";
+import { nav, navMore, site, mailto } from "../data/site";
 ---
 
-<footer class="ftr night" data-dark>
+<footer class="ftr night" data-dark data-hide-sticky>
   <div class="wrap">
     <div class="ftr__top">
       <p class="ftr__claim display" data-reveal>
@@ -22,7 +22,7 @@ import { nav, site, mailto } from "../data/site";
         <p class="ftr__h">Servicios</p>
         <ul>
           {
-            nav.map((n) => (
+            [...nav, ...navMore].map((n) => (
               <li>
                 <a href={n.href}>{n.label}</a>
               </li>
@@ -31,7 +31,7 @@ import { nav, site, mailto } from "../data/site";
         </ul>
       </div>
       <div>
-        <p class="ftr__h">Estudio</p>
+        <p class="ftr__h">Estudio · Mallorca y toda España</p>
         <address>
           {site.address.street}<br />
           {site.address.postalCode}
@@ -44,6 +44,7 @@ import { nav, site, mailto } from "../data/site";
         <ul>
           <li><a href={mailto()}>{site.email}</a></li>
           <li><a href="/contacto/">Pedir propuesta</a></li>
+          <li><a href="/precios/">Web desde 99 € + IVA</a></li>
         </ul>
       </div>
       <div>

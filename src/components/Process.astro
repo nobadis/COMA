@@ -20,7 +20,7 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
     <ol class="pr__list">
       {
         steps.map((s, i) => (
-          <li class="pr__item" data-reveal style={`--d:${i % 2}`}>
+          <li class="pr__item" style={`--i:${i}`}>
             <span class="pr__n">0{i + 1}</span>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
@@ -56,15 +56,10 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
     display: grid;
     gap: 1rem;
   }
-  @media (min-width: 640px) {
-    .pr__list {
-      grid-template-columns: 1fr 1fr;
-    }
-    .pr__item:nth-child(even) {
-      translate: 0 3rem;
-    }
-  }
   .pr__item {
+    position: sticky;
+    top: calc(6.5rem + var(--i) * 1.25rem);
+    box-shadow: 0 -20px 40px -30px rgb(0 0 0 / 0.25);
     padding: clamp(1.5rem, 3vw, 2.25rem);
     border-radius: var(--radius);
     background: #fff;
@@ -72,27 +67,32 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
     display: grid;
     gap: 0.75rem;
     align-content: start;
-    min-height: 15rem;
+    min-height: clamp(14rem, 34vh, 20rem);
+    grid-template-columns: auto 1fr;
+    column-gap: clamp(1rem, 3vw, 2.5rem);
     transition:
       transform 0.6s var(--ease),
       box-shadow 0.6s var(--ease);
   }
-  .pr__item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.25);
+  .pr__item > :not(.pr__n) {
+    grid-column: 2;
   }
   .pr__n {
+    grid-row: 1 / span 2;
     font-variation-settings: "wdth" 125;
     font-weight: 600;
-    font-size: 3rem;
-    line-height: 1;
+    font-size: clamp(3rem, 2rem + 4vw, 6rem);
+    line-height: 0.85;
     color: var(--red);
-    letter-spacing: -0.04em;
-    margin-bottom: auto;
-    padding-bottom: 1.5rem;
+    letter-spacing: -0.05em;
   }
   .pr__item h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
+  }
+  .pr__item:nth-child(even) {
+    background: var(--ink);
+    color: var(--paper);
+    --muted: var(--night-muted);
   }
   .pr__item p {
     color: var(--muted);

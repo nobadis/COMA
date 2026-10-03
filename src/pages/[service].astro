@@ -5,7 +5,15 @@ import Process from "../components/Process.astro";
 import Faq from "../components/Faq.astro";
 import Cta from "../components/Cta.astro";
 import Marquee from "../components/Marquee.astro";
+import Pricing from "../components/Pricing.astro";
+import Showcase from "../components/Showcase.astro";
+import GeoDemo from "../components/GeoDemo.astro";
+import AgentDemo from "../components/AgentDemo.astro";
+import FlowDemo from "../components/FlowDemo.astro";
+import Trust from "../components/Trust.astro";
 import { services, type Service } from "../data/services";
+import { site } from "../data/site";
+import { basePlan } from "../data/pricing";
 
 export function getStaticPaths() {
   return services.map((s) => ({ params: { service: s.slug }, props: { s } }));
@@ -17,8 +25,16 @@ const schema = [
     "@type": "Service",
     name: s.label,
     description: s.seoDescription,
-    provider: { "@id": "https://comunicacionenmallorca.com/#org" },
-    areaServed: "Mallorca",
+    serviceType: s.label,
+    url: `${site.url}/${s.slug}/`,
+    provider: { "@id": `${site.url}/#org` },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Mallorca" },
+      { "@type": "Country", name: "España" },
+    ],
+    ...(s.slug === "diseno-web"
+      ? { offers: { "@type": "Offer", price: basePlan.price, priceCurrency: "EUR", url: `${site.url}/precios/` } }
+      : {}),
   },
   {
     "@context": "https://schema.org",
@@ -28,14 +44,29 @@ const schema = [
 ];
 ---
 
-<Base title={s.seoTitle} description={s.seoDescription} schema={schema}>
+<Base
+  title={s.seoTitle}
+  description={s.seoDescription}
+  schema={schema}
+  crumbs={[{ name: s.label, path: `/${s.slug}/` }]}
+>
   <section class="ph">
     <div class="wrap ph__inner">
       <p class="eyebrow" data-reveal>{s.eyebrow}</p>
       <h1 data-split>{s.h1}<span class="comma">,</span></h1>
       <p class="lead" data-reveal style="--d:3">{s.lead}</p>
       <div class="ph__ctas" data-reveal style="--d:4">
-        <a class="btn btn--red" href="/contacto/" data-magnetic>Pedir propuesta <Arrow /></a>
+        {
+          s.slug === "diseno-web" ? (
+            <a class="btn btn--red btn--lg" href="/contacto/?plan=web" data-magnetic>
+              Quiero mi web por {basePlan.price} € <Arrow />
+            </a>
+          ) : (
+            <a class="btn btn--red btn--lg" href="/contacto/" data-magnetic>
+              Pedir propuesta <Arrow />
+            </a>
+          )
+        }
         <a class="btn btn--ghost" href="#que-hacemos">Qué incluye</a>
       </div>
     </div>
@@ -72,6 +103,12 @@ const schema = [
     </div>
   </section>
 
+  {s.slug === "diseno-web" && <Showcase title="Así de bien puede verse tu web" />}
+  {s.slug === "diseno-web" && <Pricing />}
+  {s.slug === "seo-geo" && <GeoDemo />}
+  {s.slug === "agentes-ia" && <AgentDemo />}
+  {s.slug === "automatizaciones" && <FlowDemo />}
+  <Trust />
   <Process title="Así lo hacemos" steps={s.steps} />
   <Faq items={s.faq} />
   <Cta title={s.ctaTitle} subject={s.label} />

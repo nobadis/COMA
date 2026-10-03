@@ -1,0 +1,76 @@
+---
+import Base from "../layouts/Base.astro";
+import Pricing from "../components/Pricing.astro";
+import Faq from "../components/Faq.astro";
+import Cta from "../components/Cta.astro";
+import Trust from "../components/Trust.astro";
+import { basePlan } from "../data/pricing";
+import { site } from "../data/site";
+
+const faq = [
+  {
+    title: `¿Qué incluye la web de ${basePlan.price} €?`,
+    text: `${basePlan.includes.join(". ")}. El precio es ${basePlan.price} € ${basePlan.suffix}.`,
+  },
+  {
+    title: "¿Cuánto cuestan los extras?",
+    text: "Depende de lo que elijas y del tamaño de tu proyecto. Marca los extras que te interesan y te enviamos un presupuesto cerrado, sin sorpresas.",
+  },
+  {
+    title: "¿Puedo ampliar mi web más adelante?",
+    text: "Sí. Empieza con lo esencial y añade páginas, idiomas, blog, tienda online, agentes de IA o automatizaciones cuando tu negocio lo pida.",
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${basePlan.name} - Diseño web profesional`,
+    description: basePlan.pitch,
+    brand: { "@type": "Brand", name: site.brand },
+    offers: {
+      "@type": "Offer",
+      price: basePlan.price,
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+      url: `${site.url}/precios/`,
+      seller: { "@id": `${site.url}/#org` },
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({ "@type": "Question", name: q.title, acceptedAnswer: { "@type": "Answer", text: q.text } })),
+  },
+];
+---
+
+<Base
+  title={`Precios: web profesional desde ${basePlan.price} € + IVA`}
+  description={`Diseño web desde ${basePlan.price} € + IVA para autónomos y pymes. Extras a la carta: multiidioma, alojamiento, correo corporativo, blog, tienda online, SEO, agentes de IA y automatizaciones.`}
+  crumbs={[{ name: "Precios", path: "/precios/" }]}
+  schema={schema}
+>
+  <section class="ph wrap">
+    <p class="eyebrow" data-reveal>Precios</p>
+    <h1 data-split>Tu web profesional por {basePlan.price} €<span class="comma">,</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      Precios sencillos y muy competitivos para que la tecnología no sea una barrera. Tú te dedicas a
+      tu negocio; nosotros, a que se vea.
+    </p>
+  </section>
+  <Pricing heading={false} />
+  <Trust />
+  <Faq items={faq} />
+  <Cta />
+</Base>
+
+<style>
+  .ph {
+    padding-top: clamp(9rem, 16vw, 12rem);
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+</style>

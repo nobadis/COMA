@@ -6,16 +6,16 @@ interface Props {
   title?: string;
   subject?: string;
 }
-const { title = "¿Hablamos?", subject = "Nuevo proyecto" } = Astro.props;
+const { title = "Tu web, desde 99 €. ¿Empezamos?", subject = "Nuevo proyecto" } = Astro.props;
 ---
 
-<section class="section cta">
+<section class="section cta" data-hide-sticky>
   <div class="wrap cta__inner">
     <p class="eyebrow" data-reveal>Empecemos</p>
     <h2 class="cta__title" data-split>{title}</h2>
     <p class="lead" data-reveal style="--d:2">
-      Cuéntanos qué quieres conseguir. Te respondemos personalmente con una
-      primera propuesta, sin compromiso.
+      Cuéntanos qué necesitas y te respondemos personalmente con una propuesta clara, sin
+      compromiso. Desde Mallorca para toda España.
     </p>
     <div class="cta__actions" data-reveal style="--d:3">
       <a class="btn btn--red cta__btn" href="/contacto/" data-magnetic>Pedir propuesta <Arrow /></a>

@@ -1,7 +1,10 @@
 ---
 import Logo from "./Logo.astro";
 import Arrow from "./Arrow.astro";
-import { nav, site } from "../data/site";
+import { nav, navMore, site } from "../data/site";
+import { basePlan } from "../data/pricing";
+
+const mobile = [{ href: "/", label: "Inicio" }, ...nav, ...navMore, { href: "/contacto/", label: "Contacto" }];
 
 const path = Astro.url.pathname;
 ---
@@ -27,7 +30,7 @@ const path = Astro.url.pathname;
       </ul>
     </nav>
 
-    <a href="/contacto/" class="btn btn--red hdr__cta">Hablemos <Arrow /></a>
+    <a href="/contacto/?plan=web" class="btn btn--red hdr__cta">Web desde {basePlan.price} € <Arrow /></a>
 
     <button
       class="hdr__toggle"
@@ -44,16 +47,17 @@ const path = Astro.url.pathname;
   <div class="menu" id="menu" data-menu hidden>
     <nav class="menu__inner wrap" aria-label="Menú móvil">
       <ul class="menu__list">
-        <li style="--i:0"><a href="/">Inicio</a></li>
         {
-          nav.map((item, i) => (
-            <li style={`--i:${i + 1}`}>
+          mobile.map((item, i) => (
+            <li style={`--i:${i}`}>
               <a href={item.href}>{item.label}</a>
             </li>
           ))
         }
-        <li style={`--i:${nav.length + 1}`}><a href="/contacto/">Contacto</a></li>
       </ul>
+      <a class="btn btn--red btn--lg menu__cta" href="/contacto/?plan=web" style={`--i:${mobile.length}`}
+        >Quiero mi web por {basePlan.price} € <Arrow /></a
+      >
       <div class="menu__foot">
         <a href={`mailto:${site.email}`}>{site.email}</a>
         <span>{site.address.street} · {site.address.city}</span>
@@ -174,7 +178,7 @@ const path = Astro.url.pathname;
   .hdr.is-open .hdr__burger i:last-child {
     transform: translateY(-3.5px) rotate(-45deg);
   }
-  @media (min-width: 1000px) {
+  @media (min-width: 1140px) {
     .hdr__nav ul {
       display: flex;
     }
@@ -206,7 +210,9 @@ const path = Astro.url.pathname;
   }
   .menu__inner {
     display: grid;
-    gap: 2.5rem;
+    gap: 2rem;
+    max-height: 100%;
+    overflow-y: auto;
   }
   .menu__list {
     list-style: none;
@@ -216,7 +222,7 @@ const path = Astro.url.pathname;
     display: block;
     font-variation-settings: "wdth" 125;
     font-weight: 600;
-    font-size: clamp(1.9rem, 8.2vw, 3.5rem);
+    font-size: clamp(1.6rem, 7vw, 3rem);
     letter-spacing: -0.03em;
     line-height: 1.15;
     text-decoration: none;
@@ -232,6 +238,18 @@ const path = Astro.url.pathname;
     color: var(--red);
   }
   .hdr.is-open .menu__list a {
+    opacity: 1;
+    transform: none;
+  }
+  .menu__cta {
+    justify-self: start;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s var(--ease) 0.5s,
+      transform 0.8s var(--ease) 0.5s;
+  }
+  .hdr.is-open .menu__cta {
     opacity: 1;
     transform: none;
   }
