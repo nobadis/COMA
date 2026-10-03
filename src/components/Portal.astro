@@ -1,0 +1,190 @@
+---
+/**
+ * Zoom hacia dentro de la coma: al bajar, la coma crece hasta llenar la pantalla de rojo y el
+ * rojo se funde en el texto. Todo guiado por scroll en CSS (compositor, sin JS por fotograma).
+ * Sin soporte o con "reducir movimiento" queda solo el texto como sección normal.
+ */
+interface Props {
+  eyebrow?: string;
+  text: string;
+}
+const { eyebrow = "Cómo pensamos", text } = Astro.props;
+---
+
+<section class="portal" aria-labelledby="portal-title" data-hide-sticky>
+  <div class="portal__stage">
+    <div class="portal__text wrap">
+      <p class="eyebrow">{eyebrow}</p>
+      <p class="portal__copy display" id="portal-title">{text}</p>
+    </div>
+
+    <div class="portal__veil" aria-hidden="true">
+      <svg class="portal__comma" viewBox="0 0 20 40"
+        ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"
+        ></path></svg
+      >
+      <span class="portal__cue">Entra</span>
+      <span class="portal__line display">Hacemos que tu empresa se <span class="portal__nb">note<span class="comma">,</span></span></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portal__stage {
+    position: relative;
+  }
+  .portal__text {
+    display: grid;
+    gap: 2rem;
+    padding-block: clamp(5rem, 12vw, 11rem);
+  }
+  .portal__copy {
+    font-size: clamp(1.8rem, 0.8rem + 3.6vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    max-width: 24ch;
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
+  }
+  @media (min-width: 900px) {
+    .portal__copy {
+      max-width: 30ch;
+    }
+  }
+  .portal__veil {
+    display: none;
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .portal {
+        height: 320svh;
+        view-timeline: --portal block;
+      }
+      .portal__stage {
+        position: sticky;
+        top: 0;
+        height: 100svh;
+        overflow: hidden;
+        display: grid;
+        align-items: center;
+      }
+      .portal__text {
+        padding-block: 5rem 3rem;
+        animation: portal-text linear both;
+      }
+      .portal__veil {
+        position: absolute;
+        inset: 0;
+        display: block;
+        background: var(--paper);
+        color: var(--red);
+        animation: portal-veil linear both;
+      }
+      .portal__comma {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(30vmin, 15rem);
+        transform-origin: 65% 26%;
+        transform: translate(-65%, -26%);
+        animation: portal-zoom cubic-bezier(0.55, 0, 0.9, 0.5) both;
+      }
+      .portal__line {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-content: center;
+        padding-inline: var(--gutter);
+        text-align: center;
+        font-size: clamp(1.9rem, 0.8rem + 5vw, 5.5rem);
+        letter-spacing: -0.05em;
+        color: #fff;
+        animation: portal-line linear both;
+      }
+      .portal__nb {
+        white-space: nowrap;
+      }
+      .portal__line .comma {
+        color: #fff;
+      }
+      .portal__cue {
+        position: absolute;
+        left: 50%;
+        bottom: 8%;
+        translate: -50% 0;
+        font-size: var(--fs-xs);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink);
+        animation: portal-cue linear both;
+      }
+      /* las líneas de tiempo van en reglas aparte para que el minificador no las funda en el atajo */
+      .portal__text:not(.tl),
+      .portal__veil:not(.tl),
+      .portal__comma:not(.tl),
+      .portal__cue:not(.tl),
+      .portal__line:not(.tl) {
+        animation-timeline: --portal;
+        animation-range: contain 0% contain 100%;
+      }
+      @keyframes portal-zoom {
+        0% {
+          transform: translate(-65%, -26%) scale(1);
+        }
+        54%,
+        100% {
+          transform: translate(-65%, -26%) scale(26);
+        }
+      }
+      @keyframes portal-veil {
+        0%,
+        60% {
+          opacity: 1;
+        }
+        92%,
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes portal-text {
+        0%,
+        58% {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+        94%,
+        100% {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes portal-line {
+        0%,
+        36% {
+          opacity: 0;
+          transform: scale(0.94);
+        }
+        46%,
+        64% {
+          opacity: 1;
+          transform: none;
+        }
+        76%,
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes portal-cue {
+        0% {
+          opacity: 1;
+        }
+        14%,
+        100% {
+          opacity: 0;
+        }
+      }
+    }
+  }
+</style>

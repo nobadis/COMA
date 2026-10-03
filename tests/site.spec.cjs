@@ -292,6 +292,28 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     expect(await left()).toBeLessThan(a - 300);
   });
 
+  test("zoom a la coma: se llena de rojo y se funde en el texto", async ({ page }) => {
+    await page.goto("/");
+    const geo = await page.evaluate(() => {
+      const r = document.querySelector(".portal").getBoundingClientRect();
+      return { top: r.top + scrollY, h: r.height, vh: innerHeight };
+    });
+    const veilOpacity = () =>
+      page.evaluate(() => getComputedStyle(document.querySelector(".portal__veil")).opacity);
+    const at = async (f) => {
+      await page.evaluate(
+        (y) => window.scrollTo({ top: y, behavior: "instant" }),
+        geo.top + (geo.h - geo.vh) * f
+      );
+      await page.waitForTimeout(350);
+    };
+    await at(0.3);
+    expect(Number(await veilOpacity())).toBeGreaterThan(0.95);
+    await at(0.98);
+    expect(Number(await veilOpacity())).toBeLessThan(0.05);
+    await expect(page.locator(".portal__copy")).toBeVisible();
+  });
+
   test("navegación principal en escritorio", async ({ page, isMobile }) => {
     test.skip(isMobile, "solo escritorio");
     await page.goto("/");
