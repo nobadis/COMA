@@ -14,12 +14,20 @@ const { eyebrow = "Quiénes somos", text } = Astro.props;
 </section>
 
 <style>
+  .mf {
+    padding-block: clamp(5rem, 12vw, 11rem);
+  }
+  .mf .wrap {
+    display: grid;
+    gap: 2rem;
+  }
   .mf__text {
-    margin-top: 2rem;
-    font-size: clamp(1.75rem, 1rem + 3.2vw, 4.25rem);
-    line-height: 1.08;
-    letter-spacing: -0.035em;
-    max-width: 22ch;
+    font-size: clamp(1.8rem, 0.8rem + 3.6vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    max-width: 24ch;
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
   }
   .mf__text :global(span) {
     opacity: 0.16;
@@ -27,6 +35,11 @@ const { eyebrow = "Quiénes somos", text } = Astro.props;
   }
   .mf__text :global(span.on) {
     opacity: 1;
+  }
+  @media (min-width: 900px) {
+    .mf__text {
+      max-width: 30ch;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .mf__text :global(span) {

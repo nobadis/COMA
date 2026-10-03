@@ -18,7 +18,12 @@ module.exports = [
   {
     files: ["tests/**/*.cjs", "scripts/og-image.cjs"],
     languageOptions: {
-      globals: { localStorage: "readonly", window: "readonly", document: "readonly" },
+      globals: {
+        localStorage: "readonly",
+        sessionStorage: "readonly",
+        window: "readonly",
+        document: "readonly",
+      },
     },
   },
 ];

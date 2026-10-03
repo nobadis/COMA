@@ -159,11 +159,34 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
     <meta name="twitter:image" content={ogImage} />
 
     <script is:inline>
-      document.documentElement.classList.add("js");
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (!reduced && !sessionStorage.getItem("coma_intro")) d.classList.add("intro-on");
+          if (!reduced && sessionStorage.getItem("coma_curtain")) d.classList.add("curtain-open");
+        } catch (e) {}
+      })();
     </script>
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   </head>
   <body>
+    <div class="intro" aria-hidden="true" data-intro>
+      <div class="intro__word">
+        {["C", "O", "M", "A"].map((l, i) => <span style={`--i:${i}`}>{l}</span>)}<svg viewBox="0 0 20 40"
+          ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"></path></svg
+        >
+      </div>
+      <span class="intro__count">Comunicación en Mallorca · <span data-intro-count>0</span>%</span>
+      <i class="intro__bar"></i>
+    </div>
+    <div class="curtain" aria-hidden="true" data-curtain>
+      <svg viewBox="0 0 20 40"
+        ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"></path></svg
+      >
+    </div>
+    <div class="cursor" aria-hidden="true" data-cursor></div>
     <a class="skip" href="#main">Saltar al contenido</a>
     <Header />
     <main id="main">
@@ -172,7 +195,6 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
     <Footer />
     {stickyCta && <StickyCta />}
     <CookieBanner />
-    <div class="grain" aria-hidden="true"></div>
     <script>
       import "../scripts/main";
     </script>

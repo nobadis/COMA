@@ -5,6 +5,8 @@
  * - [data-progress="exit"]: --p de 0 (arriba del todo) a 1 (la sección ha salido por arriba).
  * - [data-progress="pin"]:  --p de 0 a 1 mientras la sección (más alta que la pantalla) está fijada.
  * - [data-hscroll]: galería horizontal fijada; mueve [data-hscroll-track] con el scroll vertical.
+ * - [data-stack]: paneles apilados; cada hijo recibe --cover (0..1) según lo tapa el siguiente.
+ * - [data-velocity]: marquesina que acelera y cambia de sentido con el scroll.
  * - [data-rotate]: rota palabras dentro de un titular.
  * - [data-sticky-cta]: barra de llamada a la acción en móvil.
  */
@@ -14,6 +16,11 @@ export function initScrollFx(reduced: boolean) {
   initRotate(reduced);
   initStickyCta();
   if (reduced) return;
+  initVelocity();
+
+  const stacks = Array.from(document.querySelectorAll<HTMLElement>("[data-stack]")).map((el) => ({
+    panels: Array.from(el.children) as HTMLElement[],
+  }));
 
   const items = Array.from(document.querySelectorAll<HTMLElement>("[data-progress]"));
   const hscrolls = Array.from(document.querySelectorAll<HTMLElement>("[data-hscroll]")).map(
@@ -54,6 +61,14 @@ export function initScrollFx(reduced: boolean) {
             ? clamp(-r.top / r.height)
             : clamp((vh - r.top) / (vh + r.height));
       el.style.setProperty("--p", p.toFixed(4));
+    }
+    for (const st of stacks) {
+      st.panels.forEach((panel, i) => {
+        const next = st.panels[i + 1];
+        if (!next) return;
+        const top = next.getBoundingClientRect().top;
+        panel.style.setProperty("--cover", clamp(1 - top / vh).toFixed(3));
+      });
     }
     for (const h of hscrolls) {
       if (!h.track || !h.distance) continue;
@@ -125,4 +140,36 @@ function initStickyCta() {
     },
     { passive: true }
   );
+}
+
+function initVelocity() {
+  const rows = Array.from(document.querySelectorAll<HTMLElement>("[data-velocity]")).map((el) => ({
+    el,
+    x: 0,
+    dir: el.dataset.velocity === "reverse" ? 1 : -1,
+  }));
+  if (!rows.length) return;
+  let lastY = window.scrollY;
+  let boost = 0;
+  window.addEventListener(
+    "scroll",
+    () => {
+      boost = Math.max(-40, Math.min(40, (window.scrollY - lastY) * 0.6));
+      lastY = window.scrollY;
+    },
+    { passive: true }
+  );
+  const loop = () => {
+    boost *= 0.92;
+    for (const r of rows) {
+      const half = r.el.scrollWidth / 2;
+      if (!half) continue;
+      r.x += r.dir * (0.6 + Math.abs(boost)) * (boost < -2 ? -1 : 1);
+      if (r.x <= -half) r.x += half;
+      if (r.x > 0) r.x -= half;
+      r.el.style.transform = `translate3d(${r.x.toFixed(1)}px,0,0)`;
+    }
+    requestAnimationFrame(loop);
+  };
+  loop();
 }

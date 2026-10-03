@@ -2,20 +2,16 @@
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import Trust from "../components/Trust.astro";
-import ServicesIndex from "../components/ServicesIndex.astro";
-import PriceStatement from "../components/PriceStatement.astro";
-import Showcase from "../components/Showcase.astro";
 import Manifesto from "../components/Manifesto.astro";
-import GeoDemo from "../components/GeoDemo.astro";
-import AgentDemo from "../components/AgentDemo.astro";
-import FlowDemo from "../components/FlowDemo.astro";
 import Timeline from "../components/Timeline.astro";
 import Sectors from "../components/Sectors.astro";
 import Process from "../components/Process.astro";
 import KitBanner from "../components/KitBanner.astro";
 import Faq from "../components/Faq.astro";
 import Cta from "../components/Cta.astro";
-import Marquee from "../components/Marquee.astro";
+import ServicesStack from "../components/ServicesStack.astro";
+import PriceExpand from "../components/PriceExpand.astro";
+import Proof from "../components/Proof.astro";
 import { site, trust, years } from "../data/site";
 import { basePlan } from "../data/pricing";
 
@@ -65,17 +61,18 @@ const schema = [
 >
   <Hero />
   <Trust />
-  <ServicesIndex />
-  <PriceStatement />
-  <Showcase />
   <Manifesto
+    eyebrow="Cómo pensamos"
+    text="Una web espectacular no es la que más se mueve. Es la que se entiende a la primera, se recuerda y te trae clientes. Diseño con carácter, estructura sencilla y un único objetivo: que te contacten."
+  />
+  <ServicesStack />
+  <PriceExpand />
+  <Proof />
+  <Manifesto
+    eyebrow="Quiénes somos"
     text={`Desde ${site.since} contamos historias de empresas. Empezamos con revistas, seguimos con la radio y la televisión, y llevamos más de ${trust.pymes} pymes a internet. Hoy sumamos SEO, inteligencia artificial y automatización. Lo que no ha cambiado: que tu marca se entienda, se recuerde y se elija.`}
   />
-  <GeoDemo />
-  <AgentDemo />
-  <FlowDemo />
   <Timeline />
-  <Marquee items={["Diseño web", "SEO", "GEO", "Agentes de IA", "Automatización", "Branding", "Radio y TV", "Kit Digital"]} />
   <Sectors />
   <Process
     title="De la primera llamada a tu web publicada"

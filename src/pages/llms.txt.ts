@@ -22,7 +22,12 @@ export const GET: APIRoute = () => {
     "",
     "## Precios",
     `- ${basePlan.name}: ${basePlan.price} € ${basePlan.suffix}. Incluye: ${basePlan.includes.join("; ")}.`,
-    `- Extras con presupuesto cerrado: ${extras.map((e) => e.name).join(", ")}.`,
+    ...extras.map((e) =>
+      e.billing === "custom"
+        ? `- ${e.name}: a medida, sobre presupuesto.`
+        : `- ${e.name}: +${e.price} € ${e.billing === "month" ? "al mes" : "pago único"}${e.unit ? ` por ${e.unit}` : ""} (+ IVA).`
+    ),
+    "- Presupuesto dinámico en https://comunicacionenmallorca.com/precios/",
     `- Página de precios: ${site.url}/precios/`,
     "",
     "## Servicios",
@@ -34,7 +39,7 @@ export const GET: APIRoute = () => {
     "",
     "## Páginas",
     `- [Inicio](${site.url}/)`,
-    `- [Trabajos](${site.url}/trabajos/)`,
+    `- [Precios y presupuesto](${site.url}/precios/)`,
     `- [Contacto](${site.url}/contacto/)`,
     "",
   ];

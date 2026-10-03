@@ -25,17 +25,20 @@ export const mailto = (subject = "Información desde la web", body = "") =>
   `mailto:${site.email}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
 
 export const nav = [
-  { href: "/diseno-web/", label: "Webs" },
+  { href: "/", label: "Inicio" },
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/precios/", label: "Precios" },
+  { href: "/kit-digital/", label: "Kit Digital" },
+  { href: "/contacto/", label: "Contacto" },
+];
+
+/** Todas las páginas de servicio (menú móvil y pie). */
+export const navServices = [
+  { href: "/diseno-web/", label: "Diseño web" },
   { href: "/seo-geo/", label: "SEO y GEO" },
   { href: "/agentes-ia/", label: "Agentes de IA" },
   { href: "/automatizaciones/", label: "Automatizaciones" },
-  { href: "/precios/", label: "Precios" },
-];
-
-export const navMore = [
-  { href: "/trabajos/", label: "Trabajos" },
   { href: "/notoriedad-de-marca/", label: "Notoriedad y medios" },
-  { href: "/kit-digital/", label: "Kit Digital" },
 ];
 
 /** Clientes y referencias que se muestran como prueba social. */

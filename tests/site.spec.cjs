@@ -5,7 +5,6 @@ const PAGES = [
   "/diseno-web/",
   "/seo-geo/",
   "/precios/",
-  "/trabajos/",
   "/notoriedad-de-marca/",
   "/agentes-ia/",
   "/automatizaciones/",
@@ -18,7 +17,10 @@ const PAGES = [
 const LEGAL = ["/aviso-legal/", "/cookies/", "/privacidad/"];
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem("coma_cookie_consent", "rejected"));
+  await page.addInitScript(() => {
+    localStorage.setItem("coma_cookie_consent", "rejected");
+    sessionStorage.setItem("coma_intro", "1");
+  });
 });
 
 test.describe("COMA - Comunicación en Mallorca", () => {
@@ -28,16 +30,15 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       /Hacemos que tu empresa se note/i
     );
-    await expect(page.getByRole("link", { name: /Quiero mi web por 99/ }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Calcula tu web desde 99/ }).first()).toBeVisible();
     await expect(page.getByText(/Mallorca Live Festival/).first()).toBeVisible();
     const servicios = page.locator("#servicios");
     for (const name of [
       "Diseño web",
-      "SEO y posicionamiento en IA",
-      "Notoriedad y medios",
+      "SEO y GEO",
       "Agentes de IA",
       "Automatizaciones",
-      "Kit Digital",
+      "Notoriedad de marca",
     ]) {
       await expect(servicios.getByRole("link", { name: new RegExp(name, "i") })).toBeAttached();
     }
@@ -126,16 +127,76 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.getByRole("img", { name: /Kit Digital cofinanciado/i })).toBeAttached();
   });
 
-  test("configurador de precios lleva los extras al contacto", async ({ page }) => {
+  test("presupuesto dinámico: suma en directo y lleva el resumen al contacto", async ({ page }) => {
     await page.goto("/precios/");
-    await expect(page.locator("main h1")).toContainText("99");
-    await page.locator("label.opt", { hasText: "Multiidioma" }).click();
-    await page.locator("label.opt", { hasText: "Blog" }).click();
+    await expect(page.locator("main h1")).toContainText("Monta tu web");
+    await expect(page.locator("[data-once]")).toHaveText("99");
+    await page.locator(".opt", { hasText: "Multiidioma" }).locator("label").click();
+    await page.locator(".opt", { hasText: "Blog" }).locator("label").click();
+    await expect(page.locator("[data-once]")).toHaveText("249");
     await expect(page.locator("[data-sum]")).toContainText("Multiidioma, Blog");
+    await page.locator(".opt", { hasText: "SEO local" }).locator("label").click();
+    await expect(page.locator("[data-month]")).toHaveText("120");
+    await page.locator(".opt", { hasText: "Agente de IA" }).locator("label").click();
+    await expect(page.locator("[data-custom]")).toContainText("Agente de IA");
+    await expect(page.locator("[data-once]")).toHaveText("249"); // la IA no suma: es a medida
     await page.getByRole("button", { name: /Pedir presupuesto/ }).click();
     await expect(page).toHaveURL(/\/contacto\/\?plan=web&extras=/);
     await expect(page.locator('input[value^="Web desde"]')).toBeChecked();
-    await expect(page.locator("textarea[name=mensaje]")).toHaveValue(/Multiidioma, Blog/);
+    const msg = page.locator("textarea[name=mensaje]");
+    await expect(msg).toHaveValue(/Multiidioma, Blog/);
+    await expect(msg).toHaveValue(/249 € \+ IVA/);
+  });
+
+  test("las cantidades (páginas, idiomas) multiplican el precio", async ({ page }) => {
+    await page.goto("/precios/");
+    const opt = page.locator(".opt", { hasText: "Más páginas" });
+    await opt.getByRole("button", { name: /Más páginas/ }).click();
+    await opt.getByRole("button", { name: /Más páginas/ }).click();
+    await expect(page.locator("[data-once]")).toHaveText("189"); // 99 + 2 × 45
+  });
+
+  test("SEO tiene presupuesto dinámico y la IA se presupuesta a medida", async ({ page }) => {
+    await page.goto("/seo-geo/");
+    await page.locator(".opt", { hasText: "SEO local" }).locator("label").click();
+    await expect(page.locator("[data-month]")).toHaveText("120");
+    await page.goto("/agentes-ia/");
+    await expect(page.getByRole("heading", { name: /a medida/i })).toBeVisible();
+    await expect(page.locator(".opt")).toHaveCount(0);
+  });
+
+  test("la navegación no lista Webs ni SEO, tiene Inicio y no hay página de trabajos", async ({
+    page,
+    request,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "la barra principal solo se ve en escritorio");
+    await page.goto("/precios/");
+    const nav = page.getByRole("navigation", { name: "Principal" });
+    await expect(nav.getByRole("link", { name: "Webs" })).toHaveCount(0);
+    await expect(nav.getByRole("link", { name: /SEO/ })).toHaveCount(0);
+    await expect(nav.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
+    await expect(page.locator('a[href="/trabajos/"]')).toHaveCount(0);
+    const res = await request.get("/trabajos/");
+    expect(await res.text()).toMatch(/url=\//); // redirige a la home
+  });
+
+  test("la home cuenta con intro la primera vez y la retira", async ({ browser }) => {
+    const ctx = await browser.newContext();
+    const page = await ctx.newPage();
+    await page.addInitScript(() => localStorage.setItem("coma_cookie_consent", "rejected"));
+    await page.goto("/");
+    await expect(page.locator("[data-intro]")).toBeVisible();
+    await expect(page.locator("[data-intro]")).toHaveCount(0, { timeout: 8000 });
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await ctx.close();
+  });
+
+  test("transición entre páginas con cortina", async ({ page }) => {
+    await page.goto("/");
+    await page.locator('footer a[href="/precios/"]').first().click();
+    await expect(page).toHaveURL(/\/precios\/$/);
+    await expect(page.locator("main h1")).toBeVisible();
   });
 
   test("SEO/GEO: datos estructurados válidos, llms.txt y robots", async ({ page, request }) => {
@@ -173,9 +234,9 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     test.skip(isMobile, "solo escritorio");
     await page.goto("/");
     const nav = page.getByRole("navigation", { name: "Principal" });
-    await nav.getByRole("link", { name: "Agentes de IA" }).click();
-    await expect(page).toHaveURL(/\/agentes-ia\/$/);
-    await expect(nav.getByRole("link", { name: "Agentes de IA" })).toHaveAttribute(
+    await nav.getByRole("link", { name: "Precios" }).click();
+    await expect(page).toHaveURL(/\/precios\/$/);
+    await expect(nav.getByRole("link", { name: "Precios" })).toHaveAttribute(
       "aria-current",
       "page"
     );

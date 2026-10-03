@@ -1,0 +1,116 @@
+---
+import Arrow from "./Arrow.astro";
+import { basePlan } from "../data/pricing";
+---
+
+<section class="px" data-progress="view" id="precio">
+  <div class="px__box night" data-dark>
+    <div class="wrap px__in">
+      <p class="eyebrow" data-reveal>Precio cerrado · Sin letra pequeña</p>
+      <h2 class="px__title">
+        <span class="px__small" data-reveal>Tu web profesional por</span>
+        <span class="sr-only">{basePlan.price} €</span>
+        <span class="px__num" aria-hidden="true" data-reveal style="--d:1">{basePlan.price}<span class="red">€</span></span>
+        <span class="px__iva" data-reveal style="--d:2">{basePlan.suffix}</span>
+      </h2>
+      <div class="px__grid">
+        <ul class="px__list">
+          {
+            basePlan.includes.map((i, n) => (
+              <li data-reveal style={`--d:${n}`}>
+                <span>0{n + 1}</span>
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+        <div class="px__side" data-reveal style="--d:2">
+          <p>
+            Y si quieres más, lo montas tú mismo: páginas, idiomas, tienda, SEO… Marca lo que
+            necesitas y mira cómo cambia el presupuesto al instante. La IA y las automatizaciones, a
+            medida.
+          </p>
+          <a class="btn btn--red btn--lg" href="/precios/" data-magnetic>Montar mi presupuesto <Arrow /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .px {
+    --p: 0;
+    --e: clamp(0, calc((var(--p) - 0.12) * 3.2), 1);
+    padding-block: calc((1 - var(--e)) * clamp(2rem, 6vw, 5rem));
+    background: var(--paper);
+  }
+  .px__box {
+    margin-inline: calc((1 - var(--e)) * var(--gutter));
+    padding-block: clamp(4rem, 9vw, 8rem);
+  }
+  .px__in {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .px__title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    line-height: 0.8;
+  }
+  .px__small {
+    flex: 1 0 100%;
+    font-size: var(--fs-xl);
+    font-variation-settings: "wdth" 100;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--night-muted);
+  }
+  .px__num {
+    font-size: clamp(7rem, 2rem + 28vw, 28rem);
+    font-weight: 800;
+    letter-spacing: -0.07em;
+    line-height: 0.78;
+  }
+  .px__iva {
+    font-size: var(--fs-lg);
+    color: var(--night-muted);
+    font-variation-settings: "wdth" 100;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .px__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .px__grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+    }
+  }
+  .px__list li {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .px__list li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .px__list span {
+    color: var(--red);
+    font-weight: 700;
+    font-size: var(--fs-xs);
+    padding-top: 0.3em;
+  }
+  .px__side {
+    display: grid;
+    gap: 1.75rem;
+    align-content: start;
+    justify-items: start;
+    color: var(--night-muted);
+    font-size: var(--fs-lg);
+  }
+</style>

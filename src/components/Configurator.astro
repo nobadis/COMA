@@ -1,0 +1,618 @@
+---
+import Arrow from "./Arrow.astro";
+import { basePlan, extras, extraGroups, IVA, type GroupId } from "../data/pricing";
+import { site } from "../data/site";
+
+interface Props {
+  groups?: GroupId[];
+  /** Incluye la Web Esencial como punto de partida (99 €). */
+  base?: boolean;
+  plan?: "web" | "seo";
+  heading?: boolean;
+  title?: string;
+  intro?: string;
+}
+const {
+  groups = ["web", "crece", "ia"],
+  base = true,
+  plan = "web",
+  heading = true,
+  title = `Empieza por ${basePlan.price} €. Añade solo lo que necesites`,
+  intro = "Marca lo que necesitas y mira cómo cambia tu presupuesto al instante. Lo que depende de tu caso (IA, automatizaciones, medios) se presupuesta a medida.",
+} = Astro.props;
+
+const fmt = (n: number) => n.toLocaleString("es-ES");
+const priceLabel = (x: (typeof extras)[number]) =>
+  x.billing === "custom"
+    ? "A medida"
+    : `+${fmt(x.price ?? 0)} €${x.billing === "month" ? "/mes" : ""}${x.unit ? ` / ${x.unit}` : ""}`;
+---
+
+<section class="cfg section" id="presupuesto" data-hide-sticky>
+  <div class="wrap">
+    {
+      heading && (
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Presupuesto en directo</p>
+          <h2 data-split>{title}<span class="comma">.</span></h2>
+          <p class="lead" data-reveal style="--d:2">{intro}</p>
+        </div>
+      )
+    }
+
+    <form class="cfg__grid" data-cfg data-plan={plan} data-iva={IVA} data-base={base ? basePlan.price : 0} data-email={site.email}>
+      <div class="cfg__opts">
+        {
+          base && (
+            <div class="cfg__base" data-reveal>
+              <div>
+                <p class="cfg__bname">{basePlan.name}</p>
+                <p class="cfg__bpitch">{basePlan.pitch}</p>
+                <ul class="cfg__binc">
+                  {basePlan.includes.map((i) => <li>{i}</li>)}
+                </ul>
+              </div>
+              <p class="cfg__bprice">
+                <strong>{basePlan.price} €</strong>
+                <small>{basePlan.suffix}<br />pago único</small>
+              </p>
+            </div>
+          )
+        }
+
+        {
+          groups.map((g) => (
+            <fieldset class="cfg__group" data-reveal>
+              <legend>
+                <span>{extraGroups[g].title}</span>
+                <small>{extraGroups[g].note}</small>
+              </legend>
+              {extras
+                .filter((x) => x.group === g)
+                .map((x) => (
+                  <div
+                    class="opt"
+                    data-name={x.name}
+                    data-billing={x.billing}
+                    data-price={x.price ?? 0}
+                    data-unit={x.unit ?? ""}
+                  >
+                    <label class="opt__main">
+                      <input type="checkbox" name="extra" value={x.id} />
+                      <span class="opt__box" aria-hidden="true" />
+                      <span class="opt__txt">
+                        <strong>{x.name}</strong>
+                        <small>{x.text}</small>
+                      </span>
+                    </label>
+                    <span class="opt__side">
+                      {x.qty && (
+                        <span class="qty" role="group" aria-label={`Cantidad de ${x.qty.label}`}>
+                          <button type="button" data-dec aria-label={`Menos ${x.qty.label}`}>−</button>
+                          <output data-qty data-min={x.qty.min} data-max={x.qty.max}>{x.qty.min}</output>
+                          <button type="button" data-inc aria-label={`Más ${x.qty.label}`}>+</button>
+                        </span>
+                      )}
+                      <span class:list={["opt__price", { "opt__price--custom": x.billing === "custom" }]}>
+                        {priceLabel(x)}
+                      </span>
+                    </span>
+                  </div>
+                ))}
+            </fieldset>
+          ))
+        }
+      </div>
+
+      <aside class="cfg__sum" aria-live="polite">
+        <p class="cfg__lab">Tu presupuesto</p>
+        <p class="cfg__total">
+          <span data-once>{base ? basePlan.price : 0}</span><span class="cfg__cur">€</span>
+          <small>+ IVA<br /><span data-once-label>pago único</span></small>
+        </p>
+        <p class="cfg__row" data-month-row hidden>
+          + <strong><span data-month>0</span> €/mes</strong> + IVA
+        </p>
+        <p class="cfg__row cfg__row--custom" data-custom-row hidden>
+          + A medida: <span data-custom></span>
+        </p>
+        <p class="cfg__chosen" data-sum>{base ? "Sin extras por ahora" : "Elige lo que necesitas"}</p>
+        <details class="cfg__detail">
+          <summary>Ver desglose</summary>
+          <ul data-lines></ul>
+          <p class="cfg__iva">Con IVA ({Math.round(IVA * 100)} %): <strong data-iva>—</strong></p>
+        </details>
+        <button class="btn btn--red btn--lg cfg__go" type="submit" data-magnetic>
+          Pedir presupuesto <Arrow />
+        </button>
+        <p class="cfg__note">Sin compromiso. Te respondemos con un precio cerrado antes de empezar.</p>
+      </aside>
+    </form>
+  </div>
+</section>
+
+<script>
+  const eur = (n: number) => Math.round(n).toLocaleString("es-ES");
+
+  const tween = (el: HTMLElement, to: number) => {
+    const from = Number((el.dataset.v ?? el.textContent ?? "0").replace(/\./g, "")) || 0;
+    el.dataset.v = String(to);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || from === to) {
+      el.textContent = eur(to);
+      return;
+    }
+    const t0 = performance.now();
+    const step = (t: number) => {
+      const k = Math.min(1, (t - t0) / 450);
+      el.textContent = eur(from + (to - from) * (1 - Math.pow(1 - k, 3)));
+      if (k < 1 && el.dataset.v === String(to)) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  document.querySelectorAll<HTMLFormElement>("[data-cfg]").forEach((form) => {
+    const q = <T extends HTMLElement>(s: string) => form.querySelector<T>(s)!;
+    const base = Number(form.dataset.base) || 0;
+    const iva = Number(form.dataset.iva) || 0;
+    const opts = Array.from(form.querySelectorAll<HTMLElement>(".opt"));
+    const qtyOf = (o: HTMLElement) => Number(o.querySelector<HTMLElement>("[data-qty]")?.textContent ?? 1) || 1;
+
+    const compute = () => {
+      let once = base;
+      let month = 0;
+      const custom: string[] = [];
+      const lines: string[] = base ? [`Web Esencial · ${eur(base)} €`] : [];
+      const names: string[] = [];
+      const tokens: string[] = [];
+      for (const o of opts) {
+        const input = o.querySelector<HTMLInputElement>("input")!;
+        o.classList.toggle("is-on", input.checked);
+        if (!input.checked) continue;
+        const n = o.dataset.name ?? "";
+        const qty = o.querySelector("[data-qty]") ? qtyOf(o) : 1;
+        const price = Number(o.dataset.price) || 0;
+        const label = qty > 1 ? `${n} ×${qty}` : n;
+        names.push(label);
+        tokens.push(label);
+        if (o.dataset.billing === "custom") {
+          custom.push(n);
+          lines.push(`${n} · a medida`);
+        } else if (o.dataset.billing === "month") {
+          month += price * qty;
+          lines.push(`${label} · ${eur(price * qty)} €/mes`);
+        } else {
+          once += price * qty;
+          lines.push(`${label} · ${eur(price * qty)} €`);
+        }
+      }
+      return { once, month, custom, lines, names, tokens };
+    };
+
+    const render = () => {
+      const r = compute();
+      tween(q("[data-once]"), r.once);
+      q("[data-month-row]").hidden = r.month === 0;
+      tween(q("[data-month]"), r.month);
+      q("[data-custom-row]").hidden = r.custom.length === 0;
+      q("[data-custom]").textContent = r.custom.join(", ");
+      q("[data-sum]").textContent = r.names.length
+        ? `${r.names.length} elegido${r.names.length > 1 ? "s" : ""}: ${r.names.join(", ")}`
+        : base
+          ? "Sin extras por ahora"
+          : "Elige lo que necesitas";
+      q("[data-lines]").innerHTML = r.lines.map((l) => `<li>${l}</li>`).join("");
+      const withIva = (r.once + 0) * (1 + iva);
+      q("[data-iva]").textContent = r.month
+        ? `${eur(withIva)} € + ${eur(r.month * (1 + iva))} €/mes`
+        : `${eur(withIva)} €`;
+      const label = q("[data-once-label]");
+      label.textContent = r.once === 0 && r.month > 0 ? "solo cuota mensual" : "pago único";
+      return r;
+    };
+
+    form.addEventListener("change", render);
+    form.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-inc],[data-dec]");
+      if (!btn) return;
+      e.preventDefault();
+      const o = btn.closest<HTMLElement>(".opt")!;
+      const out = o.querySelector<HTMLElement>("[data-qty]")!;
+      const input = o.querySelector<HTMLInputElement>("input")!;
+      const min = Number(out.dataset.min);
+      const max = Number(out.dataset.max);
+      if (!input.checked) {
+        // el primer toque solo activa la opción con su cantidad mínima
+        if (btn.hasAttribute("data-inc")) input.checked = true;
+      } else {
+        const next = Math.min(max, Math.max(min, qtyOf(o) + (btn.hasAttribute("data-inc") ? 1 : -1)));
+        out.textContent = String(next);
+      }
+      render();
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const r = render();
+      const params = new URLSearchParams({ plan: form.dataset.plan ?? "web" });
+      if (r.tokens.length) params.set("extras", r.tokens.join("|"));
+      if (r.once || r.month) params.set("total", `${eur(r.once)} € + IVA${r.month ? ` y ${eur(r.month)} €/mes + IVA` : ""}`);
+      window.location.href = `/contacto/?${params.toString()}`;
+    });
+    render();
+  });
+</script>
+
+<style>
+  .cfg__grid {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .cfg__grid {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 4rem;
+    }
+    .cfg__sum {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .cfg__base {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--ink);
+    color: var(--paper);
+    margin-bottom: 2.5rem;
+  }
+  @media (min-width: 700px) {
+    .cfg__base {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+  }
+  .cfg__bname {
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+    font-size: var(--fs-xl);
+    letter-spacing: -0.03em;
+  }
+  .cfg__bpitch {
+    color: var(--night-muted);
+    margin: 0.4rem 0 1rem;
+    max-width: 46ch;
+  }
+  .cfg__binc {
+    display: grid;
+    gap: 0.35rem;
+    font-size: var(--fs-sm);
+  }
+  .cfg__binc li::before {
+    content: "✓";
+    color: var(--red);
+    font-weight: 700;
+    margin-right: 0.6rem;
+  }
+  .cfg__bprice {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+  .cfg__bprice strong {
+    font-variation-settings: "wdth" 125;
+    font-size: clamp(3rem, 2rem + 4vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+  }
+  .cfg__bprice small {
+    color: var(--night-muted);
+    font-size: var(--fs-xs);
+    line-height: 1.3;
+  }
+
+  .cfg__group {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+    margin-bottom: 2.25rem;
+  }
+  .cfg__group legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    width: 100%;
+    float: left;
+    padding: 0 0 0.9rem;
+    border-bottom: 2px solid var(--ink);
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    letter-spacing: -0.02em;
+  }
+  .cfg__group legend + * {
+    clear: both;
+  }
+  .cfg__group legend small {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-variation-settings: "wdth" 100;
+  }
+
+  .opt {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    padding: 1.1rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    transition:
+      background 0.35s var(--ease),
+      color 0.35s var(--ease);
+  }
+  .opt:hover {
+    background: rgb(12 12 12 / 0.05);
+  }
+  .opt.is-on {
+    background: var(--ink);
+    color: var(--paper);
+    --muted: var(--night-muted);
+  }
+  .opt__main {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    cursor: pointer;
+  }
+  .opt__main::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .opt input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+  }
+  .opt__box {
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 2px solid currentColor;
+    display: grid;
+    place-items: center;
+    transition: background 0.3s;
+  }
+  .opt__box::after {
+    content: "";
+    width: 0.35rem;
+    height: 0.7rem;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    margin-top: -2px;
+    transition: transform 0.3s var(--ease);
+  }
+  .opt input:checked ~ .opt__box {
+    background: var(--red);
+    border-color: var(--red);
+  }
+  .opt input:checked ~ .opt__box::after {
+    transform: rotate(45deg) scale(1);
+  }
+  .opt input:focus-visible ~ .opt__box {
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
+  }
+  .opt__txt {
+    display: grid;
+    gap: 0.1rem;
+    line-height: 1.3;
+  }
+  .opt__txt strong {
+    font-size: var(--fs-md);
+  }
+  .opt__txt small {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .opt__side {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 2.4rem;
+    pointer-events: none;
+  }
+  .qty {
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+  }
+  .opt__price {
+    font-variation-settings: "wdth" 112;
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    white-space: nowrap;
+  }
+  .opt__price--custom {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid currentColor;
+    padding: 0.2rem 0.55rem;
+  }
+  @media (min-width: 700px) {
+    .opt {
+      grid-template-columns: 1fr auto;
+    }
+    .opt__side {
+      flex-direction: row-reverse;
+      min-width: 12rem;
+      justify-content: space-between;
+      padding-left: 0;
+    }
+  }
+  .qty {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid currentColor;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .opt.is-on .qty,
+  .qty:hover {
+    opacity: 1;
+  }
+  .qty button {
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .qty button:hover {
+    color: var(--red);
+  }
+  .qty output {
+    min-width: 1.75rem;
+    text-align: center;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* resumen */
+  .cfg__sum {
+    display: grid;
+    gap: 0.9rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--paper-2);
+    border-top: 4px solid var(--red);
+  }
+  .cfg__lab {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cfg__total {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.4rem;
+    line-height: 0.85;
+  }
+  .cfg__total > span:first-child {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+    letter-spacing: -0.07em;
+    font-variant-numeric: tabular-nums;
+  }
+  .cfg__cur {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    color: var(--red);
+  }
+  .cfg__total small {
+    margin-left: 0.5rem;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    line-height: 1.3;
+    padding-bottom: 0.3rem;
+  }
+  .cfg__row {
+    font-size: var(--fs-md);
+  }
+  .cfg__row--custom {
+    color: var(--red-ink);
+    font-weight: 600;
+  }
+  .cfg__chosen {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .cfg__detail summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+  .cfg__detail ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+    font-size: var(--fs-sm);
+  }
+  .cfg__detail li {
+    padding-bottom: 0.35rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .cfg__iva {
+    margin-top: 0.75rem;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .cfg__go {
+    width: 100%;
+  }
+  .cfg__note {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+
+  /* móvil: el resumen se queda pegado abajo */
+  @media (max-width: 999px) {
+    .cfg__sum {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+      margin-inline: calc(var(--gutter) * -1);
+      padding: 0.75rem var(--gutter) max(0.75rem, env(safe-area-inset-bottom));
+      gap: 0.35rem 1rem;
+      grid-template-columns: 1fr auto;
+      border-top: 3px solid var(--red);
+      box-shadow: 0 -12px 30px -18px rgb(0 0 0 / 0.35);
+    }
+    .cfg__lab,
+    .cfg__note,
+    .cfg__iva {
+      display: none;
+    }
+    .cfg__sum > * {
+      grid-column: 1;
+    }
+    .cfg__sum > .cfg__go {
+      grid-column: 2;
+      grid-row: 1 / span 3;
+      width: auto;
+      padding-inline: 1rem;
+      align-self: center;
+    }
+    .cfg__go :global(.arrow) {
+      display: none;
+    }
+    .cfg__total > span:first-child {
+      font-size: 2.4rem;
+    }
+    .cfg__total small {
+      display: none;
+    }
+    .cfg__chosen,
+    .cfg__detail {
+      display: none;
+    }
+  }
+</style>

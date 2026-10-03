@@ -112,14 +112,31 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
   document.querySelectorAll<HTMLFormElement>("[data-brief]").forEach((form) => {
     // Precarga desde /precios/ o los botones de "Quiero mi web".
     const params = new URLSearchParams(window.location.search);
-    if (params.get("plan") === "web") {
-      const web = form.querySelector<HTMLInputElement>('input[name=interes][value^="Web desde"]');
-      if (web) web.checked = true;
+    const plan = params.get("plan");
+    const interestFor: Record<string, string> = {
+      web: 'input[name=interes][value^="Web desde"]',
+      seo: 'input[name=interes][value="SEO y GEO"]',
+      ia: 'input[name=interes][value="Agentes de IA"]',
+      auto: 'input[name=interes][value="Automatizaciones"]',
+      medios: 'input[name=interes][value="Notoriedad y medios"]',
+    };
+    if (plan && interestFor[plan]) {
+      const box = form.querySelector<HTMLInputElement>(interestFor[plan]);
+      if (box) box.checked = true;
     }
     const pre = params.get("extras");
-    if (pre) {
+    const total = params.get("total");
+    if (pre || total) {
       const msg = form.querySelector<HTMLTextAreaElement>("textarea[name=mensaje]");
-      if (msg && !msg.value) msg.value = `Me interesa la web con estos extras: ${pre.split("|").join(", ")}.\n\n`;
+      if (msg && !msg.value) {
+        const what = plan === "seo" ? "los servicios de SEO/GEO" : "la web";
+        msg.value =
+          `Me interesa ${what}` +
+          (pre ? ` con: ${pre.split("|").join(", ")}` : "") +
+          `.\n` +
+          (total ? `Presupuesto orientativo calculado en la web: ${total}.\n` : "") +
+          `\n`;
+      }
     }
     const error = form.querySelector<HTMLElement>("[data-brief-error]");
     form.addEventListener("submit", (e) => {

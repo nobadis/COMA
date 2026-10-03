@@ -38,85 +38,48 @@ const items = [
 </section>
 
 <style>
-  .tl {
-    --p: 0;
-  }
   .tl__grid {
     display: grid;
     gap: 3rem;
   }
   @media (min-width: 1000px) {
     .tl__grid {
-      grid-template-columns: 0.9fr 1.1fr;
-      align-items: start;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
     }
     .tl__head {
       position: sticky;
-      top: 8rem;
+      top: 7rem;
+      align-self: start;
     }
   }
   .tl__head {
     display: grid;
     gap: 1.5rem;
   }
-  .tl__list {
-    list-style: none;
-    padding: 0 0 0 2rem;
-    position: relative;
-    display: grid;
-    gap: clamp(2rem, 5vw, 3.5rem);
-  }
-  .tl__list::before,
-  .tl__list::after {
-    content: "";
-    position: absolute;
-    left: 0.4rem;
-    top: 0.5rem;
-    bottom: 0.5rem;
-    width: 2px;
-    background: var(--line);
-  }
-  .tl__list::after {
-    background: var(--red);
-    transform-origin: top;
-    transform: scaleY(clamp(0, calc(var(--p) * 1.7 - 0.35), 1));
-  }
   .tl__item {
-    position: relative;
     display: grid;
-    gap: 0.5rem;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--line);
   }
-  .tl__item::before {
-    content: "";
-    position: absolute;
-    left: -2rem;
-    top: 0.35rem;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-radius: 50%;
-    background: var(--paper);
-    border: 2px solid var(--red);
-    z-index: 1;
+  .tl__item:last-child {
+    border-bottom: 1px solid var(--line);
   }
   .tl__y {
     font-variation-settings: "wdth" 125;
-    font-weight: 600;
-    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+    font-weight: 800;
+    font-size: var(--fs-lg);
     letter-spacing: -0.04em;
-    line-height: 1;
     color: var(--red);
   }
   .tl__item h3 {
     font-size: 1.35rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
   }
   .tl__item p {
     color: var(--muted);
-    max-width: 48ch;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .tl__list::after {
-      transform: none;
-    }
+    max-width: 46ch;
   }
 </style>

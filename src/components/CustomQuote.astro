@@ -1,0 +1,101 @@
+---
+import Arrow from "./Arrow.astro";
+
+interface Props {
+  plan: "ia" | "auto" | "medios";
+  service: string;
+  factors: string[];
+}
+const { plan, service, factors } = Astro.props;
+const steps = [
+  { t: "Llamada de diagnóstico", d: "Gratuita y sin compromiso. Entendemos tu negocio y qué quieres conseguir." },
+  { t: "Propuesta cerrada", d: "Alcance, plazos y precio por escrito antes de empezar. Sin sorpresas." },
+  { t: "Lo construimos", d: "Pagas por lo que se hace, con entregas claras y mantenimiento opcional." },
+];
+---
+
+<section class="cq section sand" id="presupuesto">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Presupuesto</p>
+      <h2 data-split>{service} se presupuesta a medida<span class="comma">.</span></h2>
+      <p class="lead" data-reveal style="--d:2">
+        Cada negocio es distinto y por eso no ponemos un precio cerrado de catálogo. Te damos uno
+        cerrado después de entender qué necesitas.
+      </p>
+    </div>
+    <div class="cq__grid">
+      <div class="cq__col" data-reveal>
+        <p class="cq__h">Lo que influye en el precio</p>
+        <ul class="cq__factors">
+          {factors.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
+      <ol class="cq__steps">
+        {
+          steps.map((s, i) => (
+            <li data-reveal style={`--d:${i}`}>
+              <span>0{i + 1}</span>
+              <div>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <a class="btn btn--red btn--lg" href={`/contacto/?plan=${plan}`} data-magnetic data-reveal>
+      Pedir presupuesto a medida <Arrow />
+    </a>
+  </div>
+</section>
+
+<style>
+  .cq__grid {
+    display: grid;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  @media (min-width: 900px) {
+    .cq__grid {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+    }
+  }
+  .cq__h {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 0.9rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .cq__factors li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-lg);
+    font-weight: 500;
+  }
+  .cq__steps li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cq__steps li:first-child {
+    border-top: 2px solid var(--ink);
+  }
+  .cq__steps span {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: var(--fs-xl);
+    color: var(--red);
+  }
+  .cq__steps p {
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+</style>

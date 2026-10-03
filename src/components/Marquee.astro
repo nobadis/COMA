@@ -2,18 +2,19 @@
 interface Props {
   items: string[];
   class?: string;
+  big?: boolean;
+  reverse?: boolean;
 }
-const { items, class: cls = "" } = Astro.props;
-const row = [...items, ...items];
+const { items, class: cls = "", big = false, reverse = false } = Astro.props;
 ---
 
-<div class:list={["mq", cls]} aria-hidden="true">
-  <div class="mq__track">
+<div class:list={["mq", { "mq--big": big }, cls]} aria-hidden="true">
+  <div class="mq__track" data-velocity={reverse ? "reverse" : "forward"}>
     {
       [0, 1].map(() => (
         <div class="mq__group">
-          {row.map((t) => (
-            <span class="mq__item">
+          {items.map((t, i) => (
+            <span class:list={["mq__item", { "mq__item--o": big && i % 2 === 1 }]}>
               {t}
               <svg viewBox="0 0 20 40" class="mq__dot">
                 <path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor" />
@@ -29,44 +30,52 @@ const row = [...items, ...items];
 <style>
   .mq {
     overflow: hidden;
-    padding-block: 1.4rem;
     border-block: 1px solid var(--line);
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    padding-block: 0.9rem;
+    user-select: none;
+  }
+  .mq--big {
+    border: 0;
+    border-top: 1px solid var(--line);
+    padding-block: clamp(0.75rem, 2vw, 1.5rem);
+    background: var(--ink);
+    color: var(--paper);
   }
   .mq__track {
     display: flex;
     width: max-content;
-    animation: mq 50s linear infinite;
-  }
-  .mq:hover .mq__track {
-    animation-play-state: paused;
+    will-change: transform;
   }
   .mq__group {
     display: flex;
+    flex: none;
   }
   .mq__item {
     display: inline-flex;
     align-items: center;
-    gap: 2rem;
-    padding-right: 2rem;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
     font-variation-settings: "wdth" 125;
-    font-weight: 600;
-    font-size: clamp(1.5rem, 1rem + 2.4vw, 3.25rem);
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    letter-spacing: -0.02em;
     white-space: nowrap;
   }
+  .mq--big .mq__item {
+    font-size: clamp(2.2rem, 1rem + 6vw, 6.5rem);
+    letter-spacing: -0.045em;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+    line-height: 1.05;
+  }
+  .mq__item--o {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--paper);
+  }
   .mq__dot {
-    width: 0.32em;
+    width: 0.4em;
+    height: 0.8em;
     color: var(--red);
-  }
-  @keyframes mq {
-    to {
-      transform: translateX(-50%);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .mq__track {
-      animation: none;
-    }
+    flex: none;
   }
 </style>

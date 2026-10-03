@@ -1,0 +1,222 @@
+---
+const palettes = [
+  { id: "mar", name: "Mar", bg: "#0d2a3a", fg: "#f2efe6", ac: "#41c7b9" },
+  { id: "sol", name: "Sol", bg: "#f6e7c8", fg: "#2b1a0b", ac: "#e1112d" },
+  { id: "pino", name: "Pino", bg: "#16301f", fg: "#eef1e4", ac: "#d6f25a" },
+  { id: "noche", name: "Noche", bg: "#0c0c0c", fg: "#efece4", ac: "#ff5a36" },
+  { id: "arcilla", name: "Arcilla", bg: "#d9c3a8", fg: "#1a1410", ac: "#6b2d1a" },
+];
+const types = [
+  { id: "impacto", name: "Impacto", w: 125, g: 850 },
+  { id: "neutra", name: "Neutra", w: 100, g: 550 },
+  { id: "elegante", name: "Elegante", w: 62, g: 300 },
+];
+---
+
+<section class="bp section sand" id="marca">
+  <div class="wrap bp__grid">
+    <div class="bp__head">
+      <p class="eyebrow" data-reveal>Diseño a medida</p>
+      <h2 data-split>Tu marca no cabe en una plantilla<span class="comma">.</span></h2>
+      <p class="lead" data-reveal style="--d:2">
+        Prueba: cambia el color y el carácter y mira cómo cambia todo. Así empezamos cada proyecto: con
+        la personalidad de tu negocio, no con un tema de catálogo.
+      </p>
+
+      <div class="bp__ctrl" data-reveal style="--d:3">
+        <p class="bp__lab" id="bp-c">Color</p>
+        <div class="bp__swatches" role="group" aria-labelledby="bp-c">
+          {
+            palettes.map((p, i) => (
+              <button
+                type="button"
+                aria-pressed={i === 0 ? "true" : "false"}
+                aria-label={p.name}
+                class="bp__sw"
+                data-pal={JSON.stringify(p)}
+                style={`--a:${p.bg};--b:${p.ac}`}
+              />
+            ))
+          }
+        </div>
+        <p class="bp__lab" id="bp-t">Carácter</p>
+        <div class="bp__types" role="group" aria-labelledby="bp-t">
+          {
+            types.map((t, i) => (
+              <button
+                type="button"
+                aria-pressed={i === 0 ? "true" : "false"}
+                class="bp__ty"
+                data-type={JSON.stringify(t)}>{t.name}</button
+              >
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="bp__stage" data-bp data-reveal style="--d:1">
+      <p class="bp__small">Tu empresa · Palma</p>
+      <p class="bp__big" aria-hidden="true">Tu marca,<br />a tu manera<span>.</span></p>
+      <span class="bp__shape" aria-hidden="true"></span>
+      <span class="bp__btn" aria-hidden="true">Pedir cita →</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".bp").forEach((root) => {
+    const stage = root.querySelector<HTMLElement>("[data-bp]")!;
+    const pick = (sel: string, apply: (d: Record<string, string | number>) => void) => {
+      const btns = Array.from(root.querySelectorAll<HTMLButtonElement>(sel));
+      btns.forEach((b) =>
+        b.addEventListener("click", () => {
+          btns.forEach((o) => o.setAttribute("aria-pressed", String(o === b)));
+          apply(JSON.parse(b.dataset.pal ?? b.dataset.type ?? "{}"));
+        })
+      );
+    };
+    pick("[data-pal]", (p) => {
+      stage.style.setProperty("--bg", String(p.bg));
+      stage.style.setProperty("--fg", String(p.fg));
+      stage.style.setProperty("--ac", String(p.ac));
+    });
+    pick("[data-type]", (t) => {
+      stage.style.setProperty("--tw", String(t.w));
+      stage.style.setProperty("--tg", String(t.g));
+    });
+  });
+</script>
+
+<style>
+  .bp__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .bp__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+    }
+  }
+  .bp__head {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .bp__ctrl {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .bp__lab {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+  .bp__swatches,
+  .bp__types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .bp__sw {
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, var(--a) 55%, var(--b) 55%);
+    cursor: pointer;
+    outline: 1px solid var(--line);
+    outline-offset: 0;
+    transition: transform 0.3s var(--ease);
+  }
+  .bp__sw:hover {
+    transform: translateY(-3px);
+  }
+  .bp__sw[aria-pressed="true"] {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  .bp__ty {
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--ink);
+    background: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+  .bp__ty[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .bp__stage {
+    --bg: #0d2a3a;
+    --fg: #f2efe6;
+    --ac: #41c7b9;
+    --tw: 125;
+    --tg: 850;
+    position: relative;
+    aspect-ratio: 4 / 3.2;
+    min-height: 20rem;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    background: var(--bg);
+    color: var(--fg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition:
+      background 0.6s var(--ease),
+      color 0.6s var(--ease);
+  }
+  .bp__small {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .bp__big {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(2.2rem, 1rem + 5vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    font-variation-settings:
+      "wdth" var(--tw),
+      "wght" var(--tg);
+    transition: font-variation-settings 0.6s var(--ease);
+  }
+  .bp__big span {
+    color: var(--ac);
+    transition: color 0.6s var(--ease);
+  }
+  .bp__shape {
+    position: absolute;
+    right: -12%;
+    top: -18%;
+    width: 62%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--ac);
+    transition: background 0.6s var(--ease);
+  }
+  .bp__btn {
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+    padding: 0.8rem 1.25rem;
+    background: var(--ac);
+    color: var(--bg);
+    font-weight: 700;
+    transition:
+      background 0.6s var(--ease),
+      color 0.6s var(--ease);
+  }
+</style>

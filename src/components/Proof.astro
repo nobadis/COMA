@@ -1,0 +1,115 @@
+---
+import Arrow from "./Arrow.astro";
+
+const items = [
+  {
+    t: "Movimiento con sentido",
+    d: "Transiciones entre páginas, scroll suave y microinteracciones que guían la mirada sin estorbar.",
+  },
+  {
+    t: "Se lee a la primera",
+    d: "Jerarquía clara, textos cortos y un único camino hacia el contacto. Nadie se pierde.",
+  },
+  {
+    t: "Rápida de verdad",
+    d: "Sin plantillas ni plugins pesados. Carga al instante, también en el móvil.",
+  },
+  {
+    t: "Móvil primero",
+    d: "Se diseña primero para el móvil, que es donde te va a mirar tu cliente.",
+  },
+  {
+    t: "Visible para Google y la IA",
+    d: "Estructura técnica, datos estructurados y un llms.txt para que los asistentes te entiendan.",
+  },
+  {
+    t: "Accesible",
+    d: "Contraste, teclado y respeto por quien prefiere menos movimiento.",
+  },
+];
+---
+
+<section class="pf section night" data-dark id="portfolio">
+  <div class="wrap pf__grid">
+    <div class="pf__head">
+      <p class="eyebrow" data-reveal>Nuestro portfolio</p>
+      <h2 data-split>No te enseñamos ejemplos. Te enseñamos esto<span class="comma">.</span></h2>
+      <p class="lead" data-reveal style="--d:2">
+        Cada transición, cada animación y cada detalle que has visto al llegar aquí es trabajo
+        nuestro. Esta web es la prueba: la misma que haremos para ti, con tu marca.
+      </p>
+      <a class="btn btn--red btn--lg" href="/contacto/" data-reveal style="--d:3" data-magnetic>
+        Quiero una web así <Arrow />
+      </a>
+    </div>
+    <ol class="pf__list">
+      {
+        items.map((i, n) => (
+          <li class="pf__item" data-reveal style={`--d:${n % 2}`}>
+            <span class="pf__n">0{n + 1}</span>
+            <h3>{i.t}</h3>
+            <p>{i.d}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .pf__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 6rem);
+  }
+  @media (min-width: 1000px) {
+    .pf__grid {
+      grid-template-columns: 1fr 1.1fr;
+    }
+    .pf__head {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+  .pf__head h2 {
+    font-size: clamp(2rem, 1rem + 3.4vw, 4.25rem);
+  }
+  .pf__head {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .pf__item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.5rem 1rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--line);
+    transition: padding 0.5s var(--ease);
+  }
+  .pf__item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  @media (hover: hover) {
+    .pf__item:hover {
+      padding-left: 1rem;
+    }
+    .pf__item:hover h3 {
+      color: var(--red);
+    }
+  }
+  .pf__n {
+    grid-row: span 2;
+    color: var(--red);
+    font-weight: 700;
+    font-size: var(--fs-xs);
+    padding-top: 0.5em;
+  }
+  .pf__item h3 {
+    transition: color 0.3s;
+  }
+  .pf__item p {
+    color: var(--muted);
+    max-width: 44ch;
+  }
+</style>

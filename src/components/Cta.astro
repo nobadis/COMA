@@ -26,30 +26,41 @@ const { title = "Tu web, desde 99 €. ¿Empezamos?", subject = "Nuevo proyecto"
 
 <style>
   .cta {
-    text-align: center;
-    border-top: 1px solid var(--line);
+    background: var(--red);
+    color: #fff;
+    overflow: hidden;
+    padding-block: clamp(5rem, 12vw, 10rem);
+    --muted: rgb(255 255 255 / 0.85);
   }
   .cta__inner {
     display: grid;
-    justify-items: center;
     gap: 1.75rem;
+    justify-items: start;
+  }
+  .cta .eyebrow {
+    color: #fff;
+  }
+  .cta .eyebrow::before {
+    background: #fff;
   }
   .cta__title {
-    font-size: var(--fs-3xl);
-    max-width: 16ch;
-  }
-  .cta .lead {
-    max-width: 50ch;
+    font-size: clamp(2.6rem, 1rem + 8vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    max-width: 14ch;
   }
   .cta__actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
     gap: 1.5rem 2rem;
   }
-  .cta__btn {
-    padding: 1.4rem 2.2rem;
-    font-size: var(--fs-md);
+  .cta .btn--red {
+    --bg: var(--ink);
+    --fg: var(--paper);
+    --fill: var(--paper);
+  }
+  .cta .btn--red:hover {
+    color: var(--ink);
   }
 </style>

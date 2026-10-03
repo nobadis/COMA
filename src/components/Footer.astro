@@ -1,7 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import Arrow from "./Arrow.astro";
-import { nav, navMore, site, mailto } from "../data/site";
+import { navServices, site, mailto } from "../data/site";
 ---
 
 <footer class="ftr night" data-dark data-hide-sticky>
@@ -9,7 +9,7 @@ import { nav, navMore, site, mailto } from "../data/site";
     <div class="ftr__top">
       <p class="ftr__claim display" data-reveal>
         Seguimos escribiendo<span class="comma">,</span><br />
-        <span class="muted">¿nos ayudas con el siguiente capítulo?</span>
+        <span class="muted">¿escribimos juntos el siguiente capítulo?</span>
       </p>
       <a class="btn btn--red" href={mailto("Nuevo proyecto")} data-reveal style="--d:1">
         {site.email}
@@ -22,7 +22,7 @@ import { nav, navMore, site, mailto } from "../data/site";
         <p class="ftr__h">Servicios</p>
         <ul>
           {
-            [...nav, ...navMore].map((n) => (
+            [...navServices, { href: "/precios/", label: "Precios" }, { href: "/kit-digital/", label: "Kit Digital" }].map((n) => (
               <li>
                 <a href={n.href}>{n.label}</a>
               </li>
@@ -58,7 +58,7 @@ import { nav, navMore, site, mailto } from "../data/site";
       </div>
     </div>
 
-    <div class="ftr__mark" aria-hidden="true"><Logo /></div>
+    <div class="ftr__mark" aria-hidden="true" data-kinetic><Logo /></div>
 
     <div class="ftr__bottom">
       <span>© <span class="coma-year">{new Date().getFullYear()}</span> {site.brand}. Todos los derechos reservados.</span>
@@ -137,6 +137,7 @@ import { nav, navMore, site, mailto } from "../data/site";
   .ftr .btn {
     color: #fff;
   }
+  .ftr nav a { display: inline-block; }
   .ftr__mark {
     color: var(--paper);
     line-height: 0.8;

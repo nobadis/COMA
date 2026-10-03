@@ -3,7 +3,7 @@ import Arrow from "./Arrow.astro";
 import { sectors } from "../data/site";
 ---
 
-<section class="section sand sec">
+<section class="section sec">
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow" data-reveal>Para quién trabajamos</p>
@@ -13,10 +13,10 @@ import { sectors } from "../data/site";
         sabemos cómo hacer que se vea, se encuentre y se elija.
       </p>
     </div>
-    <ul class="sec__grid">
+    <ul class="sec__list">
       {
         sectors.map((s, i) => (
-          <li class="sec__card" data-reveal data-spot style={`--d:${i % 4}`}>
+          <li class="sec__row" data-reveal>
             <span class="sec__n">{String(i + 1).padStart(2, "0")}</span>
             <h3>{s.name}</h3>
             <p>{s.text}</p>
@@ -32,59 +32,59 @@ import { sectors } from "../data/site";
 </section>
 
 <style>
-  .sec__grid {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  .sec__list {
+    border-top: 1px solid var(--ink);
   }
-  @media (min-width: 1100px) {
-    .sec__grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-  .sec__card {
-    --mx: 50%;
-    --my: 50%;
-    position: relative;
-    padding: 1.6rem;
-    border-radius: var(--radius);
-    background:
-      radial-gradient(320px circle at var(--mx) var(--my), rgb(225 17 45 / 0.1), transparent 60%),
-      var(--paper);
-    border: 1px solid var(--line);
+  .sec__row {
     display: grid;
-    gap: 0.6rem;
-    align-content: start;
-    min-height: 12rem;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.25rem 1rem;
+    align-items: baseline;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--line);
     transition:
-      transform 0.6s var(--ease),
-      border-color 0.4s;
-  }
-  .sec__card:hover {
-    transform: translateY(-6px);
-    border-color: rgb(225 17 45 / 0.4);
+      padding 0.5s var(--ease),
+      background 0.4s var(--ease),
+      color 0.4s var(--ease);
   }
   .sec__n {
-    color: var(--red);
     font-size: var(--fs-xs);
-    font-weight: 600;
-    margin-bottom: auto;
-    padding-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--red);
   }
-  .sec__card h3 {
-    font-size: 1.3rem;
+  .sec__row h3 {
+    font-size: clamp(1.6rem, 1rem + 2.6vw, 3.5rem);
+    letter-spacing: -0.045em;
   }
-  .sec__card p {
+  .sec__row p {
+    grid-column: 2;
     color: var(--muted);
-    font-size: var(--fs-sm);
+    max-width: 52ch;
+  }
+  @media (min-width: 900px) {
+    .sec__row {
+      grid-template-columns: 3rem 1.2fr 1fr;
+    }
+    .sec__row p {
+      grid-column: 3;
+    }
+  }
+  @media (hover: hover) {
+    .sec__row:hover {
+      padding-inline: 1.25rem;
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .sec__row:hover p {
+      color: var(--night-muted);
+    }
   }
   .sec__cta {
-    margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
   }
 </style>

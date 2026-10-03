@@ -11,91 +11,133 @@ interface Props {
 const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
 ---
 
-<section class="section pr">
-  <div class="wrap pr__grid">
-    <div class="pr__head">
-      <p class="eyebrow" data-reveal>{eyebrow}</p>
-      <h2 data-split>{title}</h2>
+<section class="pr night" data-hscroll data-dark>
+  <div class="pr__sticky">
+    <div class="wrap pr__head">
+      <div>
+        <p class="eyebrow" data-reveal>{eyebrow}</p>
+        <h2 data-split>{title}</h2>
+      </div>
+      <p class="pr__hint" aria-hidden="true">Sigue bajando <span>→</span></p>
     </div>
-    <ol class="pr__list">
-      {
-        steps.map((s, i) => (
-          <li class="pr__item" style={`--i:${i}`}>
-            <span class="pr__n">0{i + 1}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </li>
-        ))
-      }
-    </ol>
+    <div class="pr__viewport">
+      <ol class="pr__track" data-hscroll-track>
+        {
+          steps.map((s, i) => (
+            <li class="pr__item" style={`--i:${i}`}>
+              <span class="pr__n" aria-hidden="true">0{i + 1}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <div class="wrap pr__bar" aria-hidden="true"><i></i></div>
   </div>
 </section>
 
 <style>
-  .pr__grid {
-    display: grid;
-    gap: 3rem;
-  }
-  @media (min-width: 1000px) {
-    .pr__grid {
-      grid-template-columns: 0.9fr 1.1fr;
-      align-items: start;
-    }
-    .pr__head {
-      position: sticky;
-      top: 8rem;
-    }
+  .pr {
+    --p: 0;
+    position: relative;
+    padding-block: clamp(4rem, 8vw, 6rem);
   }
   .pr__head {
-    display: grid;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
     gap: 1.5rem;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
   }
-  .pr__list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 1rem;
+  .pr__head h2 {
+    max-width: 16ch;
+  }
+  .pr__hint {
+    display: none;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--night-muted);
   }
   .pr__item {
-    position: sticky;
-    top: calc(6.5rem + var(--i) * 1.25rem);
-    box-shadow: 0 -20px 40px -30px rgb(0 0 0 / 0.25);
-    padding: clamp(1.5rem, 3vw, 2.25rem);
-    border-radius: var(--radius);
-    background: #fff;
-    border: 1px solid var(--line);
     display: grid;
-    gap: 0.75rem;
-    align-content: start;
-    min-height: clamp(14rem, 34vh, 20rem);
-    grid-template-columns: auto 1fr;
-    column-gap: clamp(1rem, 3vw, 2.5rem);
-    transition:
-      transform 0.6s var(--ease),
-      box-shadow 0.6s var(--ease);
-  }
-  .pr__item > :not(.pr__n) {
-    grid-column: 2;
+    gap: 1rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--line);
+    width: min(100% - 2 * var(--gutter), var(--max));
+    margin-inline: auto;
   }
   .pr__n {
-    grid-row: 1 / span 2;
     font-variation-settings: "wdth" 125;
-    font-weight: 600;
-    font-size: clamp(3rem, 2rem + 4vw, 6rem);
-    line-height: 0.85;
+    font-weight: 800;
+    font-size: clamp(4rem, 14vw, 9rem);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
     color: var(--red);
-    letter-spacing: -0.05em;
   }
   .pr__item h3 {
-    font-size: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
-  }
-  .pr__item:nth-child(even) {
-    background: var(--ink);
-    color: var(--paper);
-    --muted: var(--night-muted);
+    margin-bottom: 0.6rem;
   }
   .pr__item p {
     color: var(--muted);
-    font-size: var(--fs-sm);
+    max-width: 36ch;
+  }
+  .pr__bar {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .pr {
+      padding-block: 0;
+    }
+    .pr__sticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+      padding-top: 4.5rem;
+    }
+    .pr__hint {
+      display: block;
+    }
+    .pr__viewport {
+      overflow: hidden;
+    }
+    .pr__track {
+      display: flex;
+      gap: clamp(2rem, 5vw, 5rem);
+      width: max-content;
+      padding-inline: var(--gutter);
+      will-change: transform;
+    }
+    .pr__item {
+      width: min(34rem, 42vw);
+      margin: 0;
+      flex: none;
+      gap: 2rem;
+      padding-top: 2rem;
+      align-content: start;
+    }
+    .pr__bar {
+      display: block;
+      margin-top: clamp(1.5rem, 4vh, 3rem);
+      height: 2px;
+      background: var(--line);
+      position: relative;
+    }
+    .pr__bar i {
+      position: absolute;
+      inset: 0;
+      background: var(--red);
+      transform-origin: 0 50%;
+      transform: scaleX(var(--p));
+    }
   }
 </style>

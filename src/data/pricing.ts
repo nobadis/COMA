@@ -1,6 +1,10 @@
 /**
- * Precios. El plan base tiene precio público; los extras se presupuestan a medida.
- * Si quieres mostrar el precio de un extra, rellena `price` (p. ej. "desde 9 €/mes").
+ * Precios del configurador. TODOS los importes son editables aquí.
+ *
+ * - `once`: pago único (€ + IVA).
+ * - `month`: cuota mensual (€ + IVA).
+ * - `custom`: se presupuesta a medida (IA, automatizaciones, medios...). No suma al total.
+ * - `qty`: si existe, el cliente elige cuántas unidades (páginas, idiomas, buzones...).
  */
 export const basePlan = {
   name: "Web Esencial",
@@ -17,12 +21,20 @@ export const basePlan = {
   ],
 };
 
+export type Billing = "once" | "month" | "custom";
+export type GroupId = "web" | "crece" | "ia";
+
 export interface Extra {
   id: string;
+  group: GroupId;
   name: string;
   text: string;
-  price?: string;
-  group: "web" | "crece" | "ia";
+  billing: Billing;
+  /** Importe unitario en € (ignorado si billing = "custom"). */
+  price?: number;
+  /** Unidad para mostrar junto al precio: "página", "idioma", "buzón". */
+  unit?: string;
+  qty?: { min: number; max: number; label: string };
 }
 
 export const extras: Extra[] = [
@@ -31,65 +43,114 @@ export const extras: Extra[] = [
     group: "web",
     name: "Más páginas",
     text: "Servicios, equipo, galería, contacto… las secciones que necesites.",
+    billing: "once",
+    price: 45,
+    unit: "página",
+    qty: { min: 1, max: 12, label: "páginas" },
   },
   {
     id: "idiomas",
     group: "web",
     name: "Multiidioma",
     text: "Español, catalán, inglés, alemán… para clientes de cualquier lugar.",
+    billing: "once",
+    price: 60,
+    unit: "idioma",
+    qty: { min: 1, max: 5, label: "idiomas" },
+  },
+  {
+    id: "tienda",
+    group: "web",
+    name: "Tienda online",
+    text: "Catálogo, carrito y pago online. Hasta 50 productos.",
+    billing: "once",
+    price: 390,
+  },
+  {
+    id: "reservas",
+    group: "web",
+    name: "Reservas o citas online",
+    text: "Tus clientes reservan solos, con aviso por email.",
+    billing: "once",
+    price: 190,
   },
   {
     id: "alojamiento",
     group: "web",
     name: "Alojamiento y mantenimiento",
     text: "Hosting rápido, copias de seguridad y actualizaciones cada mes.",
+    billing: "month",
+    price: 15,
   },
   {
     id: "correo",
     group: "web",
     name: "Correo corporativo",
     text: "tu@tuempresa.com configurado en el móvil y el ordenador.",
-  },
-  {
-    id: "tienda",
-    group: "web",
-    name: "Tienda online o reservas",
-    text: "Vende o recibe reservas con pago online.",
+    billing: "month",
+    price: 4,
+    unit: "buzón",
+    qty: { min: 1, max: 10, label: "buzones" },
   },
   {
     id: "contenido",
     group: "crece",
     name: "Contenido propio",
-    text: "Textos, fotos y vídeo creados para tu marca.",
+    text: "Pack de textos y fotos creados para tu marca.",
+    billing: "once",
+    price: 150,
   },
   {
     id: "blog",
     group: "crece",
     name: "Blog",
-    text: "Artículos que posicionan y responden a tus clientes.",
+    text: "Blog integrado y primeros artículos que posicionan.",
+    billing: "once",
+    price: 90,
   },
   {
     id: "seo",
     group: "crece",
-    name: "SEO local y GEO",
-    text: "Aparece en Google, Google Maps y en las respuestas de la IA.",
+    name: "SEO local",
+    text: "Google, Google Maps y reseñas: que te encuentren cerca.",
+    billing: "month",
+    price: 120,
+  },
+  {
+    id: "geo",
+    group: "crece",
+    name: "GEO: posicionamiento en IA",
+    text: "Aparece en las respuestas de ChatGPT, Gemini y Perplexity.",
+    billing: "month",
+    price: 150,
   },
   {
     id: "automatizaciones",
     group: "ia",
     name: "Automatizaciones",
     text: "Leads, emails y facturas que se gestionan solos.",
+    billing: "custom",
   },
   {
     id: "agente",
     group: "ia",
     name: "Agente de IA",
     text: "Un asistente que atiende a tus clientes 24/7.",
+    billing: "custom",
+  },
+  {
+    id: "medios",
+    group: "ia",
+    name: "Radio, TV y notoriedad",
+    text: "Campañas en medios para que tu marca se conozca.",
+    billing: "custom",
   },
 ];
 
-export const extraGroups = {
-  web: "Tu web, completa",
-  crece: "Para crecer",
-  ia: "IA y automatización",
-} as const;
+export const extraGroups: Record<GroupId, { title: string; note: string }> = {
+  web: { title: "Tu web, completa", note: "Precio cerrado" },
+  crece: { title: "Para crecer", note: "Precio cerrado" },
+  ia: { title: "IA, automatización y medios", note: "A medida · sobre presupuesto" },
+};
+
+export const IVA = 0.21;

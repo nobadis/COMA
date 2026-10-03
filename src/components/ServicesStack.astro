@@ -1,0 +1,245 @@
+---
+import Arrow from "./Arrow.astro";
+import Motif from "./Motif.astro";
+import { basePlan } from "../data/pricing";
+
+const panels = [
+  {
+    href: "/diseno-web/",
+    kind: "web",
+    theme: "paper",
+    n: "01",
+    title: "Diseño web",
+    line: "Webs espectaculares y fáciles de usar.",
+    text: "Diseño a medida, con movimiento y una estructura que se lee sola. Pensadas para que el cliente entienda, confíe y te contacte.",
+    meta: `Desde ${basePlan.price} € + IVA`,
+  },
+  {
+    href: "/seo-geo/",
+    kind: "seo",
+    theme: "ink",
+    n: "02",
+    title: "SEO y GEO",
+    line: "Que te encuentren en Google… y en ChatGPT.",
+    text: "SEO local, Google Maps y posicionamiento en las respuestas de la IA. Tus clientes ya preguntan a la IA a quién contratar.",
+    meta: "Presupuesto cerrado, desde 120 €/mes",
+  },
+  {
+    href: "/agentes-ia/",
+    kind: "ia",
+    theme: "red",
+    n: "03",
+    title: "Agentes de IA",
+    line: "Un asistente que atiende a tus clientes 24/7.",
+    text: "Responde dudas, filtra contactos y agenda citas con la voz de tu marca. Se diseña a medida de tu negocio.",
+    meta: "A medida · sobre presupuesto",
+  },
+  {
+    href: "/automatizaciones/",
+    kind: "auto",
+    theme: "paper",
+    n: "04",
+    title: "Automatizaciones",
+    line: "Lo repetitivo, que se haga solo.",
+    text: "Leads, emails, facturas y avisos conectados entre sí. Menos tareas manuales, más tiempo para tu negocio.",
+    meta: "A medida · sobre presupuesto",
+  },
+] as const;
+---
+
+<section class="svs" id="servicios" aria-labelledby="svs-title">
+  <div class="svs__intro wrap">
+    <p class="eyebrow" data-reveal>Lo que hacemos</p>
+    <h2 id="svs-title" data-split>Cuatro formas de hacer que tu empresa se note<span class="comma">.</span></h2>
+  </div>
+
+  <ol class="svs__stack" data-stack>
+    {
+      panels.map((p) => (
+        <li class={`pn pn--${p.theme}`}>
+          <a class="pn__in wrap" href={p.href}>
+            <span class="pn__n">{p.n} / 04</span>
+            <h3 class="pn__title">{p.title}</h3>
+            <div class="pn__main">
+              <p class="pn__line">{p.line}</p>
+              <p class="pn__text">{p.text}</p>
+              <span class="pn__foot">
+                <span class="pn__meta">{p.meta}</span>
+                <span class="pn__go">
+                  Ver servicio <Arrow />
+                </span>
+              </span>
+            </div>
+            <div class="pn__art">
+              <Motif kind={p.kind} />
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="wrap svs__more">
+    <p class="eyebrow">Y además</p>
+    <ul class="chips">
+      {
+        ["Notoriedad y medios", "Radio y televisión", "Redes y publicidad", "Branding y diseño gráfico", "Kit Digital"].map(
+          (t) => <li class="chip">{t}</li>
+        )
+      }
+    </ul>
+    <a class="link-arrow" href="/notoriedad-de-marca/">Notoriedad de marca <Arrow /></a>
+  </div>
+</section>
+
+<style>
+  .svs__intro {
+    display: grid;
+    gap: 1.25rem;
+    padding-block: clamp(4rem, 9vw, 8rem) clamp(2.5rem, 5vw, 4rem);
+  }
+  .svs__intro h2 {
+    max-width: 16ch;
+  }
+  .pn {
+    --cover: 0;
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: stretch;
+    border-top: 1px solid var(--line);
+  }
+  .pn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: calc(var(--cover) * 0.7);
+    pointer-events: none;
+  }
+  .pn--paper {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .pn--ink {
+    background: var(--night);
+    color: var(--paper);
+    --line: var(--night-line);
+    --muted: var(--night-muted);
+  }
+  .pn--red {
+    background: var(--red);
+    color: #fff;
+    --line: rgb(255 255 255 / 0.35);
+    --muted: rgb(255 255 255 / 0.8);
+  }
+  .pn__in {
+    display: grid;
+    gap: 2rem;
+    padding-block: clamp(5rem, 9vw, 7rem) clamp(2.5rem, 5vw, 4rem);
+    text-decoration: none;
+    align-content: space-between;
+  }
+  .pn__n {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pn__title {
+    font-size: clamp(2.2rem, 9.2vw, 10.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    font-variation-settings: "wdth" 100;
+    word-spacing: 0.14em;
+    align-self: center;
+    transition: transform 0.7s var(--ease);
+  }
+  .pn__in:hover .pn__title {
+    transform: translateX(1.25rem);
+  }
+  .pn__main {
+    display: grid;
+    gap: 1.25rem;
+    align-content: end;
+  }
+  .pn__line {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    max-width: 24ch;
+  }
+  .pn__text {
+    color: var(--muted);
+    max-width: 48ch;
+  }
+  .pn__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-weight: 600;
+  }
+  .pn__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: auto;
+  }
+  .pn__go :global(.arrow) {
+    transition: transform 0.5s var(--ease);
+  }
+  .pn__in:hover .pn__go :global(.arrow) {
+    transform: translateX(6px);
+  }
+  .pn__art {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .pn__in {
+      grid-template-columns: 1.25fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 0 4rem;
+    }
+    .pn__n,
+    .pn__title {
+      grid-column: 1 / -1;
+    }
+    .pn__art {
+      display: grid;
+      align-content: end;
+      max-width: 22rem;
+      justify-self: end;
+      width: 100%;
+    }
+  }
+  @media (min-width: 900px) and (min-height: 640px) {
+    .svs__stack {
+      position: relative;
+    }
+    .pn {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+    .pn__in {
+      transform: scale(calc(1 - var(--cover) * 0.05));
+      transform-origin: 50% 0;
+    }
+  }
+  .svs__more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.25rem;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+  }
+  .svs__more .link-arrow {
+    margin-left: auto;
+  }
+</style>

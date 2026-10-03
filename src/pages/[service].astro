@@ -5,8 +5,10 @@ import Process from "../components/Process.astro";
 import Faq from "../components/Faq.astro";
 import Cta from "../components/Cta.astro";
 import Marquee from "../components/Marquee.astro";
-import Pricing from "../components/Pricing.astro";
-import Showcase from "../components/Showcase.astro";
+import Configurator from "../components/Configurator.astro";
+import BrandPlay from "../components/BrandPlay.astro";
+import CustomQuote from "../components/CustomQuote.astro";
+import Motif from "../components/Motif.astro";
 import GeoDemo from "../components/GeoDemo.astro";
 import AgentDemo from "../components/AgentDemo.astro";
 import FlowDemo from "../components/FlowDemo.astro";
@@ -14,6 +16,43 @@ import Trust from "../components/Trust.astro";
 import { services, type Service } from "../data/services";
 import { site } from "../data/site";
 import { basePlan } from "../data/pricing";
+
+const motif = {
+  "diseno-web": "web",
+  "seo-geo": "seo",
+  "agentes-ia": "ia",
+  automatizaciones: "auto",
+  "notoriedad-de-marca": "medios",
+} as const;
+const quote = {
+  "agentes-ia": {
+    plan: "ia",
+    factors: [
+      "Qué tareas atiende (dudas, citas, ventas, soporte)",
+      "Canales: web, WhatsApp, teléfono, email",
+      "Integración con tu agenda, CRM o tienda",
+      "Idiomas y volumen de conversaciones",
+    ],
+  },
+  automatizaciones: {
+    plan: "auto",
+    factors: [
+      "Cuántos procesos quieres automatizar",
+      "Herramientas que hay que conectar",
+      "Volumen de datos y avisos",
+      "Mantenimiento y soporte posterior",
+    ],
+  },
+  "notoriedad-de-marca": {
+    plan: "medios",
+    factors: [
+      "Medios elegidos: radio, prensa, televisión, digital",
+      "Duración e intensidad de la campaña",
+      "Producción creativa y audiovisual",
+      "Gabinete de prensa y gestión de redes",
+    ],
+  },
+} as const;
 
 export function getStaticPaths() {
   return services.map((s) => ({ params: { service: s.slug }, props: { s } }));
@@ -52,62 +91,96 @@ const schema = [
 >
   <section class="ph">
     <div class="wrap ph__inner">
-      <p class="eyebrow" data-reveal>{s.eyebrow}</p>
-      <h1 data-split>{s.h1}<span class="comma">,</span></h1>
-      <p class="lead" data-reveal style="--d:3">{s.lead}</p>
-      <div class="ph__ctas" data-reveal style="--d:4">
-        {
-          s.slug === "diseno-web" ? (
-            <a class="btn btn--red btn--lg" href="/contacto/?plan=web" data-magnetic>
-              Quiero mi web por {basePlan.price} € <Arrow />
-            </a>
-          ) : (
-            <a class="btn btn--red btn--lg" href="/contacto/" data-magnetic>
-              Pedir propuesta <Arrow />
-            </a>
-          )
-        }
-        <a class="btn btn--ghost" href="#que-hacemos">Qué incluye</a>
+      <div class="ph__copy">
+        <p class="eyebrow" data-reveal>{s.eyebrow}</p>
+        <h1 data-split>{s.h1}<span class="comma">,</span></h1>
+        <p class="lead" data-reveal style="--d:3">{s.lead}</p>
+        <div class="ph__ctas" data-reveal style="--d:4">
+          {
+            s.slug === "diseno-web" ? (
+              <a class="btn btn--red btn--lg" href="#presupuesto" data-magnetic>
+                Calcula tu web desde {basePlan.price} € <Arrow />
+              </a>
+            ) : s.slug === "seo-geo" ? (
+              <a class="btn btn--red btn--lg" href="#presupuesto" data-magnetic>
+                Calcula tu presupuesto <Arrow />
+              </a>
+            ) : (
+              <a class="btn btn--red btn--lg" href="#presupuesto" data-magnetic>
+                Cómo se presupuesta <Arrow />
+              </a>
+            )
+          }
+          <a class="link-arrow" href="#que-hacemos">Qué incluye</a>
+        </div>
+      </div>
+      <div class="ph__art" data-reveal style="--d:2">
+        <Motif kind={motif[s.slug as keyof typeof motif]} />
       </div>
     </div>
   </section>
   <Marquee items={s.tags} />
 
   <section class="section night" id="que-hacemos" data-dark>
-    <div class="wrap">
-      <div class="section-head">
+    <div class="wrap dl">
+      <div class="dl__head">
         <p class="eyebrow" data-reveal>Qué hacemos</p>
         <h2 data-split>{s.deliverablesTitle}</h2>
       </div>
-      <ul class="dl">
+      <ol class="dl__list">
         {s.deliverables.map((d, i) => (
-          <li class="dl__item" data-reveal data-spot style={`--d:${i % 3}`}>
+          <li class="dl__item" data-reveal>
             <span class="dl__n">0{i + 1}</span>
             <h3>{d.title}</h3>
             <p>{d.text}</p>
           </li>
         ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section fw">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Para quién</p>
+      <h2 data-split>{s.forWhomTitle}</h2>
+      <ul class="fw__list">
+        {s.forWhom.map((f, i) => <li data-reveal style={`--d:${i % 2}`}>{f}</li>)}
       </ul>
     </div>
   </section>
 
-  <section class="section sand">
-    <div class="wrap grid-2">
-      <div>
-        <p class="eyebrow" data-reveal>Para quién</p>
-        <h2 data-split>{s.forWhomTitle}</h2>
-      </div>
-      <ul class="fw">
-        {s.forWhom.map((f, i) => <li data-reveal style={`--d:${i}`}>{f}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  {s.slug === "diseno-web" && <Showcase title="Así de bien puede verse tu web" />}
-  {s.slug === "diseno-web" && <Pricing />}
+  {s.slug === "diseno-web" && <BrandPlay />}
+  {
+    s.slug === "diseno-web" && (
+      <Configurator
+        groups={["web", "crece"]}
+        title={`Empieza por ${basePlan.price} €. Añade solo lo que necesites`}
+      />
+    )
+  }
   {s.slug === "seo-geo" && <GeoDemo />}
+  {
+    s.slug === "seo-geo" && (
+      <Configurator
+        groups={["crece"]}
+        base={false}
+        plan="seo"
+        title="Monta tu plan de visibilidad"
+        intro="Elige qué quieres trabajar y mira la cuota mensual al instante. Sin permanencia ni letra pequeña."
+      />
+    )
+  }
   {s.slug === "agentes-ia" && <AgentDemo />}
   {s.slug === "automatizaciones" && <FlowDemo />}
+  {
+    s.slug in quote && (
+      <CustomQuote
+        plan={quote[s.slug as keyof typeof quote].plan}
+        service={s.label}
+        factors={[...quote[s.slug as keyof typeof quote].factors]}
+      />
+    )
+  }
   <Trust />
   <Process title="Así lo hacemos" steps={s.steps} />
   <Faq items={s.faq} />
@@ -116,63 +189,114 @@ const schema = [
 
 <style>
   .ph {
-    padding-top: clamp(9rem, 18vw, 13rem);
+    padding-top: clamp(8.5rem, 15vw, 12rem);
     padding-bottom: clamp(3rem, 6vw, 5rem);
   }
   .ph__inner {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .ph__inner {
+      grid-template-columns: 1.3fr 1fr;
+      gap: 5rem;
+    }
+  }
+  .ph__copy {
     display: grid;
     gap: 1.75rem;
     justify-items: start;
   }
   .ph h1 {
-    max-width: 18ch;
+    font-size: clamp(2.4rem, 1rem + 5vw, 6rem);
+    max-width: 17ch;
+    letter-spacing: -0.05em;
   }
   .ph__ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+  .ph__art {
+    max-width: 30rem;
+    width: 100%;
+    justify-self: center;
   }
   .dl {
-    list-style: none;
-    padding: 0;
     display: grid;
-    gap: 1rem;
+    gap: 3rem;
   }
-  @media (min-width: 700px) {
-    .dl { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1000px) {
+    .dl {
+      grid-template-columns: 0.9fr 1.3fr;
+      gap: 6rem;
+    }
+    .dl__head {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
   }
-  @media (min-width: 1100px) {
-    .dl { grid-template-columns: repeat(3, 1fr); }
+  .dl__head {
+    display: grid;
+    gap: 1.25rem;
   }
   .dl__item {
-    --mx: 50%;
-    --my: 50%;
-    padding: 2rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: radial-gradient(400px circle at var(--mx) var(--my), rgb(225 17 45 / 0.14), transparent 60%), var(--night-2);
     display: grid;
-    gap: 0.75rem;
-    align-content: start;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.4rem 1rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--line);
+    transition: padding 0.5s var(--ease);
   }
-  .dl__n { color: var(--red); font-size: var(--fs-xs); font-weight: 600; }
-  .dl__item h3 { font-size: 1.4rem; }
-  .dl__item p { color: var(--muted); font-size: var(--fs-sm); }
-  .fw { list-style: none; padding: 0; border-top: 1px solid var(--line); }
-  .fw li {
-    padding: 1.25rem 0 1.25rem 2rem;
+  .dl__item:last-child {
     border-bottom: 1px solid var(--line);
-    font-size: var(--fs-lg);
-    position: relative;
   }
-  .fw li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 1.85rem;
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 50%;
-    background: var(--red);
+  .dl__n {
+    grid-row: span 2;
+    color: var(--red);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    padding-top: 0.55em;
+  }
+  .dl__item h3 {
+    font-size: clamp(1.4rem, 1rem + 1.4vw, 2.2rem);
+    transition: color 0.3s;
+  }
+  .dl__item p {
+    color: var(--muted);
+    max-width: 46ch;
+  }
+  @media (hover: hover) {
+    .dl__item:hover {
+      padding-left: 1rem;
+    }
+    .dl__item:hover h3 {
+      color: var(--red);
+    }
+  }
+  .fw .wrap {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .fw__list {
+    margin-top: 1.5rem;
+    border-top: 2px solid var(--ink);
+  }
+  .fw__list li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
+    font-size: clamp(1.3rem, 1rem + 1.6vw, 2.4rem);
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+  .fw__list li::before {
+    content: "→";
+    color: var(--red);
+    margin-right: 1rem;
   }
 </style>
