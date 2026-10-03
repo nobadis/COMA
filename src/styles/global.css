@@ -938,3 +938,55 @@ html {
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Escritorio: media columna que entra desplazándose de lado y se queda, mientras
+   la otra mitad queda fija. Guiado por scroll en CSS (sin JS por fotograma).
+   --------------------------------------------------------------------------- */
+.pf,
+.tl,
+.sec,
+.faq {
+  overflow-x: clip;
+}
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .pf__item,
+    .faq__list details,
+    .sec__row:nth-child(odd) {
+      animation: slide-r linear both;
+    }
+    .tl__item,
+    .sec__row:nth-child(even) {
+      animation: slide-l linear both;
+    }
+    /* línea de tiempo en regla aparte (el minificador la fundiría en el atajo y se descartaría) */
+    .pf__item:not(.tl),
+    .faq__list details:not(.tl),
+    .tl__item:not(.tl),
+    .sec__row:not(.tl) {
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    @keyframes slide-r {
+      from {
+        opacity: 0;
+        transform: translateX(26vw);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    @keyframes slide-l {
+      from {
+        opacity: 0;
+        transform: translateX(-26vw);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}

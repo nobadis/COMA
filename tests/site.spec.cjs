@@ -314,6 +314,29 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.locator(".portal__copy")).toBeVisible();
   });
 
+  test("escritorio: las tarjetas entran desplazándose de lado y quedan en su sitio", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "solo escritorio");
+    await page.goto("/");
+    const top = await page.evaluate(
+      () => document.querySelector(".pf").getBoundingClientRect().top + scrollY
+    );
+    const lastItem = page.locator(".pf__item").last();
+    await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), top + 100);
+    await page.waitForTimeout(400);
+    const shiftX = () =>
+      lastItem.evaluate((e) => new DOMMatrixReadOnly(getComputedStyle(e).transform).m41);
+    expect(await shiftX()).toBeGreaterThan(50); // todavía desplazado hacia la derecha
+    const bottom = await page.evaluate(
+      () => document.querySelector(".pf").getBoundingClientRect().bottom + scrollY
+    );
+    await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), bottom - 900);
+    await page.waitForTimeout(400);
+    expect(await shiftX()).toBe(0);
+  });
+
   test("navegación principal en escritorio", async ({ page, isMobile }) => {
     test.skip(isMobile, "solo escritorio");
     await page.goto("/");
