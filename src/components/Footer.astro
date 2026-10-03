@@ -2,123 +2,78 @@
 import Logo from "./Logo.astro";
 import Arrow from "./Arrow.astro";
 import { navServices, site, mailto } from "../data/site";
+
+const links = [
+  ...navServices,
+  { href: "/precios/", label: "Precios" },
+  { href: "/kit-digital/", label: "Kit Digital" },
+];
 ---
 
 <footer class="ftr night" data-dark data-hide-sticky>
   <div class="wrap">
     <div class="ftr__top">
-      <div class="ftr__brand">
-        <a href="/" class="ftr__logo" aria-label="COMA, ir al inicio"><Logo /></a>
-        <p>Hacemos que tu empresa se note<span class="comma">,</span> sin que te cueste una fortuna.</p>
-      </div>
+      <a href="/" class="ftr__logo" aria-label="COMA, ir al inicio"><Logo /></a>
       <a class="btn btn--red" href={mailto("Nuevo proyecto")}>
         {site.email}
         <Arrow />
       </a>
     </div>
 
-    <div class="ftr__grid">
-      <div>
-        <p class="ftr__h">Servicios</p>
-        <ul>
-          {navServices.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-          <li><a href="/precios/">Precios</a></li>
-          <li><a href="/kit-digital/">Kit Digital</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="ftr__h">Estudio</p>
-        <address>
-          {site.address.street}<br />
-          {site.address.postalCode}
-          {site.address.city}, {site.address.region}<br />
-          <a href={site.mapsUrl} target="_blank" rel="noopener">Ver en el mapa ↗</a>
-        </address>
-      </div>
-      <div>
-        <p class="ftr__h">Legal</p>
-        <ul>
-          <li><a href="/aviso-legal/">Aviso legal</a></li>
-          <li><a href="/cookies/">Política de cookies</a></li>
-          <li><a href="/privacidad/">Política de privacidad</a></li>
-          <li><button type="button" class="ftr__linkbtn" data-cookie-open>Preferencias de cookies</button></li>
-        </ul>
-      </div>
-    </div>
+    <nav class="ftr__links" aria-label="Pie de página">
+      {links.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/aviso-legal/">Aviso legal</a>
+      <a href="/cookies/">Cookies</a>
+      <a href="/privacidad/">Privacidad</a>
+      <button type="button" class="ftr__linkbtn" data-cookie-open>Preferencias de cookies</button>
+    </nav>
 
-    <div class="ftr__bottom">
-      <span>© <span class="coma-year">{new Date().getFullYear()}</span> {site.brand}. Todos los derechos reservados.</span>
-      <span>{site.legalName} · CIF {site.cif}</span>
-    </div>
+    <p class="ftr__bottom">
+      © <span class="coma-year">{new Date().getFullYear()}</span>{" "}
+      {`${site.brand} · ${site.legalName} · CIF ${site.cif} · ${site.address.street}, ${site.address.postalCode} ${site.address.city}`}
+    </p>
   </div>
 </footer>
 
 <style>
   .ftr {
-    padding-top: clamp(3rem, 6vw, 5rem);
-    padding-bottom: 1.25rem;
+    padding-block: clamp(1.75rem, 4vw, 2.5rem) 1.25rem;
   }
   .ftr__top {
-    display: grid;
-    gap: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--line);
-  }
-  @media (min-width: 800px) {
-    .ftr__top {
-      grid-template-columns: 1fr auto;
-    }
-  }
-  .ftr__brand {
-    display: grid;
-    gap: 0.75rem;
+    justify-content: space-between;
+    gap: 1rem;
   }
   .ftr__logo {
     text-decoration: none;
-    justify-self: start;
   }
   .ftr__logo :global(.logo) {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
-  .ftr__brand p {
-    color: var(--muted);
-    max-width: 40ch;
+  .ftr .btn {
+    color: #fff;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    min-height: 3rem;
+    padding-block: 0.75rem;
   }
-  .ftr__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding-block: 2.5rem;
+  .ftr__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    padding-block: 1.25rem;
+    margin-block: 1.25rem 0;
+    border-block: 1px solid var(--line);
     font-size: var(--fs-sm);
   }
-  @media (min-width: 600px) {
-    .ftr__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  .ftr__h {
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.9rem;
-  }
-  .ftr ul {
-    display: grid;
-    gap: 0.45rem;
-  }
-  .ftr address {
-    font-style: normal;
-    line-height: 1.8;
-  }
-  .ftr a,
+  .ftr__links a,
   .ftr__linkbtn {
     text-decoration: none;
     transition: color 0.3s;
   }
-  .ftr a:hover,
+  .ftr__links a:hover,
   .ftr__linkbtn:hover {
     color: var(--red);
   }
@@ -127,21 +82,11 @@ import { navServices, site, mailto } from "../data/site";
     border: 0;
     padding: 0;
     cursor: pointer;
-    text-align: left;
     font-size: inherit;
-  }
-  .ftr .btn {
-    color: #fff;
-    max-width: 100%;
-    overflow-wrap: anywhere;
+    color: var(--night-muted);
   }
   .ftr__bottom {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem 2rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line);
+    padding-top: 1rem;
     font-size: var(--fs-xs);
     color: var(--muted);
   }

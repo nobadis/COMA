@@ -199,6 +199,10 @@ const panels = [
   .pn__in:hover .pn__go :global(.arrow) {
     transform: translateX(6px);
   }
+  /* sobre fondo rojo, el acento de la ilustración pasa a negro (si no, rojo sobre rojo) */
+  .pn--red .pn__art {
+    --red: var(--ink);
+  }
   .pn__in {
     position: relative;
   }
