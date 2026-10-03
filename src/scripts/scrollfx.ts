@@ -36,8 +36,10 @@ export function initScrollFx(reduced: boolean) {
     hscrolls.forEach((h) => {
       if (!h.track) return;
       if (!desktop.matches) {
-        h.section.style.height = "";
-        h.track.style.transform = "";
+        if (!h.section.classList.contains("is-pinned")) {
+          h.section.style.height = "";
+          h.track.style.transform = "";
+        }
         h.distance = 0;
         return;
       }
@@ -193,4 +195,47 @@ function initVelocity() {
     requestAnimationFrame(loop);
   };
   loop();
+}
+
+/**
+ * Móvil: secciones ancladas ([data-pin]) cuyas tarjetas se desplazan de lado MIENTRAS se hace
+ * scroll vertical. El movimiento lo hace el navegador (animation-timeline: view(), compositor);
+ * aquí solo se mide la distancia y la altura. Sin soporte o con "reducir movimiento" se queda el
+ * carrusel de deslizar con el dedo.
+ */
+export function initPinned() {
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-pin]"));
+  if (!sections.length) return;
+  const supported = typeof CSS !== "undefined" && CSS.supports("animation-timeline: view()");
+  const mq = window.matchMedia("(max-width: 899px) and (prefers-reduced-motion: no-preference)");
+  let raf = 0;
+
+  const apply = () => {
+    raf = 0;
+    const on = supported && mq.matches && window.innerHeight >= 560;
+    for (const section of sections) {
+      const track = section.querySelector<HTMLElement>("[data-pin-track]");
+      const stick = section.firstElementChild as HTMLElement | null;
+      if (!track || !stick) continue;
+      if (!on) {
+        section.classList.remove("is-pinned");
+        section.style.removeProperty("height");
+        section.style.removeProperty("--pin-d");
+        continue;
+      }
+      section.classList.add("is-pinned");
+      const cs = getComputedStyle(stick);
+      const inner = stick.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const dist = Math.max(0, Math.round(track.scrollWidth - inner));
+      section.style.setProperty("--pin-d", `${dist}px`);
+      section.style.height = `calc(${dist}px + 100svh)`;
+    }
+  };
+  const schedule = () => {
+    if (!raf) raf = requestAnimationFrame(apply);
+  };
+  apply();
+  window.addEventListener("resize", schedule);
+  mq.addEventListener("change", schedule);
+  document.fonts?.ready.then(schedule);
 }

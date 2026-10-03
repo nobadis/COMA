@@ -29,7 +29,7 @@ const items = [
 ];
 ---
 
-<section class="pf section night" data-dark id="portfolio">
+<section class="pf section night" data-dark id="portfolio" data-pin data-hide-sticky>
   <div class="wrap pf__grid">
     <div class="pf__head">
       <p class="eyebrow" data-reveal>Nuestro portfolio</p>
@@ -42,7 +42,7 @@ const items = [
         Quiero una web así <Arrow />
       </a>
     </div>
-    <ol class="pf__list hs" data-hs>
+    <ol class="pf__list hs" data-hs data-pin-track>
       {
         items.map((i, n) => (
           <li class="pf__item" data-reveal style={`--d:${n % 2}`}>

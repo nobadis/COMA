@@ -234,23 +234,62 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page).toHaveURL(/\/kit-digital\/$/);
   });
 
-  test("móvil: carruseles horizontales con imán y barra de posición", async ({
+  test("móvil: carrusel de deslizar (servicios) con imán y barra de posición", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "solo móvil");
+    await page.goto("/diseno-web/");
+    const list = page.locator(".dl__list[data-hs]");
+    await list.scrollIntoViewIfNeeded();
+    const sizes = await list.evaluate((e) => ({ sw: e.scrollWidth, cw: e.clientWidth }));
+    expect(sizes.sw).toBeGreaterThan(sizes.cw);
+    await list.evaluate((e) => e.scrollTo({ left: e.clientWidth * 0.8 }));
+    await expect(list.locator("xpath=following-sibling::*[1]").locator("i")).toHaveAttribute(
+      "style",
+      /left: (?!0%)/
+    );
+  });
+
+  test("móvil: sin scroll horizontal de página en ninguna ruta", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "solo móvil");
+    for (const path of PAGES) {
+      await page.goto(path);
+      const h = await page.evaluate(() => document.documentElement.scrollHeight);
+      for (let y = 0; y < h; y += 700) {
+        await page.evaluate((v) => window.scrollTo({ top: v, behavior: "instant" }), y);
+        const extra = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+        );
+        expect(extra, `${path} @${y}`).toBeLessThanOrEqual(0);
+      }
+    }
+  });
+
+  test("móvil: las tarjetas se mueven de lado solo con el scroll vertical", async ({
     page,
     isMobile,
   }) => {
     test.skip(!isMobile, "solo móvil");
     await page.goto("/");
-    const lists = page.locator("[data-hs]");
-    expect(await lists.count()).toBeGreaterThanOrEqual(3);
-    const first = lists.first();
-    await first.scrollIntoViewIfNeeded();
-    const sizes = await first.evaluate((e) => ({ sw: e.scrollWidth, cw: e.clientWidth }));
-    expect(sizes.sw).toBeGreaterThan(sizes.cw);
-    await first.evaluate((e) => e.scrollTo({ left: e.clientWidth * 0.8 }));
-    await expect(first.locator("xpath=following-sibling::*[1]").locator("i")).toHaveAttribute(
-      "style",
-      /left: (?!0%)/
+    const sec = page.locator("[data-pin]").first();
+    await expect(sec).toHaveClass(/is-pinned/);
+    const geo = await sec.evaluate((e) => ({
+      top: e.getBoundingClientRect().top + scrollY,
+      h: e.getBoundingClientRect().height,
+      vh: innerHeight,
+    }));
+    const left = () =>
+      sec.evaluate((e) => e.querySelector("[data-pin-track] > *").getBoundingClientRect().left);
+    await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), geo.top + 10);
+    await page.waitForTimeout(400);
+    const a = await left();
+    await page.evaluate(
+      (y) => window.scrollTo({ top: y, behavior: "instant" }),
+      geo.top + (geo.h - geo.vh) * 0.7
     );
+    await page.waitForTimeout(400);
+    expect(await left()).toBeLessThan(a - 300);
   });
 
   test("navegación principal en escritorio", async ({ page, isMobile }) => {

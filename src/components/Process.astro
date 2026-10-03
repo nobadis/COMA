@@ -11,7 +11,7 @@ interface Props {
 const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
 ---
 
-<section class="pr night" data-hscroll data-dark>
+<section class="pr night" data-hscroll data-dark data-pin data-hide-sticky>
   <div class="pr__sticky">
     <div class="wrap pr__head">
       <div>
@@ -21,7 +21,7 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
       <p class="pr__hint" aria-hidden="true">Sigue bajando <span>→</span></p>
     </div>
     <div class="pr__viewport">
-      <ol class="pr__track" data-hscroll-track data-hs>
+      <ol class="pr__track" data-hscroll-track data-hs data-pin-track>
         {
           steps.map((s, i) => (
             <li class="pr__item" style={`--i:${i}`}>

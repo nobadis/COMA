@@ -48,6 +48,7 @@
   margin: 0;
 }
 html {
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: 5rem;
@@ -812,6 +813,10 @@ html {
     .hs[data-hs] > li,
     .pr__item {
       animation: hs-in linear both;
+    }
+    /* la línea de tiempo va en regla aparte: si no, el minificador la funde en el atajo y se descarta */
+    .hs[data-hs] > li:not(.tl),
+    .pr__item:not(.tl) {
       animation-timeline: view(inline);
       animation-range: entry 0% entry 100%;
     }
@@ -834,9 +839,102 @@ html {
 }
 /* secciones largas bajo el pliegue: se pintan al acercarse (carga y scroll más ligeros) */
 .faq,
-.sec,
-.tl,
 .kb {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
+}
+
+/* ---------------------------------------------------------------------------
+   Móvil: secciones ancladas con movimiento horizontal guiado por el scroll vertical.
+   Solo se activan con .is-pinned (lo pone el JS si el navegador lo soporta).
+   --------------------------------------------------------------------------- */
+@media (max-width: 899px) {
+  .is-pinned {
+    view-timeline: --pin block;
+    padding-block: 0 !important;
+    content-visibility: visible;
+  }
+  .is-pinned > :first-child {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 5rem var(--gutter) 2.5rem;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    overflow: hidden;
+  }
+  .is-pinned > :first-child > * {
+    flex: 0 0 auto;
+  }
+  .is-pinned h2 {
+    font-size: clamp(1.7rem, 7.4vw, 2.4rem);
+  }
+  .is-pinned [data-pin-track] {
+    display: flex !important;
+    width: max-content !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    gap: 0.75rem;
+    will-change: transform;
+    animation: pin-x linear both;
+  }
+  .is-pinned [data-pin-track]:not(.tl) {
+    animation-timeline: --pin;
+    animation-range: contain 0% contain 100%;
+  }
+  .is-pinned [data-pin-track] > li {
+    flex: 0 0 min(78vw, 22rem) !important;
+    animation: none !important;
+    min-height: 11.5rem;
+  }
+  .is-pinned .hs-bar {
+    display: none;
+  }
+  /* barra de progreso del recorrido */
+  .is-pinned > :first-child::before,
+  .is-pinned > :first-child::after {
+    content: "";
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 1.5rem;
+    height: 3px;
+    background: var(--line);
+  }
+  .is-pinned > :first-child::after {
+    background: var(--red);
+    transform-origin: 0 50%;
+    animation: pin-fill linear both;
+  }
+  .is-pinned > :first-child:not(.tl)::after {
+    animation-timeline: --pin;
+    animation-range: contain 0% contain 100%;
+  }
+  @keyframes pin-x {
+    to {
+      transform: translate3d(calc(var(--pin-d) * -1), 0, 0);
+    }
+  }
+  @keyframes pin-fill {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+/* pantallas bajas: se recorta lo accesorio para que todo quepa anclado */
+@media (max-width: 899px) and (max-height: 780px) {
+  .is-pinned .lead,
+  .is-pinned .sec__cta {
+    display: none;
+  }
 }

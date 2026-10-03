@@ -1,5 +1,5 @@
 import Lenis from "lenis";
-import { initScrollFx } from "./scrollfx";
+import { initPinned, initScrollFx } from "./scrollfx";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -460,6 +460,7 @@ if (sp) {
 
 /* --------------------------------------------------------- scroll effects */
 initScrollFx(reduced);
+initPinned();
 
 /* ------------------------------------------------------------------- year */
 const year = String(new Date().getFullYear());

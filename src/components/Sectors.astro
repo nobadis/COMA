@@ -3,7 +3,7 @@ import Arrow from "./Arrow.astro";
 import { sectors } from "../data/site";
 ---
 
-<section class="section sec">
+<section class="section sec" data-pin data-hide-sticky>
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow" data-reveal>Para quién trabajamos</p>
@@ -13,7 +13,7 @@ import { sectors } from "../data/site";
         sabemos cómo hacer que se vea, se encuentre y se elija.
       </p>
     </div>
-    <ul class="sec__list hs" data-hs>
+    <ul class="sec__list hs" data-hs data-pin-track>
       {
         sectors.map((s, i) => (
           <li class="sec__row" data-reveal>

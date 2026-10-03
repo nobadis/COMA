@@ -11,7 +11,7 @@ const items = [
 ];
 ---
 
-<section class="section tl" data-progress="view">
+<section class="section tl" data-progress="view" data-pin data-hide-sticky>
   <div class="wrap tl__grid">
     <div class="tl__head">
       <p class="eyebrow" data-reveal>Nuestra historia</p>
@@ -21,7 +21,7 @@ const items = [
         podemos hacer cualquier cosa por tu empresa.
       </p>
     </div>
-    <ol class="tl__list hs" data-hs>
+    <ol class="tl__list hs" data-hs data-pin-track>
       {
         items.map((it, i) => (
           <li class="tl__item" data-reveal style={`--d:${i % 2}`}>
