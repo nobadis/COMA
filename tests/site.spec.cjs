@@ -234,6 +234,25 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page).toHaveURL(/\/kit-digital\/$/);
   });
 
+  test("móvil: carruseles horizontales con imán y barra de posición", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "solo móvil");
+    await page.goto("/");
+    const lists = page.locator("[data-hs]");
+    expect(await lists.count()).toBeGreaterThanOrEqual(3);
+    const first = lists.first();
+    await first.scrollIntoViewIfNeeded();
+    const sizes = await first.evaluate((e) => ({ sw: e.scrollWidth, cw: e.clientWidth }));
+    expect(sizes.sw).toBeGreaterThan(sizes.cw);
+    await first.evaluate((e) => e.scrollTo({ left: e.clientWidth * 0.8 }));
+    await expect(first.locator("xpath=following-sibling::*[1]").locator("i")).toHaveAttribute(
+      "style",
+      /left: (?!0%)/
+    );
+  });
+
   test("navegación principal en escritorio", async ({ page, isMobile }) => {
     test.skip(isMobile, "solo escritorio");
     await page.goto("/");

@@ -253,4 +253,17 @@ const panels = [
   .svs__more .link-arrow {
     margin-left: auto;
   }
+  @supports (animation-timeline: view()) {
+    .pn__title {
+      animation: ttl linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+    @keyframes ttl {
+      from {
+        transform: translateX(14vw);
+        opacity: 0.15;
+      }
+    }
+  }
 </style>

@@ -92,7 +92,7 @@ if (curtain) {
     }
     curtain.classList.remove("is-out");
     curtain.classList.add("is-in");
-    window.setTimeout(() => (location.href = url.href), 620);
+    window.setTimeout(() => (location.href = url.href), finePointer ? 620 : 460);
   });
 }
 // Volver con el botón «atrás» (bfcache): quitar la cortina.
@@ -402,6 +402,39 @@ if (kinetics.length && finePointer && !reduced) {
     kick();
   });
 }
+
+/* ------------------------------------------------------- carruseles horizontales */
+// Barra de posición bajo cada carrusel táctil ([data-hs]); el scroll es nativo (con imán).
+document.querySelectorAll<HTMLElement>("[data-hs]").forEach((el) => {
+  const bar = document.createElement("div");
+  bar.className = "hs-bar";
+  bar.setAttribute("aria-hidden", "true");
+  const thumb = document.createElement("i");
+  bar.appendChild(thumb);
+  el.insertAdjacentElement("afterend", bar);
+  let pending = false;
+  const update = () => {
+    pending = false;
+    const max = el.scrollWidth - el.clientWidth;
+    bar.hidden = max <= 2;
+    if (bar.hidden) return;
+    const w = el.clientWidth / el.scrollWidth;
+    thumb.style.width = `${(w * 100).toFixed(2)}%`;
+    thumb.style.left = `${((el.scrollLeft / max) * (1 - w) * 100).toFixed(2)}%`;
+  };
+  el.addEventListener(
+    "scroll",
+    () => {
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", update);
+  update();
+});
 
 /* ------------------------------------------------------------ scroll progress */
 const sp = document.querySelector<HTMLElement>("[data-sp]");

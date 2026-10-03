@@ -77,6 +77,21 @@ const words = ["note", "vea", "encuentre", "elija", "recuerde"];
     transform: translate3d(0, calc(var(--p) * 30vh), 0) rotate(calc(var(--p) * 40deg - 8deg));
     will-change: transform;
   }
+  /* con animaciones guiadas por scroll (CSS), el comma se mueve en el compositor sin JS */
+  @supports (animation-timeline: scroll()) {
+    .hero__comma {
+      transform: none;
+      will-change: auto;
+      animation: comma-scroll linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100svh;
+    }
+    @keyframes comma-scroll {
+      to {
+        transform: translate3d(0, 30vh, 0) rotate(32deg);
+      }
+    }
+  }
   .hero__comma svg {
     animation: comma-in 1.4s var(--ease) 0.3s both;
   }

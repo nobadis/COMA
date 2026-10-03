@@ -743,3 +743,100 @@ html {
     min-height: 2.6rem;
   }
 }
+
+/* ---------------------------------------- carruseles horizontales (móvil) */
+.hs-bar {
+  display: none;
+}
+@media (max-width: 899px) {
+  .hs[data-hs] {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) 0.25rem;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    border: 0 !important;
+  }
+  .hs[data-hs]::-webkit-scrollbar {
+    display: none;
+  }
+  .hs[data-hs] > li {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+    display: block;
+    min-height: 13.5rem;
+    padding: 1.25rem !important;
+    border: 1px solid var(--line) !important;
+    background: transparent;
+  }
+  /* el primer elemento de cada tarjeta (número/año) pasa a ser un gran número rojo */
+  .hs[data-hs] > li > span:first-child {
+    display: block;
+    margin-bottom: 1rem;
+    font-variation-settings: "wdth" 125;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--red);
+  }
+  .hs[data-hs] > li h3 {
+    margin-bottom: 0.5rem;
+  }
+  .hs-bar {
+    display: block;
+    position: relative;
+    height: 3px;
+    margin-top: 1rem;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .hs-bar[hidden] {
+    display: none;
+  }
+  .hs-bar i {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    background: var(--red);
+  }
+  /* entrada de las tarjetas según se acercan (CSS guiado por scroll: sin JS por fotograma) */
+  @supports (animation-timeline: view()) {
+    .hs[data-hs] > li,
+    .pr__item {
+      animation: hs-in linear both;
+      animation-timeline: view(inline);
+      animation-range: entry 0% entry 100%;
+    }
+    @keyframes hs-in {
+      from {
+        opacity: 0.3;
+        transform: scale(0.9) translateX(6%);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
+@media (hover: none) {
+  .curtain {
+    transition-duration: 0.45s;
+  }
+}
+/* secciones largas bajo el pliegue: se pintan al acercarse (carga y scroll más ligeros) */
+.faq,
+.sec,
+.tl,
+.kb {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
