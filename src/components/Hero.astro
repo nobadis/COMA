@@ -23,8 +23,8 @@ const words = ["note", "vea", "encuentre", "elija", "recuerde"];
     <h1 class="hero__title">
       <span class="sr-only">Hacemos que tu empresa se note,</span>
       <span class="hero__lines" aria-hidden="true">
-        <span class="ln"><span class="ln__in" data-reveal data-kinetic style="--d:1">Hacemos que</span></span>
-        <span class="ln"><span class="ln__in" data-reveal data-kinetic style="--d:2">tu empresa se</span></span>
+        <span class="ln"><span class="ln__in" data-kinetic>Hacemos que</span></span>
+        <span class="ln"><span class="ln__in" data-kinetic>tu empresa se</span></span>
         <span class="ln">
           <span class="ln__in" data-reveal style="--d:3">
             <span class="rot" data-rotate data-nokin>{words.map((w) => <em>{w}<i>,</i></em>)}</span>
@@ -90,8 +90,13 @@ const words = ["note", "vea", "encuentre", "elija", "recuerde"];
     display: grid;
     gap: clamp(1.5rem, 3.5vw, 2.75rem);
     padding-bottom: clamp(2rem, 4vw, 3.5rem);
-    transform: translate3d(0, calc(var(--p) * -8vh), 0);
-    opacity: calc(1 - var(--p) * 1.3);
+  }
+  /* el desvanecido ligado al scroll solo en escritorio (en móvil encarece cada fotograma) */
+  @media (hover: hover) and (pointer: fine) {
+    .hero__inner {
+      transform: translate3d(0, calc(var(--p) * -8vh), 0);
+      opacity: calc(1 - var(--p) * 1.3);
+    }
   }
   .hero__meta {
     display: flex;
@@ -185,9 +190,12 @@ const words = ["note", "vea", "encuentre", "elija", "recuerde"];
   }
   @media (max-width: 599px) {
     .hero__comma {
-      top: 6rem;
-      width: 7rem;
-      right: -1.5rem;
+      top: 3.75rem;
+      width: 4.75rem;
+      right: -1rem;
+    }
+    .hero__meta .eyebrow {
+      max-width: calc(100% - 4.5rem);
     }
   }
 </style>

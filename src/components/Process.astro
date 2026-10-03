@@ -56,7 +56,7 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
     max-width: 16ch;
   }
   .pr__hint {
-    display: none;
+    display: block;
     font-size: var(--fs-xs);
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -138,6 +138,44 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
       background: var(--red);
       transform-origin: 0 50%;
       transform: scaleX(var(--p));
+    }
+  }
+  /* móvil: carrusel con imán, se desliza con el pulgar */
+  @media (max-width: 899px) {
+    .pr__viewport {
+      overflow: hidden;
+    }
+    .pr__track {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-inline: var(--gutter);
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+    .pr__track::-webkit-scrollbar {
+      display: none;
+    }
+    .pr__item {
+      flex: 0 0 78%;
+      width: auto;
+      margin: 0;
+      scroll-snap-align: start;
+      border: 1px solid var(--line);
+      padding: 1.25rem;
+      align-content: start;
+      min-height: 15rem;
+    }
+    .pr__hint span {
+      display: inline-block;
+      animation: nudge 1.4s var(--ease) infinite;
+    }
+  }
+  @keyframes nudge {
+    50% {
+      transform: translateX(6px);
     }
   }
 </style>

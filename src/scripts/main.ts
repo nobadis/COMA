@@ -7,7 +7,8 @@ const CONSENT_KEY = "coma_cookie_consent";
 
 /* ---------------------------------------------------------- smooth scroll */
 let lenis: Lenis | null = null;
-if (!reduced) {
+// El scroll suave de Lenis solo en escritorio: en móvil el desplazamiento nativo es más fluido.
+if (!reduced && finePointer) {
   lenis = new Lenis({ lerp: 0.1, anchors: { offset: -90 }, autoRaf: true });
 }
 
@@ -46,6 +47,10 @@ const introDone = new Promise<void>((resolve) => {
   }, dur + 250);
 });
 
+// Las letras del titular esperan a que termine la intro para entrar (con salvaguarda).
+introDone.then(() => root.classList.add("is-ready"));
+window.setTimeout(() => root.classList.add("is-ready"), 5000);
+
 // Entrada de página: la cortina que cubría la pantalla se levanta.
 if (curtain && root.classList.contains("curtain-open")) {
   try {
@@ -70,7 +75,7 @@ if (curtain && root.classList.contains("curtain-open")) {
   );
 }
 // Salida de página: la cortina cubre la pantalla y después se navega.
-if (curtain && !reduced) {
+if (curtain) {
   document.addEventListener("click", (e) => {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
       return;
@@ -317,73 +322,107 @@ if (cursor && finePointer && !reduced) {
 }
 
 /* ------------------------------------------------------------ kinetic type */
-// Cada letra reacciona a la cercanía del puntero (ancho y grosor de la tipografía variable).
+// Se divide en letras (entrada escalonada con transform). En escritorio, además, cada letra
+// reacciona al puntero con ancho y grosor de la tipografía variable.
 const kinetics = Array.from(document.querySelectorAll<HTMLElement>("[data-kinetic]")).map((el) => {
   const label = (el.textContent ?? "").replace(/\s+/g, " ").trim();
   if (!el.closest("[aria-hidden=true]")) el.setAttribute("aria-label", label);
   const letters: HTMLElement[] = [];
+  let n = 0;
   const walk = (node: Node) => {
-    Array.from(node.childNodes).forEach((n) => {
-      if (n.nodeType === Node.TEXT_NODE) {
+    Array.from(node.childNodes).forEach((c) => {
+      if (c.nodeType === Node.TEXT_NODE) {
         const frag = document.createDocumentFragment();
-        Array.from(n.textContent ?? "").forEach((ch) => {
+        Array.from(c.textContent ?? "").forEach((ch) => {
           const sp = document.createElement("span");
           sp.className = ch === " " ? "k k--sp" : "k";
           sp.setAttribute("aria-hidden", "true");
+          sp.style.setProperty("--ci", String(n++));
           sp.textContent = ch === " " ? "\u00a0" : ch;
           if (ch !== " ") letters.push(sp);
           frag.appendChild(sp);
         });
-        node.replaceChild(frag, n);
+        node.replaceChild(frag, c);
       } else if (
-        n.nodeType === Node.ELEMENT_NODE &&
-        !(n as HTMLElement).hasAttribute("data-nokin") &&
-        n.nodeName !== "svg"
+        c.nodeType === Node.ELEMENT_NODE &&
+        !(c as HTMLElement).hasAttribute("data-nokin") &&
+        c.nodeName !== "svg"
       ) {
-        walk(n);
+        walk(c);
       }
     });
   };
   walk(el);
   return { el, letters };
 });
-if (kinetics.length && !reduced) {
+if (kinetics.length && finePointer && !reduced) {
   let mx = -9999;
   let my = -9999;
-  let lastMove = 0;
+  let running = false;
+  const level = new WeakMap<HTMLElement, number>();
+  const frame = () => {
+    let active = false;
+    for (const { el, letters } of kinetics) {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) continue;
+      for (const l of letters) {
+        const b = l.getBoundingClientRect();
+        const d = Math.hypot(b.left + b.width / 2 - mx, b.top + b.height / 2 - my);
+        let target = Math.max(0, 1 - d / 260);
+        target = target * target * (3 - 2 * target);
+        const cur = level.get(l) ?? 0;
+        const next = cur + (target - cur) * 0.2;
+        if (Math.abs(next - cur) < 0.004) continue;
+        active = true;
+        level.set(l, next);
+        l.style.setProperty("--kw", String(Math.round(108 + next * 17)));
+        l.style.setProperty("--kg", String(Math.round(600 + next * 300)));
+      }
+    }
+    running = active;
+    if (active) requestAnimationFrame(frame);
+  };
+  const kick = () => {
+    if (!running) {
+      running = true;
+      requestAnimationFrame(frame);
+    }
+  };
   window.addEventListener(
     "pointermove",
     (e) => {
       mx = e.clientX;
       my = e.clientY;
-      lastMove = performance.now();
+      kick();
     },
     { passive: true }
   );
-  const paint = (now: number) => {
-    const idle = now - lastMove > 2500;
-    for (const { el, letters } of kinetics) {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) continue;
-      letters.forEach((l, i) => {
-        let k = 0;
-        if (!idle && finePointer) {
-          const b = l.getBoundingClientRect();
-          const d = Math.hypot(b.left + b.width / 2 - mx, b.top + b.height / 2 - my);
-          k = Math.max(0, 1 - d / 260);
-          k = k * k * (3 - 2 * k);
-        } else {
-          // en reposo (o en táctil) una ola lenta recorre las letras
-          k = (Math.sin(now / 900 - i * 0.55) + 1) / 2;
-          k = k * k * 0.85;
-        }
-        l.style.setProperty("--kw", String(Math.round(108 + k * 17)));
-        l.style.setProperty("--kg", String(Math.round(600 + k * 300)));
-      });
-    }
-    requestAnimationFrame(paint);
+  document.addEventListener("pointerleave", () => {
+    mx = my = -9999;
+    kick();
+  });
+}
+
+/* ------------------------------------------------------------ scroll progress */
+const sp = document.querySelector<HTMLElement>("[data-sp]");
+if (sp) {
+  let pending = false;
+  const paint = () => {
+    pending = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    sp.style.setProperty("--sp", (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4));
   };
-  requestAnimationFrame(paint);
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(paint);
+      }
+    },
+    { passive: true }
+  );
+  paint();
 }
 
 /* --------------------------------------------------------- scroll effects */

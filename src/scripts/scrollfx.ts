@@ -153,9 +153,22 @@ function initVelocity() {
   const rows = Array.from(document.querySelectorAll<HTMLElement>("[data-velocity]")).map((el) => ({
     el,
     x: 0,
+    half: 0,
+    visible: true,
     dir: el.dataset.velocity === "reverse" ? 1 : -1,
   }));
   if (!rows.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      const row = rows.find((r) => r.el.parentElement === e.target || r.el === e.target);
+      if (row) row.visible = e.isIntersecting;
+    });
+  });
+  const measure = () => rows.forEach((r) => (r.half = r.el.scrollWidth / 2));
+  rows.forEach((r) => io.observe(r.el.parentElement ?? r.el));
+  measure();
+  window.addEventListener("resize", measure);
+  document.fonts?.ready.then(measure);
   let lastY = window.scrollY;
   let boost = 0;
   window.addEventListener(
@@ -168,13 +181,14 @@ function initVelocity() {
   );
   const loop = () => {
     boost *= 0.92;
-    for (const r of rows) {
-      const half = r.el.scrollWidth / 2;
-      if (!half) continue;
-      r.x += r.dir * (0.6 + Math.abs(boost)) * (boost < -2 ? -1 : 1);
-      if (r.x <= -half) r.x += half;
-      if (r.x > 0) r.x -= half;
-      r.el.style.transform = `translate3d(${r.x.toFixed(1)}px,0,0)`;
+    if (!document.hidden) {
+      for (const r of rows) {
+        if (!r.visible || !r.half) continue;
+        r.x += r.dir * (0.6 + Math.abs(boost)) * (boost < -2 ? -1 : 1);
+        if (r.x <= -r.half) r.x += r.half;
+        if (r.x > 0) r.x -= r.half;
+        r.el.style.transform = `translate3d(${r.x.toFixed(1)}px,0,0)`;
+      }
     }
     requestAnimationFrame(loop);
   };

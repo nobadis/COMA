@@ -645,3 +645,101 @@ h3 {
     display: none;
   }
 }
+
+/* ------------------------------------------------- móvil: ligero y táctil */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+  /* las letras del titular entran con transform (sin reflujo), escalonadas */
+  .js .k {
+    transform: translateY(115%);
+  }
+  .is-ready .k {
+    animation: kin-in 0.95s var(--ease) both;
+    animation-delay: calc(var(--ci) * 32ms + 80ms);
+  }
+  @keyframes kin-in {
+    from {
+      transform: translateY(115%) rotate(7deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+}
+/* respuesta táctil inmediata */
+.btn:active,
+.sticky-cta .btn:active {
+  transform: scale(0.97);
+}
+.opt:active {
+  transform: scale(0.99);
+}
+.sp {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 70;
+  pointer-events: none;
+}
+.sp i {
+  display: block;
+  height: 100%;
+  background: var(--red);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--sp, 0));
+}
+@media (hover: none) {
+  /* sin hover: los hovers pegajosos del táctil no deben dejar estados a medias */
+  .btn:hover::before {
+    transform: translateY(101%);
+  }
+}
+
+/* reduce motion: la cortina pasa a un fundido suave (sin movimiento) */
+@media (prefers-reduced-motion: reduce) {
+  .curtain {
+    transform: none !important;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.25s ease,
+      visibility 0s linear 0.25s !important;
+  }
+  .curtain.is-in {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s !important;
+  }
+  .curtain-open .curtain {
+    opacity: 1;
+    visibility: visible;
+    transition: none !important;
+  }
+  .curtain.is-out {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .sticky-cta {
+    font-size: var(--fs-xs);
+    padding-left: 0.9rem;
+  }
+  .sticky-cta > span,
+  .sticky-cta .btn {
+    white-space: nowrap;
+  }
+  .sticky-cta .muted-sm {
+    display: none;
+  }
+  .sticky-cta .btn {
+    padding-inline: 0.9rem;
+    gap: 0.6rem;
+    min-height: 2.6rem;
+  }
+}

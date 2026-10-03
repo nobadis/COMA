@@ -196,8 +196,15 @@ const panels = [
   .pn__in:hover .pn__go :global(.arrow) {
     transform: translateX(6px);
   }
+  .pn__in {
+    position: relative;
+  }
   .pn__art {
-    display: none;
+    position: absolute;
+    right: var(--gutter);
+    top: 4.6rem;
+    width: 6.5rem;
+    opacity: 0.9;
   }
   @media (min-width: 900px) {
     .pn__in {
@@ -210,26 +217,30 @@ const panels = [
       grid-column: 1 / -1;
     }
     .pn__art {
+      position: static;
       display: grid;
       align-content: end;
       max-width: 22rem;
       justify-self: end;
       width: 100%;
+      opacity: 1;
     }
   }
-  @media (min-width: 900px) and (min-height: 640px) {
-    .svs__stack {
-      position: relative;
-    }
+  /* apilado a pantalla completa también en móvil (si cabe en pantalla) */
+  @media (min-height: 640px) {
     .pn {
       position: sticky;
       top: 0;
-      height: 100svh;
-      overflow: hidden;
     }
     .pn__in {
       transform: scale(calc(1 - var(--cover) * 0.05));
       transform-origin: 50% 0;
+    }
+  }
+  @media (min-width: 900px) and (min-height: 640px) {
+    .pn {
+      height: 100svh;
+      overflow: hidden;
     }
   }
   .svs__more {

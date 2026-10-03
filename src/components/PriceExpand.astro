@@ -10,7 +10,7 @@ import { basePlan } from "../data/pricing";
       <h2 class="px__title">
         <span class="px__small" data-reveal>Tu web profesional por</span>
         <span class="sr-only">{basePlan.price} €</span>
-        <span class="px__num" aria-hidden="true" data-reveal style="--d:1">{basePlan.price}<span class="red">€</span></span>
+        <span class="px__num" aria-hidden="true" data-reveal style="--d:1"><span data-count={basePlan.price}>{basePlan.price}</span><span class="red">€</span></span>
         <span class="px__iva" data-reveal style="--d:2">{basePlan.suffix}</span>
       </h2>
       <div class="px__grid">

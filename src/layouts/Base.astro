@@ -165,7 +165,7 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
         try {
           var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
           if (!reduced && !sessionStorage.getItem("coma_intro")) d.classList.add("intro-on");
-          if (!reduced && sessionStorage.getItem("coma_curtain")) d.classList.add("curtain-open");
+          if (sessionStorage.getItem("coma_curtain")) d.classList.add("curtain-open");
         } catch (e) {}
       })();
     </script>
@@ -187,6 +187,7 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
       >
     </div>
     <div class="cursor" aria-hidden="true" data-cursor></div>
+    <div class="sp" aria-hidden="true" data-sp><i></i></div>
     <a class="skip" href="#main">Saltar al contenido</a>
     <Header />
     <main id="main">
