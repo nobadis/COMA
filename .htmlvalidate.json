@@ -3,6 +3,9 @@
   "rules": {
     "doctype-style": "off",
     "void-style": "off",
-    "no-trailing-whitespace": "error"
+    "no-inline-style": "off",
+    "attribute-boolean-style": "off",
+    "no-trailing-whitespace": "error",
+    "form-dup-name": ["error", { "shared": ["radio", "checkbox"] }]
   }
 }

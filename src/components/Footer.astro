@@ -1,0 +1,159 @@
+---
+import Logo from "./Logo.astro";
+import Arrow from "./Arrow.astro";
+import { nav, site, mailto } from "../data/site";
+---
+
+<footer class="ftr night" data-dark>
+  <div class="wrap">
+    <div class="ftr__top">
+      <p class="ftr__claim display" data-reveal>
+        Seguimos escribiendo<span class="comma">,</span><br />
+        <span class="muted">¿nos ayudas con el siguiente capítulo?</span>
+      </p>
+      <a class="btn btn--red" href={mailto("Nuevo proyecto")} data-reveal style="--d:1">
+        {site.email}
+        <Arrow />
+      </a>
+    </div>
+
+    <div class="ftr__grid">
+      <div>
+        <p class="ftr__h">Servicios</p>
+        <ul>
+          {
+            nav.map((n) => (
+              <li>
+                <a href={n.href}>{n.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="ftr__h">Estudio</p>
+        <address>
+          {site.address.street}<br />
+          {site.address.postalCode}
+          {site.address.city}, {site.address.region}<br />
+          <a href={site.mapsUrl} target="_blank" rel="noopener">Ver en el mapa ↗</a>
+        </address>
+      </div>
+      <div>
+        <p class="ftr__h">Contacto</p>
+        <ul>
+          <li><a href={mailto()}>{site.email}</a></li>
+          <li><a href="/contacto/">Pedir propuesta</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="ftr__h">Legal</p>
+        <ul>
+          <li><a href="/aviso-legal/">Aviso legal</a></li>
+          <li><a href="/cookies/">Política de cookies</a></li>
+          <li><a href="/privacidad/">Política de privacidad</a></li>
+          <li><button type="button" class="ftr__linkbtn" data-cookie-open>Preferencias de cookies</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr__mark" aria-hidden="true"><Logo /></div>
+
+    <div class="ftr__bottom">
+      <span>© <span class="coma-year">{new Date().getFullYear()}</span> {site.brand}. Todos los derechos reservados.</span>
+      <span>{site.legalName} · CIF {site.cif}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    padding-top: clamp(4rem, 9vw, 8rem);
+    padding-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .ftr__top {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 900px) {
+    .ftr__top {
+      grid-template-columns: 1fr auto;
+    }
+  }
+  .ftr__claim {
+    font-size: var(--fs-2xl);
+    line-height: 1.02;
+  }
+  .ftr__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 1.5rem;
+    padding-block: 3rem;
+    font-size: var(--fs-sm);
+  }
+  @media (min-width: 800px) {
+    .ftr__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .ftr__h {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .ftr ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .ftr address {
+    font-style: normal;
+    line-height: 1.8;
+  }
+  .ftr a,
+  .ftr__linkbtn {
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .ftr a:hover,
+  .ftr__linkbtn:hover {
+    color: var(--red);
+  }
+  .ftr__linkbtn {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+  }
+  .ftr .btn {
+    color: #fff;
+  }
+  .ftr__mark {
+    color: var(--paper);
+    line-height: 0.8;
+    user-select: none;
+  }
+  .ftr__mark :global(.logo) {
+    font-size: clamp(4rem, 23vw, 20rem);
+    letter-spacing: -0.04em;
+    display: flex;
+  }
+  .ftr__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,59 @@
+<div class="ck" id="cookie-banner" role="dialog" aria-live="polite" aria-labelledby="ck-title" hidden>
+  <p id="ck-title" class="ck__title">Cookies, las justas<span class="comma">,</span></p>
+  <p class="ck__text">
+    Usamos cookies técnicas y, solo si lo aceptas, analítica anónima (Microsoft Clarity) para mejorar la web.{" "}
+    <a href="/cookies/">Más información</a>.
+  </p>
+  <div class="ck__actions">
+    <button type="button" class="btn btn--ghost" data-consent="rejected">Denegar</button>
+    <button type="button" class="btn btn--red" data-consent="accepted">Aceptar</button>
+  </div>
+</div>
+
+<style>
+  .ck {
+    position: fixed;
+    z-index: 80;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    max-width: 26rem;
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.5);
+    animation: ck-in 0.8s var(--ease) both;
+    --line: var(--night-line);
+  }
+  .ck[hidden] {
+    display: none;
+  }
+  @keyframes ck-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  .ck__title {
+    font-weight: 600;
+    font-variation-settings: "wdth" 125;
+    margin-bottom: 0.35rem;
+  }
+  .ck__text {
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+    line-height: 1.5;
+  }
+  .ck__actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .ck__actions .btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.6rem 1rem;
+  }
+</style>

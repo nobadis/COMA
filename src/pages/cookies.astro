@@ -1,0 +1,29 @@
+---
+import Legal from "../layouts/Legal.astro";
+import body from "../data/legal/cookies.html?raw";
+---
+
+<Legal title="Política de cookies" description="Política de cookies de comunicacionenmallorca.com: qué cookies usamos y cómo gestionarlas.">
+  <Fragment set:html={body} />
+  <h2>Cookies que utiliza este sitio</h2>
+  <table>
+    <thead>
+      <tr><th scope="col">Nombre</th><th scope="col">Proveedor</th><th scope="col">Finalidad</th><th scope="col">Tipo</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>coma_cookie_consent</td>
+        <td>Propia (almacenamiento local)</td>
+        <td>Recordar tu elección sobre las cookies.</td>
+        <td>Técnica · persistente</td>
+      </tr>
+      <tr>
+        <td>_clck, _clsk, CLID, MUID</td>
+        <td>Microsoft Clarity (tercero)</td>
+        <td>Analítica anónima de uso para mejorar la web. Solo se activa si aceptas.</td>
+        <td>Análisis · persistente</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Puedes cambiar tu elección en cualquier momento desde «Preferencias de cookies» en el pie de página.</p>
+</Legal>

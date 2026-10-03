@@ -1,0 +1,72 @@
+---
+interface Props {
+  items: string[];
+  class?: string;
+}
+const { items, class: cls = "" } = Astro.props;
+const row = [...items, ...items];
+---
+
+<div class:list={["mq", cls]} aria-hidden="true">
+  <div class="mq__track">
+    {
+      [0, 1].map(() => (
+        <div class="mq__group">
+          {row.map((t) => (
+            <span class="mq__item">
+              {t}
+              <svg viewBox="0 0 20 40" class="mq__dot">
+                <path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor" />
+              </svg>
+            </span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .mq {
+    overflow: hidden;
+    padding-block: 1.4rem;
+    border-block: 1px solid var(--line);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .mq__track {
+    display: flex;
+    width: max-content;
+    animation: mq 50s linear infinite;
+  }
+  .mq:hover .mq__track {
+    animation-play-state: paused;
+  }
+  .mq__group {
+    display: flex;
+  }
+  .mq__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    padding-right: 2rem;
+    font-variation-settings: "wdth" 125;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 1rem + 2.4vw, 3.25rem);
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  .mq__dot {
+    width: 0.32em;
+    color: var(--red);
+  }
+  @keyframes mq {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mq__track {
+      animation: none;
+    }
+  }
+</style>

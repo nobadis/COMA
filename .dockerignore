@@ -2,6 +2,8 @@
 .github
 node_modules
 dist
+release
+.astro
 test-results
 playwright-report
 docs
@@ -11,6 +13,5 @@ tests
 .env.*
 !.env.example
 .DS_Store
-__pycache__
-*.pyc
 .vercel
+.claude

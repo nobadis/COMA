@@ -1,0 +1,120 @@
+---
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  updated?: string;
+}
+const { title, description, updated = "octubre de 2026" } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <article class="lg">
+    <header class="wrap lg__head">
+      <p class="eyebrow" data-reveal>Legal</p>
+      <h1 data-split>{title}<span class="comma">,</span></h1>
+      <p class="muted" data-reveal style="--d:2">Última actualización: {updated}</p>
+    </header>
+    <div class="wrap lg__body">
+      <nav class="lg__nav" aria-label="Documentos legales">
+        <a href="/aviso-legal/" aria-current={Astro.url.pathname === "/aviso-legal/" ? "page" : undefined}>Aviso legal</a>
+        <a href="/privacidad/" aria-current={Astro.url.pathname === "/privacidad/" ? "page" : undefined}>Privacidad</a>
+        <a href="/cookies/" aria-current={Astro.url.pathname === "/cookies/" ? "page" : undefined}>Cookies</a>
+      </nav>
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .lg__head {
+    padding-top: clamp(9rem, 16vw, 12rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    display: grid;
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .lg__body {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 9vw, 8rem);
+  }
+  @media (min-width: 1000px) {
+    .lg__body {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
+    .lg__nav {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+  .lg__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  @media (min-width: 1000px) {
+    .lg__nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  .lg__nav a {
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+  }
+  .lg__nav a[aria-current="page"] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .prose {
+    max-width: 72ch;
+    overflow-wrap: anywhere;
+  }
+  .prose :global(h2) {
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 2.75rem 0 1rem;
+  }
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .prose :global(h3) {
+    font-size: 1.15rem;
+    margin: 2rem 0 0.75rem;
+  }
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 1rem;
+    color: #34312d;
+  }
+  .prose :global(li) {
+    margin-bottom: 0.4rem;
+  }
+  .prose :global(a) {
+    color: var(--red-ink);
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+    margin-bottom: 1.5rem;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    text-align: left;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+</style>

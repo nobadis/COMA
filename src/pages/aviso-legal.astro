@@ -1,0 +1,8 @@
+---
+import Legal from "../layouts/Legal.astro";
+import body from "../data/legal/aviso-legal.html?raw";
+---
+
+<Legal title="Aviso legal" description="Aviso legal de comunicacionenmallorca.com, titularidad de Publicom Marketing 2000 SL.">
+  <Fragment set:html={body} />
+</Legal>

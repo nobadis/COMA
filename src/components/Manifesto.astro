@@ -1,0 +1,36 @@
+---
+interface Props {
+  eyebrow?: string;
+  text: string;
+}
+const { eyebrow = "Quiénes somos", text } = Astro.props;
+---
+
+<section class="section mf">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>{eyebrow}</p>
+    <p class="mf__text display" data-scrub>{text}</p>
+  </div>
+</section>
+
+<style>
+  .mf__text {
+    margin-top: 2rem;
+    font-size: clamp(1.75rem, 1rem + 3.2vw, 4.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    max-width: 22ch;
+  }
+  .mf__text :global(span) {
+    opacity: 0.16;
+    transition: opacity 0.4s var(--ease);
+  }
+  .mf__text :global(span.on) {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mf__text :global(span) {
+      opacity: 1;
+    }
+  }
+</style>

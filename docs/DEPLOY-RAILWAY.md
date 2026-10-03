@@ -1,8 +1,8 @@
 # Despliegue en Railway
 
-Sitio estático servido desde `site/` con **Dockerfile** (build reproducible).
+Web Astro: el **Dockerfile** hace `astro build` y sirve `dist/` con `serve`.
 
-Microsoft Clarity se inyecta al **arrancar** leyendo `CLARITY_PROJECT_ID`.
+Microsoft Clarity se inyecta al **arrancar** leyendo `CLARITY_PROJECT_ID` y solo se carga si el visitante acepta las cookies.
 
 ## Variable
 
@@ -14,11 +14,11 @@ Si la variable está vacía, Clarity no se carga.
 
 ## Config del repo
 
-- `Dockerfile` — `npm ci --omit=dev` + arranque
+- `Dockerfile` — `npm ci` + `astro build` + `npm prune --omit=dev`
 - `railway.toml` — builder `DOCKERFILE`
 - `scripts/railway-start.sh` — inject + `serve`
-- `scripts/inject_clarity.js` — inyección desde env
-- `site/serve.json` — CSP con Clarity permitido
+- `scripts/inject_clarity.cjs` — inyección desde env
+- `public/serve.json` (se copia a `dist/`) — CSP con Clarity permitido
 
 ## Panel Railway
 

@@ -1,0 +1,36 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: cls = "" } = Astro.props;
+---
+
+<span class:list={["logo", cls]} role="img" aria-label="COMA">
+  <span aria-hidden="true">COMA</span><svg
+    class="logo__comma"
+    viewBox="0 0 20 40"
+    aria-hidden="true"
+    ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"
+    ></path></svg
+  >
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: flex-start;
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-size: 1.35rem;
+  }
+  .logo__comma {
+    width: 0.32em;
+    height: auto;
+    margin-left: 0.04em;
+    margin-top: -0.18em;
+    color: var(--red);
+    transform-origin: 50% 0;
+  }
+</style>

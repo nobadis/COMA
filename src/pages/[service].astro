@@ -1,0 +1,141 @@
+---
+import Base from "../layouts/Base.astro";
+import Arrow from "../components/Arrow.astro";
+import Process from "../components/Process.astro";
+import Faq from "../components/Faq.astro";
+import Cta from "../components/Cta.astro";
+import Marquee from "../components/Marquee.astro";
+import { services, type Service } from "../data/services";
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { service: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: s.label,
+    description: s.seoDescription,
+    provider: { "@id": "https://comunicacionenmallorca.com/#org" },
+    areaServed: "Mallorca",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: s.faq.map((q) => ({ "@type": "Question", name: q.title, acceptedAnswer: { "@type": "Answer", text: q.text } })),
+  },
+];
+---
+
+<Base title={s.seoTitle} description={s.seoDescription} schema={schema}>
+  <section class="ph">
+    <div class="wrap ph__inner">
+      <p class="eyebrow" data-reveal>{s.eyebrow}</p>
+      <h1 data-split>{s.h1}<span class="comma">,</span></h1>
+      <p class="lead" data-reveal style="--d:3">{s.lead}</p>
+      <div class="ph__ctas" data-reveal style="--d:4">
+        <a class="btn btn--red" href="/contacto/" data-magnetic>Pedir propuesta <Arrow /></a>
+        <a class="btn btn--ghost" href="#que-hacemos">Qué incluye</a>
+      </div>
+    </div>
+  </section>
+  <Marquee items={s.tags} />
+
+  <section class="section night" id="que-hacemos" data-dark>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Qué hacemos</p>
+        <h2 data-split>{s.deliverablesTitle}</h2>
+      </div>
+      <ul class="dl">
+        {s.deliverables.map((d, i) => (
+          <li class="dl__item" data-reveal data-spot style={`--d:${i % 3}`}>
+            <span class="dl__n">0{i + 1}</span>
+            <h3>{d.title}</h3>
+            <p>{d.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section sand">
+    <div class="wrap grid-2">
+      <div>
+        <p class="eyebrow" data-reveal>Para quién</p>
+        <h2 data-split>{s.forWhomTitle}</h2>
+      </div>
+      <ul class="fw">
+        {s.forWhom.map((f, i) => <li data-reveal style={`--d:${i}`}>{f}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Process title="Así lo hacemos" steps={s.steps} />
+  <Faq items={s.faq} />
+  <Cta title={s.ctaTitle} subject={s.label} />
+</Base>
+
+<style>
+  .ph {
+    padding-top: clamp(9rem, 18vw, 13rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .ph__inner {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .ph h1 {
+    max-width: 18ch;
+  }
+  .ph__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .dl {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 700px) {
+    .dl { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .dl { grid-template-columns: repeat(3, 1fr); }
+  }
+  .dl__item {
+    --mx: 50%;
+    --my: 50%;
+    padding: 2rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: radial-gradient(400px circle at var(--mx) var(--my), rgb(225 17 45 / 0.14), transparent 60%), var(--night-2);
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  .dl__n { color: var(--red); font-size: var(--fs-xs); font-weight: 600; }
+  .dl__item h3 { font-size: 1.4rem; }
+  .dl__item p { color: var(--muted); font-size: var(--fs-sm); }
+  .fw { list-style: none; padding: 0; border-top: 1px solid var(--line); }
+  .fw li {
+    padding: 1.25rem 0 1.25rem 2rem;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-lg);
+    position: relative;
+  }
+  .fw li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.85rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--red);
+  }
+</style>

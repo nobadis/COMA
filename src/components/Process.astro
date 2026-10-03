@@ -1,0 +1,101 @@
+---
+interface Step {
+  title: string;
+  text: string;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  steps: Step[];
+}
+const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
+---
+
+<section class="section pr">
+  <div class="wrap pr__grid">
+    <div class="pr__head">
+      <p class="eyebrow" data-reveal>{eyebrow}</p>
+      <h2 data-split>{title}</h2>
+    </div>
+    <ol class="pr__list">
+      {
+        steps.map((s, i) => (
+          <li class="pr__item" data-reveal style={`--d:${i % 2}`}>
+            <span class="pr__n">0{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .pr__grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .pr__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: start;
+    }
+    .pr__head {
+      position: sticky;
+      top: 8rem;
+    }
+  }
+  .pr__head {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .pr__list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .pr__list {
+      grid-template-columns: 1fr 1fr;
+    }
+    .pr__item:nth-child(even) {
+      translate: 0 3rem;
+    }
+  }
+  .pr__item {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border-radius: var(--radius);
+    background: #fff;
+    border: 1px solid var(--line);
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    min-height: 15rem;
+    transition:
+      transform 0.6s var(--ease),
+      box-shadow 0.6s var(--ease);
+  }
+  .pr__item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.25);
+  }
+  .pr__n {
+    font-variation-settings: "wdth" 125;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--red);
+    letter-spacing: -0.04em;
+    margin-bottom: auto;
+    padding-bottom: 1.5rem;
+  }
+  .pr__item h3 {
+    font-size: 1.5rem;
+  }
+  .pr__item p {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+</style>

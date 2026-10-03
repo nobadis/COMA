@@ -1,0 +1,270 @@
+---
+import Arrow from "./Arrow.astro";
+
+const script = [
+  { who: "user", text: "Hola, ¿tenéis mesa para 4 este sábado a las 21:00?" },
+  { who: "bot", text: "¡Hola! Sí, el sábado a las 21:00 tenemos mesa para 4 en la terraza. ¿A nombre de quién la reservo?" },
+  { who: "user", text: "Laura. ¿Hay opciones sin gluten?" },
+  { who: "bot", text: "Claro, Laura: buena parte de la carta se puede preparar sin gluten. Reserva confirmada ✓ Te envío los detalles por WhatsApp." },
+  { who: "sys", text: "Reserva registrada · Equipo de sala avisado" },
+];
+---
+
+<section class="section ad" id="ia">
+  <div class="wrap grid-2 ad__grid">
+    <div class="ad__copy">
+      <p class="eyebrow" data-reveal>Agentes de IA</p>
+      <h2 data-split>Atiende a cada cliente como si fuera el único<span class="comma">,</span></h2>
+      <p class="lead" data-reveal style="--d:2">
+        Un agente de IA entrenado con tu negocio responde al instante, en el idioma del cliente, a
+        cualquier hora. Y cuando hace falta una persona, avisa a tu equipo con todo el contexto.
+      </p>
+      <ul class="ad__points" data-reveal style="--d:3">
+        <li><strong>Web, WhatsApp y email</strong> — donde ya están tus clientes.</li>
+        <li><strong>Multidioma</strong> — español, catalán, inglés, alemán y más.</li>
+        <li><strong>Conectado</strong> — a tu agenda, CRM o sistema de reservas.</li>
+      </ul>
+      <a href="/agentes-ia/" class="btn" data-reveal style="--d:4">Descubre los agentes de IA <Arrow /></a>
+    </div>
+
+    <div class="ad__device" data-reveal style="--d:2">
+      <div class="ad__top">
+        <span class="ad__avatar" aria-hidden="true">C<i></i></span>
+        <span>
+          <strong>Asistente · Restaurante</strong>
+          <small><i class="ad__live"></i> En línea</small>
+        </span>
+        <span class="ad__tag">Ejemplo ilustrativo</span>
+      </div>
+      <p class="sr-only">Ejemplo de conversación con un agente de IA:</p>
+      <ol class="ad__chat" data-chat>
+        {
+          script.map((m) => (
+            <li class={`ad__msg ad__msg--${m.who}`}>{m.text}</li>
+          ))
+        }
+      </ol>
+      <div class="ad__input" aria-hidden="true">
+        <span>Escribe un mensaje…</span>
+        <span class="ad__send"><Arrow /></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLElement>("[data-chat]").forEach((chat) => {
+    const msgs = Array.from(chat.children) as HTMLElement[];
+    if (reduced) return;
+    msgs.forEach((m) => m.classList.add("is-wait"));
+    let timer = 0;
+    const play = () => {
+      msgs.forEach((m) => m.classList.add("is-wait"));
+      let t = 400;
+      msgs.forEach((m) => {
+        const isBot = m.classList.contains("ad__msg--bot");
+        if (isBot) {
+          window.setTimeout(() => chat.classList.add("is-typing"), t);
+          t += 1200;
+        }
+        window.setTimeout(() => {
+          chat.classList.remove("is-typing");
+          m.classList.remove("is-wait");
+        }, t);
+        t += isBot ? 1300 : 900;
+      });
+      timer = window.setTimeout(play, t + 4500);
+    };
+    const io = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        io.disconnect();
+        play();
+      }
+    }, { threshold: 0.4 });
+    io.observe(chat);
+    window.addEventListener("pagehide", () => window.clearTimeout(timer));
+  });
+</script>
+
+<style>
+  .ad__grid {
+    align-items: center;
+  }
+  .ad__copy {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .ad__points {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .ad__points li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .ad__points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--red);
+  }
+  .ad__device {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 28px;
+    padding: 0.75rem;
+    box-shadow:
+      0 50px 100px -40px rgb(0 0 0 / 0.45),
+      0 0 0 1px rgb(255 255 255 / 0.04) inset;
+    max-width: 30rem;
+    width: 100%;
+    justify-self: center;
+    transform: rotate(1.5deg);
+  }
+  .ad__top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem 0.9rem;
+    border-bottom: 1px solid var(--night-line);
+    font-size: var(--fs-sm);
+    line-height: 1.3;
+  }
+  .ad__top small {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--night-muted);
+  }
+  .ad__avatar {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: var(--red);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-variation-settings: "wdth" 125;
+  }
+  .ad__avatar i {
+    display: none;
+  }
+  .ad__live {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3ad07a;
+    box-shadow: 0 0 0 3px rgb(58 208 122 / 0.2);
+  }
+  .ad__tag {
+    margin-left: auto;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--night-muted);
+    border: 1px solid var(--night-line);
+    border-radius: 999px;
+    padding: 0.25rem 0.55rem;
+    white-space: nowrap;
+  }
+  .ad__chat {
+    list-style: none;
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 23rem;
+    font-size: var(--fs-sm);
+    line-height: 1.45;
+    position: relative;
+  }
+  .ad__msg {
+    max-width: 84%;
+    padding: 0.7rem 0.95rem;
+    border-radius: 18px;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.6s var(--ease);
+    transform-origin: bottom left;
+  }
+  .ad__msg.is-wait {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  .ad__msg--user {
+    align-self: flex-end;
+    background: var(--paper);
+    color: var(--ink);
+    border-bottom-right-radius: 6px;
+    transform-origin: bottom right;
+  }
+  .ad__msg--bot {
+    background: var(--night-2);
+    border: 1px solid var(--night-line);
+    border-bottom-left-radius: 6px;
+  }
+  .ad__msg--sys {
+    align-self: center;
+    max-width: none;
+    font-size: var(--fs-xs);
+    color: #3ad07a;
+    background: rgb(58 208 122 / 0.08);
+    border: 1px solid rgb(58 208 122 / 0.25);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+  }
+  .ad__chat.is-typing::after {
+    content: "";
+    width: 3.2rem;
+    height: 2.1rem;
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+    background:
+      radial-gradient(circle 3px, var(--night-muted) 98%, transparent) 0.95rem 50% / 8px 8px no-repeat,
+      radial-gradient(circle 3px, var(--night-muted) 98%, transparent) 1.5rem 50% / 8px 8px no-repeat,
+      radial-gradient(circle 3px, var(--night-muted) 98%, transparent) 2.05rem 50% / 8px 8px no-repeat,
+      var(--night-2);
+    border: 1px solid var(--night-line);
+    animation: typing 1s ease-in-out infinite;
+    order: 99;
+  }
+  .ad__chat.is-typing .ad__msg.is-wait {
+    order: 100;
+  }
+  @keyframes typing {
+    50% {
+      opacity: 0.5;
+    }
+  }
+  .ad__input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.4rem 0.4rem 1rem;
+    border-radius: 999px;
+    background: var(--night-2);
+    color: var(--night-muted);
+    font-size: var(--fs-sm);
+  }
+  .ad__send {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    display: grid;
+    place-items: center;
+  }
+  .ad__send :global(.arrow) {
+    width: 1rem;
+    transform: rotate(-90deg);
+  }
+</style>

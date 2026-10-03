@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+import Arrow from "../components/Arrow.astro";
+---
+
+<Base title="Página no encontrada" description="La página que buscas no existe." noindex>
+  <section class="nf wrap">
+    <p class="eyebrow">Error 404</p>
+    <h1>Aquí falta algo<span class="comma">,</span></h1>
+    <p class="lead">La página que buscas no existe o ha cambiado de sitio.</p>
+    <a class="btn btn--red" href="/">Volver al inicio <Arrow /></a>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    min-height: 80svh;
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 1.5rem;
+    padding-top: 8rem;
+  }
+</style>

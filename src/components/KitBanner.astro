@@ -1,0 +1,74 @@
+---
+import Arrow from "./Arrow.astro";
+---
+
+<section class="kb" data-dark>
+  <div class="wrap kb__inner">
+    <div>
+      <p class="kb__eyebrow" data-reveal>Agente digitalizador · Kit Digital</p>
+      <h2 class="kb__title" data-split>¿Tienes derecho a ayudas para digitalizarte<span class="kb__q">?</span></h2>
+    </div>
+    <div class="kb__side" data-reveal style="--d:2">
+      <p>
+        Te decimos si encajas, qué solución te conviene y nos encargamos de todo: desde la
+        implantación hasta la justificación. Te avisamos en cuanto se abra la próxima convocatoria.
+      </p>
+      <a href="/kit-digital/" class="btn btn--light" data-magnetic>Todo sobre el Kit Digital <Arrow /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kb {
+    background: var(--red);
+    color: #fff;
+    padding-block: clamp(4rem, 9vw, 8rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .kb::before {
+    content: "";
+    position: absolute;
+    inset: auto -10% -60% auto;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(0 0 0 / 0.25), transparent);
+  }
+  .kb__inner {
+    position: relative;
+    display: grid;
+    gap: 2.5rem;
+    align-items: end;
+  }
+  @media (min-width: 1000px) {
+    .kb__inner {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  .kb__eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+  .kb__title {
+    font-size: var(--fs-3xl);
+    line-height: 0.95;
+  }
+  .kb__q {
+    color: var(--ink);
+  }
+  .kb__side {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+    font-size: var(--fs-lg);
+    line-height: 1.5;
+  }
+  .kb .btn--light::before {
+    background: var(--ink);
+  }
+</style>

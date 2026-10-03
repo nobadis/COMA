@@ -1,15 +1,17 @@
-# Imagen Node-only: build reproducible en Railway (evita fallos de Nixpacks/Railpack).
+# Build de Astro + servidor estático (serve) en una imagen Node.
 FROM node:22-bookworm-slim
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
+COPY astro.config.mjs tsconfig.json ./
+COPY public ./public
+COPY src ./src
 COPY scripts ./scripts
-COPY site ./site
 
-RUN chmod +x scripts/railway-start.sh
+RUN npx astro build && npm prune --omit=dev && chmod +x scripts/railway-start.sh
 
 # Project ID de Clarity (sobreescribible en Variables de Railway).
 ENV CLARITY_PROJECT_ID=ylu80felfk

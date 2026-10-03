@@ -1,0 +1,71 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import ServicesIndex from "../components/ServicesIndex.astro";
+import Manifesto from "../components/Manifesto.astro";
+import AgentDemo from "../components/AgentDemo.astro";
+import FlowDemo from "../components/FlowDemo.astro";
+import Process from "../components/Process.astro";
+import KitBanner from "../components/KitBanner.astro";
+import Faq from "../components/Faq.astro";
+import Cta from "../components/Cta.astro";
+import { site } from "../data/site";
+
+const faq = [
+  {
+    title: "¿Con qué tipo de empresas trabajáis?",
+    text: "Sobre todo con pymes, autónomos y marcas de Mallorca y Baleares: turismo, restauración, comercio, servicios profesionales, salud o industria. Si tu empresa quiere crecer y hacerse notar, hablamos el mismo idioma.",
+  },
+  {
+    title: "¿Puedo contratar solo un servicio?",
+    text: "Sí. Puedes empezar por lo que más te urge —una campaña, un agente de IA o una automatización— y ampliar cuando lo necesites. Todo encaja porque lo diseñamos con la misma visión.",
+  },
+  {
+    title: "¿Qué diferencia a COMA de otras agencias?",
+    text: `Llevamos en la comunicación desde ${site.since}, cuando todo era radio, prensa y papel, y hoy trabajamos con inteligencia artificial y automatización. Unimos criterio de marca y tecnología en un único equipo local.`,
+  },
+  {
+    title: "¿Cómo empezamos?",
+    text: "Escríbenos contándonos tu situación. Te proponemos una primera reunión para entender tu negocio y, a partir de ahí, una propuesta clara con objetivos, plazos y presupuesto.",
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  description="Agencia de marketing en Mallorca desde 1999: notoriedad de marca, agentes de IA, automatizaciones y Kit Digital para pymes y autónomos."
+  schema={schema}
+>
+  <Hero />
+  <Marquee items={["Branding", "Agentes de IA", "Prensa y radio", "Automatización", "Redes sociales", "Kit Digital", "Publicidad digital", "Webs"]} />
+  <ServicesIndex />
+  <Manifesto
+    text={`Desde ${site.since} ayudamos a empresas de Mallorca a contar lo que hacen. Empezamos en la radio, la prensa y el papel. Hoy sumamos datos, automatización e inteligencia artificial. Lo que no ha cambiado: que tu marca se entienda, se recuerde y se elija.`}
+  />
+  <AgentDemo />
+  <FlowDemo />
+  <Process
+    title="Un método claro, de la primera charla a los resultados"
+    steps={[
+      { title: "Escuchamos", text: "Entendemos tu negocio, tus clientes y lo que quieres conseguir. Sin plantillas." },
+      { title: "Diseñamos", text: "Estrategia, creatividad y tecnología en una propuesta con objetivos medibles." },
+      { title: "Lanzamos", text: "Campañas, agentes y automatizaciones en marcha, con tu equipo a bordo." },
+      { title: "Medimos y mejoramos", text: "Informes claros y ajustes continuos. Lo que no se mide, no mejora." },
+    ]}
+  />
+  <KitBanner />
+  <Faq items={faq} />
+  <Cta />
+</Base>

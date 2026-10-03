@@ -1,0 +1,301 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Arrow from "../components/Arrow.astro";
+import Process from "../components/Process.astro";
+import Faq from "../components/Faq.astro";
+import Cta from "../components/Cta.astro";
+import logos from "../assets/kit-digital-financiacion.jpg";
+import { mailto } from "../data/site";
+
+const segments = [
+  { n: "I", who: "10 a menos de 50 empleados" },
+  { n: "II", who: "3 a menos de 10 empleados" },
+  { n: "III", who: "0 a menos de 3 empleados (micropymes y autónomos)" },
+  { n: "IV", who: "50 a menos de 100 empleados" },
+  { n: "V", who: "100 a menos de 250 empleados" },
+];
+
+const categories = [
+  { t: "Sitio web y presencia básica", d: "Tu web profesional, optimizada y lista para captar clientes." },
+  { t: "Comercio electrónico", d: "Tienda online para vender tus productos o servicios." },
+  { t: "Gestión de redes sociales", d: "Estrategia, publicaciones y gestión de tus perfiles sociales." },
+  { t: "Presencia avanzada en internet", d: "Posicionamiento, visibilidad y una imagen digital renovada." },
+  { t: "Gestión de clientes (CRM)", d: "Digitaliza y ordena la relación comercial con tus clientes." },
+  { t: "Business intelligence y analítica", d: "Explota tus datos para tomar mejores decisiones." },
+  { t: "Gestión de procesos", d: "Digitaliza y automatiza la operativa de tu empresa." },
+  { t: "Factura electrónica", d: "Emisión y recepción de facturas digital y segura." },
+  { t: "Oficina virtual", d: "Herramientas de colaboración para equipos más eficientes." },
+  { t: "Comunicaciones seguras", d: "Conexiones protegidas entre los dispositivos de tu equipo." },
+  { t: "Ciberseguridad", d: "Protección básica y avanzada para los equipos de tu empresa." },
+];
+
+const faq = [
+  {
+    title: "¿Está abierto ahora el Kit Digital?",
+    text: "A octubre de 2026 no hay plazo de solicitud abierto: las convocatorias anteriores cerraron, la última el 31 de octubre de 2025. La Orden TDF/39/2026, publicada en el BOE el 28 de enero de 2026, permite nuevas convocatorias por segmentos con fondos remanentes. Cuando Red.es publique una, te avisamos.",
+  },
+  {
+    title: "Ya tengo el bono concedido, ¿me podéis ayudar?",
+    text: "Sí. Revisamos qué te queda por usar, te proponemos la solución que más te conviene, la implantamos y preparamos la documentación de justificación.",
+  },
+  {
+    title: "¿Tiene algún coste para mí?",
+    text: "La ayuda cubre el importe de la solución hasta el máximo de tu bono. Los impuestos indirectos (IVA) y lo que supere el bono no son subvencionables. Te lo explicamos todo por escrito antes de firmar.",
+  },
+  {
+    title: "¿Y si no encajo en el Kit Digital?",
+    text: "Te lo diremos con franqueza y, si te interesa, te propondremos alternativas: otras ayudas disponibles o un plan escalonado adaptado a tu presupuesto.",
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({ "@type": "Question", name: q.title, acceptedAnswer: { "@type": "Answer", text: q.text } })),
+  },
+];
+---
+
+<Base
+  title="Kit Digital en Mallorca"
+  description="Te ayudamos con el Kit Digital en Mallorca: requisitos, soluciones, implantación y justificación. Estado de la convocatoria en 2026 y aviso de nuevas convocatorias."
+  schema={schema}
+>
+  <section class="kh">
+    <div class="wrap kh__inner">
+      <p class="eyebrow" data-reveal>Kit Digital · Ayudas a la digitalización</p>
+      <h1 data-split>Digitalízate con ayudas. Nosotros nos encargamos del resto<span class="comma">,</span></h1>
+      <p class="lead" data-reveal style="--d:3">
+        El Kit Digital financia soluciones digitales para pymes y autónomos. Te ayudamos a saber si
+        encajas, a elegir bien y a implantarlo y justificarlo sin quebraderos de cabeza.
+      </p>
+      <div class="kh__ctas" data-reveal style="--d:4">
+        <a class="btn btn--red" href={mailto("Avisadme de la próxima convocatoria del Kit Digital")} data-magnetic>
+          Avisadme cuando abra <Arrow />
+        </a>
+        <a class="btn btn--ghost" href="#soluciones">Ver soluciones</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="status" data-reveal>
+      <div class="status__badge"><i></i> Estado · octubre 2026</div>
+      <div class="status__body">
+        <h2>Convocatorias cerradas, nuevas en camino</h2>
+        <p>
+          Los plazos de solicitud anteriores finalizaron (el último, el 31 de octubre de 2025). La
+          <strong>Orden TDF/39/2026</strong> (BOE, 28 de enero de 2026) habilita nuevas convocatorias por
+          segmentos con fondos remanentes. Aún no hay fecha oficial: déjanos tu email y te avisamos en
+          cuanto Red.es abra plazo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="kq">
+        <p class="eyebrow" data-reveal>¿Qué es?</p>
+        <h2 data-split>Una ayuda pública para dar el salto digital</h2>
+        <p class="lead" data-reveal style="--d:2">
+          Kit Digital es una iniciativa del Gobierno de España, financiada por los fondos Next
+          Generation EU, que subvenciona la implantación de soluciones digitales disponibles en el
+          mercado para mejorar la madurez digital de pymes y autónomos.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow" data-reveal>¿A quién va dirigido?</p>
+        <ol class="seg">
+          {segments.map((s, i) => (
+            <li data-reveal style={`--d:${i}`}>
+              <span class="seg__n">Segmento {s.n}</span>
+              <span>{s.who}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section night" id="soluciones" data-dark>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Soluciones</p>
+        <h2 data-split>Once categorías para digitalizar tu empresa<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          El importe de cada ayuda depende de la categoría y del segmento de tu empresa. Te decimos
+          exactamente qué te corresponde.
+        </p>
+      </div>
+      <ul class="cats">
+        {categories.map((c, i) => (
+          <li data-reveal data-spot style={`--d:${i % 3}`}>
+            <span class="cats__n">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{c.t}</h3>
+            <p>{c.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Process
+    title="Te acompañamos de principio a fin"
+    steps={[
+      { title: "Comprobamos", text: "Revisamos si cumples los requisitos y qué bono te corresponde." },
+      { title: "Elegimos", text: "Te recomendamos la solución que más impacto tendrá en tu negocio." },
+      { title: "Implantamos", text: "Diseñamos, desarrollamos y ponemos en marcha la solución." },
+      { title: "Justificamos", text: "Preparamos la documentación para que no pierdas la ayuda." },
+    ]}
+  />
+
+  <Faq items={faq} />
+
+  <section class="wrap funding">
+    <Image src={logos} alt="Programa Kit Digital cofinanciado por los fondos Next Generation (EU) del Mecanismo de Recuperación y Resiliencia. Gobierno de España, Red.es, Kit Digital, Plan de Recuperación y Unión Europea NextGenerationEU." widths={[800, 1600, 2560]} sizes="(min-width: 1320px) 1320px, 100vw" />
+  </section>
+
+  <Cta title="¿Te ayudamos con tu Kit Digital?" subject="Kit Digital" />
+</Base>
+
+<style>
+  .kh {
+    padding-top: clamp(9rem, 18vw, 13rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .kh__inner {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .kh h1 {
+    max-width: 18ch;
+  }
+  .kh__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .status {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--radius);
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.3);
+  }
+  @media (min-width: 900px) {
+    .status {
+      grid-template-columns: 14rem 1fr;
+    }
+  }
+  .status__badge {
+    align-self: start;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background: #fff4e0;
+    color: #8a5300;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .status__badge i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e59a12;
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0.3;
+    }
+  }
+  .status h2 {
+    font-size: var(--fs-xl);
+    margin-bottom: 0.75rem;
+  }
+  .status p {
+    color: var(--muted);
+    max-width: 70ch;
+  }
+  .kq {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  .seg {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .seg li {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .seg__n {
+    font-weight: 600;
+    color: var(--red);
+  }
+  .cats {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 700px) {
+    .cats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .cats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .cats li {
+    --mx: 50%;
+    --my: 50%;
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(400px circle at var(--mx) var(--my), rgb(225 17 45 / 0.14), transparent 60%),
+      var(--night-2);
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+  }
+  .cats__n {
+    color: var(--red);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+  }
+  .cats h3 {
+    font-size: 1.3rem;
+  }
+  .cats p {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .funding {
+    padding-block: 2rem 1rem;
+  }
+  .funding img {
+    width: 100%;
+    border-radius: var(--radius-sm);
+  }
+</style>

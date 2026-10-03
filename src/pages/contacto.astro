@@ -1,0 +1,296 @@
+---
+import Base from "../layouts/Base.astro";
+import Arrow from "../components/Arrow.astro";
+import { site, mailto } from "../data/site";
+
+const interests = ["Notoriedad y marca", "Agentes de IA", "Automatizaciones", "Kit Digital", "Web o ecommerce", "Redes sociales", "Publicidad digital", "Otro"];
+const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
+---
+
+<Base
+  title="Contacto"
+  description="Cuéntanos tu proyecto. Agencia de marketing, IA y automatización en Palma de Mallorca. Escríbenos a info@comunicacionenmallorca.com."
+>
+  <section class="ct">
+    <div class="wrap ct__grid">
+      <div class="ct__intro">
+        <p class="eyebrow" data-reveal>Contacto</p>
+        <h1 data-split>¿Necesitas alguna información sobre nosotros o algún servicio?</h1>
+        <p class="lead" data-reveal style="--d:3">
+          Cuéntanos qué tienes en mente. Rellena el brief y se abrirá tu correo con el mensaje listo
+          para enviar, o escríbenos directamente.
+        </p>
+        <dl class="ct__info" data-reveal style="--d:4">
+          <div>
+            <dt>Email</dt>
+            <dd><a href={mailto()}>{site.email}</a></dd>
+          </div>
+          <div>
+            <dt>Estudio</dt>
+            <dd>
+              <a href={site.mapsUrl} target="_blank" rel="noopener">
+                {site.address.street}, {site.address.postalCode} {site.address.city} ↗
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <form class="brief" data-brief data-reveal style="--d:2" novalidate>
+        <fieldset>
+          <legend>¿En qué te podemos ayudar?</legend>
+          <div class="brief__chips">
+            {
+              interests.map((i) => (
+                <label class="pick">
+                  <input type="checkbox" name="interes" value={i} />
+                  <span>{i}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <div class="brief__row">
+          <label class="field">
+            <span>Nombre</span>
+            <input type="text" name="nombre" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>Empresa</span>
+            <input type="text" name="empresa" autocomplete="organization" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Cuéntanos un poco más</span>
+          <textarea name="mensaje" rows="4" placeholder="Qué quieres conseguir, a quién te diriges, qué tienes ya en marcha…" required></textarea>
+        </label>
+
+        <fieldset>
+          <legend>¿Cuándo te gustaría empezar?</legend>
+          <div class="brief__chips">
+            {
+              timings.map((t, i) => (
+                <label class="pick">
+                  <input type="radio" name="plazo" value={t} checked={i === 0} />
+                  <span>{t}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <p class="brief__error" data-brief-error hidden>Indica tu nombre y cuéntanos brevemente tu proyecto.</p>
+
+        <div class="brief__foot">
+          <button class="btn btn--red" type="submit" data-magnetic>Preparar email <Arrow /></button>
+          <p class="brief__legal">
+            No guardamos nada en esta web: el mensaje se abre en tu programa de correo. Consulta
+            nuestra <a href="/privacidad/">política de privacidad</a>.
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { site } from "../data/site";
+
+  document.querySelectorAll<HTMLFormElement>("[data-brief]").forEach((form) => {
+    const error = form.querySelector<HTMLElement>("[data-brief-error]");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const nombre = String(data.get("nombre") ?? "").trim();
+      const mensaje = String(data.get("mensaje") ?? "").trim();
+      if (!nombre || !mensaje) {
+        if (error) error.hidden = false;
+        form.querySelector<HTMLElement>(nombre ? "textarea" : "input[name=nombre]")?.focus();
+        return;
+      }
+      if (error) error.hidden = true;
+      const empresa = String(data.get("empresa") ?? "").trim();
+      const intereses = data.getAll("interes").map(String);
+      const body = [
+        `Hola, soy ${nombre}${empresa ? ` de ${empresa}` : ""}.`,
+        "",
+        mensaje,
+        "",
+        intereses.length ? `Me interesa: ${intereses.join(", ")}` : "",
+        `Plazo: ${data.get("plazo") ?? ""}`,
+      ]
+        .filter((l, i, arr) => l !== "" || arr[i - 1] !== "")
+        .join("\n");
+      const subject = `Nuevo proyecto${empresa ? ` · ${empresa}` : ""}`;
+      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>
+
+<style>
+  .ct {
+    padding-top: clamp(8.5rem, 16vw, 12rem);
+    padding-bottom: clamp(4rem, 9vw, 8rem);
+  }
+  .ct__grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .ct__grid {
+      grid-template-columns: 1fr 1.05fr;
+      align-items: start;
+    }
+    .ct__intro {
+      position: sticky;
+      top: 8rem;
+    }
+  }
+  .ct__intro {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .ct__intro h1 {
+    font-size: var(--fs-2xl);
+  }
+  .ct__info {
+    display: grid;
+    gap: 1.25rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1.5rem;
+  }
+  .ct__info dt {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .ct__info dd {
+    margin: 0.25rem 0 0;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+  }
+  .ct__info a {
+    text-decoration: none;
+  }
+  .ct__info a:hover {
+    color: var(--red);
+  }
+
+  .brief {
+    display: grid;
+    gap: 1.75rem;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border-radius: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    --line: var(--night-line);
+    box-shadow: 0 50px 100px -50px rgb(0 0 0 / 0.5);
+  }
+  fieldset {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  legend {
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+    font-variation-settings: "wdth" 115;
+  }
+  .brief__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .pick {
+    position: relative;
+    cursor: pointer;
+  }
+  .pick input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .pick span {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--night-line);
+    font-size: var(--fs-sm);
+    transition:
+      background 0.3s var(--ease),
+      border-color 0.3s var(--ease),
+      transform 0.3s var(--ease);
+  }
+  .pick:hover span {
+    border-color: var(--night-muted);
+  }
+  .pick input:checked + span {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+  .pick input:focus-visible + span {
+    outline: 2px solid var(--paper);
+    outline-offset: 2px;
+  }
+  .pick input:active + span {
+    transform: scale(0.96);
+  }
+  .brief__row {
+    display: grid;
+    gap: 1.75rem;
+  }
+  @media (min-width: 640px) {
+    .brief__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .field span {
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--night-line);
+    padding: 0.6rem 0;
+    font-size: var(--fs-lg);
+    color: var(--paper);
+    resize: vertical;
+    transition: border-color 0.3s;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+  .field textarea::placeholder {
+    color: rgb(243 240 234 / 0.35);
+  }
+  .brief__error {
+    color: #ff8a9a;
+    font-size: var(--fs-sm);
+  }
+  .brief__foot {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+  .brief__legal {
+    font-size: var(--fs-xs);
+    color: var(--night-muted);
+  }
+  .brief__legal a:hover {
+    color: var(--paper);
+  }
+</style>

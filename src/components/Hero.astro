@@ -1,0 +1,202 @@
+---
+import Arrow from "./Arrow.astro";
+import { site } from "../data/site";
+
+const years = new Date().getFullYear() - site.since;
+---
+
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__glow"></div>
+    <svg class="hero__comma" viewBox="0 0 20 40"
+      ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"></path></svg
+    >
+  </div>
+
+  <div class="wrap hero__inner">
+    <p class="eyebrow" data-reveal>Agencia de marketing en Mallorca · Desde {site.since}</p>
+
+    <h1 class="hero__title display" data-split>
+      Hacemos que tu empresa <em>se note</em><span class="comma">,</span>
+    </h1>
+
+    <div class="hero__row">
+      <p class="lead" data-reveal style="--d:3">
+        Notoriedad de marca, agentes de IA y automatizaciones para pymes que quieren crecer sin
+        hacer más ruido del necesario. Estrategia, creatividad y tecnología bajo un mismo techo.
+      </p>
+      <div class="hero__ctas" data-reveal style="--d:4">
+        <a href="/contacto/" class="btn btn--red" data-magnetic>Cuéntanos tu proyecto <Arrow /></a>
+        <a href="#servicios" class="btn btn--ghost">Ver servicios</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wrap">
+    <dl class="stats">
+      <div data-reveal>
+        <dt>Años comunicando</dt>
+        <dd>+<span data-count={years}>{years}</span></dd>
+      </div>
+      <div data-reveal style="--d:1">
+        <dt>De la radio a la IA</dt>
+        <dd>360<span class="red">º</span></dd>
+      </div>
+      <div data-reveal style="--d:2">
+        <dt>Agentes trabajando</dt>
+        <dd>24/7</dd>
+      </div>
+      <div data-reveal style="--d:3">
+        <dt>Equipo local</dt>
+        <dd>Palma<span class="red">.</span></dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 8rem;
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero__glow {
+    position: absolute;
+    width: 70vmax;
+    height: 70vmax;
+    right: -25vmax;
+    top: -30vmax;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(225 17 45 / 0.22), rgb(225 17 45 / 0) 70%);
+    filter: blur(20px);
+    animation: drift 18s var(--ease-io) infinite alternate;
+  }
+  .hero__comma {
+    position: absolute;
+    right: clamp(-7rem, -5vw, -2rem);
+    top: 7%;
+    width: clamp(9rem, 19vw, 19rem);
+    color: var(--red);
+    opacity: 0.95;
+    filter: drop-shadow(0 40px 60px rgb(225 17 45 / 0.3));
+    animation:
+      comma-in 1.6s var(--ease) 0.2s both,
+      float 9s ease-in-out 1.8s infinite alternate;
+  }
+  @keyframes comma-in {
+    from {
+      transform: translateY(-40%) rotate(-25deg) scale(0.6);
+      opacity: 0;
+    }
+  }
+  @keyframes float {
+    to {
+      transform: translateY(-18px) rotate(4deg);
+    }
+  }
+  @keyframes drift {
+    to {
+      transform: translate(-12vmax, 10vmax) scale(1.15);
+    }
+  }
+  @media (max-width: 1099px) {
+    .hero__comma {
+      top: 5.5rem;
+      right: -2.5rem;
+      width: clamp(6.5rem, 18vw, 11rem);
+    }
+  }
+  @media (max-width: 599px) {
+    .hero__comma {
+      top: 4.75rem;
+      right: -1.75rem;
+      width: 5.5rem;
+    }
+    .hero__inner .eyebrow {
+      max-width: 75%;
+    }
+  }
+
+  .hero__inner {
+    position: relative;
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+  }
+  .hero__title {
+    font-size: var(--fs-hero);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    max-width: 13ch;
+  }
+  .hero__title em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--ink);
+  }
+  @supports not (-webkit-text-stroke: 1px black) {
+    .hero__title em {
+      color: var(--ink);
+    }
+  }
+  .hero__row {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .stats {
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 800px) {
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .stats > div {
+    padding: 1.25rem 0 0;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.25rem;
+  }
+  .stats dt {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stats dd {
+    margin: 0;
+    font-variation-settings: "wdth" 125;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__glow,
+    .hero__comma {
+      animation: none;
+    }
+  }
+</style>

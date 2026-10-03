@@ -1,31 +1,30 @@
 # Publicar en Dinahosting (Hosting Profesional Linux)
 
-Guía para sustituir WordPress por el sitio estático del repositorio COMA.
+Guía para publicar la web Astro del repositorio COMA (sitio estático en `dist/`).
 
 ## Arquitectura en el servidor
 
 Tu dominio apunta a la carpeta raíz web (normalmente `public_html` o `www`).
 
-Debes subir **el contenido de la carpeta `site/`**, no la carpeta `site` entera:
+Debes subir **el contenido de la carpeta `dist/`** (lo genera `npm run build`), no la carpeta entera:
 
 ```
 public_html/
 ├── .htaccess
 ├── index.html
-├── coma-static.js
-├── coma-fixes.css
+├── 404.html
+├── favicon.svg
 ├── robots.txt
-├── sitemap.xml
+├── sitemap-index.xml
+├── _astro/            (CSS, JS, fuentes e imágenes con hash)
+├── agentes-ia/
+├── automatizaciones/
+├── notoriedad-de-marca/
+├── kit-digital/
+├── contacto/
 ├── aviso-legal/
-│   └── index.html
 ├── cookies/
-│   └── index.html
-├── privacidad/
-│   └── index.html
-└── wp-content/
-    └── ...
-└── wp-includes/
-    └── ...
+└── privacidad/
 ```
 
 ## Paso 1: Backup de WordPress (importante)
@@ -39,17 +38,11 @@ public_html/
 En el proyecto:
 
 ```bash
-cd /Users/paulvictormoramorgant/Dev/COMA
-npm run postprocess
+npm install
+CLARITY_PROJECT_ID=ylu80felfk npm run pack:dinahosting
 ```
 
-Genera ZIP listo para subir:
-
-```bash
-./scripts/pack-dinahosting.sh
-```
-
-Se crea `dist/coma-dinahosting.zip`.
+Hace el build y crea `release/coma-dinahosting.zip`.
 
 ## Paso 3: Subir por FTP/SFTP o Administrador de archivos
 
@@ -64,7 +57,7 @@ Se crea `dist/coma-dinahosting.zip`.
 
 ### Opción B — Administrador de archivos del panel
 
-1. Comprime `site/` en ZIP.
+1. Usa el ZIP `release/coma-dinahosting.zip`.
 2. Súbelo a `public_html`.
 3. Extrae el ZIP en el panel.
 4. Verifica permisos: carpetas `755`, archivos `644`.
@@ -89,14 +82,15 @@ En Dinahosting:
 Abre en el navegador:
 
 - https://comunicacionenmallorca.com/
+- https://comunicacionenmallorca.com/kit-digital/
 - https://comunicacionenmallorca.com/aviso-legal/
 - https://comunicacionenmallorca.com/cookies/
 - https://comunicacionenmallorca.com/privacidad/
 
 Checklist:
 
-- [ ] Home con carrusel e imágenes
-- [ ] Menú: Soluciones, Kit Digital, Contacto
+- [ ] Home con hero, servicios y animaciones
+- [ ] Menú: Notoriedad, Agentes de IA, Automatizaciones, Kit Digital, Contacto
 - [ ] Sin teléfono en contacto
 - [ ] Año actual en el pie de página
 - [ ] Banner de cookies (Aceptar / Denegar)
@@ -112,9 +106,7 @@ Si migras desde otro proveedor, en Dinahosting usa los nameservers que te indiqu
 ## Actualizar la web en el futuro
 
 ```bash
-npm run mirror      # re-descarga desde WP si aún existe
-npm run postprocess # aplica fixes
-./scripts/pack-dinahosting.sh
+CLARITY_PROJECT_ID=ylu80felfk npm run pack:dinahosting
 ```
 
 Sube solo los archivos cambiados por FTP, o el ZIP completo.
@@ -123,11 +115,11 @@ Sube solo los archivos cambiados por FTP, o el ZIP completo.
 
 | Problema | Solución |
 |----------|----------|
-| CSS roto / web sin diseño | `wp-content` debe estar en la raíz junto a `index.html` |
+| CSS roto / web sin diseño | `_astro/` debe estar en la raíz junto a `index.html` |
 | 403 / 500 | Revisa que `.htaccess` esté en `public_html` y `mod_rewrite` activo |
 | Página legal 404 | La URL debe llevar barra final: `/aviso-legal/` |
 | Sigue saliendo WordPress | Borra archivos viejos de WP en `public_html` |
-| Imágenes no cargan | Sube carpeta `wp-content/uploads` completa |
+| Imágenes no cargan | Sube la carpeta `_astro/` completa |
 
 ## Soporte Dinahosting
 

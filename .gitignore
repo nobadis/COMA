@@ -5,3 +5,5 @@ test-results/
 __pycache__/
 *.pyc
 dist/
+release/
+.astro/

@@ -1,0 +1,151 @@
+---
+import Arrow from "./Arrow.astro";
+
+const steps = [
+  { k: "Trigger", t: "Llega un contacto", s: "Formulario web, Instagram o anuncio" },
+  { k: "IA", t: "Se clasifica solo", s: "Interés, urgencia y presupuesto" },
+  { k: "CRM", t: "Se registra", s: "Ficha creada con todo el contexto" },
+  { k: "Email", t: "Recibe respuesta", s: "En menos de un minuto, 24/7" },
+  { k: "Equipo", t: "Tu equipo actúa", s: "Aviso con el lead ya cualificado" },
+];
+---
+
+<section class="section night fl" data-dark>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>Automatizaciones</p>
+      <h2 data-split>Mientras lees esto, tu negocio podría estar trabajando solo<span class="comma">,</span></h2>
+      <div data-reveal style="--d:2" class="fl__side">
+        <p class="lead">
+          Conectamos tus herramientas para que cada lead, factura o informe siga su camino sin que
+          nadie tenga que copiar y pegar.
+        </p>
+        <a href="/automatizaciones/" class="link-arrow">Ver automatizaciones <Arrow /></a>
+      </div>
+    </div>
+
+    <ol class="fl__track" data-reveal>
+      {
+        steps.map((s, i) => (
+          <li class="fl__node" style={`--i:${i}`}>
+            <span class="fl__k">{s.k}</span>
+            <strong>{s.t}</strong>
+            <span class="fl__s">{s.s}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .fl__side {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+  .fl__track {
+    --n: 5;
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    position: relative;
+  }
+  @media (min-width: 900px) {
+    .fl__track {
+      grid-template-columns: repeat(var(--n), 1fr);
+      gap: 1rem;
+    }
+  }
+  .fl__node {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    background: var(--night-2);
+    border: 1px solid var(--night-line);
+    animation: node 5s var(--ease-io) infinite;
+    animation-delay: calc(var(--i) * 0.8s);
+  }
+  .fl__node strong {
+    font-variation-settings: "wdth" 115;
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+  .fl__s {
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+    line-height: 1.45;
+  }
+  .fl__k {
+    justify-self: start;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgb(225 17 45 / 0.14);
+    color: #ff6b7f;
+    margin-bottom: 0.5rem;
+  }
+  /* conector con pulso */
+  .fl__node:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 2rem;
+    top: 100%;
+    width: 2px;
+    height: 1.25rem;
+    background: linear-gradient(var(--red), transparent);
+    background-size: 100% 200%;
+    animation: pulse-v 1.6s linear infinite;
+  }
+  @media (min-width: 900px) {
+    .fl__node:not(:last-child)::after {
+      left: 100%;
+      top: 50%;
+      width: 1rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red) 0 40%, rgb(243 240 234 / 0.15) 40%);
+      background-size: 200% 100%;
+      animation: pulse-h 1.6s linear infinite;
+    }
+  }
+  @keyframes node {
+    0%,
+    30%,
+    100% {
+      border-color: var(--night-line);
+      box-shadow: none;
+    }
+    10% {
+      border-color: rgb(225 17 45 / 0.7);
+      box-shadow: 0 0 0 4px rgb(225 17 45 / 0.12);
+    }
+  }
+  @keyframes pulse-h {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+  @keyframes pulse-v {
+    from {
+      background-position: 0 100%;
+    }
+    to {
+      background-position: 0 -100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fl__node,
+    .fl__node::after {
+      animation: none !important;
+    }
+  }
+</style>
