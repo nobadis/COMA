@@ -2,6 +2,9 @@
 import Base from "../layouts/Base.astro";
 import Arrow from "../components/Arrow.astro";
 import { site, mailto } from "../data/site";
+import { ads } from "../data/ads";
+
+const viaEndpoint = Boolean(ads.formEndpoint);
 
 const interests = [
   "Web desde 99 €",
@@ -73,6 +76,15 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
           </label>
         </div>
 
+        {
+          viaEndpoint && (
+            <label class="field">
+              <span>Email o teléfono</span>
+              <input type="text" name="contacto" autocomplete="email" required />
+            </label>
+          )
+        }
+
         <label class="field">
           <span>Cuéntanos un poco más</span>
           <textarea name="mensaje" rows="4" placeholder="Qué quieres conseguir, a quién te diriges, qué tienes ya en marcha…" required></textarea>
@@ -92,13 +104,18 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
           </div>
         </fieldset>
 
-        <p class="brief__error" data-brief-error hidden>Indica tu nombre y cuéntanos brevemente tu proyecto.</p>
+        <p class="brief__error" data-brief-error hidden>Indica tu nombre{viaEndpoint ? ", cómo contactarte" : ""} y cuéntanos brevemente tu proyecto.</p>
 
         <div class="brief__foot">
-          <button class="btn btn--red" type="submit" data-magnetic>Preparar email <Arrow /></button>
+          <button class="btn btn--red" type="submit" data-magnetic>
+            {viaEndpoint ? "Enviar mensaje" : "Preparar email"} <Arrow />
+          </button>
           <p class="brief__legal">
-            No guardamos nada en esta web: el mensaje se abre en tu programa de correo. Consulta
-            nuestra <a href="/privacidad/">política de privacidad</a>.
+            {
+              viaEndpoint
+                ? "Usamos tus datos solo para responderte. Se envían a nuestro proveedor de formularios. "
+                : "No guardamos nada en esta web: el mensaje se abre en tu programa de correo. "
+            }Consulta nuestra <a href="/privacidad/">política de privacidad</a>.
           </p>
         </div>
       </form>
@@ -107,7 +124,7 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
 </Base>
 
 <script>
-  import { site } from "../data/site";
+  import { submitLead } from "../scripts/lead";
 
   document.querySelectorAll<HTMLFormElement>("[data-brief]").forEach((form) => {
     // Precarga desde /precios/ o los botones de "Quiero mi web".
@@ -144,26 +161,24 @@ const timings = ["Lo antes posible", "En 1-3 meses", "Solo estoy explorando"];
       const data = new FormData(form);
       const nombre = String(data.get("nombre") ?? "").trim();
       const mensaje = String(data.get("mensaje") ?? "").trim();
-      if (!nombre || !mensaje) {
+      const contacto = String(data.get("contacto") ?? "").trim();
+      const needsContact = form.querySelector("input[name=contacto]") !== null;
+      if (!nombre || !mensaje || (needsContact && !contacto)) {
         if (error) error.hidden = false;
         form.querySelector<HTMLElement>(nombre ? "textarea" : "input[name=nombre]")?.focus();
         return;
       }
       if (error) error.hidden = true;
       const empresa = String(data.get("empresa") ?? "").trim();
-      const intereses = data.getAll("interes").map(String);
-      const body = [
-        `Hola, soy ${nombre}${empresa ? ` de ${empresa}` : ""}.`,
-        "",
+      void submitLead({
+        nombre,
+        empresa,
+        contacto,
         mensaje,
-        "",
-        intereses.length ? `Me interesa: ${intereses.join(", ")}` : "",
-        `Plazo: ${data.get("plazo") ?? ""}`,
-      ]
-        .filter((l, i, arr) => l !== "" || arr[i - 1] !== "")
-        .join("\n");
-      const subject = `Nuevo proyecto${empresa ? ` · ${empresa}` : ""}`;
-      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        intereses: data.getAll("interes").map(String),
+        plazo: String(data.get("plazo") ?? ""),
+        source: "contacto",
+      });
     });
   });
 </script>

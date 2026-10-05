@@ -1,0 +1,175 @@
+---
+import Base from "../../layouts/Base.astro";
+import Cta from "../../components/Cta.astro";
+import Faq from "../../components/Faq.astro";
+import { places, placeBySlug, childrenOf } from "../../data/places";
+import { site, years } from "../../data/site";
+import { basePlan } from "../../data/pricing";
+
+const balearic = ["mallorca", "menorca", "ibiza", "formentera"].map((s) => placeBySlug(s)!);
+const regions = places.filter((p) => p.kind === "ccaa");
+const faq = [
+  {
+    title: "¿En qué zonas trabajáis?",
+    text: `En toda España. Nuestra sede está en Palma de Mallorca desde ${site.since} y desde ${site.spainSince} atendemos a autónomos y pymes de todas las comunidades autónomas, en remoto y con la misma cercanía.`,
+  },
+  {
+    title: "¿El precio cambia según la ciudad?",
+    text: `No. La Web Esencial cuesta ${basePlan.price} € ${basePlan.suffix} en cualquier lugar de España. Los extras y los servicios mensuales también tienen el mismo precio.`,
+  },
+  {
+    title: "¿Tenéis oficinas en todas las ciudades?",
+    text: "No. Tenemos sede en Palma y trabajamos en remoto con el resto de España, con reuniones por videollamada. Preferimos decirlo claro: así el proyecto es más ágil y más barato para ti.",
+  },
+];
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Zonas donde trabajamos",
+    url: `${site.url}/zonas/`,
+    isPartOf: { "@id": `${site.url}/#web` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: regions.map((r, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: r.name,
+        url: `${site.url}/zonas/${r.slug}/`,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title="Agencia de diseño web y SEO en Mallorca y toda España"
+  description={`Diseño web desde ${basePlan.price} €, SEO, GEO y agentes de IA en Mallorca, Illes Balears y todas las comunidades de España. Sede en Palma desde ${site.since}.`}
+  crumbs={[{ name: "Zonas", path: "/zonas/" }]}
+  schema={schema}
+>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-reveal>Zonas</p>
+    <h1 data-split>De Mallorca a toda España<span class="comma">.</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      Sede en Palma desde {site.since}, {years()} años comunicando empresas y clientes en las 17 comunidades y las dos ciudades autónomas. Elige tu zona.
+    </p>
+  </section>
+
+  <section class="section zn">
+    <div class="wrap">
+      <h2>Mallorca e Illes Balears</h2>
+      <ul class="zn__big">
+        {balearic.map((p) => (
+          <li>
+            <a href={`/zonas/${p.slug}/`}>
+              <strong>{p.name}</strong>
+              <span>{childrenOf(p.slug).map((c) => c.name).join(" · ") || "Toda la isla"}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section zn zn--alt">
+    <div class="wrap">
+      <h2>Comunidades autónomas</h2>
+      <div class="zn__grid">
+        {regions.map((r) => (
+          <div class="zn__card">
+            <h3><a href={`/zonas/${r.slug}/`}>{r.name}</a></h3>
+            <ul>
+              {childrenOf(r.slug).map((c) => (
+                <li><a href={`/zonas/${c.slug}/`}>{c.name}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faq} />
+  <Cta title="¿Empezamos en tu zona?" subject="Zonas" />
+</Base>
+
+<style>
+  .zn h2 {
+    font-size: var(--fs-2xl);
+    margin-bottom: 2rem;
+  }
+  .zn--alt {
+    background: var(--paper-2);
+  }
+  .zn__big {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 800px) {
+    .zn__big {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .zn__big a {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--ink);
+    text-decoration: none;
+  }
+  .zn__big strong {
+    font-size: var(--fs-xl);
+    font-variation-settings: "wdth" 125;
+  }
+  .zn__big span {
+    color: var(--muted);
+  }
+  .zn__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 700px) {
+    .zn__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .zn__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .zn__card {
+    border-top: 1px solid var(--ink);
+    padding-top: 1rem;
+  }
+  .zn__card h3 {
+    font-size: var(--fs-lg);
+    margin-bottom: 0.75rem;
+  }
+  .zn__card h3 a {
+    text-decoration: none;
+  }
+  .zn__card ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+  }
+  .zn__card li a {
+    color: var(--muted);
+    text-underline-offset: 0.2em;
+  }
+</style>

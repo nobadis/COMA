@@ -4,6 +4,8 @@ const node = {
   process: "readonly",
   console: "readonly",
   __dirname: "readonly",
+  fetch: "readonly",
+  URL: "readonly",
 };
 
 module.exports = [
@@ -23,6 +25,11 @@ module.exports = [
         sessionStorage: "readonly",
         window: "readonly",
         document: "readonly",
+        // Globales del navegador usados dentro de page.evaluate().
+        scrollY: "readonly",
+        innerHeight: "readonly",
+        getComputedStyle: "readonly",
+        DOMMatrixReadOnly: "readonly",
       },
     },
   },

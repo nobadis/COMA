@@ -157,5 +157,10 @@ export const IVA = 0.21;
 /** Subsección de correo: tarjeta destacada del configurador. */
 export const mailInfo = {
   storage: "50 GB",
-  perks: ["Antispam y antivirus", "Webmail + app móvil", "Alias y reenvíos incluidos", "Tus datos en la UE"],
+  perks: [
+    "Antispam y antivirus",
+    "Webmail + app móvil",
+    "Alias y reenvíos incluidos",
+    "Tus datos en la UE",
+  ],
 };

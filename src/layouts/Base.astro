@@ -5,7 +5,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
 import StickyCta from "../components/StickyCta.astro";
-import { site } from "../data/site";
+import MinimalBar from "../components/MinimalBar.astro";
+import MinimalFoot from "../components/MinimalFoot.astro";
+import { site, team, testimonials } from "../data/site";
+import { places } from "../data/places";
+import { adsEnabled, verification } from "../data/ads";
 import { services } from "../data/services";
 import { basePlan } from "../data/pricing";
 
@@ -20,12 +24,35 @@ interface Props {
   schema?: Record<string, unknown>[];
   crumbs?: Crumb[];
   stickyCta?: boolean;
+  /** Imagen para redes (ruta absoluta en /public). */
+  image?: string;
+  /** "article" para guías; "website" para el resto. */
+  type?: "website" | "article";
+  /** ISO 8601. Se publican en og:article y en el WebPage del schema. */
+  published?: string;
+  modified?: string;
+  /** Landing de anuncios: sin menú ni pie, noindex y sin botón flotante. */
+  minimal?: boolean;
 }
 
-const { title, description, noindex = false, schema = [], crumbs = [], stickyCta = true } = Astro.props;
+const {
+  title,
+  description,
+  noindex: noindexProp = false,
+  schema = [],
+  crumbs = [],
+  stickyCta: stickyProp = true,
+  image,
+  type = "website",
+  published,
+  modified,
+  minimal = false,
+} = Astro.props;
+const noindex = noindexProp || minimal;
+const stickyCta = stickyProp && !minimal;
 const fullTitle = title ? `${title} | COMA` : `${site.title} · Diseño web desde ${basePlan.price} €, SEO e IA`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
-const ogImage = new URL("/og-coma.png", site.url).href;
+const ogImage = new URL(image ?? "/og-coma.png", site.url).href;
 const orgId = `${site.url}/#org`;
 
 const org = {
@@ -54,11 +81,45 @@ const org = {
     addressCountry: site.address.country,
   },
   geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
+  hasMap: site.mapsUrl,
   areaServed: [
-    { "@type": "AdministrativeArea", name: "Mallorca" },
-    { "@type": "AdministrativeArea", name: "Illes Balears" },
     { "@type": "Country", name: "España" },
+    ...places
+      .filter((p) => p.kind === "ccaa" || p.kind === "isla")
+      .map((p) => ({ "@type": "AdministrativeArea", name: p.name })),
   ],
+  knowsLanguage: site.languages,
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      email: site.email,
+      areaServed: "ES",
+      availableLanguage: ["Spanish", "Catalan", "English"],
+    },
+  ],
+  ...(site.social.length ? { sameAs: site.social } : {}),
+  ...(team.length
+    ? {
+        employee: team.map((m) => ({
+          "@type": "Person",
+          name: m.name,
+          jobTitle: m.role,
+          worksFor: { "@id": orgId },
+          ...(m.url ? { sameAs: [m.url] } : {}),
+        })),
+      }
+    : {}),
+  ...(testimonials.length
+    ? {
+        review: testimonials.map((t) => ({
+          "@type": "Review",
+          reviewBody: t.quote,
+          author: { "@type": "Person", name: t.author },
+          itemReviewed: { "@id": orgId },
+        })),
+      }
+    : {}),
   knowsAbout: [
     "Diseño web",
     "Desarrollo web",
@@ -104,6 +165,21 @@ const website = {
   publisher: { "@id": orgId },
 };
 
+const webpage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${canonical}#page`,
+  url: canonical,
+  name: fullTitle,
+  description,
+  inLanguage: "es-ES",
+  isPartOf: { "@id": `${site.url}/#web` },
+  about: { "@id": orgId },
+  primaryImageOfPage: { "@type": "ImageObject", url: ogImage },
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ?? published ? { dateModified: modified ?? published } : {}),
+};
+
 const breadcrumb = crumbs.length
   ? {
       "@context": "https://schema.org",
@@ -117,7 +193,7 @@ const breadcrumb = crumbs.length
     }
   : null;
 
-const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
+const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schema];
 ---
 
 <!doctype html>
@@ -139,12 +215,25 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
     <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
     <meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="alternate" hreflang="es-ES" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    {verification.google && <meta name="google-site-verification" content={verification.google} />}
+    {verification.bing && <meta name="msvalidate.01" content={verification.bing} />}
+    {verification.meta && <meta name="facebook-domain-verification" content={verification.meta} />}
+    {verification.tiktok && <meta name="tiktok-developers-site-verification" content={verification.tiktok} />}
+    {verification.pinterest && <meta name="p:domain_verify" content={verification.pinterest} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="Resumen para modelos de IA" />
     <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
 
     <meta property="og:locale" content="es_ES" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
+    {type === "article" && published && <meta property="article:published_time" content={published} />}
+    {type === "article" && (modified ?? published) && <meta property="article:modified_time" content={modified ?? published} />}
+    {type === "article" && <meta property="article:author" content={site.brand} />}
     <meta property="og:site_name" content={site.brand} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -153,6 +242,7 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="COMA - Comunicación en Mallorca. Webs desde 99 €, SEO e IA." />
+    <meta name="twitter:image:alt" content="COMA - Comunicación en Mallorca. Webs desde 99 €, SEO e IA." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
@@ -169,6 +259,14 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
         } catch (e) {}
       })();
     </script>
+    {
+      adsEnabled && (
+        <script
+          is:inline
+          set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:"denied",functionality_storage:"granted",security_storage:"granted"});gtag("set","ads_data_redaction",true);gtag("set","url_passthrough",true);`}
+        />
+      )
+    }
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   </head>
   <body>
@@ -189,11 +287,11 @@ const ld = [org, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
     <div class="cursor" aria-hidden="true" data-cursor></div>
     <div class="sp" aria-hidden="true" data-sp><i></i></div>
     <a class="skip" href="#main">Saltar al contenido</a>
-    <Header />
+    {minimal ? <MinimalBar /> : <Header />}
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    {minimal ? <MinimalFoot /> : <Footer />}
     {stickyCta && <StickyCta />}
     <CookieBanner />
     <script>

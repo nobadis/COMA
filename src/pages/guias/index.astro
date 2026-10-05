@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import Cta from "../../components/Cta.astro";
+import { guides } from "../../data/guides";
+import { site } from "../../data/site";
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Guías de COMA",
+    url: `${site.url}/guias/`,
+    isPartOf: { "@id": `${site.url}/#web` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: guides.map((g, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${site.url}/guias/${g.slug}/`,
+        name: g.title,
+      })),
+    },
+  },
+];
+const fmt = (iso: string) =>
+  new Date(iso).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<Base
+  title="Guías de diseño web, SEO, GEO e IA para pymes"
+  description="Guías prácticas y sin humo sobre cuánto cuesta una web, SEO local, posicionamiento en ChatGPT y Gemini (GEO), agentes de IA y marketing en Mallorca."
+  crumbs={[{ name: "Guías", path: "/guias/" }]}
+  schema={schema}
+>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-reveal>Guías</p>
+    <h1 data-split>Lo que sabemos, contado claro<span class="comma">.</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      Guías prácticas para autónomos y pymes sobre webs, SEO, IA y marketing. Con precios a la vista y sin humo.
+    </p>
+  </section>
+
+  <section class="section gl">
+    <div class="wrap">
+      <ul class="gl__list">
+        {
+          guides.map((g) => (
+            <li>
+              <a href={`/guias/${g.slug}/`}>
+                <time datetime={g.modified}>{fmt(g.modified)}</time>
+                <h2>{g.title}</h2>
+                <p>{g.description}</p>
+                <span class="gl__more">{g.readMin} min de lectura →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  <Cta title="¿Quieres que lo hagamos por ti?" subject="Guías" />
+</Base>
+
+<style>
+  .gl__list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .gl__list li {
+    border-bottom: 1px solid var(--line);
+  }
+  .gl__list a {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1.75rem 0;
+    text-decoration: none;
+  }
+  .gl__list h2 {
+    font-size: var(--fs-xl);
+    line-height: 1.1;
+  }
+  .gl__list p {
+    color: var(--muted);
+    max-width: 62ch;
+    line-height: 1.5;
+  }
+  .gl__list time,
+  .gl__more {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .gl__list a:hover h2 {
+    color: var(--red);
+  }
+</style>

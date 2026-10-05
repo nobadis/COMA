@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import Arrow from "../components/Arrow.astro";
+import { site } from "../data/site";
+---
+
+<Base title="Gracias" description="Hemos recibido tu mensaje. Te respondemos personalmente en breve." noindex stickyCta={false}>
+  <section class="th wrap">
+    <p class="eyebrow">Recibido</p>
+    <h1>Gracias<span class="comma">.</span></h1>
+    <p class="lead">
+      Hemos recibido tu mensaje. Te respondemos personalmente con una propuesta clara. Si tienes prisa, escríbenos a
+      <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+    <a class="btn btn--red" href="/">Volver al inicio <Arrow /></a>
+    <!-- Conversión de lead: se mide aquí una sola vez (ver src/scripts/tracking.ts) -->
+    <span hidden data-track-load="generate_lead" data-track-label="gracias" data-track-via="endpoint"></span>
+  </section>
+</Base>
+
+<style>
+  .th {
+    min-height: 80svh;
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 1.5rem;
+    padding-top: 8rem;
+  }
+</style>

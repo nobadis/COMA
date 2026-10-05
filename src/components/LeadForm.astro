@@ -1,0 +1,104 @@
+---
+import Arrow from "./Arrow.astro";
+import { ads } from "../data/ads";
+
+interface Props {
+  interest: string;
+  source: string;
+  cta?: string;
+}
+const { interest, source, cta = "Quiero la propuesta" } = Astro.props;
+const viaEndpoint = Boolean(ads.formEndpoint);
+---
+
+<form class="lf" id="propuesta" data-lead data-source={source} data-interest={interest} novalidate>
+  <h2 class="lf__title">Cuéntanos y te respondemos</h2>
+  <label class="field">
+    <span>Nombre</span>
+    <input type="text" name="nombre" autocomplete="name" required />
+  </label>
+  <label class="field">
+    <span>Email o teléfono</span>
+    <input type="text" name="contacto" autocomplete="email" required />
+  </label>
+  <label class="field">
+    <span>Empresa (opcional)</span>
+    <input type="text" name="empresa" autocomplete="organization" />
+  </label>
+  <label class="field">
+    <span>¿Qué necesitas? (opcional)</span>
+    <textarea name="mensaje" rows="3"></textarea>
+  </label>
+  <label class="lf__bot" aria-hidden="true">
+    Web <input type="text" name="web" tabindex="-1" autocomplete="off" />
+  </label>
+  <p class="lf__error" data-lead-error hidden>Indica tu nombre y un email o teléfono para poder responderte.</p>
+  <button class="btn btn--red btn--lg" type="submit" data-magnetic>{cta} <Arrow /></button>
+  <p class="lf__legal">
+    {
+      viaEndpoint
+        ? "Usamos tus datos solo para responderte. Se envían a nuestro proveedor de formularios. "
+        : "No guardamos nada en esta web: el mensaje se abre en tu programa de correo. "
+    }Consulta nuestra <a href="/privacidad/">política de privacidad</a>.
+  </p>
+</form>
+
+<style>
+  .lf {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    max-width: 34rem;
+  }
+  .lf__title {
+    font-size: var(--fs-xl);
+  }
+  .lf__bot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .lf__error {
+    color: var(--red-ink);
+    font-size: var(--fs-sm);
+  }
+  .lf__legal {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .lf .btn {
+    justify-content: center;
+  }
+  .field {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .field span {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 0;
+    padding: 0.8rem 1rem;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    resize: vertical;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgb(225 17 45 / 0.25);
+  }
+</style>

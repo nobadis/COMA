@@ -1,0 +1,49 @@
+---
+import { site } from "../data/site";
+---
+
+<footer class="mf night" data-dark data-hide-sticky>
+  <div class="wrap">
+    <nav class="mf__links" aria-label="Pie de página">
+      <a href="/aviso-legal/">Aviso legal</a>
+      <a href="/cookies/">Cookies</a>
+      <a href="/privacidad/">Privacidad</a>
+      <button type="button" class="mf__btn" data-cookie-open>Preferencias de cookies</button>
+    </nav>
+    <p class="mf__bottom">
+      © <span class="coma-year">{new Date().getFullYear()}</span>
+      {` ${site.brand} · ${site.legalName} · CIF ${site.cif} · ${site.address.street}, ${site.address.postalCode} ${site.address.city}`}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .mf {
+    padding-block: 2rem;
+  }
+  .mf__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+  }
+  .mf__links a,
+  .mf__btn {
+    text-decoration: none;
+    color: var(--night-muted);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: inherit;
+  }
+  .mf__links a:hover,
+  .mf__btn:hover {
+    color: var(--red);
+  }
+  .mf__bottom {
+    font-size: var(--fs-xs);
+    color: var(--night-muted);
+  }
+</style>

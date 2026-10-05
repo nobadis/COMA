@@ -1,0 +1,46 @@
+---
+import Logo from "./Logo.astro";
+import Arrow from "./Arrow.astro";
+import { basePlan } from "../data/pricing";
+
+interface Props {
+  cta?: string;
+  href?: string;
+}
+const { cta = `Web desde ${basePlan.price} €`, href = "#propuesta" } = Astro.props;
+---
+
+<header class="mb">
+  <div class="mb__bar wrap">
+    <span class="mb__logo"><Logo /></span>
+    <a class="btn btn--red" href={href} data-track="cta_click" data-track-label="lp-header">
+      {cta}
+      <Arrow />
+    </a>
+  </div>
+</header>
+
+<style>
+  .mb {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .mb__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+  }
+  .mb__logo :global(.logo) {
+    font-size: 1.5rem;
+  }
+  .mb .btn {
+    min-height: 2.75rem;
+    padding: 0.55rem 1.1rem;
+  }
+</style>

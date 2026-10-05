@@ -33,12 +33,15 @@ npm run validate     # formato + tipos + lint + build + tests E2E (escritorio y 
 
 ## SEO y GEO
 
-- Datos estructurados (Organization/MarketingAgency, Offer 99 €, Service, FAQPage, BreadcrumbList, Product) en todas las páginas.
-- `sitemap-index.xml`, `robots.txt` con los bots de IA permitidos y `/llms.txt` (resumen de la empresa para asistentes de IA) generado desde los datos.
+Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). En resumen: ~350 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). Contenido local en `src/data/places.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
+
+## Anuncios y outbound
+
+Ver [docs/ADS.md](docs/ADS.md): GTM/GA4/Google Ads/Meta/TikTok/LinkedIn/Bing por variables `PUBLIC_*`, Consent Mode v2, eventos y atribución UTM, landings `/lp/*` y personalización para outbound.
 
 ## Analítica y cookies
 
-Microsoft Clarity se inyecta en el HTML con `CLARITY_PROJECT_ID`, pero **solo se carga si el usuario acepta las cookies** (`coma_cookie_consent` en `localStorage`).
+Microsoft Clarity se inyecta en el HTML con `CLARITY_PROJECT_ID`, y el resto de etiquetas (ver docs/ADS.md) se cargan por variables `PUBLIC_*`. **Nada se carga si el usuario no acepta las cookies** (`coma_cookie_consent` en `localStorage`).
 
 ## Despliegue
 

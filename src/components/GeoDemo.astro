@@ -1,5 +1,11 @@
 ---
 import Arrow from "./Arrow.astro";
+
+interface Props {
+  /** En landings de anuncios se oculta el enlace que saca al visitante. */
+  showLink?: boolean;
+}
+const { showLink = true } = Astro.props;
 ---
 
 <section class="section geo" id="seo-geo">
@@ -16,7 +22,7 @@ import Arrow from "./Arrow.astro";
         <li><strong>GEO</strong>: visibilidad en ChatGPT, Gemini, Perplexity y Copilot</li>
         <li><strong>Datos estructurados</strong> que buscadores e IA entienden al instante</li>
       </ul>
-      <a class="btn" href="/seo-geo/" data-reveal style="--d:4">Cómo lo hacemos <Arrow /></a>
+      {showLink && <a class="btn" href="/seo-geo/" data-reveal style="--d:4">Cómo lo hacemos <Arrow /></a>}
     </div>
 
     <div class="geo__stack" data-geo>

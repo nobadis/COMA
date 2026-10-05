@@ -1,5 +1,7 @@
 import Lenis from "lenis";
 import { initPinned, initScrollFx } from "./scrollfx";
+import "./tracking";
+import "./lead";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;

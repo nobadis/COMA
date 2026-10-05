@@ -1,0 +1,11 @@
+/* EMPRESA */
+Nombre comercial: COMA - Comunicación en Mallorca
+Razón social: Publicom Marketing 2000 SL
+Fundada: 1997
+Sede: Paseo Mallorca, 16, 07012 Palma, Illes Balears, España
+Contacto: info@comunicacionenmallorca.com
+Web: https://comunicacionenmallorca.com
+
+/* SITIO */
+Hecho a medida, sin plantillas. Astro, HTML estático y CSS propio.
+Idioma: español

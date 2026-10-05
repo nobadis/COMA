@@ -1,0 +1,308 @@
+---
+import Base from "../../layouts/Base.astro";
+import Arrow from "../../components/Arrow.astro";
+import Faq from "../../components/Faq.astro";
+import Cta from "../../components/Cta.astro";
+import Trust from "../../components/Trust.astro";
+import { places, placeBySlug, childrenOf, inPlace } from "../../data/places";
+import { localCopy, localPaths, presence, serviceLabel, placeTrail, localServiceSlugs } from "../../data/local";
+import type { LocalServiceSlug } from "../../data/local";
+import { site, years } from "../../data/site";
+import { basePlan } from "../../data/pricing";
+
+export function getStaticPaths() {
+  return localPaths(places).map(({ service, place }) => ({
+    params: { service, place: place.slug },
+    props: { service, placeSlug: place.slug },
+  }));
+}
+const { service, placeSlug } = Astro.props as { service: string; placeSlug: string };
+const place = placeBySlug(placeSlug)!;
+const copy = localCopy(service as LocalServiceSlug, place);
+const label = serviceLabel(service);
+const trail = placeTrail(place);
+const base = `/${service}/`;
+const url = `${site.url}${base}${place.slug}/`;
+const inside = childrenOf(place.slug);
+const near = (place.near ?? []).map((s) => placeBySlug(s)).filter(Boolean);
+const others = localServiceSlugs.filter((s) => s !== service);
+
+const areaType = place.kind === "ccaa" || place.kind === "isla" ? "AdministrativeArea" : "City";
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: `${label} ${inPlace(place)}`,
+    serviceType: label,
+    description: copy.description,
+    url,
+    provider: { "@id": `${site.url}/#org` },
+    areaServed: { "@type": areaType, name: place.name },
+    ...(service === "diseno-web"
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: basePlan.price,
+            priceCurrency: "EUR",
+            url: `${site.url}/precios/`,
+          },
+        }
+      : {}),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: copy.faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+const crumbs = [
+  { name: label, path: base },
+  { name: place.name, path: `${base}${place.slug}/` },
+];
+---
+
+<Base title={copy.title} description={copy.description} schema={schema} crumbs={crumbs}>
+  <section class="lp-h">
+    <div class="wrap lp-h__in">
+      <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+      <h1 data-split>{copy.h1}<span class="comma">,</span></h1>
+      <p class="lead" data-reveal style="--d:3">{copy.lead}</p>
+      <div class="lp-h__cta" data-reveal style="--d:4">
+        <a class="btn btn--red btn--lg" href="/contacto/" data-magnetic data-track="cta_click" data-track-label={`local-${service}-${place.slug}`}>
+          Pedir propuesta <Arrow />
+        </a>
+        <a class="link-arrow" href={service === "agentes-ia" ? "/agentes-ia/" : "/precios/"}>
+          {service === "agentes-ia" ? "Cómo funciona" : "Ver precios"}
+        </a>
+      </div>
+      <nav class="lp-h__trail" aria-label="Ubicación">
+        <a href="/zonas/">Zonas</a>
+        {trail.map((t) => (<><span aria-hidden="true">/</span><a href={`/zonas/${t.slug}/`}>{t.name}</a></>))}
+      </nav>
+    </div>
+  </section>
+
+  <section class="section lp-why">
+    <div class="wrap lp-why__grid">
+      <div>
+        <p class="eyebrow">{place.name}</p>
+        <h2>{copy.why.title}</h2>
+      </div>
+      <div class="lp-why__text">
+        {copy.why.paragraphs.map((t) => <p>{t}</p>)}
+        <p class="lp-why__presence">{presence(place)}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section night lp-do" data-dark>
+    <div class="wrap">
+      <p class="eyebrow">Qué incluye</p>
+      <h2>{label} {inPlace(place)}</h2>
+      <ul class="lp-do__list">
+        {copy.bullets.map((b, i) => (
+          <li>
+            <span aria-hidden="true">0{i + 1}</span>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="lp-do__price">{copy.priceLine}</p>
+    </div>
+  </section>
+
+  <section class="section lp-sec">
+    <div class="wrap">
+      <p class="eyebrow">Sectores {inPlace(place)}</p>
+      <h2>Con quién trabajamos {inPlace(place)}</h2>
+      <ul class="lp-sec__list">
+        {place.sectors.map((s) => <li>{s}</li>)}
+      </ul>
+      <p class="lp-sec__note">
+        Llevamos {years()} años contando historias de empresas y desde {site.spainSince} atendemos a pymes y autónomos de toda España. ¿No ves tu sector? <a href="/contacto/">Cuéntanos el tuyo</a>.
+      </p>
+    </div>
+  </section>
+
+  <Trust />
+
+  {
+    (inside.length > 0 || near.length > 0) && (
+      <section class="section lp-links">
+        <div class="wrap lp-links__grid">
+          {inside.length > 0 && (
+            <div>
+              <h2>Dentro de {place.name}</h2>
+              <ul>
+                {inside.map((c) => (
+                  <li><a href={`${base}${c.slug}/`}>{label} {inPlace(c)}</a></li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {near.length > 0 && (
+            <div>
+              <h2>Cerca de {place.name}</h2>
+              <ul>
+                {near.map((c) => (
+                  <li><a href={`${base}${c!.slug}/`}>{label} {inPlace(c!)}</a></li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div>
+            <h2>Más servicios {inPlace(place)}</h2>
+            <ul>
+              <li><a href={`/zonas/${place.slug}/`}>Todo lo que hacemos {inPlace(place)}</a></li>
+              {others.map((o) => (
+                <li><a href={`/${o}/${place.slug}/`}>{serviceLabel(o)} {inPlace(place)}</a></li>
+              ))}
+              <li><a href="/precios/">Presupuesto en directo</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Faq items={copy.faq} title={`Preguntas sobre ${label.toLowerCase()} ${inPlace(place)}`} />
+  <Cta title={copy.ctaTitle} subject={copy.subject} />
+</Base>
+
+<style>
+  .lp-h {
+    padding-top: clamp(8.5rem, 15vw, 12rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .lp-h__in {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .lp-h h1 {
+    font-size: clamp(1.7rem, 0.6rem + 5vw, 5.2rem);
+    max-width: 20ch;
+    letter-spacing: -0.05em;
+  }
+  .lp-h__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+  .lp-h__trail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .lp-h__trail a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+  .lp-why__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .lp-why__grid {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+    }
+  }
+  .lp-why__text {
+    display: grid;
+    gap: 1.1rem;
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+  .lp-why__presence {
+    border-left: 3px solid var(--red);
+    padding-left: 1rem;
+    color: var(--muted);
+  }
+  .lp-do__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 800px) {
+    .lp-do__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 3rem;
+    }
+  }
+  .lp-do__list li {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--night-line);
+  }
+  .lp-do__list span {
+    color: var(--red);
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+  }
+  .lp-do__list p {
+    color: var(--night-muted);
+    line-height: 1.55;
+  }
+  .lp-do__price {
+    margin-top: 2.5rem;
+    font-weight: 600;
+    max-width: 62ch;
+  }
+  .lp-sec__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .lp-sec__list li {
+    border: 1px solid var(--ink);
+    padding: 0.55rem 1rem;
+    font-weight: 600;
+  }
+  .lp-sec__note {
+    margin-top: 2rem;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .lp-links {
+    background: var(--paper-2);
+  }
+  .lp-links__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .lp-links__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .lp-links h2 {
+    font-size: var(--fs-xl);
+    margin-bottom: 1rem;
+  }
+  .lp-links ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .lp-links a {
+    text-underline-offset: 0.2em;
+  }
+</style>

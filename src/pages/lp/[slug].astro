@@ -1,0 +1,169 @@
+---
+import Base from "../../layouts/Base.astro";
+import Arrow from "../../components/Arrow.astro";
+import Faq from "../../components/Faq.astro";
+import Trust from "../../components/Trust.astro";
+import LeadForm from "../../components/LeadForm.astro";
+import GeoDemo from "../../components/GeoDemo.astro";
+import AgentDemo from "../../components/AgentDemo.astro";
+import BrandPlay from "../../components/BrandPlay.astro";
+import { landings, type Landing } from "../../data/landings";
+import { years, site } from "../../data/site";
+
+export function getStaticPaths() {
+  return landings.map((l) => ({ params: { slug: l.slug }, props: { l } }));
+}
+const { l } = Astro.props as { l: Landing };
+---
+
+<Base title={l.title} description={l.description} minimal>
+  <section class="lp">
+    <div class="wrap lp__grid">
+      <div class="lp__copy">
+        <p class="eyebrow" data-reveal>
+          {l.eyebrow}
+          {l.personalize && <> <b data-lp-company>tu empresa</b></>}
+        </p>
+        <h1 data-split>{l.h1}<span class="comma">.</span></h1>
+        <p class="lead" data-reveal style="--d:3">{l.lead}</p>
+        {
+          l.personalize && (
+            <p class="lp__for" data-reveal style="--d:3">
+              Para <strong data-lp-company>tu empresa</strong> · sector <strong data-lp-sector>tu sector</strong>
+            </p>
+          )
+        }
+        <ul class="lp__bullets" data-reveal style="--d:4">
+          {l.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+        <a class="btn btn--red btn--lg" href="#propuesta" data-magnetic data-track="cta_click" data-track-label={`lp-${l.slug}-hero`}>
+          {l.cta} <Arrow />
+        </a>
+        <p class="lp__proof">
+          {years()} años en Mallorca · más de 100 pymes · {site.legalName}
+        </p>
+      </div>
+      <div class="lp__form">
+        <LeadForm interest={l.interest} source={`lp-${l.slug}`} cta={l.cta} />
+      </div>
+    </div>
+  </section>
+
+  {l.demo === "geo" && <GeoDemo showLink={false} />}
+  {l.demo === "agent" && <AgentDemo showLink={false} />}
+  {l.demo === "brand" && <BrandPlay />}
+
+  <Trust />
+
+  <section class="section lp-o">
+    <div class="wrap lp-o__grid">
+      <div>
+        <p class="eyebrow">La oferta</p>
+        <h2>{l.offer.label}: {l.offer.price}</h2>
+        <p class="lead">{l.offer.note}</p>
+      </div>
+      <ol class="lp-o__steps">
+        {l.steps.map((s, i) => (
+          <li>
+            <span>0{i + 1}</span>
+            <div><h3>{s.title}</h3><p>{s.text}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <Faq items={l.faq} />
+
+  <section class="section lp-end night" data-dark>
+    <div class="wrap lp-end__in">
+      <h2>¿Empezamos?</h2>
+      <a class="btn btn--red btn--lg" href="#propuesta" data-track="cta_click" data-track-label={`lp-${l.slug}-end`}>{l.cta} <Arrow /></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lp {
+    padding-top: clamp(6.5rem, 12vw, 9rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .lp__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .lp__grid {
+      grid-template-columns: 1.25fr 1fr;
+      gap: 4rem;
+    }
+    .lp__form {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .lp__copy {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .lp h1 {
+    font-size: clamp(1.8rem, 0.8rem + 4.4vw, 4.6rem);
+    max-width: 20ch;
+    letter-spacing: -0.05em;
+  }
+  .lp__for {
+    color: var(--muted);
+  }
+  .lp__bullets {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+    font-weight: 600;
+  }
+  .lp__bullets li::before {
+    content: "→ ";
+    color: var(--red);
+  }
+  .lp__proof {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .lp-o__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .lp-o__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+  .lp-o__steps {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+  .lp-o__steps li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--ink);
+  }
+  .lp-o__steps span {
+    color: var(--red);
+    font-weight: 700;
+    font-variation-settings: "wdth" 125;
+  }
+  .lp-o__steps p {
+    color: var(--muted);
+  }
+  .lp-end__in {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+</style>

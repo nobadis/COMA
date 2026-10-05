@@ -1,0 +1,104 @@
+---
+import Arrow from "./Arrow.astro";
+import { placeBySlug } from "../data/places";
+import { guides } from "../data/guides";
+
+interface Props {
+  /** Si se indica, los enlaces de zona apuntan a la página local de ese servicio. */
+  service?: string;
+  title?: string;
+  showGuides?: boolean;
+}
+const { service, title = "Dónde trabajamos", showGuides = true } = Astro.props;
+
+const top = ["mallorca", "palma", "illes-balears", "menorca", "ibiza", "madrid", "barcelona", "valencia", "sevilla", "malaga", "bilbao", "zaragoza"]
+  .map((s) => placeBySlug(s))
+  .filter((p) => p !== undefined);
+const href = (slug: string) => (service ? `/${service}/${slug}/` : `/zonas/${slug}/`);
+---
+
+<section class="section ex">
+  <div class="wrap ex__grid">
+    <div>
+      <p class="eyebrow">Zonas</p>
+      <h2>{title}</h2>
+      <p class="lead">Sede en Palma desde 1997. Mismo equipo y mismo precio en toda España.</p>
+      <ul class="ex__chips">
+        {top.map((p) => <li><a href={href(p.slug)}>{p.name}</a></li>)}
+      </ul>
+      <a class="link-arrow" href="/zonas/">Ver todas las zonas <Arrow /></a>
+    </div>
+    {
+      showGuides && (
+        <div>
+          <p class="eyebrow">Guías</p>
+          <h2>Para decidir con criterio</h2>
+          <ul class="ex__guides">
+            {guides.slice(0, 4).map((g) => (
+              <li><a href={`/guias/${g.slug}/`}>{g.title}</a></li>
+            ))}
+          </ul>
+          <a class="link-arrow" href="/guias/">Todas las guías <Arrow /></a>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .ex {
+    background: var(--paper-2);
+  }
+  .ex__grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 900px) {
+    .ex__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+  .ex h2 {
+    font-size: var(--fs-xl);
+    margin: 0.75rem 0 1rem;
+  }
+  .ex__chips {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+  .ex__chips a {
+    display: inline-block;
+    border: 1px solid var(--ink);
+    padding: 0.45rem 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .ex__chips a:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .ex__guides {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    display: grid;
+  }
+  .ex__guides li {
+    border-top: 1px solid var(--line);
+  }
+  .ex__guides a {
+    display: block;
+    padding: 0.85rem 0;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .ex__guides a:hover {
+    color: var(--red);
+  }
+</style>

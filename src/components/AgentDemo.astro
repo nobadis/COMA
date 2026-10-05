@@ -1,6 +1,12 @@
 ---
 import Arrow from "./Arrow.astro";
 
+interface Props {
+  /** En landings de anuncios se oculta el enlace que saca al visitante. */
+  showLink?: boolean;
+}
+const { showLink = true } = Astro.props;
+
 const script = [
   { who: "user", text: "Hola, ¿tenéis mesa para 4 este sábado a las 21:00?" },
   { who: "bot", text: "¡Hola! Sí, el sábado a las 21:00 tenemos mesa para 4 en la terraza. ¿A nombre de quién la reservo?" },
@@ -24,7 +30,7 @@ const script = [
         <li><strong>Multidioma</strong> — español, catalán, inglés, alemán y más.</li>
         <li><strong>Conectado</strong> — a tu agenda, CRM o sistema de reservas.</li>
       </ul>
-      <a href="/agentes-ia/" class="btn" data-reveal style="--d:4">Descubre los agentes de IA <Arrow /></a>
+      {showLink && <a href="/agentes-ia/" class="btn" data-reveal style="--d:4">Descubre los agentes de IA <Arrow /></a>}
     </div>
 
     <div class="ad__device" data-reveal style="--d:2">

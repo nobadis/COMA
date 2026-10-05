@@ -349,3 +349,186 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     );
   });
 });
+
+/* ------------------------------------------------------------------ SEO / GEO / Ads */
+const fs = require("fs");
+const nodePath = require("path");
+
+const DIST = nodePath.join(__dirname, "..", "dist");
+const htmlFiles = (dir) =>
+  fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+    const full = nodePath.join(dir, e.name);
+    if (e.isDirectory()) return htmlFiles(full);
+    return e.name === "index.html" ? [full] : [];
+  });
+const meta = (html, re) => (html.match(re) || [])[1];
+
+test.describe("SEO / GEO / Ads", () => {
+  test("zonas: hub y páginas locales con contenido propio", async ({ page }) => {
+    for (const path of [
+      "/zonas/",
+      "/zonas/mallorca/",
+      "/zonas/palma/",
+      "/zonas/cataluna/",
+      "/diseno-web/palma/",
+      "/seo-geo/valencia/",
+      "/agentes-ia/comunidad-de-madrid/",
+    ]) {
+      const res = await page.goto(path);
+      expect(res?.status(), path).toBe(200);
+      await expect(page.locator("h1"), path).toHaveCount(1);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        "href",
+        `https://comunicacionenmallorca.com${path}`
+      );
+      const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+      const types = blocks.flatMap((b) => JSON.parse(b)).map((o) => o["@type"]);
+      expect(types.flat(), path).toContain("BreadcrumbList");
+    }
+    await page.goto("/diseno-web/valencia/");
+    await expect(page.locator("h1")).toContainText("Valencia");
+    await expect(page).toHaveTitle(/Diseño web en Valencia desde 99/);
+    // Honestidad: fuera de Palma se declara trabajo en remoto, nunca una oficina inventada.
+    await expect(page.locator("main")).toContainText(/en remoto desde nuestra sede de Palma/);
+    await page.goto("/diseno-web/palma/");
+    await expect(page.locator("main")).toContainText(/Paseo Mallorca, 16/);
+  });
+
+  test("todas las páginas indexables tienen título y descripción únicos", () => {
+    const seen = { title: new Map(), desc: new Map() };
+    for (const file of htmlFiles(DIST)) {
+      const html = fs.readFileSync(file, "utf8");
+      if (!html.includes("</head>") || /name="robots" content="noindex/.test(html)) continue;
+      const title = meta(html, /<title>([^<]+)<\/title>/);
+      const desc = meta(html, /<meta name="description" content="([^"]+)"/);
+      expect(title, file).toBeTruthy();
+      expect(desc, file).toBeTruthy();
+      expect(title.length, `${file} título`).toBeLessThanOrEqual(72);
+      expect(desc.length, `${file} descripción`).toBeLessThanOrEqual(215);
+      expect(
+        seen.title.has(title),
+        `título repetido: ${title} (${file} / ${seen.title.get(title)})`
+      ).toBe(false);
+      expect(seen.desc.has(desc), `descripción repetida: ${desc} (${file})`).toBe(false);
+      seen.title.set(title, file);
+      seen.desc.set(desc, file);
+    }
+    expect(seen.title.size).toBeGreaterThan(300);
+  });
+
+  test("sitemap: cientos de URLs con lastmod y sin landings ni gracias", async ({ request }) => {
+    const index = await (await request.get("/sitemap-index.xml")).text();
+    expect(index).toMatch(/sitemap-0\.xml/);
+    const xml = await (await request.get("/sitemap-0.xml")).text();
+    const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+    expect(locs.length).toBeGreaterThan(300);
+    expect(xml).toMatch(/<lastmod>\d{4}-\d{2}-\d{2}T/);
+    expect(locs.some((u) => /\/lp\/|\/gracias\//.test(u))).toBe(false);
+    for (const u of ["/guias/", "/zonas/", "/sobre-coma/", "/seo-geo/palma/"])
+      expect(locs).toContain(`https://comunicacionenmallorca.com${u}`);
+  });
+
+  test("robots, llms y archivos de confianza", async ({ request }) => {
+    const robots = await (await request.get("/robots.txt")).text();
+    for (const bot of [
+      "GPTBot",
+      "ClaudeBot",
+      "Claude-SearchBot",
+      "PerplexityBot",
+      "Google-Extended",
+      "Bingbot",
+      "AdsBot-Google",
+    ])
+      expect(robots).toContain(bot);
+    expect(robots).not.toMatch(/Disallow:\s*\/\s*$/m);
+    const full = await request.get("/llms-full.txt");
+    expect(full.status()).toBe(200);
+    expect(await full.text()).toMatch(/Diseño web en Valencia|\/diseno-web\/valencia\//);
+    const key = fs.readdirSync(nodePath.join(DIST)).find((f) => /^[a-f0-9]{32}\.txt$/.test(f));
+    expect(key, "archivo de clave IndexNow").toBeTruthy();
+    expect((await (await request.get(`/${key}`)).text()).trim()).toBe(key.replace(".txt", ""));
+    expect((await request.get("/.well-known/security.txt")).status()).toBe(200);
+    expect((await request.get("/manifest.webmanifest")).status()).toBe(200);
+  });
+
+  test("guías: Article con autoría y fechas", async ({ page }) => {
+    await page.goto("/guias/");
+    await expect(page.locator("main h1")).toBeVisible();
+    await page.goto("/guias/cuanto-cuesta-una-pagina-web/");
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const article = blocks.flatMap((b) => JSON.parse(b)).find((o) => o["@type"] === "Article");
+    expect(article.datePublished).toMatch(/^\d{4}-\d{2}-\d{2}/);
+    expect(article.author["@id"]).toContain("#org");
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute("content", "article");
+  });
+
+  test("sobre COMA: datos reales y sin inventar personas ni opiniones", async ({ page }) => {
+    await page.goto("/sobre-coma/");
+    const main = page.locator("main");
+    await expect(main).toContainText("Publicom Marketing 2000 SL");
+    await expect(main).toContainText("B07949647");
+    await expect(main.getByText("Quién está detrás")).toHaveCount(0); // solo si hay equipo en site.ts
+    await expect(main.getByText("Lo que dicen nuestros clientes")).toHaveCount(0);
+  });
+
+  test("landings de anuncios: noindex, sin menú, formulario y personalización", async ({
+    page,
+  }) => {
+    await page.goto("/lp/web-99/");
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+    await expect(page.locator("header .hdr__nav")).toHaveCount(0);
+    await page
+      .getByRole("button", { name: /Quiero mi web/ })
+      .last()
+      .click();
+    await expect(page.getByText(/Indica tu nombre y un email o teléfono/)).toBeVisible();
+    await page.goto("/lp/tu-empresa/?e=Cl%C3%ADnica%20Sol&s=dental");
+    await expect(page.locator("[data-lp-company]").first()).toHaveText("Clínica Sol");
+    await expect(page.locator("[data-lp-sector]").first()).toHaveText("dental");
+    // Sin HTML: la personalización solo escribe texto plano.
+    await page.goto("/lp/tu-empresa/?e=%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E");
+    await expect(page.locator("main img[src='x']")).toHaveCount(0);
+    const res = await page.goto("/gracias/");
+    expect(res?.status()).toBe(200);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  });
+
+  test("sin IDs configurados no se carga ninguna etiqueta de seguimiento", async ({ page }) => {
+    const hosts = [];
+    page.on("request", (r) => hosts.push(new URL(r.url()).hostname));
+    await page.addInitScript(() => localStorage.setItem("coma_cookie_consent", "accepted"));
+    await page.goto("/");
+    await page.waitForTimeout(800);
+    for (const h of [
+      "googletagmanager.com",
+      "connect.facebook.net",
+      "analytics.tiktok.com",
+      "snap.licdn.com",
+      "bat.bing.com",
+    ])
+      expect(
+        hosts.some((x) => x.endsWith(h)),
+        h
+      ).toBe(false);
+  });
+
+  test("las cuatro configuraciones de cabeceras comparten la misma CSP", () => {
+    const root = nodePath.join(__dirname, "..");
+    const vercel = JSON.parse(fs.readFileSync(nodePath.join(root, "vercel.json"), "utf8"));
+    const serve = JSON.parse(fs.readFileSync(nodePath.join(root, "public/serve.json"), "utf8"));
+    const pick = (cfg) =>
+      cfg.headers[0].headers.find((h) => h.key === "Content-Security-Policy").value;
+    const csp = pick(vercel);
+    expect(pick(serve)).toBe(csp);
+    expect(fs.readFileSync(nodePath.join(root, "public/_headers"), "utf8")).toContain(csp);
+    expect(fs.readFileSync(nodePath.join(root, "public/.htaccess"), "utf8")).toContain(csp);
+    for (const host of [
+      "googletagmanager.com",
+      "connect.facebook.net",
+      "analytics.tiktok.com",
+      "snap.licdn.com",
+      "bat.bing.com",
+    ])
+      expect(csp).toContain(host);
+  });
+});

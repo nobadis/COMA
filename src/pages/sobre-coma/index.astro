@@ -1,0 +1,278 @@
+---
+import Base from "../../layouts/Base.astro";
+import Arrow from "../../components/Arrow.astro";
+import Cta from "../../components/Cta.astro";
+import Faq from "../../components/Faq.astro";
+import { site, trust, team, testimonials, years } from "../../data/site";
+import { basePlan } from "../../data/pricing";
+
+const history = [
+  { y: String(site.since), t: "Revistas", d: "Empezamos editando revistas que contaban historias de empresas de Mallorca." },
+  { y: "Radio", t: "Programas y campañas en antena", d: "Aprendimos a comunicar con voz, ritmo y cercanía." },
+  { y: "TV", t: "Programas de televisión", d: "Producción audiovisual y formatos para toda la isla." },
+  { y: "Digital", t: "Webs, redes y marketing online", d: `Más de ${trust.pymes} pymes llevadas a internet.` },
+  { y: "IA", t: "Agentes, automatización y GEO", d: "Inteligencia artificial aplicada a lo que le importa a una pyme." },
+  { y: String(site.spainSince), t: "De Mallorca a toda España", d: "El mismo equipo y la misma cercanía para empresas de todo el país." },
+];
+const principles = [
+  { t: "Precio claro desde el primer día", d: `La web empieza en ${basePlan.price} € ${basePlan.suffix} y cada extra tiene su precio visible. Sin letra pequeña.` },
+  { t: "Nada de plantillas", d: "Diseñamos cada web desde cero con un proceso propio. Por eso es rápida, única y barata." },
+  { t: "Respuesta personal", d: "Escribes y te contestamos personas, con una propuesta clara de objetivos, plazos y precio." },
+  { t: "Lo que no podemos prometer, no lo prometemos", d: "Nadie serio garantiza el primer puesto en Google ni en la IA. Sí trabajamos de forma medible y transparente." },
+];
+const faq = [
+  {
+    title: "¿Quién es COMA?",
+    text: `COMA (Comunicación en Mallorca) es una agencia con sede en Palma de Mallorca, operada por ${site.legalName} (CIF ${site.cif}). Llevamos ${years()} años (desde ${site.since}) comunicando empresas: revistas, radio, televisión, webs, marketing digital e inteligencia artificial.`,
+  },
+  {
+    title: "¿Dónde estáis?",
+    text: `${site.address.street}, ${site.address.postalCode} ${site.address.city} (${site.address.region}). Desde ${site.spainSince} trabajamos también en remoto con empresas de toda España.`,
+  },
+  {
+    title: "¿Con quién habéis trabajado?",
+    text: `${trust.references.filter((r) => !r.startsWith("+")).join(", ")} y más de ${trust.pymes} pymes.`,
+  },
+];
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${site.url}/sobre-coma/#page`,
+    url: `${site.url}/sobre-coma/`,
+    name: "Sobre COMA",
+    isPartOf: { "@id": `${site.url}/#web` },
+    about: { "@id": `${site.url}/#org` },
+    mainEntity: { "@id": `${site.url}/#org` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title={`Sobre COMA: ${years()} años comunicando empresas desde Mallorca`}
+  description={`Quiénes somos: agencia de Palma de Mallorca fundada en ${site.since}. Revistas, radio, televisión, webs, SEO e IA para más de ${trust.pymes} pymes. Datos de empresa y cómo trabajamos.`}
+  crumbs={[{ name: "Sobre COMA", path: "/sobre-coma/" }]}
+  schema={schema}
+>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-reveal>Sobre COMA</p>
+    <h1 data-split>{years()} años contando historias de empresas<span class="comma">.</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      Nacimos en Mallorca en {site.since} editando revistas. Hoy hacemos webs, SEO, posicionamiento en IA, agentes y automatizaciones para autónomos y pymes de toda España.
+    </p>
+  </section>
+
+  <section class="section ab">
+    <div class="wrap ab__grid">
+      <div>
+        <p class="eyebrow">COMA en datos</p>
+        <h2>Una empresa real, con nombre y dirección</h2>
+      </div>
+      <dl class="ab__facts">
+        <div><dt>Nombre comercial</dt><dd>{site.brand} (COMA)</dd></div>
+        <div><dt>Razón social</dt><dd>{site.legalName}</dd></div>
+        <div><dt>CIF</dt><dd>{site.cif}</dd></div>
+        <div><dt>Fundada</dt><dd>{site.since}</dd></div>
+        <div><dt>Sede</dt><dd>{site.address.street}, {site.address.postalCode} {site.address.city}, {site.address.region}</dd></div>
+        <div><dt>Ámbito</dt><dd>Mallorca, Illes Balears y toda España (desde {site.spainSince})</dd></div>
+        <div><dt>Contacto</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+        <div><dt>Referencias</dt><dd>{trust.references.join(" · ")}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section night ab-h" data-dark>
+    <div class="wrap">
+      <p class="eyebrow">Nuestra historia</p>
+      <h2>De las revistas a la inteligencia artificial</h2>
+      <ol class="ab-h__list">
+        {history.map((h) => (
+          <li>
+            <span>{h.y}</span>
+            <div><h3>{h.t}</h3><p>{h.d}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section ab-p">
+    <div class="wrap">
+      <p class="eyebrow">Cómo trabajamos</p>
+      <h2>Lo que no negociamos</h2>
+      <ul class="ab-p__list">
+        {principles.map((p) => (<li><h3>{p.t}</h3><p>{p.d}</p></li>))}
+      </ul>
+    </div>
+  </section>
+
+  {
+    team.length > 0 && (
+      <section class="section ab-t">
+        <div class="wrap">
+          <p class="eyebrow">Las personas</p>
+          <h2>Quién está detrás</h2>
+          <ul class="ab-t__list">
+            {team.map((m) => (
+              <li>
+                {m.photo && <img src={m.photo} alt={`${m.name}, ${m.role}`} width="160" height="160" loading="lazy" />}
+                <h3>{m.name}</h3>
+                <p class="ab-t__role">{m.role}</p>
+                <p>{m.bio}</p>
+                {m.url && <a href={m.url} rel="noopener">Perfil</a>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    testimonials.length > 0 && (
+      <section class="section ab-q">
+        <div class="wrap">
+          <p class="eyebrow">Opiniones</p>
+          <h2>Lo que dicen nuestros clientes</h2>
+          <ul class="ab-q__list">
+            {testimonials.map((t) => (
+              <li>
+                <blockquote>{t.quote}</blockquote>
+                <p><strong>{t.author}</strong>, {t.company}{t.work ? ` · ${t.work}` : ""}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section ab-c">
+    <div class="wrap ab-c__in">
+      <h2>¿Hablamos?</h2>
+      <p class="lead">Cuéntanos qué necesitas y te respondemos personalmente.</p>
+      <a class="btn btn--red btn--lg" href="/contacto/" data-track="cta_click" data-track-label="sobre-coma">Pedir propuesta <Arrow /></a>
+    </div>
+  </section>
+
+  <Faq items={faq} />
+  <Cta />
+</Base>
+
+<style>
+  .ab__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .ab__grid {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+    }
+  }
+  .ab__facts {
+    display: grid;
+  }
+  .ab__facts > div {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 600px) {
+    .ab__facts > div {
+      grid-template-columns: 11rem 1fr;
+      gap: 1.5rem;
+    }
+  }
+  .ab__facts dt {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .ab__facts dd {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .ab-h__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 0;
+  }
+  .ab-h__list li {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--night-line);
+  }
+  @media (min-width: 700px) {
+    .ab-h__list li {
+      grid-template-columns: 9rem 1fr;
+      gap: 2rem;
+    }
+  }
+  .ab-h__list span {
+    color: var(--red);
+    font-weight: 700;
+    font-variation-settings: "wdth" 125;
+  }
+  .ab-h__list p {
+    color: var(--night-muted);
+  }
+  .ab-p__list,
+  .ab-t__list,
+  .ab-q__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 800px) {
+    .ab-p__list,
+    .ab-t__list,
+    .ab-q__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem 4rem;
+    }
+  }
+  .ab-p__list li,
+  .ab-t__list li,
+  .ab-q__list li {
+    border-top: 1px solid var(--ink);
+    padding-top: 1rem;
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+  .ab-t__list img {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+  }
+  .ab-t__role {
+    color: var(--muted);
+  }
+  .ab-q__list blockquote {
+    font-size: var(--fs-lg);
+    line-height: 1.4;
+  }
+  .ab-c {
+    background: var(--paper-2);
+  }
+  .ab-c__in {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+</style>

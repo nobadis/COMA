@@ -14,6 +14,7 @@ import GeoDemo from "../components/GeoDemo.astro";
 import AgentDemo from "../components/AgentDemo.astro";
 import FlowDemo from "../components/FlowDemo.astro";
 import Trust from "../components/Trust.astro";
+import Explore from "../components/Explore.astro";
 import { services, type Service } from "../data/services";
 import { site } from "../data/site";
 import { basePlan } from "../data/pricing";
@@ -186,6 +187,11 @@ const schema = [
   <Trust />
   <Process title="Así lo hacemos" steps={s.steps} />
   <Faq items={s.faq} />
+  {
+    ["diseno-web", "seo-geo", "agentes-ia"].includes(s.slug) && (
+      <Explore service={s.slug} title={`${s.label} en tu zona`} showGuides={false} />
+    )
+  }
   <Cta title={s.ctaTitle} subject={s.label} />
 </Base>
 
