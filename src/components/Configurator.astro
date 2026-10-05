@@ -25,7 +25,9 @@ const fmt = (n: number) => n.toLocaleString("es-ES");
 const priceLabel = (x: (typeof extras)[number]) =>
   x.billing === "custom"
     ? "A medida"
-    : `+${fmt(x.price ?? 0)} €${x.billing === "month" ? "/mes" : ""}${x.unit ? ` / ${x.unit}` : ""}`;
+    : x.billing === "year"
+      ? `+${fmt((x.price ?? 0) / 12)} €/mes${x.unit ? ` / ${x.unit}` : ""}`
+      : `+${fmt(x.price ?? 0)} €${x.billing === "month" ? "/mes" : ""}${x.unit ? ` / ${x.unit}` : ""}`;
 ---
 
 <section class="cfg section" id="presupuesto" data-hide-sticky>
@@ -126,6 +128,9 @@ const priceLabel = (x: (typeof extras)[number]) =>
           <span data-once>{base ? basePlan.price : 0}</span><span class="cfg__cur">€</span>
           <small>+ IVA<br /><span data-once-label>pago único</span></small>
         </p>
+        <p class="cfg__row" data-year-row hidden>
+          + <strong><span data-year>0</span> €/año</strong> + IVA
+        </p>
         <p class="cfg__row" data-month-row hidden>
           + <strong><span data-month>0</span> €/mes</strong> + IVA
         </p>
@@ -177,6 +182,7 @@ const priceLabel = (x: (typeof extras)[number]) =>
     const compute = () => {
       let once = base;
       let month = 0;
+      let year = 0;
       const custom: string[] = [];
       const lines: string[] = base ? [`Web Esencial · ${eur(base)} €`] : [];
       const names: string[] = [];
@@ -194,6 +200,9 @@ const priceLabel = (x: (typeof extras)[number]) =>
         if (o.dataset.billing === "custom") {
           custom.push(n);
           lines.push(`${n} · a medida`);
+        } else if (o.dataset.billing === "year") {
+          year += price * qty;
+          lines.push(`${label} · ${eur(price * qty)} €/año (${eur((price * qty) / 12)} €/mes)`);
         } else if (o.dataset.billing === "month") {
           month += price * qty;
           lines.push(`${label} · ${eur(price * qty)} €/mes`);
@@ -202,12 +211,14 @@ const priceLabel = (x: (typeof extras)[number]) =>
           lines.push(`${label} · ${eur(price * qty)} €`);
         }
       }
-      return { once, month, custom, lines, names, tokens };
+      return { once, month, year, custom, lines, names, tokens };
     };
 
     const render = () => {
       const r = compute();
       tween(q("[data-once]"), r.once);
+      q("[data-year-row]").hidden = r.year === 0;
+      tween(q("[data-year]"), r.year);
       q("[data-month-row]").hidden = r.month === 0;
       tween(q("[data-month]"), r.month);
       q("[data-custom-row]").hidden = r.custom.length === 0;
@@ -219,11 +230,12 @@ const priceLabel = (x: (typeof extras)[number]) =>
           : "Elige lo que necesitas";
       q("[data-lines]").innerHTML = r.lines.map((l) => `<li>${l}</li>`).join("");
       const withIva = (r.once + 0) * (1 + iva);
-      q("[data-iva]").textContent = r.month
-        ? `${eur(withIva)} € + ${eur(r.month * (1 + iva))} €/mes`
-        : `${eur(withIva)} €`;
+      q("[data-iva]").textContent =
+        `${eur(withIva)} €` +
+        (r.month ? ` + ${eur(r.month * (1 + iva))} €/mes` : "") +
+        (r.year ? ` + ${eur(r.year * (1 + iva))} €/año` : "");
       const label = q("[data-once-label]");
-      label.textContent = r.once === 0 && r.month > 0 ? "solo cuota mensual" : "pago único";
+      label.textContent = r.once === 0 && (r.month > 0 || r.year > 0) ? "solo cuotas" : "pago único";
       return r;
     };
 
@@ -251,7 +263,8 @@ const priceLabel = (x: (typeof extras)[number]) =>
       const r = render();
       const params = new URLSearchParams({ plan: form.dataset.plan ?? "web" });
       if (r.tokens.length) params.set("extras", r.tokens.join("|"));
-      if (r.once || r.month) params.set("total", `${eur(r.once)} € + IVA${r.month ? ` y ${eur(r.month)} €/mes + IVA` : ""}`);
+      if (r.once || r.month || r.year)
+        params.set("total", `${eur(r.once)} € + IVA${r.month ? ` y ${eur(r.month)} €/mes + IVA` : ""}${r.year ? ` y ${eur(r.year)} €/año + IVA` : ""}`);
       window.location.href = `/contacto/?${params.toString()}`;
     });
     render();

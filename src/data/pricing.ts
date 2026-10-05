@@ -21,7 +21,7 @@ export const basePlan = {
   ],
 };
 
-export type Billing = "once" | "month" | "custom";
+export type Billing = "once" | "month" | "year" | "custom";
 export type GroupId = "web" | "correo" | "crece" | "ia";
 
 export interface Extra {
@@ -76,9 +76,9 @@ export const extras: Extra[] = [
     id: "correo",
     group: "correo",
     name: "Buzón con 50 GB",
-    text: "nombre@tuempresa.com con 50 GB de espacio cada uno.",
-    billing: "month",
-    price: 3,
+    text: "nombre@tuempresa.com con 50 GB de espacio cada uno. Facturado al año.",
+    billing: "year",
+    price: 60,
     unit: "buzón",
     qty: { min: 1, max: 25, label: "buzones" },
   },
@@ -147,7 +147,7 @@ export const extras: Extra[] = [
 
 export const extraGroups: Record<GroupId, { title: string; note: string }> = {
   web: { title: "Tu web, completa", note: "Precio cerrado" },
-  correo: { title: "Correo con tu dominio", note: "Desde 3 €/mes por buzón" },
+  correo: { title: "Correo con tu dominio", note: "5 €/mes por buzón · facturado al año" },
   crece: { title: "Para crecer", note: "Precio cerrado" },
   ia: { title: "IA, automatización y medios", note: "A medida · sobre presupuesto" },
 };
