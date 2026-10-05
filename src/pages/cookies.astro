@@ -1,6 +1,7 @@
 ---
 import Legal from "../layouts/Legal.astro";
 import body from "../data/legal/cookies.html?raw";
+import { activeTrackers } from "../data/ads";
 ---
 
 <Legal title="Política de cookies" description="Política de cookies de comunicacionenmallorca.com: qué cookies usamos y cómo gestionarlas.">
@@ -23,6 +24,16 @@ import body from "../data/legal/cookies.html?raw";
         <td>Analítica anónima de uso para mejorar la web. Solo se activa si aceptas.</td>
         <td>Análisis · persistente</td>
       </tr>
+      {
+        activeTrackers.map((t) => (
+          <tr>
+            <td>{t.cookies}</td>
+            <td>{t.name} (tercero)</td>
+            <td>{t.purpose} Solo se activa si aceptas.</td>
+            <td>Publicidad · persistente</td>
+          </tr>
+        ))
+      }
     </tbody>
   </table>
   <p>Puedes cambiar tu elección en cualquier momento desde «Preferencias de cookies» en el pie de página.</p>

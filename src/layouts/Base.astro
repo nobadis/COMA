@@ -5,8 +5,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
 import StickyCta from "../components/StickyCta.astro";
-import MinimalBar from "../components/MinimalBar.astro";
-import MinimalFoot from "../components/MinimalFoot.astro";
 import { site, team, testimonials } from "../data/site";
 import { places } from "../data/places";
 import { adsEnabled, verification } from "../data/ads";
@@ -31,7 +29,7 @@ interface Props {
   /** ISO 8601. Se publican en og:article y en el WebPage del schema. */
   published?: string;
   modified?: string;
-  /** Landing de anuncios: sin menú ni pie, noindex y sin botón flotante. */
+  /** Landing de anuncios: noindex y sin botón flotante (cabecera y pie van por slots). */
   minimal?: boolean;
 }
 
@@ -64,10 +62,21 @@ const org = {
   legalName: site.legalName,
   taxID: site.cif,
   url: site.url,
-  logo: new URL("/favicon.svg", site.url).href,
-  image: ogImage,
+  // Google pide un logo rasterizado de al menos 112 px para el panel de empresa.
+  logo: {
+    "@type": "ImageObject",
+    url: new URL("/icon-512.png", site.url).href,
+    width: 512,
+    height: 512,
+  },
+  image: new URL("/og-coma.png", site.url).href,
   email: site.email,
   foundingDate: String(site.since),
+  foundingLocation: {
+    "@type": "Place",
+    name: "Palma, Mallorca",
+    address: { "@type": "PostalAddress", addressLocality: site.address.city, addressRegion: site.address.region, addressCountry: site.address.country },
+  },
   slogan: "Hacemos que tu empresa se note",
   description:
     "Agencia de diseño web y marketing en Mallorca desde 1997. Webs desde 99 € + IVA, SEO y posicionamiento en IA (GEO), agentes de IA y automatizaciones para autónomos y pymes de toda España.",
@@ -287,11 +296,11 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
     <div class="cursor" aria-hidden="true" data-cursor></div>
     <div class="sp" aria-hidden="true" data-sp><i></i></div>
     <a class="skip" href="#main">Saltar al contenido</a>
-    {minimal ? <MinimalBar /> : <Header />}
+    {Astro.slots.has("header") ? <slot name="header" /> : <Header />}
     <main id="main">
       <slot />
     </main>
-    {minimal ? <MinimalFoot /> : <Footer />}
+    {Astro.slots.has("footer") ? <slot name="footer" /> : <Footer />}
     {stickyCta && <StickyCta />}
     <CookieBanner />
     <script>

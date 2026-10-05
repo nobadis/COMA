@@ -51,3 +51,73 @@ export const verification = {
   tiktok: id(env.PUBLIC_TIKTOK_VERIFICATION),
   pinterest: id(env.PUBLIC_PINTEREST_VERIFICATION),
 };
+
+/**
+ * Herramientas de terceros activas en este build, para el aviso y la política de cookies.
+ * Solo se nombran las que de verdad se cargan: sin variables, el texto queda como siempre.
+ */
+export const activeTrackers: { name: string; cookies: string; purpose: string }[] = [
+  ...(ads.gtm
+    ? [
+        {
+          name: "Google Tag Manager",
+          cookies: "Según las etiquetas del contenedor",
+          purpose: "Gestionar las etiquetas de analítica y medición de anuncios.",
+        },
+      ]
+    : []),
+  ...(ads.ga4
+    ? [
+        {
+          name: "Google Analytics",
+          cookies: "_ga, _ga_*",
+          purpose: "Medir visitas y uso de la web.",
+        },
+      ]
+    : []),
+  ...(ads.gads
+    ? [
+        {
+          name: "Google Ads",
+          cookies: "_gcl_au, _gcl_aw",
+          purpose: "Medir conversiones de campañas en Google.",
+        },
+      ]
+    : []),
+  ...(ads.meta
+    ? [
+        {
+          name: "Meta (Facebook e Instagram)",
+          cookies: "_fbp, _fbc",
+          purpose: "Medir conversiones de campañas en Meta.",
+        },
+      ]
+    : []),
+  ...(ads.tiktok
+    ? [
+        {
+          name: "TikTok",
+          cookies: "_ttp, ttclid",
+          purpose: "Medir conversiones de campañas en TikTok.",
+        },
+      ]
+    : []),
+  ...(ads.linkedin
+    ? [
+        {
+          name: "LinkedIn",
+          cookies: "li_fat_id, bcookie, lidc",
+          purpose: "Medir conversiones de campañas en LinkedIn.",
+        },
+      ]
+    : []),
+  ...(ads.bing
+    ? [
+        {
+          name: "Microsoft Advertising",
+          cookies: "_uetsid, _uetvid, MUID",
+          purpose: "Medir conversiones de campañas en Bing.",
+        },
+      ]
+    : []),
+];

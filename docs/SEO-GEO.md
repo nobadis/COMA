@@ -1,5 +1,9 @@
 # SEO y GEO: qué hay hecho y qué falta fuera del código
 
+## Principio: la web no cambia por fuera
+
+Todo el posicionamiento se hace sin tocar lo que ve el visitante en las páginas existentes (inicio, servicios, precios, Kit Digital, contacto y legales): mismo contenido, mismo diseño, mismo JavaScript y CSS. Un test lo vigila comparando con `main` en local (ver abajo). Lo que cambia es invisible: `<head>` (metadatos y datos estructurados), `robots.txt`, sitemap, `llms*.txt` y páginas nuevas a las que se llega desde Google y las IA, no desde el menú.
+
 ## Ya está en el código
 
 - **~350 URLs indexables**: servicios, `/zonas/` (82 lugares: Mallorca y sus municipios, Menorca, Ibiza, Formentera, 19 comunidades/ciudades autónomas y ciudades clave), `/diseno-web|seo-geo|agentes-ia/<lugar>/` (246 páginas), `/guias/` (7 guías), `/sobre-coma/`.
@@ -26,6 +30,10 @@
 ## Medir la visibilidad en IA
 
 Cada mes, pregunta a ChatGPT, Gemini, Claude, Copilot y Perplexity lo que preguntaría tu cliente ("mejor agencia de diseño web en Palma", "diseño web barato en Valencia") y anota si apareces, cómo te describen y qué fuentes citan.
+
+## Enlazado interno
+
+Las páginas nuevas no están enlazadas desde el menú ni el pie, para no alterar la web. Se descubren por el sitemap, IndexNow y `llms.txt`, y se enlazan entre sí (zonas ↔ servicios ↔ guías). Si algún día quieres más fuerza, un enlace discreto en el pie a `/zonas/` y `/guias/` ayudaría, pero es decisión de diseño.
 
 ## Mantenimiento
 

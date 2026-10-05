@@ -7,6 +7,17 @@ const SITE = "https://comunicacionenmallorca.com";
 const EXCLUDED = /\/(lp|gracias)\//;
 // Fecha de despliegue: Bing y Google la usan para decidir cuándo volver a rastrear.
 const BUILD_DATE = new Date();
+// ¿Hay alguna etiqueta de analítica o anuncios configurada? Si no, el código de medición
+// desaparece del JavaScript de la web (ver src/scripts/main.ts).
+const ADS_ON = [
+  "PUBLIC_GTM_ID",
+  "PUBLIC_GA4_ID",
+  "PUBLIC_GADS_ID",
+  "PUBLIC_META_PIXEL_ID",
+  "PUBLIC_TIKTOK_PIXEL_ID",
+  "PUBLIC_LINKEDIN_PARTNER_ID",
+  "PUBLIC_BING_UET_ID",
+].some((k) => Boolean(process.env[k]?.trim()));
 
 /**
  * Prioridad orientativa por tipo de página.
@@ -51,4 +62,5 @@ export default defineConfig({
     }),
   ],
   devToolbar: { enabled: false },
+  vite: { define: { __COMA_ADS_ON__: JSON.stringify(ADS_ON) } },
 });

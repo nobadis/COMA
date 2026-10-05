@@ -7,19 +7,6 @@ const links = [
   ...navServices,
   { href: "/precios/", label: "Precios" },
   { href: "/kit-digital/", label: "Kit Digital" },
-  { href: "/sobre-coma/", label: "Sobre COMA" },
-  { href: "/guias/", label: "Guías" },
-];
-const zones = [
-  { href: "/zonas/mallorca/", label: "Mallorca" },
-  { href: "/zonas/palma/", label: "Palma" },
-  { href: "/zonas/illes-balears/", label: "Illes Balears" },
-  { href: "/zonas/madrid/", label: "Madrid" },
-  { href: "/zonas/barcelona/", label: "Barcelona" },
-  { href: "/zonas/valencia/", label: "Valencia" },
-  { href: "/zonas/sevilla/", label: "Sevilla" },
-  { href: "/zonas/bilbao/", label: "Bilbao" },
-  { href: "/zonas/", label: "Todas las zonas" },
 ];
 ---
 
@@ -39,11 +26,6 @@ const zones = [
       <a href="/cookies/">Cookies</a>
       <a href="/privacidad/">Privacidad</a>
       <button type="button" class="ftr__linkbtn" data-cookie-open>Preferencias de cookies</button>
-    </nav>
-
-    <nav class="ftr__links ftr__zones" aria-label="Zonas">
-      <span>Diseño web, SEO e IA en:</span>
-      {zones.map((z) => <a href={z.href}>{z.label}</a>)}
     </nav>
 
     <p class="ftr__bottom">
@@ -101,11 +83,6 @@ const zones = [
     padding: 0;
     cursor: pointer;
     font-size: inherit;
-    color: var(--night-muted);
-  }
-  .ftr__zones {
-    margin-block: 0;
-    border-top: 0;
     color: var(--night-muted);
   }
   .ftr__bottom {

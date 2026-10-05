@@ -14,10 +14,10 @@ import GeoDemo from "../components/GeoDemo.astro";
 import AgentDemo from "../components/AgentDemo.astro";
 import FlowDemo from "../components/FlowDemo.astro";
 import Trust from "../components/Trust.astro";
-import Explore from "../components/Explore.astro";
 import { services, type Service } from "../data/services";
 import { site } from "../data/site";
-import { basePlan } from "../data/pricing";
+import { basePlan, extras } from "../data/pricing";
+import { places } from "../data/places";
 
 const motif = {
   "diseno-web": "web",
@@ -70,11 +70,34 @@ const schema = [
     url: `${site.url}/${s.slug}/`,
     provider: { "@id": `${site.url}/#org` },
     areaServed: [
-      { "@type": "AdministrativeArea", name: "Mallorca" },
       { "@type": "Country", name: "España" },
+      ...places
+        .filter((p) => p.kind === "ccaa" || p.kind === "isla")
+        .map((p) => ({ "@type": "AdministrativeArea", name: p.name })),
     ],
     ...(s.slug === "diseno-web"
       ? { offers: { "@type": "Offer", price: basePlan.price, priceCurrency: "EUR", url: `${site.url}/precios/` } }
+      : {}),
+    ...(s.slug === "seo-geo"
+      ? {
+          offers: ["seo", "geo"].map((id) => {
+            const e = extras.find((x) => x.id === id)!;
+            return {
+              "@type": "Offer",
+              name: e.name,
+              price: e.price,
+              priceCurrency: "EUR",
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: e.price,
+                priceCurrency: "EUR",
+                unitCode: "MON",
+                valueAddedTaxIncluded: false,
+              },
+              url: `${site.url}/seo-geo/`,
+            };
+          }),
+        }
       : {}),
   },
   {
@@ -187,11 +210,6 @@ const schema = [
   <Trust />
   <Process title="Así lo hacemos" steps={s.steps} />
   <Faq items={s.faq} />
-  {
-    ["diseno-web", "seo-geo", "agentes-ia"].includes(s.slug) && (
-      <Explore service={s.slug} title={`${s.label} en tu zona`} showGuides={false} />
-    )
-  }
   <Cta title={s.ctaTitle} subject={s.label} />
 </Base>
 

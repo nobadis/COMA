@@ -33,7 +33,7 @@ npm run validate     # formato + tipos + lint + build + tests E2E (escritorio y 
 
 ## SEO y GEO
 
-Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). En resumen: ~350 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). Contenido local en `src/data/places.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
+Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). Las páginas existentes no cambian por fuera: todo va en `<head>`, archivos de rastreo y páginas nuevas. En resumen: ~350 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). Contenido local en `src/data/places.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
 
 ## Anuncios y outbound
 

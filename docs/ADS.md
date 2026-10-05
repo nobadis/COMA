@@ -1,5 +1,7 @@
 # Anuncios, medición y outbound
 
+Nada de esto se ve en la web: sin variables no se carga ni un byte de medición y el aviso de cookies queda como siempre. Al activar una herramienta, el aviso y la tabla de `/cookies/` la nombran automáticamente (solo las que estén activas).
+
 La web está lista para Google Ads, Meta (Facebook e Instagram), TikTok, LinkedIn y Microsoft (Bing) Ads. **Sin variables de entorno no se carga nada.** Todo se activa en Railway → Variables y se vuelve a desplegar (las `PUBLIC_*` se incrustan en el build). Lista completa en `.env.example`.
 
 ## Activar la medición

@@ -1,7 +1,5 @@
 import Lenis from "lenis";
 import { initPinned, initScrollFx } from "./scrollfx";
-import "./tracking";
-import "./lead";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -496,4 +494,13 @@ if (banner) {
       banner.hidden = false;
     })
   );
+}
+
+/* ------------------------------------------------- medición y formularios */
+// Solo se descargan si hay etiquetas configuradas (las landings y /gracias/ los cargan por su
+// cuenta): sin variables PUBLIC_* esta rama desaparece del build y la web pesa lo de siempre.
+declare const __COMA_ADS_ON__: boolean;
+if (__COMA_ADS_ON__) {
+  void import("./tracking");
+  void import("./lead");
 }
