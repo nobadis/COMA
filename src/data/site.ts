@@ -82,7 +82,6 @@ export const trust = {
   headline: "Mallorca Live Festival",
   pymes: 100,
   references: [
-    "Mallorca Live Festival",
     "Berkeley",
     "Silicon Valley",
     "Universitat Politècnica de València",
@@ -90,6 +89,7 @@ export const trust = {
     "Farmacias",
     "Clínicas dentales",
     "Despachos profesionales",
+    "Mallorca Live Festival",
     "+100 pymes",
   ],
 };
