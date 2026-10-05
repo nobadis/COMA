@@ -1,6 +1,6 @@
 ---
 import Arrow from "./Arrow.astro";
-import { basePlan, extras, extraGroups, IVA, type GroupId } from "../data/pricing";
+import { basePlan, extras, extraGroups, mailInfo, IVA, type GroupId } from "../data/pricing";
 import { site } from "../data/site";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
   intro?: string;
 }
 const {
-  groups = ["web", "crece", "ia"],
+  groups = ["web", "correo", "crece", "ia"],
   base = true,
   plan = "web",
   heading = true,
@@ -67,6 +67,22 @@ const priceLabel = (x: (typeof extras)[number]) =>
                 <span>{extraGroups[g].title}</span>
                 <small>{extraGroups[g].note}</small>
               </legend>
+              {g === "correo" && (
+                <div class="mail">
+                  <div class="mail__card">
+                    <span class="mail__addr">
+                      tu.nombre<b>@tuempresa.com</b>
+                    </span>
+                    <span class="mail__bar"><i /></span>
+                    <span class="mail__cap">
+                      <strong>{mailInfo.storage}</strong> por buzón
+                    </span>
+                  </div>
+                  <ul class="mail__perks">
+                    {mailInfo.perks.map((p) => <li>{p}</li>)}
+                  </ul>
+                </div>
+              )}
               {extras
                 .filter((x) => x.group === g)
                 .map((x) => (
@@ -342,6 +358,66 @@ const priceLabel = (x: (typeof extras)[number]) =>
     text-transform: uppercase;
     color: var(--muted);
     font-variation-settings: "wdth" 100;
+  }
+
+  .mail {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+    margin-top: 1rem;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  @media (min-width: 700px) {
+    .mail {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+  }
+  .mail__card {
+    display: grid;
+    gap: 0.7rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--night-line);
+  }
+  .mail__addr {
+    font-variation-settings: "wdth" 115;
+    font-weight: 600;
+    font-size: var(--fs-md);
+    overflow-wrap: anywhere;
+  }
+  .mail__addr b {
+    color: var(--red);
+    font-weight: 600;
+  }
+  .mail__bar {
+    height: 0.5rem;
+    background: rgb(255 255 255 / 0.14);
+    overflow: hidden;
+  }
+  .mail__bar i {
+    display: block;
+    height: 100%;
+    width: 18%;
+    background: var(--red);
+  }
+  .mail__cap {
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+  }
+  .mail__cap strong {
+    color: var(--paper);
+    font-size: var(--fs-md);
+  }
+  .mail__perks {
+    display: grid;
+    gap: 0.35rem;
+    font-size: var(--fs-sm);
+  }
+  .mail__perks li::before {
+    content: "✓ ";
+    color: var(--red);
+    font-weight: 700;
   }
 
   .opt {

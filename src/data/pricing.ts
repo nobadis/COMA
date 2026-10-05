@@ -22,7 +22,7 @@ export const basePlan = {
 };
 
 export type Billing = "once" | "month" | "custom";
-export type GroupId = "web" | "crece" | "ia";
+export type GroupId = "web" | "correo" | "crece" | "ia";
 
 export interface Extra {
   id: string;
@@ -74,13 +74,21 @@ export const extras: Extra[] = [
   },
   {
     id: "correo",
-    group: "web",
-    name: "Correo corporativo",
-    text: "tu@tuempresa.com configurado en el móvil y el ordenador.",
+    group: "correo",
+    name: "Buzón con 50 GB",
+    text: "nombre@tuempresa.com con 50 GB de espacio cada uno.",
     billing: "month",
     price: 3,
     unit: "buzón",
-    qty: { min: 1, max: 10, label: "buzones" },
+    qty: { min: 1, max: 25, label: "buzones" },
+  },
+  {
+    id: "correo-config",
+    group: "correo",
+    name: "Configuración y migración",
+    text: "DNS, antispam (SPF, DKIM, DMARC), móvil y ordenador listos; traemos tus correos antiguos.",
+    billing: "once",
+    price: 29,
   },
   {
     id: "contenido",
@@ -139,8 +147,15 @@ export const extras: Extra[] = [
 
 export const extraGroups: Record<GroupId, { title: string; note: string }> = {
   web: { title: "Tu web, completa", note: "Precio cerrado" },
+  correo: { title: "Correo con tu dominio", note: "Desde 3 €/mes por buzón" },
   crece: { title: "Para crecer", note: "Precio cerrado" },
   ia: { title: "IA, automatización y medios", note: "A medida · sobre presupuesto" },
 };
 
 export const IVA = 0.21;
+
+/** Subsección de correo: tarjeta destacada del configurador. */
+export const mailInfo = {
+  storage: "50 GB",
+  perks: ["Antispam y antivirus", "Webmail + app móvil", "Alias y reenvíos incluidos", "Tus datos en la UE"],
+};
