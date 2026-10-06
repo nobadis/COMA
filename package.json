@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/inject_clarity.cjs",
+    "build": "astro build && node scripts/build-ejemplos.cjs && node scripts/inject_clarity.cjs",
     "preview": "NO_UPDATE_CHECK=1 serve -n -l 4173 dist",
     "start": "bash scripts/railway-start.sh",
     "check": "astro check",
@@ -17,7 +17,8 @@
     "test:e2e": "playwright test",
     "test": "npm run check && npm run lint:js && npm run build && npm run lint:html && npm run test:e2e",
     "validate": "npm run format:check && npm run test",
-    "seo:indexnow": "node scripts/indexnow.cjs"
+    "seo:indexnow": "node scripts/indexnow.cjs",
+    "ejemplo": "node scripts/ejemplo.cjs"
   },
   "license": "ISC",
   "type": "module",

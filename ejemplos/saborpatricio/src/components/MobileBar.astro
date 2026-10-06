@@ -1,0 +1,87 @@
+---
+import Icon from './Icon.astro';
+import { waLink, site, telLink } from '../config/site';
+---
+
+<div class="mb" data-mobilebar>
+  <a class="mb__wa" href={waLink(`¡Hola ${site.name}! Quiero hacer un pedido 🥟`)} target="_blank" rel="noopener">
+    <Icon name="whatsapp" /> WhatsApp
+  </a>
+  <a class="mb__order" href={telLink}>
+    <Icon name="phone" /> Llamar
+  </a>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-mobilebar]');
+  const hero = document.querySelector('[data-hero]');
+  if (bar) {
+    if (hero) {
+      new IntersectionObserver(([e]) => bar.classList.toggle('is-on', !e.isIntersecting), {
+        rootMargin: '-55% 0px 0px 0px',
+      }).observe(hero);
+    } else bar.classList.add('is-on');
+  }
+</script>
+
+<style>
+  .mb {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 55;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 999px;
+    background: rgb(12 26 64 / 0.86);
+    backdrop-filter: blur(14px) saturate(1.5);
+    -webkit-backdrop-filter: blur(14px) saturate(1.5);
+    box-shadow: 0 16px 40px -12px rgb(0 0 0 / 0.5);
+    transform: translateY(140%);
+    transition: transform 0.5s var(--ease-spring);
+  }
+  .mb.is-on {
+    transform: none;
+  }
+  .mb a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    border-radius: 999px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .mb__wa {
+    background: var(--wa);
+    color: #05210f;
+  }
+  .mb__order {
+    background: var(--sol);
+    color: var(--ink);
+  }
+  .mb__count {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--red);
+    color: #fff;
+    font-size: 0.8rem;
+  }
+  .mb__count[hidden] {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .mb {
+      display: none;
+    }
+  }
+</style>

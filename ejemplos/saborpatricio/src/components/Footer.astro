@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import Icon from './Icon.astro';
+import { site, igLink, telLink, waLink } from '../config/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="ft">
+  <div class="wrap ft__in">
+    <div class="ft__brand">
+      <Image src={logo} alt="Sabor Patricio" width={88} height={88} loading="lazy" />
+      <p class="ft__tag">Auténtica empanada argentina.<br />Hecha en Mallorca, con el corazón allá.</p>
+    </div>
+    <nav class="ft__nav" aria-label="Pie de página">
+      <a href="/#sabores">Sabores</a>
+      <a href="/#nosotros">Nosotros</a>
+      <a href="/#donde">Dónde estamos</a>
+      <a href={waLink('¡Hola! Quiero hacer un pedido.')} target="_blank" rel="noopener">Pedir por WhatsApp</a>
+    </nav>
+    <div class="ft__contact">
+      <a href={waLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp</a>
+      <a href={telLink}><Icon name="phone" size={20} /> {site.phone}</a>
+      <a href={igLink} target="_blank" rel="noopener"><Icon name="instagram" size={20} /> @{site.instagram}</a>
+      <a href={site.mapsUrl} target="_blank" rel="noopener"><Icon name="pin" size={20} /> {site.address.street}, {site.address.area}</a>
+    </div>
+  </div>
+  <div class="wrap ft__bottom">
+    <p>© {year} {site.name} · Palma de Mallorca</p>
+    <p>Hecho con <span aria-label="amor">♥</span> y mucho repulgue</p>
+  </div>
+</footer>
+
+<style>
+  .ft {
+    background: var(--night);
+    color: rgb(255 248 236 / 0.85);
+    padding: 72px 0 calc(32px + env(safe-area-inset-bottom));
+  }
+  .ft__in {
+    display: grid;
+    gap: 40px;
+  }
+  .ft__brand {
+    display: grid;
+    gap: 16px;
+    justify-items: start;
+  }
+  .ft__brand img {
+    border-radius: 50%;
+  }
+  .ft__tag {
+    font-weight: 600;
+    color: var(--cream);
+  }
+  .ft__nav,
+  .ft__contact {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+  .ft a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .ft a:hover {
+    color: var(--sol);
+  }
+  .ft__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 0.9rem;
+    color: rgb(255 248 236 / 0.6);
+  }
+  @media (min-width: 900px) {
+    .ft__in {
+      grid-template-columns: 1.4fr 1fr 1.2fr;
+    }
+  }
+  @media (max-width: 899px) {
+    .ft {
+      padding-bottom: calc(110px + env(safe-area-inset-bottom));
+    }
+  }
+</style>

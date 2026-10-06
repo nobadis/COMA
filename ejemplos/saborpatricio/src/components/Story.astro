@@ -1,0 +1,223 @@
+---
+import { Image, Picture } from 'astro:assets';
+import logo from '../assets/logo.png';
+import crowd from '../assets/photos/inauguracion.jpg';
+import bite from '../assets/photos/mordida.jpg';
+import { site } from '../config/site';
+
+const statement =
+  `Nacimos en ${site.founded} en Cala Major con un propósito claro: que cada argentino en Mallorca se sienta en casa, y que todos los demás viajen a Argentina sin subirse a un avión.`;
+const words = statement.split(' ');
+const highlight = new Set(['casa,', 'Argentina']);
+---
+
+<section id="nosotros" class="story section" aria-labelledby="story-title">
+  <div class="wrap">
+    <div class="story__top">
+      <div class="story__seal reveal">
+        <Image src={logo} alt="Logo de Sabor Patricio: gaucho con una bandeja de empanadas" width={260} height={260} loading="lazy" />
+      </div>
+      <div>
+        <p class="eyebrow story__eyebrow">Nuestra historia</p>
+        <h2 id="story-title" class="sr-only">Nuestra historia</h2>
+        <p class="story__statement">
+          {
+            words.map((w) => (
+              <span class:list={['w', { 'w--hl': highlight.has(w) }]}>{w} </span>
+            ))
+          }
+        </p>
+      </div>
+    </div>
+
+    <div class="story__grid">
+      <article class="pill pill--ar reveal">
+        <Picture
+          src={crowd}
+          alt="El local de Sabor Patricio lleno de gente el día de la inauguración"
+          formats={['avif', 'webp']}
+          widths={[400, 600]}
+          sizes="(min-width: 900px) 25vw, 45vw"
+          loading="lazy"
+          class="pill__img"
+        />
+        <div class="pill__txt">
+          <p class="pill__q">¿Sos argentino?</p>
+          <h3 class="pill__h">Esto es volver a casa.</h3>
+          <p>
+            El sabor del domingo en lo de la abuela, de la previa con amigos, del club después del partido. Pedí una
+            criolla, cerrá los ojos y listo: estás allá.
+          </p>
+        </div>
+      </article>
+
+      <article class="pill pill--world reveal" style="--d:.1s">
+        <Picture
+          src={bite}
+          alt="Mano con guante mordiendo una empanada recién horneada"
+          formats={['avif', 'webp']}
+          widths={[400, 600]}
+          sizes="(min-width: 900px) 25vw, 45vw"
+          loading="lazy"
+          class="pill__img"
+        />
+        <div class="pill__txt">
+          <p class="pill__q">¿No lo sos?</p>
+          <h3 class="pill__h">Bienvenido a tu primer viaje.</h3>
+          <p>
+            Masa dorada, repulgue a mano y un relleno criollo que no se parece a nada. Empezá por la carne criolla.
+            Después nos contás (spoiler: vas a volver).
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  const st = document.querySelector<HTMLElement>('.story__statement');
+  if (st && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const words = [...st.querySelectorAll<HTMLElement>('.w')];
+    st.classList.add('is-scrub');
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const r = st.getBoundingClientRect();
+      // 0 cuando el texto asoma por abajo (85 % de la pantalla), 1 cuando su final pasa del 45 %.
+      const start = innerHeight * 0.85;
+      const end = innerHeight * 0.45 - r.height;
+      const p = Math.min(1, Math.max(0, (start - r.top) / (start - end)));
+      const lit = Math.round(p * words.length);
+      words.forEach((w, i) => w.classList.toggle('on', i < lit));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    update();
+  }
+</script>
+
+<style>
+  .story {
+    position: relative;
+    background: var(--night);
+    color: var(--cream);
+    overflow: clip;
+  }
+  .story::before {
+    content: '';
+    position: absolute;
+    right: -20vmax;
+    top: -20vmax;
+    width: 60vmax;
+    height: 60vmax;
+    background: url('/sol.svg') center / contain no-repeat;
+    opacity: 0.035;
+    animation: spin 120s linear infinite;
+  }
+  .story__top {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    align-items: center;
+  }
+  .story__eyebrow {
+    color: var(--celeste);
+    margin-bottom: 20px;
+  }
+  .story__seal img {
+    width: clamp(140px, 22vw, 260px);
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px rgb(116 172 223 / 0.15);
+  }
+  .story__statement {
+    font-size: clamp(1.7rem, 1.1rem + 2.6vw, 3.4rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    max-width: 24ch;
+  }
+  .w--hl {
+    color: var(--sol);
+  }
+  /* Las palabras se encienden al hacer scroll (script de arriba). Sin JS se ven en blanco. */
+  .story__statement.is-scrub .w {
+    opacity: 0.18;
+    transition: opacity 0.3s;
+  }
+  .story__statement.is-scrub .w.on {
+    opacity: 1;
+  }
+
+  .story__grid {
+    display: grid;
+    gap: 20px;
+    margin-top: clamp(48px, 7vw, 96px);
+  }
+  .pill {
+    display: grid;
+    grid-template-columns: minmax(110px, 38%) 1fr;
+    gap: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--cream);
+    color: var(--ink);
+  }
+  .pill--world {
+    background: var(--celeste);
+  }
+  .pill__img :global(img),
+  .pill :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .pill--world :global(img) {
+    object-position: center 75%;
+  }
+  .pill__txt {
+    display: grid;
+    align-content: center;
+    gap: 10px;
+    padding: clamp(20px, 3vw, 36px);
+  }
+  .pill__q {
+    font-family: var(--brush);
+    font-size: 1.5rem;
+    color: var(--blue);
+    line-height: 1;
+  }
+  .pill--world .pill__q {
+    color: var(--night);
+  }
+  .pill__h {
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+    text-transform: uppercase;
+  }
+  @media (max-width: 560px) {
+    .pill {
+      grid-template-columns: 1fr;
+    }
+    .pill :global(picture),
+    .pill :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+  }
+  @media (min-width: 900px) {
+    .story__top {
+      grid-template-columns: auto 1fr;
+      gap: 64px;
+    }
+    .story__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

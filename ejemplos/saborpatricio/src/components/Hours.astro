@@ -1,0 +1,104 @@
+---
+import { site, waLink } from '../config/site';
+const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const order = [1, 2, 3, 4, 5, 6, 0];
+const hasHours = site.hours.length > 0;
+---
+
+{
+  hasHours ? (
+    <div class="hours" data-hours={JSON.stringify(site.hours)}>
+      <p class="hours__now" data-now hidden />
+      <dl class="hours__list">
+        {order.map((d) => {
+          const slots = site.hours.filter((h) => h.day === d);
+          return (
+            <div class="hours__row" data-day={d}>
+              <dt>{days[d]}</dt>
+              <dd>{slots.length ? slots.map((s) => `${s.open}–${s.close}`).join(' · ') : 'Cerrado'}</dd>
+            </div>
+          );
+        })}
+      </dl>
+    </div>
+  ) : (
+    <p class="hours__ask">
+      Horarios actualizados en nuestras historias de Instagram. ¿Dudas?{' '}
+      <a href={waLink('¡Hola! ¿Hoy a qué hora abren?')} target="_blank" rel="noopener">
+        Preguntanos por WhatsApp
+      </a>
+      .
+    </p>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hours]').forEach((el) => {
+    const hours: { day: number; open: string; close: string }[] = JSON.parse(el.dataset.hours!);
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Madrid',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(new Date());
+    const wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parts.find((p) => p.type === 'weekday')!.value);
+    const now = `${parts.find((p) => p.type === 'hour')!.value}:${parts.find((p) => p.type === 'minute')!.value}`;
+    const open = hours.some((h) => h.day === wd && now >= h.open && now < h.close);
+    el.querySelector(`[data-day="${wd}"]`)?.classList.add('is-today');
+    const badge = el.querySelector<HTMLElement>('[data-now]')!;
+    badge.hidden = false;
+    badge.classList.toggle('is-open', open);
+    badge.textContent = open ? 'Abierto ahora' : 'Cerrado ahora';
+  });
+</script>
+
+<style>
+  .hours__now {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgb(200 52 31 / 0.12);
+    color: var(--red);
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+  .hours__now::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .hours__now.is-open {
+    background: rgb(37 211 102 / 0.15);
+    color: #0f7a3a;
+  }
+  .hours__list {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+  }
+  .hours__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgb(14 21 48 / 0.15);
+  }
+  .hours__row dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .hours__row.is-today {
+    font-weight: 800;
+    color: var(--blue);
+  }
+  .hours__ask a {
+    font-weight: 700;
+    color: var(--blue);
+  }
+</style>

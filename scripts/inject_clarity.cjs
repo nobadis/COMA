@@ -12,7 +12,8 @@ const PARTIAL = path.join(__dirname, "partials", "clarity.html");
 function findHtml(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) return findHtml(full);
+    // Las webs de ejemplo para clientes no llevan la analítica de COMA.
+    if (entry.isDirectory()) return entry.name === "ejemplos-web" ? [] : findHtml(full);
     return entry.name.endsWith(".html") ? [full] : [];
   });
 }

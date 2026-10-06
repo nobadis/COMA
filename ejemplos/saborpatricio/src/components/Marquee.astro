@@ -1,0 +1,71 @@
+---
+import { flavors } from '../config/site';
+const { tone = 'sol' } = Astro.props as { tone?: 'sol' | 'blue' };
+const items = [...flavors.map((f) => f.name), 'Pizza argentina', 'Quilmes bien fría'];
+---
+
+<div class:list={['mq', `mq--${tone}`]} aria-hidden="true">
+  <div class="mq__track">
+    {
+      [0, 1].map(() => (
+        <div class="mq__group">
+          {items.map((t) => (
+            <span class="mq__item">
+              {t}
+              <img src="/sol.svg" alt="" width="34" height="34" loading="lazy" />
+            </span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .mq {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    padding: 18px 0;
+    background: var(--sol);
+    color: var(--ink);
+    box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.3);
+  }
+  .mq--blue {
+    background: var(--ink);
+    color: var(--cream);
+    transform: rotate(1.2deg);
+    margin: -18px -10px 0;
+  }
+  .mq__track {
+    display: flex;
+    width: max-content;
+    animation: mq 32s linear infinite;
+  }
+  .mq__group {
+    display: flex;
+  }
+  .mq__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    padding-right: 28px;
+    font-size: clamp(1.4rem, 1rem + 2vw, 2.6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  .mq__item img {
+    width: 1em;
+    height: 1em;
+  }
+  .mq--sol .mq__item img {
+    filter: brightness(0.2) sepia(1) hue-rotate(190deg) saturate(4);
+  }
+  @keyframes mq {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

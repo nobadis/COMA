@@ -1,0 +1,55 @@
+---
+import { Picture } from 'astro:assets';
+import { productGroups } from '../config/site';
+import classics from '../assets/photos/stack.jpg';
+import gourmet from '../assets/photos/vitrina.jpg';
+const images = [classics, gourmet];
+---
+
+<section id="sabores" class="flavors section" aria-labelledby="flavors-title">
+  <div class="wrap">
+    <header class="flavors__head reveal">
+      <p class="eyebrow">Hay mucho por descubrir</p>
+      <h2 id="flavors-title" class="h2">De las de siempre.<br /><span>A tus nuevas favoritas.</span></h2>
+      <p class="lead">Empanadas clásicas y gourmet, un final dulce y algo fresco para acompañar. Vos elegís el plan.</p>
+    </header>
+    <div class="flavors__grid">
+      {productGroups.map((group, i) => (
+        <article class:list={['flavors__card', 'reveal', `flavors__card--${i}`]} aria-labelledby={`flavors-group-${i}`}>
+          {i < 2 && <div class="flavors__media"><Picture src={images[i]} alt={i === 0 ? 'Empanadas de Sabor Patricio recién preparadas' : 'Selección de empanadas en la vitrina de Sabor Patricio'} formats={['avif', 'webp']} widths={[480, 800]} sizes="(min-width: 900px) 45vw, 92vw" loading="lazy" /></div>}
+          <div class="flavors__copy">
+            <p class="flavors__kicker brush">{['Las de siempre', 'Un paso más', 'El final feliz', 'Bien fresquito'][i]}</p>
+            <h3 id={`flavors-group-${i}`}>{group.name}</h3>
+            <p class="flavors__intro">{group.intro}</p>
+            <ul class="flavors__list" role="list">{group.items.map(item => <li>{item}</li>)}</ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .flavors { background: var(--cream); }
+  .flavors__head { display: grid; gap: 18px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .flavors__head h2 { max-width: 20ch; line-height: 1.04; }
+  .flavors__head h2 span { color: var(--blue); }
+  .flavors__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: stretch; }
+  .flavors__card { min-width: 0; display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; background: var(--blue); color: var(--cream); }
+  .flavors__card--1 { background: var(--night); }
+  .flavors__media { position: relative; height: clamp(200px, 28vw, 280px); flex: none; overflow: hidden; }
+  .flavors__media :global(picture) { display: block; width: 100%; height: 100%; }
+  .flavors__media :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 48%; }
+  .flavors__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: clamp(24px, 3vw, 36px); flex: 1; }
+  .flavors__kicker { font-size: 1.65rem; line-height: 1.15; color: var(--sol); }
+  .flavors__copy h3 { font-size: clamp(1.65rem, 1.2rem + 1.5vw, 2.4rem); line-height: 1.08; text-transform: uppercase; }
+  .flavors__intro { font-size: 1rem; line-height: 1.55; opacity: 0.88; max-width: 40ch; }
+  .flavors__list { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 24px; width: 100%; margin: 8px 0 0; padding: 0; list-style: none; }
+  .flavors__list li { padding: 9px 0; border-bottom: 1px solid rgb(255 248 236 / 0.22); font-size: 0.95rem; font-weight: 600; line-height: 1.45; overflow-wrap: break-word; }
+  .flavors__card--2 { background: var(--sol); color: var(--ink); }
+  .flavors__card--3 { background: var(--celeste-soft); color: var(--ink); }
+  .flavors__card--2 .flavors__kicker, .flavors__card--3 .flavors__kicker { color: var(--blue); }
+  .flavors__card--2 .flavors__list li, .flavors__card--3 .flavors__list li { border-color: rgb(14 21 48 / 0.18); }
+  @media (min-width: 360px) { .flavors__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 900px) { .flavors__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

@@ -1,0 +1,145 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import Icon from './Icon.astro';
+import { waLink } from '../config/site';
+
+const { solid = false } = Astro.props as { solid?: boolean };
+const links = [
+  { href: '/#sabores', label: 'Sabores' },
+  { href: '/#nosotros', label: 'Nosotros' },
+  { href: '/#donde', label: 'Dónde estamos' },
+];
+---
+
+<header class:list={['hdr', { 'is-solid': solid }]} data-header>
+  <div class="hdr__in wrap">
+    <a href="/" class="hdr__logo" aria-label="Sabor Patricio, ir al inicio">
+      <Image src={logo} alt="" width={56} height={56} loading="eager" fetchpriority="high" />
+      <span class="hdr__name">Sabor<br />Patricio</span>
+    </a>
+    <nav class="hdr__nav" aria-label="Principal">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <a href={waLink('¡Hola! Quiero hacer un pedido.')} class="hdr__cta" target="_blank" rel="noopener">
+      <Icon name="whatsapp" size={20} />
+      <span>Pedir</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  const h = document.querySelector<HTMLElement>('[data-header]');
+  if (h && !h.classList.contains('is-solid')) {
+    const sentinel = document.createElement('div');
+    sentinel.style.cssText = 'position:absolute;top:0;height:40px;width:1px;pointer-events:none';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(([e]) => h.classList.toggle('is-scrolled', !e.isIntersecting)).observe(sentinel);
+  }
+</script>
+
+<style>
+  .hdr {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--header-h);
+    color: #fff;
+    transition:
+      background-color 0.35s,
+      color 0.35s,
+      box-shadow 0.35s;
+    view-transition-name: header;
+  }
+  .hdr.is-scrolled,
+  .hdr.is-solid {
+    color: var(--ink);
+    background: rgb(255 248 236 / 0.82);
+    backdrop-filter: saturate(1.6) blur(16px);
+    -webkit-backdrop-filter: saturate(1.6) blur(16px);
+    box-shadow: 0 1px 0 rgb(14 21 48 / 0.08);
+  }
+  .hdr__in {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .hdr__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .hdr__logo img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    transition: transform 0.6s var(--ease-spring);
+  }
+  .hdr__logo:hover img {
+    transform: rotate(-12deg) scale(1.06);
+  }
+  .hdr__name {
+    font-weight: 800;
+    font-size: 0.95rem;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .hdr__nav {
+    display: none;
+    gap: 6px;
+  }
+  .hdr__nav a {
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  .hdr__nav a:hover {
+    background: rgb(127 127 127 / 0.15);
+  }
+  .hdr__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--sol);
+    color: var(--ink);
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.25s var(--ease-spring);
+  }
+  .hdr__cta:hover {
+    transform: scale(1.05);
+  }
+  .hdr__count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--red);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .hdr__count[hidden] {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .hdr__nav {
+      display: flex;
+    }
+  }
+</style>

@@ -1,0 +1,212 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { waLink } from '../config/site';
+import boxBeer from '../assets/photos/caja-quilmes.jpg';
+import boxOpen from '../assets/photos/caja-abierta.jpg';
+import pizza from '../assets/photos/pizza-pepperoni.jpg';
+import pizzas from '../assets/photos/pizzas.jpg';
+---
+
+<section id="combos" class="box section" aria-labelledby="box-title">
+  <div class="wrap box__grid">
+    <div class="box__media reveal">
+      <Picture
+        src={boxBeer}
+        alt="Caja de Sabor Patricio con seis empanadas y botellas de cerveza Quilmes"
+        formats={['avif', 'webp']}
+        widths={[400, 600]}
+        sizes="(min-width: 900px) 28vw, 60vw"
+        loading="lazy"
+      />
+      <Picture
+        src={boxOpen}
+        alt="Cajas abiertas de Sabor Patricio llenas de empanadas"
+        formats={['avif', 'webp']}
+        widths={[400, 600]}
+        sizes="(min-width: 900px) 24vw, 50vw"
+        loading="lazy"
+      />
+      <span class="box__sticker brush" aria-hidden="true">¡Plan<br />resuelto!</span>
+    </div>
+
+    <div class="box__copy">
+      <p class="eyebrow reveal">Para compartir (o no)</p>
+      <h2 id="box-title" class="h2 reveal">Un combo.<br />Mil buenos planes.</h2>
+      <p class="lead reveal">
+        Para una pausa al mediodía, una cena en casa o una juntada con amigos. Empanadas para vos o para compartir, con los sabores que más te gustan.
+      </p>
+      <ul class="box__list reveal" role="list">
+        <li><Icon name="check" size={22} /> Individuales: 2 o 3 empanadas y bebida</li>
+        <li><Icon name="check" size={22} /> Con algo dulce: 2 empanadas, bebida y postre</li>
+        <li><Icon name="check" size={22} /> Para compartir: cajas de 6, 10 o 20 empanadas</li>
+        <li><Icon name="check" size={22} /> Para la juntada: 12 empanadas y 4 bebidas</li>
+      </ul>
+      <a href={waLink('¡Hola! Quiero consultar por los combos de empanadas.')} target="_blank" rel="noopener" class="btn btn--blue btn--lg reveal">Consultá por tu combo <Icon name="arrow" /></a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="pz reveal">
+      <div class="pz__copy">
+        <p class="pz__kicker brush">Y sí…</p>
+        <h3 class="pz__h">También hay<br />pizza argentina</h3>
+        <p>Margarita, pepperoni o jamón. Porciones con mucha muzza para cambiar de plan o sumar a tus empanadas.</p>
+        <a href={waLink('¡Hola! Quiero consultar por las pizzas.')} target="_blank" rel="noopener" class="btn btn--ink">Preguntanos por las pizzas <Icon name="arrow" /></a>
+      </div>
+      <div class="pz__media">
+        <Picture
+          src={pizza}
+          alt="Pizza de pepperoni con mucho queso"
+          formats={['avif', 'webp']}
+          widths={[360, 560]}
+          sizes="(min-width: 900px) 22vw, 45vw"
+          loading="lazy"
+        />
+        <Picture
+          src={pizzas}
+          alt="Tres pizzas argentinas sobre tabla de madera"
+          formats={['avif', 'webp']}
+          widths={[360, 560]}
+          sizes="(min-width: 900px) 22vw, 45vw"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .box {
+    background: var(--celeste-soft);
+    overflow: clip;
+  }
+  .box__grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+  .box__media {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: end;
+    gap: 14px;
+  }
+  .box__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+  }
+  .box__media > :global(picture:first-child) {
+    transform: rotate(-3deg);
+  }
+  .box__media > :global(picture:nth-child(2)) {
+    transform: rotate(4deg) translateY(-12%);
+  }
+  .box__sticker {
+    position: absolute;
+    left: 46%;
+    top: -4%;
+    display: grid;
+    place-items: center;
+    width: clamp(96px, 12vw, 136px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--sol);
+    color: var(--ink);
+    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.7rem);
+    line-height: 0.95;
+    text-align: center;
+    transform: rotate(-12deg);
+    box-shadow: 0 8px 0 -2px rgb(0 0 0 / 0.2);
+    animation: bob 4s ease-in-out infinite;
+  }
+  .box__copy {
+    display: grid;
+    gap: 20px;
+    justify-items: start;
+  }
+  .box__list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+  .box__list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .box__list :global(svg) {
+    flex: none;
+    color: #fff;
+    background: var(--blue);
+    border-radius: 50%;
+    padding: 3px;
+  }
+
+  .pz {
+    display: grid;
+    gap: 28px;
+    margin-top: clamp(72px, 10vw, 120px);
+    padding: clamp(24px, 4vw, 48px);
+    border-radius: calc(var(--radius) + 8px);
+    background: var(--red);
+    color: #fff;
+    overflow: hidden;
+  }
+  .pz__copy {
+    display: grid;
+    gap: 14px;
+    justify-items: start;
+    align-content: center;
+  }
+  .pz__kicker {
+    font-size: 2rem;
+    color: var(--sol);
+    line-height: 1;
+  }
+  .pz__h {
+    font-size: clamp(2rem, 1.4rem + 2.6vw, 3.6rem);
+    text-transform: uppercase;
+  }
+  .pz__media {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .pz__media :global(img) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    transition: transform 0.6s var(--ease-spring);
+  }
+  .pz__media :global(picture:nth-child(2) img) {
+    transform: translateY(18px);
+  }
+  .pz:hover .pz__media :global(img) {
+    transform: rotate(-2deg) scale(1.03);
+  }
+  @media (min-width: 900px) {
+    .box__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .pz {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 48px;
+    }
+  }
+  @keyframes bob {
+    50% {
+      transform: rotate(-6deg) translateY(-8px);
+    }
+  }
+</style>

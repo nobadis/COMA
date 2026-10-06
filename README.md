@@ -39,6 +39,14 @@ Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). Las páginas existentes no cambian por f
 
 Ver [docs/ADS.md](docs/ADS.md): GTM/GA4/Google Ads/Meta/TikTok/LinkedIn/Bing por variables `PUBLIC_*`, Consent Mode v2, eventos y atribución UTM, landings `/lp/*` y personalización para outbound.
 
+## Webs de ejemplo para clientes
+
+Maquetas completas de webs de clientes servidas en `/ejemplos-web/<id>/<proyecto>/`. El `id` es aleatorio y largo, y las páginas no se enlazan, van con `noindex` (meta y cabecera `X-Robots-Tag`) y no están en el sitemap ni llevan la analítica de COMA.
+
+- Código de cada ejemplo: `ejemplos/<proyecto>/` (un proyecto Astro propio). Registro de ids: `ejemplos/ejemplos.json`.
+- Añadir o actualizar uno desde GitHub: `npm run ejemplo -- <proyecto> <url-del-repo>`. Al actualizar se conserva el id, así que el enlace del cliente no cambia.
+- `scripts/build-ejemplos.cjs` (dentro de `npm run build` y del `Dockerfile`) compila cada ejemplo con su `base` y reescribe las rutas absolutas para que la navegación funcione dentro de la subcarpeta.
+
 ## Analítica y cookies
 
 Microsoft Clarity se inyecta en el HTML con `CLARITY_PROJECT_ID`, y el resto de etiquetas (ver docs/ADS.md) se cargan por variables `PUBLIC_*`. **Nada se carga si el usuario no acepta las cookies** (`coma_cookie_consent` en `localStorage`).

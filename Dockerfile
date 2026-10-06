@@ -10,6 +10,7 @@ COPY astro.config.mjs tsconfig.json ./
 COPY public ./public
 COPY src ./src
 COPY scripts ./scripts
+COPY ejemplos ./ejemplos
 
 # Variables PUBLIC_* (analítica, anuncios, formulario): en Railway se declaran en Variables y
 # se pasan al build. Vacías = no se carga ninguna etiqueta. Ver .env.example.
@@ -44,7 +45,7 @@ ENV PUBLIC_GTM_ID=$PUBLIC_GTM_ID \
     PUBLIC_TIKTOK_VERIFICATION=$PUBLIC_TIKTOK_VERIFICATION \
     PUBLIC_PINTEREST_VERIFICATION=$PUBLIC_PINTEREST_VERIFICATION
 
-RUN npx astro build && npm prune --omit=dev && chmod +x scripts/railway-start.sh
+RUN npx astro build && node scripts/build-ejemplos.cjs && npm prune --omit=dev && chmod +x scripts/railway-start.sh
 
 # Project ID de Clarity (sobreescribible en Variables de Railway).
 ENV CLARITY_PROJECT_ID=ylu80felfk

@@ -1,0 +1,159 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import Hours from './Hours.astro';
+import map from '../assets/photos/mapa.jpg';
+import { site, telLink, waLink, igLink } from '../config/site';
+const { heading = 'Vení a buscarlas' } = Astro.props as { heading?: string };
+---
+
+<section id="donde" class="visit section" aria-labelledby="visit-title">
+  <div class="wrap visit__grid">
+    <a href={site.mapsUrl} class="visit__map reveal" target="_blank" rel="noopener" aria-label="Abrir ubicación en Google Maps">
+      <Picture
+        src={map}
+        alt="Mapa de Cala Major con la ubicación de Sabor Patricio en la Avenida Joan Miró"
+        formats={['avif', 'webp']}
+        widths={[400, 640, 768]}
+        sizes="(min-width: 900px) 45vw, 92vw"
+        loading="lazy"
+      />
+      <span class="visit__mapcta"><Icon name="pin" size={20} /> Cómo llegar</span>
+    </a>
+
+    <div class="visit__info">
+      <p class="eyebrow reveal">Dónde estamos</p>
+      <h2 id="visit-title" class="h2 reveal">{heading}</h2>
+
+      <div class="visit__cards">
+        <div class="vc reveal">
+          <Icon name="pin" />
+          <div>
+            <p class="vc__t">Dirección</p>
+            <address>
+              {site.address.street}<br />
+              {site.address.area}, {site.address.postalCode} {site.address.city}
+            </address>
+          </div>
+        </div>
+        <div class="vc reveal">
+          <Icon name="clock" />
+          <div>
+            <p class="vc__t">Horario</p>
+            <Hours />
+          </div>
+        </div>
+        <div class="vc reveal">
+          <Icon name="phone" />
+          <div>
+            <p class="vc__t">Teléfono y WhatsApp</p>
+            <a href={telLink} class="vc__big">{site.phone}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="visit__ctas reveal">
+        <a href={site.mapsUrl} class="btn btn--blue" target="_blank" rel="noopener"><Icon name="pin" /> Cómo llegar</a>
+        <a href={waLink(`¡Hola ${site.name}!`)} class="btn btn--wa" target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp</a>
+        <a href={telLink} class="btn btn--ghost"><Icon name="phone" /> Llamar</a>
+        <a href={igLink} class="btn btn--ghost" target="_blank" rel="noopener"><Icon name="instagram" /> Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .visit {
+    background: var(--paper);
+  }
+  .visit__grid {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+  .visit__map {
+    position: relative;
+    display: block;
+    border-radius: calc(var(--radius) + 8px);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transform: rotate(-1.5deg);
+    transition: transform 0.5s var(--ease-spring);
+  }
+  .visit__map:hover {
+    transform: rotate(0) scale(1.01);
+  }
+  .visit__map :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .visit__mapcta {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 800;
+  }
+  .visit__info {
+    display: grid;
+    gap: 20px;
+  }
+  .visit__cards {
+    display: grid;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .vc {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: var(--radius-sm);
+    background: #fff;
+    box-shadow: 0 1px 0 rgb(14 21 48 / 0.06), 0 10px 30px -18px rgb(14 21 48 / 0.3);
+  }
+  .vc > :global(svg) {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border-radius: 12px;
+    background: var(--celeste-soft);
+    color: var(--blue);
+  }
+  .vc__t {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .vc address {
+    font-style: normal;
+    font-weight: 600;
+  }
+  .vc__big {
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .visit__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  @media (min-width: 900px) {
+    .visit__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+    }
+  }
+</style>
