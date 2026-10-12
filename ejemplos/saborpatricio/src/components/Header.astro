@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '../assets/logo.png';
+import logoNegro from '../assets/brand/logo-negro-800.png';
+import logoBlanco from '../assets/brand/logo-blanco-800.png';
 import Icon from './Icon.astro';
 import { waLink } from '../config/site';
 
@@ -15,7 +16,10 @@ const links = [
 <header class:list={['hdr', { 'is-solid': solid }]} data-header>
   <div class="hdr__in wrap">
     <a href="/" class="hdr__logo" aria-label="Sabor Patricio, ir al inicio">
-      <Image src={logo} alt="" width={56} height={56} loading="eager" fetchpriority="high" />
+      <span class="hdr__mark">
+        <Image class="hdr__img hdr__img--light" src={logoBlanco} alt="" width={96} height={96} loading="eager" fetchpriority="high" />
+        <Image class="hdr__img hdr__img--dark" src={logoNegro} alt="" width={96} height={96} loading="eager" />
+      </span>
       <span class="hdr__name">Sabor<br />Patricio</span>
     </a>
     <nav class="hdr__nav" aria-label="Principal">
@@ -72,14 +76,32 @@ const links = [
     gap: 10px;
     text-decoration: none;
   }
-  .hdr__logo img {
+  /* Logo en blanco sobre el hero y en negro cuando la cabecera se vuelve clara. */
+  .hdr__mark {
+    position: relative;
+    display: block;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
     transition: transform 0.6s var(--ease-spring);
   }
-  .hdr__logo:hover img {
+  .hdr__logo:hover .hdr__mark {
     transform: rotate(-12deg) scale(1.06);
+  }
+  .hdr__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.35s;
+  }
+  .hdr__img--dark,
+  .hdr.is-scrolled .hdr__img--light,
+  .hdr.is-solid .hdr__img--light {
+    opacity: 0;
+  }
+  .hdr.is-scrolled .hdr__img--dark,
+  .hdr.is-solid .hdr__img--dark {
+    opacity: 1;
   }
   .hdr__name {
     font-weight: 800;

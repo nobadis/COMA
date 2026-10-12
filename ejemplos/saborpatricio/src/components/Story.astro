@@ -1,6 +1,6 @@
 ---
 import { Image, Picture } from 'astro:assets';
-import logo from '../assets/logo.png';
+import logo from '../assets/brand/logo-blanco-800.png';
 import crowd from '../assets/photos/inauguracion.jpg';
 import bite from '../assets/photos/mordida.jpg';
 import { site } from '../config/site';
@@ -130,8 +130,6 @@ const highlight = new Set(['casa,', 'Argentina']);
   .story__seal img {
     width: clamp(140px, 22vw, 260px);
     height: auto;
-    border-radius: 50%;
-    box-shadow: 0 0 0 10px rgb(116 172 223 / 0.15);
   }
   .story__statement {
     font-size: clamp(1.7rem, 1.1rem + 2.6vw, 3.4rem);
