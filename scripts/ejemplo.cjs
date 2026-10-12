@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Añade o actualiza una web de ejemplo desde una rama de su repositorio de GitHub (main por defecto):
- *   npm run ejemplo -- <proyecto> [url-del-repo] [rama]
+ *   npm run ejemplo -- <proyecto> [url-del-repo] [rama] [--negocio="Nombre del negocio"]
  * Copia el código en ejemplos/<proyecto>/ (sin .git) y, si es nuevo, le asigna un id aleatorio
  * en ejemplos/ejemplos.json. Al actualizar se conserva el id, así el enlace del cliente no cambia.
  */
@@ -13,11 +13,13 @@ const { execFileSync } = require("child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const REGISTRY = path.join(ROOT, "ejemplos", "ejemplos.json");
-const [proyecto, repoArg, branchArg] = process.argv.slice(2);
+const rawArgs = process.argv.slice(2);
+const negocioArg = rawArgs.find((a) => a.startsWith("--negocio="))?.slice("--negocio=".length);
+const [proyecto, repoArg, branchArg] = rawArgs.filter((a) => !a.startsWith("--"));
 
 if (!proyecto || !/^[a-z0-9-]+$/.test(proyecto)) {
   console.error(
-    "Uso: npm run ejemplo -- <proyecto> [url-del-repo] [rama]  (proyecto: a-z, 0-9, -)"
+    'Uso: npm run ejemplo -- <proyecto> [url-del-repo] [rama] [--negocio="Nombre"]  (proyecto: a-z, 0-9, -)'
   );
   process.exit(1);
 }
@@ -36,6 +38,7 @@ if (!entry) {
   list.push(entry);
 }
 entry.repo = repo;
+if (negocioArg) entry.negocio = negocioArg;
 // Siempre una rama concreta: la rama por defecto del repo en GitHub puede ser otra más antigua.
 const branch = branchArg || entry.branch || "main";
 if (branch !== "main") entry.branch = branch;
