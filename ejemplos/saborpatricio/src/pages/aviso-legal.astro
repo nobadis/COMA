@@ -1,0 +1,77 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { site, igLink, telLink } from '../config/site';
+
+const l = site.legal;
+---
+
+<LegalPage
+  title="Aviso legal"
+  description={`Aviso legal de la web de ${site.name}: datos del titular (${l.company}, CIF ${l.cif}), condiciones de uso y propiedad intelectual.`}
+  updated="15 de octubre de 2026"
+>
+  <h2>Titular de la web</h2>
+  <p>
+    En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio
+    Electrónico (LSSI-CE), se informa de los datos del titular de esta web:
+  </p>
+  <dl>
+    <div><dt>Titular</dt><dd>{l.company}</dd></div>
+    <div><dt>CIF</dt><dd>{l.cif}</dd></div>
+    <div><dt>Domicilio social</dt><dd>{l.street}, {l.postalCode} {l.city} ({l.region})</dd></div>
+    <div><dt>Marca comercial</dt><dd>{site.name}</dd></div>
+    <div>
+      <dt>Local</dt>
+      <dd>{site.address.street}, {site.address.area}, {site.address.postalCode} {site.address.city}</dd>
+    </div>
+    <div>
+      <dt>Contacto</dt>
+      <dd>
+        Teléfono y WhatsApp <a href={telLink}>{site.phone}</a>
+        {l.email && <> · <a href={`mailto:${l.email}`}>{l.email}</a></>}
+        {' '}· Instagram <a href={igLink} target="_blank" rel="noopener">@{site.instagram}</a>
+      </dd>
+    </div>
+  </dl>
+
+  <h2>Objeto</h2>
+  <p>
+    Esta web informa sobre los productos, horarios y ubicación de {site.name} y permite preparar pedidos que se
+    envían por WhatsApp. No se realizan compras ni pagos a través de la web: el pedido se confirma directamente con el
+    local.
+  </p>
+
+  <h2>Condiciones de uso</h2>
+  <p>
+    El acceso a la web es gratuito y supone la aceptación de este aviso legal. El usuario se compromete a hacer un uso
+    adecuado de los contenidos y a no emplearlos para actividades ilícitas o contrarias a la buena fe.
+  </p>
+  <p>
+    Los productos, ingredientes, precios y horarios se muestran a título informativo y pueden cambiar. Ante cualquier
+    duda sobre alérgenos, consulta en el local o por WhatsApp antes de hacer tu pedido.
+  </p>
+
+  <h2>Propiedad intelectual e industrial</h2>
+  <p>
+    La marca {site.name}, su logotipo, los textos, las fotografías y el diseño de esta web pertenecen a {l.company} o a
+    sus legítimos titulares. Queda prohibida su reproducción, distribución o transformación sin autorización expresa.
+  </p>
+
+  <h2>Enlaces a otros sitios</h2>
+  <p>
+    La web incluye enlaces a servicios de terceros (WhatsApp, Instagram, Google Maps). {l.company} no se hace responsable
+    de sus contenidos ni de sus políticas, que se rigen por sus propias condiciones.
+  </p>
+
+  <h2>Responsabilidad</h2>
+  <p>
+    {l.company} trabaja para que la información sea correcta y esté actualizada, pero no garantiza la ausencia de errores
+    ni la disponibilidad continua de la web, y no se responsabiliza de los daños derivados de su uso.
+  </p>
+
+  <h2>Legislación y jurisdicción</h2>
+  <p>
+    Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los
+    juzgados y tribunales que correspondan conforme a la ley; cuando el usuario sea consumidor, los de su domicilio.
+  </p>
+</LegalPage>

@@ -37,9 +37,17 @@ Todo el contenido del negocio está en **`src/config/site.ts`**:
 - `reviews`: reseñas reales de Google (texto literal). Si está vacío, se muestra solo el botón a Google.
 - `flavors`: sabores, ingredientes y color de cada tarjeta. Las fotos están en `src/assets/flavors/<id>.png`.
 
+## Legal
+
+Titular de la web: **Marfer Obrador SL** (CIF B10645463), Carrer Son Julià, 7, nave 5 (Polígono Son Noguera), 07620 Llucmajor. Los datos viven en `site.legal` (`src/config/site.ts`) y alimentan `/aviso-legal`, `/privacidad`, `/cookies`, el pie y los datos estructurados. La web no usa cookies de analítica ni publicidad (solo `localStorage` para el carrito y el nombre del pedido), por eso no hay aviso de cookies: si se añade analítica, hay que poner aviso y actualizar `/cookies`.
+
+En el pie hay un crédito discreto «Web hecha por COMA» (`src/components/ComaCredit.astro`).
+
 ## Pendiente
 
 - [x] Horario real (`hours`), según el perfil de Instagram @saborpatricio: lunes a jueves 10:30–22:30, viernes y sábado 10:30–23:30, domingo 10:30–23:00.
+- [ ] Email de contacto del titular (`site.legal.email`): la LSSI pide un email en el aviso legal
+- [ ] Datos de inscripción en el Registro Mercantil de Marfer Obrador SL (tomo, folio, hoja) para el aviso legal
 - [ ] Dominio definitivo (`url`)
 - [ ] Reseñas de Google (`reviews`)
 - [ ] Confirmar si hacen envío a domicilio (ahora el pedido ofrece «Consultar envío»)

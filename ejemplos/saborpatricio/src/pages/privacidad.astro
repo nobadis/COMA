@@ -1,0 +1,61 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { site, telLink } from '../config/site';
+
+const l = site.legal;
+---
+
+<LegalPage
+  title="Política de privacidad"
+  description={`Cómo trata ${l.company} (${site.name}) los datos personales de quienes hacen pedidos o contactan por WhatsApp o teléfono.`}
+  updated="15 de octubre de 2026"
+>
+  <h2>Responsable del tratamiento</h2>
+  <p>
+    {l.company} (CIF {l.cif}), con domicilio en {l.street}, {l.postalCode} {l.city} ({l.region}), titular de la marca
+    {' '}{site.name}. Puedes contactar por teléfono o WhatsApp en <a href={telLink}>{site.phone}</a>
+    {l.email && <> o por email en <a href={`mailto:${l.email}`}>{l.email}</a></>}.
+  </p>
+
+  <h2>Qué datos tratamos y para qué</h2>
+  <p>
+    Esta web no tiene formularios que envíen datos a un servidor ni crea cuentas de usuario. Cuando haces un pedido, la
+    web prepara el mensaje y lo abres tú en WhatsApp. A partir de ahí tratamos:
+  </p>
+  <ul>
+    <li>Tu nombre, tu número de teléfono y el contenido del pedido, para preparar y entregarte el pedido y atender tus consultas.</li>
+    <li>Los datos que nos des al llamarnos o escribirnos por WhatsApp o Instagram, solo para responderte.</li>
+  </ul>
+  <p>
+    El nombre que escribes en la página de pedido y el carrito se guardan únicamente en tu propio navegador para que no
+    tengas que repetirlos; no los recibimos hasta que envías el mensaje.
+  </p>
+
+  <h2>Base legal</h2>
+  <p>
+    La gestión de tu pedido o consulta, a petición tuya (artículo 6.1.b del Reglamento General de Protección de Datos).
+  </p>
+
+  <h2>Cuánto tiempo los conservamos</h2>
+  <p>
+    El tiempo necesario para atender tu pedido o consulta y, después, durante los plazos que exija la ley (por ejemplo,
+    en materia fiscal).
+  </p>
+
+  <h2>Destinatarios</h2>
+  <p>
+    No cedemos tus datos a terceros salvo obligación legal. Al usar WhatsApp o Instagram, esos servicios (Meta
+    Platforms) tratan también los datos según sus propias políticas de privacidad.
+  </p>
+
+  <h2>Tus derechos</h2>
+  <p>
+    Puedes pedir el acceso, la rectificación, la supresión, la oposición, la limitación del tratamiento y la
+    portabilidad de tus datos escribiéndonos por los medios indicados arriba. Si consideras que no hemos atendido bien
+    tu solicitud, puedes reclamar ante la Agencia Española de Protección de Datos (<a
+      href="https://www.aepd.es"
+      target="_blank"
+      rel="noopener">www.aepd.es</a
+    >).
+  </p>
+</LegalPage>

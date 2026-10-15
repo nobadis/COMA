@@ -27,6 +27,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
   name: site.name,
+  legalName: site.legal.company,
+  taxID: site.legal.cif,
   slogan: site.tagline,
   description,
   url: site.url,

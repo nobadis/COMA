@@ -1,0 +1,39 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { site } from '../config/site';
+---
+
+<LegalPage
+  title="Política de cookies"
+  description={`La web de ${site.name} no usa cookies de analítica ni de publicidad. Solo guarda en tu navegador el carrito y tu nombre para el pedido.`}
+  updated="15 de octubre de 2026"
+>
+  <h2>Resumen</h2>
+  <p>
+    Esta web no usa cookies de analítica, de publicidad ni de seguimiento, por eso no te mostramos ningún aviso de
+    cookies.
+  </p>
+
+  <h2>Qué guardamos en tu navegador</h2>
+  <p>Para que la página de pedido funcione, guardamos en el almacenamiento local de tu navegador:</p>
+  <ul>
+    <li>El carrito con los productos que vas eligiendo.</li>
+    <li>El nombre que escribes para el pedido, para no pedírtelo cada vez.</li>
+  </ul>
+  <p>
+    Son datos técnicos necesarios para el servicio que pides, no salen de tu dispositivo hasta que envías el mensaje por
+    WhatsApp y puedes borrarlos cuando quieras desde la configuración de tu navegador.
+  </p>
+
+  <h2>Servicios de terceros</h2>
+  <p>
+    Si sigues un enlace a WhatsApp, Instagram o Google Maps, esos servicios pueden usar sus propias cookies según sus
+    políticas. Esto ocurre fuera de esta web y solo si decides abrirlos.
+  </p>
+
+  <h2>Cambios</h2>
+  <p>
+    Si en el futuro añadimos herramientas que usen cookies no necesarias, actualizaremos esta política y te pediremos
+    el consentimiento antes de activarlas.
+  </p>
+</LegalPage>

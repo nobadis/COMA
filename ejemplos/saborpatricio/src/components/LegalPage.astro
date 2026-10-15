@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  updated: string;
+}
+const { title, description, updated } = Astro.props;
+---
+
+<Base title={`${title} · Sabor Patricio`} description={description} solidHeader hideMobileBar>
+  <article class="lg">
+    <div class="wrap lg__in">
+      <p class="eyebrow">Información legal</p>
+      <h1 class="h2">{title}</h1>
+      <p class="lg__updated">Última actualización: {updated}</p>
+      <div class="lg__body">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .lg {
+    padding: calc(var(--header-h) + 56px) 0 96px;
+    background: var(--paper);
+  }
+  .lg__in {
+    max-width: 760px;
+    display: grid;
+    gap: 16px;
+  }
+  .lg__updated {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .lg__body {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .lg__body :global(h2) {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .lg__body :global(ul) {
+    padding-left: 1.2em;
+    display: grid;
+    gap: 6px;
+  }
+  .lg__body :global(dl) {
+    display: grid;
+    gap: 8px;
+  }
+  .lg__body :global(dl div) {
+    display: grid;
+    gap: 2px;
+  }
+  @media (min-width: 640px) {
+    .lg__body :global(dl div) {
+      grid-template-columns: 11rem 1fr;
+      gap: 16px;
+    }
+  }
+  .lg__body :global(dt) {
+    font-weight: 700;
+  }
+  .lg__body :global(a) {
+    color: var(--blue);
+    text-underline-offset: 0.2em;
+  }
+</style>

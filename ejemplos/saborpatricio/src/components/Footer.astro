@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/brand/logo-blanco-800.png';
 import Icon from './Icon.astro';
+import ComaCredit from './ComaCredit.astro';
 import { site, igLink, telLink, waLink } from '../config/site';
 const year = new Date().getFullYear();
 ---
@@ -26,8 +27,16 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="wrap ft__bottom">
-    <p>© {year} {site.name} · Palma de Mallorca</p>
-    <p>Hecho con <span aria-label="amor">♥</span> y mucho repulgue</p>
+    <div class="ft__legal">
+      <p>© {year} {site.name} · Hecho con <span aria-label="amor">♥</span> y mucho repulgue</p>
+      <p class="ft__company">{site.legal.company} · CIF {site.legal.cif}</p>
+      <nav class="ft__links" aria-label="Información legal">
+        <a href="/aviso-legal">Aviso legal</a>
+        <a href="/privacidad">Privacidad</a>
+        <a href="/cookies">Cookies</a>
+      </nav>
+    </div>
+    <ComaCredit />
   </div>
 </footer>
 
@@ -75,12 +84,34 @@ const year = new Date().getFullYear();
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 8px;
+    align-items: flex-end;
+    gap: 16px;
     margin-top: 56px;
     padding-top: 24px;
     border-top: 1px solid rgb(255 255 255 / 0.12);
     font-size: 0.9rem;
     color: rgb(255 248 236 / 0.6);
+  }
+  .ft__legal {
+    display: grid;
+    gap: 4px;
+  }
+  .ft__company {
+    font-size: 0.8rem;
+    color: rgb(255 248 236 / 0.45);
+  }
+  .ft__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 16px;
+  }
+  .ft .ft__links a {
+    min-height: 32px;
+    font-size: 0.8rem;
+    color: rgb(255 248 236 / 0.6);
+  }
+  .ft .ft__links a:hover {
+    color: var(--sol);
   }
   @media (min-width: 900px) {
     .ft__in {

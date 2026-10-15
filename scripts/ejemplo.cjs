@@ -48,6 +48,8 @@ execFileSync("git", ["clone", "--depth", "1", "--branch", branch, repo, tmp], {
   stdio: "inherit",
 });
 const commit = execFileSync("git", ["-C", tmp, "log", "--oneline", "-1"], { encoding: "utf8" });
+// Commit copiado: npm run ejemplos:check lo compara con el del repo para detectar demos desfasadas.
+entry.commit = execFileSync("git", ["-C", tmp, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 fs.rmSync(path.join(tmp, ".git"), { recursive: true, force: true });
 const dest = path.join(ROOT, "ejemplos", proyecto);
 fs.rmSync(dest, { recursive: true, force: true });

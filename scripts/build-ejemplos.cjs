@@ -66,8 +66,12 @@ const prefixer = (base) => (url) =>
 function rewrite(text, ext, base, negocio) {
   const fix = prefixer(base);
   const esc = SITE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  // URLs absolutas del dominio (canonical, og:image, JSON-LD).
-  let out = text.replace(new RegExp(`${esc}(/[^"'\\s<>)]*)?`, "g"), (_m, p = "/") => SITE + fix(p));
+  // URLs absolutas del dominio (canonical, og:image, JSON-LD). Los enlaces con ?utm_ son el
+  // crédito «Web hecha por COMA» y deben seguir apuntando a la web de COMA, no a la demo.
+  let out = text.replace(
+    new RegExp(`${esc}(?!/\\?utm_)(/[^"'\\s<>)]*)?`, "g"),
+    (_m, p = "/") => SITE + fix(p)
+  );
   if (ext === ".css" || ext === ".html") {
     out = out.replace(/url\((['"]?)(\/[^'")]*)\1\)/g, (_m, q, u) => `url(${q}${fix(u)}${q})`);
   }

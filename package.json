@@ -18,7 +18,8 @@
     "test": "npm run check && npm run lint:js && npm run build && npm run lint:html && npm run test:e2e",
     "validate": "npm run format:check && npm run test",
     "seo:indexnow": "node scripts/indexnow.cjs",
-    "ejemplo": "node scripts/ejemplo.cjs"
+    "ejemplo": "node scripts/ejemplo.cjs",
+    "ejemplos:check": "node scripts/ejemplos-check.cjs"
   },
   "license": "ISC",
   "type": "module",
