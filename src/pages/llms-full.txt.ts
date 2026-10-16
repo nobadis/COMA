@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { site, trust, sectors, years } from "../data/site";
 import { services } from "../data/services";
+import * as despachos from "../data/despachos";
 import { basePlan, extras } from "../data/pricing";
 import { guides } from "../data/guides";
 import { places, inPlace } from "../data/places";
@@ -10,7 +11,7 @@ export const GET: APIRoute = () => {
   const out: string[] = [
     `# ${site.title}: información completa`,
     "",
-    `COMA (Comunicación en Mallorca) es una agencia de diseño web y marketing con sede en ${site.address.city} desde ${site.since} (${years()} años), operada por ${site.legalName} (CIF ${site.cif}). Dirección: ${site.address.street}, ${site.address.postalCode} ${site.address.city}, ${site.address.region}. Email: ${site.email}. Web: ${site.url}.`,
+    `COMA (Comunicación en Mallorca) es un estudio de comunicación, tecnología e IA para pymes con sede en ${site.address.city} desde ${site.since} (${years()} años), operada por ${site.legalName} (CIF ${site.cif}). Dirección: ${site.address.street}, ${site.address.postalCode} ${site.address.city}, ${site.address.region}. Email: ${site.email}. Web: ${site.url}.`,
     `Desde ${site.spainSince} trabaja con autónomos y pymes de toda España, en remoto. Empezó en revistas, siguió con radio y televisión y hoy hace webs, SEO, posicionamiento en IA (GEO), agentes de IA y automatizaciones. Referencias: ${trust.references.filter((r) => !r.startsWith("+")).join(", ")} y más de ${trust.pymes} pymes.`,
     "",
     "## Precios (sin IVA)",
@@ -29,6 +30,21 @@ export const GET: APIRoute = () => {
     out.push("", `Ideal si: ${s.forWhom.join("; ")}.`, "");
     for (const q of s.faq) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
   }
+
+  out.push(
+    "## COMA para despachos (asesorías, gestorías y despachos contables)",
+    `URL: ${site.url}/despachos/`,
+    "Automatización de la recepción, lectura con IA, registro y exportación de facturas de clientes, sin cambiar de programa contable.",
+    ""
+  );
+  for (const m of despachos.modules) out.push(`- ${m.title}: ${m.text}`);
+  out.push("", "Planes (sin IVA, orientativos):");
+  for (const p of despachos.plans)
+    out.push(
+      `- ${p.name}: ${p.setup === null ? p.priceLabel : `${p.month} €/mes + ${p.setup} € de puesta en marcha`}. ${p.pitch}`
+    );
+  out.push(`- Bajo demanda: ${despachos.onDemand.map((o) => o.name).join("; ")}.`, "");
+  for (const q of despachos.faq) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
 
   out.push("## Sectores");
   for (const s of sectors) out.push(`- ${s.name}: ${s.text}`);

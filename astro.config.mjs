@@ -26,7 +26,7 @@ const ADS_ON = [
 function priority(path) {
   if (path === "/") return 1;
   if (
-    /^\/(diseno-web|seo-geo|agentes-ia|automatizaciones|notoriedad-de-marca|precios|kit-digital)\/$/.test(
+    /^\/(diseno-web|seo-geo|agentes-ia|automatizaciones|notoriedad-de-marca|precios|kit-digital|despachos)\/$/.test(
       path
     )
   )

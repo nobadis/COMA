@@ -26,6 +26,7 @@ npm run validate     # formato + tipos + lint + build + tests E2E (escritorio y 
 - Textos de servicios: `src/data/services.ts`.
 - Precio base (99 € + IVA), lo que incluye y extras: `src/data/pricing.ts`. Para mostrar el precio de un extra, rellena su campo `price`.
 - Precios del presupuesto dinámico: `src/data/pricing.ts` (cada extra tiene `billing`: `once`, `month` o `custom`; `custom` = a medida, no suma). Los importes actuales son orientativos: ajústalos a tu tarifa real.
+- COMA para despachos (`/despachos/`): módulos, precios (orientativos), extras bajo demanda, FAQ y el email del diagnóstico en `src/data/despachos.ts`. Las demos están en `src/components/despachos/`.
 - No hay página de trabajos: el portfolio es la propia web (`/trabajos/` redirige a la home).
 - Email, dirección, clientes, referencias y sectores: `src/data/site.ts`.
 - Imagen para redes sociales: `node scripts/og-image.cjs` regenera `public/og-coma.png`.

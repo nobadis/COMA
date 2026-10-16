@@ -1,0 +1,753 @@
+---
+/**
+ * Demo interactiva: se elige un documento de ejemplo, un haz lo «lee» y el asiento propuesto se
+ * rellena campo a campo, con avisos de revisión y vista previa de exportación. Sin backend: los
+ * datos son ficticios y viajan en data-docs. Sin JS se ve el primer documento ya procesado.
+ */
+type Field = "who" | "nif" | "num" | "date" | "base" | "vat" | "ret" | "total";
+interface Doc {
+  id: string;
+  tab: string;
+  kind: string;
+  who: string;
+  addr: string;
+  nif: string;
+  num: string;
+  date: string;
+  client: string;
+  lines: { d: string; q: string; a: string }[];
+  base: string;
+  vatRate: string;
+  vat: string;
+  ret?: string;
+  total: string;
+  account: string;
+  folder: string;
+  flag?: string;
+  ok: string;
+}
+
+const docs: Doc[] = [
+  {
+    id: "proveedor",
+    tab: "Factura de proveedor",
+    kind: "Factura",
+    who: "Suministros Llevant SL",
+    addr: "C/ del Comerç 12 · 07009 Palma",
+    nif: "B07412345",
+    num: "F-2026/0418",
+    date: "03/10/2026",
+    client: "Fontanería Coll SL · B57123456",
+    lines: [
+      { d: "Tubo multicapa 20 mm (rollo 100 m)", q: "2", a: "248,00" },
+      { d: "Racores de latón, caja 50 uds.", q: "4", a: "164,40" },
+    ],
+    base: "412,40",
+    vatRate: "21 %",
+    vat: "86,60",
+    total: "499,00",
+    account: "600 · Compras de mercaderías",
+    folder: "Fontanería Coll / 2026 / T4 / Compras",
+    ok: "Todo cuadra: base + IVA = total",
+  },
+  {
+    id: "ticket",
+    tab: "Ticket de gasolinera",
+    kind: "Factura simplificada",
+    who: "Carburantes Migjorn SL",
+    addr: "Ctra. Manacor km 7 · 07600 Llucmajor",
+    nif: "B07998877",
+    num: "T-118-55021",
+    date: "14/10/2026",
+    client: "— (sin datos del cliente)",
+    lines: [{ d: "Gasóleo A · 38,02 l", q: "1", a: "49,59" }],
+    base: "49,59",
+    vatRate: "21 %",
+    vat: "10,41",
+    total: "60,00",
+    account: "628 · Suministros",
+    folder: "Bar Es Pla / 2026 / T4 / Gastos",
+    flag: "Factura simplificada sin NIF del cliente: pedimos la completa para deducir el IVA",
+    ok: "Recordatorio enviado al cliente",
+  },
+  {
+    id: "profesional",
+    tab: "Honorarios con retención",
+    kind: "Factura",
+    who: "Marta Pons · Abogada",
+    addr: "Av. Jaume III 4 · 07012 Palma",
+    nif: "43123456K",
+    num: "2026-077",
+    date: "09/10/2026",
+    client: "Clínica Sant Jaume SLP · B57654321",
+    lines: [{ d: "Asesoramiento contrato de arrendamiento", q: "1", a: "600,00" }],
+    base: "600,00",
+    vatRate: "21 %",
+    vat: "126,00",
+    ret: "−90,00",
+    total: "636,00",
+    account: "623 · Servicios de profesionales",
+    folder: "Clínica Sant Jaume / 2026 / T4 / Gastos",
+    flag: "Retención IRPF del 15 % detectada: va al modelo 111 del trimestre",
+    ok: "Retención anotada para el 111",
+  },
+];
+
+const rows: { f: Field | "account" | "folder"; label: string; get: (d: Doc) => string }[] = [
+  { f: "who", label: "Emisor", get: (d) => d.who },
+  { f: "nif", label: "NIF", get: (d) => d.nif },
+  { f: "num", label: "Nº", get: (d) => d.num },
+  { f: "date", label: "Fecha", get: (d) => d.date },
+  { f: "base", label: "Base imponible", get: (d) => `${d.base} €` },
+  { f: "vat", label: "IVA", get: (d) => `${d.vatRate} · ${d.vat} €` },
+  { f: "ret", label: "Retención IRPF", get: (d) => (d.ret ? `15 % · ${d.ret} €` : "—") },
+  { f: "total", label: "Total", get: (d) => `${d.total} €` },
+  { f: "account", label: "Cuenta sugerida", get: (d) => d.account },
+  { f: "folder", label: "Archivada en", get: (d) => d.folder },
+];
+
+const payload = docs.map((d) => ({
+  id: d.id,
+  values: Object.fromEntries(rows.map((r) => [r.f, r.get(d)])),
+  flag: d.flag ?? "",
+  ok: d.ok,
+  csv: {
+    a3: `${d.date};${d.num};${d.nif};${d.who};${d.account.slice(0, 3)};${d.base};${d.vatRate.replace(" %", "")};${d.vat};${d.ret ?? "0,00"};${d.total}`,
+    sage: `"${d.date}","${d.num}","${d.nif}","${d.who}","${d.account.slice(0, 3)}0000","${d.base}","${d.vat}","${d.total}"`,
+    holded: `${d.date},${d.who},${d.nif},${d.num},${d.base.replace(",", ".")},${d.vat.replace(",", ".")},${d.total.replace(",", ".")}`,
+    excel: `${d.date} | ${d.who} | ${d.nif} | ${d.num} | ${d.base} | ${d.vat} | ${d.total} | ${d.account}`,
+  },
+}));
+const first = docs[0];
+const formats = [
+  { id: "a3", label: "a3" },
+  { id: "sage", label: "Sage" },
+  { id: "holded", label: "Holded" },
+  { id: "excel", label: "Excel" },
+];
+---
+
+<div class="lab" data-lab data-docs={JSON.stringify(payload)}>
+  <div class="lab__tabs" role="group" aria-label="Elige un documento de ejemplo">
+    {
+      docs.map((d, i) => (
+        <button type="button" class="lab__tab" data-doc={d.id} aria-pressed={i === 0 ? "true" : "false"}>
+          <span>0{i + 1}</span>
+          {d.tab}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="lab__stage">
+    <div class="lab__desk">
+      {
+        docs.map((d, i) => (
+          <article class="pp" data-paper={d.id} hidden={i !== 0} aria-label={`Documento de ejemplo: ${d.tab}`}>
+            <header class="pp__head">
+              <div>
+                <strong data-f="who">{d.who}</strong>
+                <span>{d.addr}</span>
+                <span>
+                  NIF <b data-f="nif">{d.nif}</b>
+                </span>
+              </div>
+              <div class="pp__kind">
+                <em>{d.kind}</em>
+                <span>
+                  Nº <b data-f="num">{d.num}</b>
+                </span>
+                <span>
+                  Fecha <b data-f="date">{d.date}</b>
+                </span>
+              </div>
+            </header>
+            <p class="pp__client">
+              <span>Cliente</span> {d.client}
+            </p>
+            <table class="pp__lines">
+              <thead>
+                <tr>
+                  <th scope="col">Concepto</th>
+                  <th scope="col">Uds.</th>
+                  <th scope="col">Importe</th>
+                </tr>
+              </thead>
+              <tbody>
+                {d.lines.map((l) => (
+                  <tr>
+                    <td>{l.d}</td>
+                    <td>{l.q}</td>
+                    <td>{l.a}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <dl class="pp__sum">
+              <div>
+                <dt>Base imponible</dt>
+                <dd data-f="base">{d.base} €</dd>
+              </div>
+              <div>
+                <dt>IVA {d.vatRate}</dt>
+                <dd data-f="vat">{d.vat} €</dd>
+              </div>
+              {d.ret && (
+                <div>
+                  <dt>Retención IRPF 15 %</dt>
+                  <dd data-f="ret">{d.ret} €</dd>
+                </div>
+              )}
+              <div class="pp__total">
+                <dt>Total</dt>
+                <dd data-f="total">{d.total} €</dd>
+              </div>
+            </dl>
+            <i class="pp__beam" aria-hidden="true" />
+          </article>
+        ))
+      }
+      <span class="lab__note">Documentos y datos ficticios</span>
+    </div>
+
+    <div class="lab__out" aria-live="polite">
+      <div class="lab__outhead">
+        <span class="lab__ai" aria-hidden="true">IA</span>
+        <span>
+          <strong>Asiento propuesto</strong>
+          <small data-lab-status>Listo para revisar</small>
+        </span>
+      </div>
+      <dl class="lab__fields">
+        {
+          rows.map((r) => (
+            <div class="lab__field" data-row={r.f}>
+              <dt>{r.label}</dt>
+              <dd data-v={r.f}>{r.get(first)}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="lab__flag" data-lab-flag hidden></p>
+      <p class="lab__ok" data-lab-ok>✓ {first.ok}</p>
+      <div class="lab__export">
+        <div class="lab__fmts" role="group" aria-label="Formato de exportación">
+          <span>Exportar a</span>
+          {
+            formats.map((f, i) => (
+              <button type="button" data-fmt={f.id} aria-pressed={i === 0 ? "true" : "false"}>
+                {f.label}
+              </button>
+            ))
+          }
+        </div>
+        <code class="lab__csv" data-lab-csv>{payload[0].csv.a3}</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Payload = {
+    id: string;
+    values: Record<string, string>;
+    flag: string;
+    ok: string;
+    csv: Record<string, string>;
+  };
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLElement>("[data-lab]").forEach((lab) => {
+    const docs = JSON.parse(lab.dataset.docs ?? "[]") as Payload[];
+    const tabs = Array.from(lab.querySelectorAll<HTMLButtonElement>("[data-doc]"));
+    const fmts = Array.from(lab.querySelectorAll<HTMLButtonElement>("[data-fmt]"));
+    const status = lab.querySelector<HTMLElement>("[data-lab-status]");
+    const flag = lab.querySelector<HTMLElement>("[data-lab-flag]");
+    const ok = lab.querySelector<HTMLElement>("[data-lab-ok]");
+    const csv = lab.querySelector<HTMLElement>("[data-lab-csv]");
+    const order = ["who", "nif", "num", "date", "base", "vat", "ret", "total", "account", "folder"];
+    let current = docs[0];
+    let fmt = "a3";
+    let timers: number[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+
+    const type = (el: HTMLElement, text: string) => {
+      if (reduced) {
+        el.textContent = text;
+        return;
+      }
+      const steps = Math.min(14, text.length);
+      for (let i = 1; i <= steps; i++) {
+        at(i * 28, () => (el.textContent = text.slice(0, Math.round((text.length * i) / steps))));
+      }
+    };
+
+    const run = (doc: Payload) => {
+      timers.forEach(clearTimeout);
+      timers = [];
+      current = doc;
+      const paper = lab.querySelector<HTMLElement>(`[data-paper="${doc.id}"]`);
+      lab.querySelectorAll<HTMLElement>("[data-paper]").forEach((p) => (p.hidden = p !== paper));
+      lab.querySelectorAll(".is-hit").forEach((n) => n.classList.remove("is-hit"));
+      lab.querySelectorAll<HTMLElement>("[data-row]").forEach((r) => r.classList.remove("is-set"));
+      lab.querySelectorAll<HTMLElement>("[data-v]").forEach((v) => (v.textContent = ""));
+      if (flag) flag.hidden = true;
+      if (ok) ok.hidden = true;
+      if (csv) csv.textContent = "";
+      lab.classList.remove("is-done");
+      lab.classList.add("is-scan");
+      if (status) status.textContent = "Leyendo documento…";
+      // reinicia la animación del haz
+      paper?.classList.remove("is-scan");
+      void paper?.offsetWidth;
+      paper?.classList.add("is-scan");
+
+      let t = reduced ? 0 : 650;
+      order.forEach((f) => {
+        at(t, () => {
+          lab.querySelectorAll(".is-hit").forEach((n) => n.classList.remove("is-hit"));
+          paper?.querySelector(`[data-f="${f}"]`)?.classList.add("is-hit");
+          const row = lab.querySelector<HTMLElement>(`[data-row="${f}"]`);
+          const v = lab.querySelector<HTMLElement>(`[data-v="${f}"]`);
+          row?.classList.add("is-set");
+          if (v) type(v, doc.values[f] ?? "");
+        });
+        if (!reduced) t += 260;
+      });
+      at(t + (reduced ? 0 : 300), () => {
+        lab.querySelectorAll(".is-hit").forEach((n) => n.classList.remove("is-hit"));
+        paper?.classList.remove("is-scan");
+        lab.classList.remove("is-scan");
+        lab.classList.add("is-done");
+        if (status) status.textContent = doc.flag ? "Revisar 1 aviso" : "Listo para exportar";
+        if (flag) {
+          flag.textContent = doc.flag;
+          flag.hidden = !doc.flag;
+        }
+        if (ok) {
+          ok.textContent = `✓ ${doc.ok}`;
+          ok.hidden = false;
+        }
+        if (csv) type(csv, doc.csv[fmt]);
+      });
+    };
+
+    tabs.forEach((tab) =>
+      tab.addEventListener("click", () => {
+        tabs.forEach((x) => x.setAttribute("aria-pressed", String(x === tab)));
+        const doc = docs.find((d) => d.id === tab.dataset.doc);
+        if (doc) run(doc);
+      })
+    );
+    fmts.forEach((b) =>
+      b.addEventListener("click", () => {
+        fmt = b.dataset.fmt ?? "a3";
+        fmts.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        if (csv && lab.classList.contains("is-done")) csv.textContent = current.csv[fmt];
+      })
+    );
+
+    // Primera lectura automática al entrar en pantalla.
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          io.disconnect();
+          run(docs[0]);
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(lab);
+    window.addEventListener("pagehide", () => timers.forEach(clearTimeout));
+  });
+</script>
+
+<style>
+  .lab {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .lab__tabs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+  .lab__tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .lab__tab {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.1rem;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    cursor: pointer;
+    transition:
+      background 0.35s var(--ease),
+      color 0.35s var(--ease),
+      border-color 0.35s var(--ease);
+  }
+  .lab__tab span {
+    color: var(--red);
+    font-size: var(--fs-xs);
+  }
+  .lab__tab:hover {
+    border-color: var(--ink);
+  }
+  .lab__tab[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .lab__stage {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 960px) {
+    .lab__stage {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+  }
+
+  /* ---------------------------------------------------------------- papel */
+  .lab__desk {
+    position: relative;
+    display: grid;
+    padding: clamp(1rem, 3vw, 2.25rem);
+    background:
+      radial-gradient(circle at 1px 1px, rgb(12 12 12 / 0.12) 1px, transparent 0) 0 0 / 18px 18px,
+      var(--paper-2);
+    border: 1px solid var(--line);
+  }
+  .lab__note {
+    justify-self: end;
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pp {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    color: #222;
+    padding: clamp(1rem, 3vw, 1.75rem);
+    box-shadow:
+      0 30px 60px -30px rgb(0 0 0 / 0.35),
+      0 1px 0 rgb(0 0 0 / 0.05);
+    font-size: 0.8rem;
+    line-height: 1.45;
+    transform: rotate(-0.6deg);
+    animation: pp-in 0.6s var(--ease);
+  }
+  .pp[hidden] {
+    display: none;
+  }
+  @keyframes pp-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) rotate(1.5deg);
+    }
+  }
+  .pp__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 2px solid #222;
+  }
+  .pp__head > div {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .pp__head strong {
+    font-size: 1rem;
+    font-variation-settings: "wdth" 112;
+    justify-self: start;
+  }
+  .pp__head span {
+    color: #666;
+  }
+  .pp__kind {
+    text-align: right;
+    justify-items: end;
+  }
+  .pp__kind em {
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+  }
+  .pp__client {
+    padding: 0.7rem 0;
+    color: #444;
+  }
+  .pp__client span {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-right: 0.4rem;
+  }
+  .pp__lines {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.75rem;
+  }
+  .pp__lines th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    border-bottom: 1px solid #ddd;
+    padding: 0.35rem 0;
+  }
+  .pp__lines td {
+    padding: 0.45rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  .pp__lines th:not(:first-child),
+  .pp__lines td:not(:first-child) {
+    text-align: right;
+    padding-left: 0.75rem;
+    white-space: nowrap;
+  }
+  .pp__sum {
+    display: grid;
+    gap: 0.2rem;
+    margin-left: auto;
+    max-width: 15rem;
+  }
+  .pp__sum > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .pp__sum dt {
+    color: #666;
+  }
+  .pp__sum dd {
+    font-variant-numeric: tabular-nums;
+  }
+  .pp__total {
+    margin-top: 0.3rem;
+    padding-top: 0.4rem;
+    border-top: 2px solid #222;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .pp__total dt {
+    color: #222;
+  }
+  /* campo leído: recuadro rojo */
+  [data-f] {
+    position: relative;
+    border-radius: 2px;
+    transition:
+      background 0.3s,
+      box-shadow 0.3s;
+  }
+  [data-f].is-hit {
+    background: rgb(225 17 45 / 0.1);
+    box-shadow: 0 0 0 2px var(--red);
+  }
+  .pp__beam {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -5rem;
+    height: 5rem;
+    background: linear-gradient(180deg, transparent, rgb(225 17 45 / 0.14) 70%, rgb(225 17 45 / 0.75) 99%);
+    border-bottom: 2px solid var(--red);
+    pointer-events: none;
+    opacity: 0;
+  }
+  .pp.is-scan .pp__beam {
+    animation: beam 2.6s var(--ease-io) forwards;
+  }
+  @keyframes beam {
+    0% {
+      opacity: 1;
+      top: -5rem;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      top: 100%;
+    }
+  }
+
+  /* ------------------------------------------------------------ resultado */
+  .lab__out {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    display: grid;
+    gap: 1rem;
+    --line: var(--night-line);
+    --muted: var(--night-muted);
+  }
+  .lab__outhead {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.3;
+  }
+  .lab__outhead small {
+    display: block;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .lab__ai {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: var(--red);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    flex: none;
+  }
+  .is-scan .lab__ai {
+    animation: ai-pulse 1s ease-in-out infinite;
+  }
+  @keyframes ai-pulse {
+    50% {
+      box-shadow: 0 0 0 8px rgb(225 17 45 / 0.2);
+    }
+  }
+  .lab__fields {
+    display: grid;
+  }
+  .lab__field {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 8.5rem) 1fr;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-sm);
+    transition: background 0.4s var(--ease);
+  }
+  @media (max-width: 340px) {
+    .lab__field {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+  .lab__field dt {
+    color: var(--muted);
+  }
+  .lab__field dd {
+    font-weight: 600;
+    min-height: 1.45em;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+  }
+  .lab__field[data-row="account"] dd,
+  .lab__field[data-row="total"] dd {
+    color: #ff6b7f;
+  }
+  .is-scan .lab__field.is-set {
+    animation: row-flash 0.8s var(--ease);
+  }
+  @keyframes row-flash {
+    from {
+      background: rgb(225 17 45 / 0.18);
+    }
+  }
+  .lab__flag,
+  .lab__ok {
+    font-size: var(--fs-sm);
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    line-height: 1.4;
+  }
+  .lab__flag {
+    color: #ffb35c;
+    background: rgb(255 179 92 / 0.08);
+    border: 1px solid rgb(255 179 92 / 0.3);
+  }
+  .lab__flag::before {
+    content: "⚑ ";
+  }
+  .lab__ok {
+    color: #3ad07a;
+    background: rgb(58 208 122 / 0.08);
+    border: 1px solid rgb(58 208 122 / 0.25);
+  }
+  .lab__flag[hidden],
+  .lab__ok[hidden] {
+    display: none;
+  }
+  .lab__export {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .lab__fmts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+  .lab__fmts span {
+    margin-right: 0.3rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .lab__fmts button {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .lab__fmts button[aria-pressed="true"] {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+  .lab__csv {
+    display: block;
+    min-height: 3.6em;
+    padding: 0.7rem 0.85rem;
+    background: var(--night-2);
+    border: 1px solid var(--line);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: #cfcac1;
+    overflow-wrap: anywhere;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pp,
+    .pp.is-scan .pp__beam,
+    .is-scan .lab__ai,
+    .is-scan .lab__field.is-set {
+      animation: none;
+    }
+  }
+</style>

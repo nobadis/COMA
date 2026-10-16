@@ -199,6 +199,17 @@ const schema = [
   {s.slug === "agentes-ia" && <AgentOrbit />}
   {s.slug === "automatizaciones" && <FlowDemo />}
   {
+    s.slug === "automatizaciones" && (
+      <section class="section dsp">
+        <a class="wrap dsp__inner" href="/despachos/">
+          <span class="eyebrow">Para asesorías y despachos</span>
+          <span class="dsp__t">¿Llevas una asesoría? Tus clientes envían facturas y tu despacho deja de teclearlas<span class="comma">,</span></span>
+          <span class="link-arrow">Ver COMA para despachos <Arrow /></span>
+        </a>
+      </section>
+    )
+  }
+  {
     s.slug in quote && (
       <CustomQuote
         plan={quote[s.slug as keyof typeof quote].plan}
@@ -307,6 +318,28 @@ const schema = [
     .dl__item:hover h3 {
       color: var(--red);
     }
+  }
+  .dsp {
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .dsp__inner {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    text-decoration: none;
+  }
+  .dsp__t {
+    font-variation-settings: "wdth" 112;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 1rem + 2.4vw, 3.2rem);
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    max-width: 26ch;
+    transition: color 0.3s;
+  }
+  .dsp__inner:hover .dsp__t {
+    color: var(--red);
   }
   .fw .wrap {
     display: grid;

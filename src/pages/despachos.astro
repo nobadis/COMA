@@ -1,0 +1,780 @@
+---
+import Base from "../layouts/Base.astro";
+import Arrow from "../components/Arrow.astro";
+import Marquee from "../components/Marquee.astro";
+import Process from "../components/Process.astro";
+import Faq from "../components/Faq.astro";
+import Cta from "../components/Cta.astro";
+import DeskInbox from "../components/despachos/DeskInbox.astro";
+import InvoiceLab from "../components/despachos/InvoiceLab.astro";
+import CloseBoard from "../components/despachos/CloseBoard.astro";
+import RoiCalc from "../components/despachos/RoiCalc.astro";
+import { site, trust, years } from "../data/site";
+import { diagnosticoMail, despachosSubject, modules, plans, onDemand, steps, faq, channels } from "../data/despachos";
+
+const title = "Automatización para asesorías y despachos contables";
+const description =
+  "Recepción, lectura con IA y registro de facturas para asesorías, gestorías y despachos. Exporta a a3, Sage, Holded o Contasol sin cambiar de programa. Diagnóstico gratuito.";
+const mail = diagnosticoMail();
+const eur = (n: number) => `${n.toLocaleString("es-ES")} €`;
+
+const pains = [
+  { pain: "Facturas por email, WhatsApp, papel y fotos torcidas", fix: "Un único buzón, ordenado por cliente" },
+  { pain: "Teclear NIF, bases e IVA, una a una", fix: "La IA lo lee; tú revisas lo dudoso" },
+  { pain: "Perseguir al cliente por el ticket que falta", fix: "Recordatorios automáticos" },
+  { pain: "El último día del trimestre, todo a la vez", fix: "Documentación al día, cada semana" },
+  { pain: "Cero tiempo para asesorar", fix: "Horas libres para lo que de verdad se paga" },
+];
+
+const promises = [
+  { t: "La IA propone, tu equipo decide", d: "Lo claro pasa solo. Lo dudoso se marca y lo revisa una persona." },
+  { t: "Tu programa de siempre", d: "a3, Sage, Holded, Contasol o Excel. No migras nada." },
+  { t: "Datos protegidos", d: "Contrato de encargado del tratamiento y proveedores con servidores en la UE." },
+  { t: "Sin permanencia ni cajas negras", d: "Cuota mensual, todo documentado y tuyo." },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: title,
+    description,
+    serviceType: "Automatización de procesos contables",
+    audience: { "@type": "BusinessAudience", name: "Asesorías, gestorías y despachos profesionales" },
+    url: `${site.url}/despachos/`,
+    provider: { "@id": `${site.url}/#org` },
+    areaServed: { "@type": "Country", name: "España" },
+    offers: plans
+      .filter((p) => p.month !== null || p.priceLabel)
+      .map((p) => ({
+        "@type": "Offer",
+        name: p.name,
+        price: p.setup ?? 0,
+        priceCurrency: "EUR",
+        description: p.pitch,
+        url: `${site.url}/despachos/#precios`,
+        ...(p.month
+          ? {
+              priceSpecification: [
+                { "@type": "UnitPriceSpecification", price: p.setup, priceCurrency: "EUR", name: "Puesta en marcha", valueAddedTaxIncluded: false },
+                { "@type": "UnitPriceSpecification", price: p.month, priceCurrency: "EUR", unitCode: "MON", valueAddedTaxIncluded: false },
+              ],
+            }
+          : {}),
+      })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({ "@type": "Question", name: q.title, acceptedAnswer: { "@type": "Answer", text: q.text } })),
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema} crumbs={[{ name: "Despachos", path: "/despachos/" }]} stickyCta={false}>
+  <!-- ------------------------------------------------------------- portada -->
+  <section class="dh">
+    <div class="wrap dh__inner">
+      <div class="dh__copy">
+        <p class="eyebrow" data-reveal>COMA para asesorías y despachos</p>
+        <h1 data-split>Tus clientes envían facturas. Tu despacho deja de teclearlas<span class="comma">,</span></h1>
+        <p class="lead" data-reveal style="--d:3">
+          Recibimos, leemos, ordenamos y preparamos cada factura para tu programa contable. Tú solo
+          revisas lo dudoso. Diseñado junto a un contable en ejercicio.
+        </p>
+        <div class="dh__ctas" data-reveal style="--d:4">
+          <a class="btn btn--red btn--lg" href={mail} data-magnetic data-track-label="despachos-hero">
+            Diagnóstico gratis <Arrow />
+          </a>
+          <a class="link-arrow" href="#demo">Pruébalo con una factura</a>
+        </div>
+        <ul class="dh__chips chips" data-reveal style="--d:5">
+          <li class="chip">Sin cambiar de programa</li>
+          <li class="chip">Sin permanencia</li>
+          <li class="chip">Datos en la UE</li>
+        </ul>
+      </div>
+      <div class="dh__art" data-reveal style="--d:2">
+        <DeskInbox />
+      </div>
+    </div>
+  </section>
+  <Marquee items={["Recepción de facturas", "Lectura con IA", "a3 · Sage · Holded · Contasol", "Recordatorios a clientes", "Conciliación", "Cierre trimestral", "Verifactu"]} />
+
+  <!-- ---------------------------------------------------------------- dolor -->
+  <section class="section night pn" data-dark>
+    <div class="wrap pn__inner">
+      <div class="pn__head">
+        <p class="eyebrow" data-reveal>Si esto te suena</p>
+        <h2 data-split>El trimestre no debería ser una avalancha<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Las asesorías pequeñas pierden horas cada semana en trabajo que no aporta criterio. Lo
+          tachamos de la lista.
+        </p>
+      </div>
+      <ul class="pn__list">
+        {
+          pains.map((p, i) => (
+            <li data-reveal style={`--d:${i % 2}`}>
+              <span class="pn__pain">
+                <span>{p.pain}</span>
+              </span>
+              <span class="pn__fix">→ {p.fix}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------------- demo -->
+  <section class="section" id="demo">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Pruébalo</p>
+        <h2 data-split>Elige una factura. Mira cómo se registra sola<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Así trabaja cada documento que te envía un cliente: se lee, se comprueba, se propone la
+          cuenta y queda listo para tu programa. Y si algo no cuadra, te avisa.
+        </p>
+      </div>
+      <div data-reveal>
+        <InvoiceLab />
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- módulos -->
+  <section class="section sand" id="que-hacemos">
+    <div class="wrap md">
+      <div class="md__head">
+        <p class="eyebrow" data-reveal>Qué automatizamos</p>
+        <h2 data-split>Del WhatsApp del cliente al libro de registro<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Seis piezas que se montan por separado o juntas. Empezamos por la que más horas te quita.
+        </p>
+        <p class="sr-only">Canales de entrada:</p>
+        <ul class="md__channels" data-reveal style="--d:3">
+          {channels.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <ol class="md__list hs" data-hs>
+        {
+          modules.map((m, i) => (
+            <li class="md__item" data-reveal>
+              <span class="md__n">0{i + 1}</span>
+              <h3>{m.title}</h3>
+              <p>{m.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- cierre -->
+  <section class="section night bd" data-dark>
+    <div class="wrap grid-2 bd__grid">
+      <div class="bd__copy">
+        <p class="eyebrow" data-reveal>Cierre trimestral</p>
+        <h2 data-split>Sabes quién falta antes de que falte<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Un panel con el estado de cada cliente y recordatorios que salen solos, con el tono de tu
+          despacho. Nadie tiene que perseguir a nadie.
+        </p>
+        <ul class="bd__points" data-reveal style="--d:3">
+          <li><strong>Avisos con lo que falta</strong>, no con un «mándame todo».</li>
+          <li><strong>Por el canal del cliente</strong>: email o WhatsApp.</li>
+          <li><strong>Escalado a una persona</strong> si el cliente no responde.</li>
+        </ul>
+      </div>
+      <div data-reveal style="--d:2">
+        <CloseBoard />
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ calculadora -->
+  <section class="section" id="ahorro">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Calcula tu ahorro</p>
+        <h2 data-split>¿Cuántas horas le devuelves a tu despacho<span class="comma">?</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Mueve los datos de tu despacho. El tiempo que hoy se va en teclear puede ir a asesorar,
+          captar clientes o, simplemente, salir a tu hora.
+        </p>
+      </div>
+      <div data-reveal>
+        <RoiCalc />
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- precios -->
+  <section class="section sand" id="precios">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Precios</p>
+        <h2 data-split>Precio claro para empezar. El resto, bajo demanda<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Una puesta en marcha y una cuota mensual sin permanencia. Antes de pagar nada, el diagnóstico
+          es gratis y el piloto se hace con tus clientes reales.
+        </p>
+      </div>
+      <ul class="pl">
+        {
+          plans.map((p, i) => (
+            <li class:list={["pl__card", { "pl__card--hot": p.featured }]} data-reveal style={`--d:${i}`}>
+              {p.featured && <span class="pl__badge">Recomendado</span>}
+              <h3>{p.name}</h3>
+              <p class="pl__price">
+                {p.setup === null ? (
+                  <strong>{p.priceLabel}</strong>
+                ) : (
+                  <>
+                    <strong>{eur(p.month ?? 0)}</strong>
+                    <span>/mes</span>
+                  </>
+                )}
+              </p>
+              <p class="pl__setup">{p.setup === null ? "Sin compromiso" : `+ ${eur(p.setup)} de puesta en marcha`}</p>
+              <p class="pl__pitch">{p.pitch}</p>
+              <ul class="pl__inc">
+                {p.includes.map((x) => <li>{x}</li>)}
+              </ul>
+              <a
+                class:list={["btn", p.featured ? "btn--red" : "btn--ghost"]}
+                href={diagnosticoMail(`Me interesa: ${p.name}.`)}
+                data-track-label={`despachos-plan-${p.id}`}
+              >
+                {p.cta} <Arrow />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="od">
+        <div class="od__head" data-reveal>
+          <h3>Bajo demanda</h3>
+          <p>Se suma cuando lo necesites, con precio cerrado por escrito.</p>
+        </div>
+        <ul class="od__list" data-reveal style="--d:1">
+          {
+            onDemand.map((o) => (
+              <li>
+                {o.href ? <a href={o.href}>{o.name}</a> : <span>{o.name}</span>}
+                <small>{o.note}</small>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <p class="pl__legal" data-reveal>
+        Precios sin IVA y orientativos. El precio final queda cerrado por escrito tras el diagnóstico.
+        Volúmenes mayores o varios despachos: a medida.
+      </p>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- confianza -->
+  <section class="section tz">
+    <div class="wrap tz__inner">
+      <div class="tz__head">
+        <p class="eyebrow" data-reveal>Hecho con un contable</p>
+        <p class="tz__quote display" data-scrub>
+          Lo hemos diseñado con un contable en ejercicio, no en una sala de reuniones. Por eso
+          automatiza lo que sobra y deja a tu equipo lo que importa: el criterio.
+        </p>
+        <p class="tz__sign" data-reveal>
+          COMA · {years()} años contando historias de empresas · más de {trust.pymes} pymes
+        </p>
+      </div>
+      <ul class="tz__list">
+        {
+          promises.map((p, i) => (
+            <li data-reveal style={`--d:${i % 2}`}>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Process eyebrow="Cómo empezamos" title="Sin saltos al vacío: primero un piloto" steps={steps} />
+  <Faq items={faq} />
+  <Cta
+    title="Recupera el trimestre. Empieza por un diagnóstico gratis"
+    subject={despachosSubject}
+    lead="Escríbenos y responde a cinco preguntas que ya te dejamos en el email. En 30 minutos sabrás cuántas horas puedes recuperar y cuánto cuesta, por escrito."
+    action={{ href: mail, label: "Pedir diagnóstico" }}
+    mail={mail}
+  />
+
+  <div class="sticky-cta" data-sticky-cta>
+    <span>Diagnóstico <strong>gratis</strong> <span class="muted-sm">· 30 min</span></span>
+    <a class="btn btn--red" href={mail} tabindex="-1" data-track-label="despachos-sticky">Escríbenos <Arrow /></a>
+  </div>
+</Base>
+
+<style>
+  /* ---------------------------------------------------------------- portada */
+  .dh {
+    padding-top: clamp(8.5rem, 15vw, 11rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .dh__inner {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .dh__inner {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+    }
+  }
+  .dh__copy {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .dh h1 {
+    font-size: clamp(1.9rem, 0.6rem + 4.6vw, 5.4rem);
+    max-width: 16ch;
+    letter-spacing: -0.05em;
+  }
+  @media (max-width: 479px) {
+    .dh h1 {
+      font-variation-settings: "wdth" 100;
+    }
+  }
+  .dh__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+  .dh__chips .chip::before {
+    content: "✓";
+    color: var(--red);
+    margin-right: 0.45rem;
+    font-weight: 700;
+  }
+  .dh__art {
+    display: grid;
+  }
+
+  /* ------------------------------------------------------------------ dolor */
+  .pn__inner {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .pn__inner {
+      grid-template-columns: 0.9fr 1.3fr;
+      gap: 6rem;
+    }
+    .pn__head {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+  .pn__head {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .pn__list {
+    border-top: 2px solid var(--paper);
+  }
+  .pn__list li {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .pn__pain {
+    justify-self: start;
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 0.95rem + 1.4vw, 2.1rem);
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+    transition: color 0.6s var(--ease) 0.7s;
+  }
+  /* tachado rojo al entrar en pantalla (una raya por línea, también si el texto salta de línea) */
+  .pn__pain > span {
+    background: linear-gradient(var(--red), var(--red)) 0 56% / 100% max(2px, 0.08em) no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .pn__fix {
+    color: #ff6b7f;
+    font-weight: 600;
+    font-size: var(--fs-lg);
+  }
+  .pn__list li.is-in .pn__pain {
+    color: var(--night-muted);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .pn__pain > span {
+      background-size: 0% max(2px, 0.08em);
+      transition: background-size 0.8s var(--ease-io) 0.45s;
+    }
+    .js .pn__list li.is-in .pn__pain > span {
+      background-size: 100% max(2px, 0.08em);
+    }
+    .js .pn__fix {
+      opacity: 0;
+      transform: translateX(-12px);
+      transition:
+        opacity 0.6s var(--ease) 1.05s,
+        transform 0.8s var(--ease) 1.05s;
+    }
+    .js .pn__list li.is-in .pn__fix {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* --------------------------------------------------------------- módulos */
+  .md {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .md {
+      grid-template-columns: 0.9fr 1.3fr;
+      gap: 6rem;
+    }
+    .md__head {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+  .md__head {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+  .md__channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .md__channels li {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .md__item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.4rem 1rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--line);
+    transition: padding 0.5s var(--ease);
+  }
+  .md__item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .md__n {
+    grid-row: span 2;
+    color: var(--red);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    padding-top: 0.55em;
+  }
+  .md__item h3 {
+    font-size: clamp(1.4rem, 1rem + 1.4vw, 2.2rem);
+    transition: color 0.3s;
+  }
+  .md__item p {
+    color: var(--muted);
+    max-width: 48ch;
+  }
+  @media (hover: hover) {
+    .md__item:hover {
+      padding-left: 1rem;
+    }
+    .md__item:hover h3 {
+      color: var(--red);
+    }
+  }
+
+  /* ---------------------------------------------------------------- cierre */
+  .bd__grid {
+    align-items: center;
+  }
+  .bd__copy {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .bd__points {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .bd__points li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .bd__points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  /* --------------------------------------------------------------- precios */
+  .pl {
+    display: grid;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  @media (min-width: 900px) {
+    .pl {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .pl__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .pl__card--hot {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    --line: var(--night-line);
+    --muted: var(--night-muted);
+  }
+  @media (min-width: 900px) {
+    .pl__card--hot {
+      transform: translateY(-1rem);
+      box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.5);
+    }
+  }
+  .pl__badge {
+    position: absolute;
+    top: 0;
+    right: clamp(1.5rem, 3vw, 2.25rem);
+    transform: translateY(-50%);
+    background: var(--red);
+    color: #fff;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+  }
+  .pl__card h3 {
+    font-size: var(--fs-xl);
+  }
+  .pl__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+  .pl__price strong {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 1.8rem + 2.6vw, 3.8rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+  .pl__price span {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .pl__setup {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    margin-top: -0.4rem;
+  }
+  .pl__pitch {
+    font-weight: 600;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .pl__inc {
+    display: grid;
+    gap: 0.55rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 0.75rem;
+  }
+  .pl__inc li {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .pl__inc li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+  .pl__card .btn {
+    margin-top: auto;
+  }
+  .pl__card--hot .btn--red {
+    --fill: var(--paper);
+  }
+  .pl__card--hot .btn--red:hover {
+    color: var(--ink);
+  }
+  .od {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 2rem;
+    border-top: 2px solid var(--ink);
+  }
+  @media (min-width: 900px) {
+    .od {
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+    }
+  }
+  .od__head {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+  .od__head p {
+    color: var(--muted);
+  }
+  .od__list {
+    display: grid;
+  }
+  @media (min-width: 640px) {
+    .od__list {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2rem;
+    }
+  }
+  .od__list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+  }
+  .od__list a {
+    text-decoration-color: var(--red);
+  }
+  .od__list a:hover {
+    color: var(--red);
+  }
+  .od__list small {
+    flex: none;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .pl__legal {
+    margin-top: 1.5rem;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    max-width: 70ch;
+  }
+
+  /* ------------------------------------------------------------- confianza */
+  .tz__inner {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+  .tz__head {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .tz__quote {
+    font-size: clamp(1.7rem, 0.8rem + 3.2vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+    max-width: 26ch;
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
+  }
+  .tz__quote :global(span) {
+    opacity: 0.16;
+    transition: opacity 0.4s var(--ease);
+  }
+  .tz__quote :global(span.on) {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tz__quote :global(span) {
+      opacity: 1;
+    }
+  }
+  .tz__sign {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .tz__list {
+    display: grid;
+    border-top: 2px solid var(--ink);
+  }
+  @media (min-width: 760px) {
+    .tz__list {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 3rem;
+    }
+  }
+  @media (min-width: 1100px) {
+    .tz__list {
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 2rem;
+    }
+  }
+  .tz__list li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .tz__list h3 {
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.6rem);
+  }
+  .tz__list h3::before {
+    content: "";
+    display: block;
+    width: 1.75rem;
+    height: 3px;
+    background: var(--red);
+    margin-bottom: 1rem;
+  }
+  .tz__list p {
+    color: var(--muted);
+  }
+
+  .muted-sm {
+    color: var(--night-muted);
+    font-size: var(--fs-xs);
+  }
+</style>

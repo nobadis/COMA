@@ -75,6 +75,7 @@ export const navServices = [
   { href: "/agentes-ia/", label: "Agentes de IA" },
   { href: "/automatizaciones/", label: "Automatizaciones" },
   { href: "/notoriedad-de-marca/", label: "Notoriedad y medios" },
+  { href: "/despachos/", label: "Para despachos" },
 ];
 
 /** Clientes y referencias que se muestran como prueba social. */

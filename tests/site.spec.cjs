@@ -8,6 +8,7 @@ const PAGES = [
   "/notoriedad-de-marca/",
   "/agentes-ia/",
   "/automatizaciones/",
+  "/despachos/",
   "/kit-digital/",
   "/contacto/",
   "/aviso-legal/",
@@ -347,6 +348,36 @@ test.describe("COMA - Comunicación en Mallorca", () => {
       "aria-current",
       "page"
     );
+  });
+
+  test("despachos: demo de factura, calculadora de ahorro y CTAs al email", async ({ page }) => {
+    await page.goto("/despachos/");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      /deja de teclearlas/i
+    );
+    // los CTAs principales abren el email con el diagnóstico ya escrito
+    const hero = page.getByRole("link", { name: /Diagnóstico gratis/i }).first();
+    await expect(hero).toHaveAttribute("href", /^mailto:info@comunicacionenmallorca\.com\?subject=Diagn/);
+    await expect(hero).toHaveAttribute("href", /Programa%20contable/);
+
+    // demo: al elegir otro documento se lee y aparece el aviso de revisión
+    await page.locator("#demo").scrollIntoViewIfNeeded();
+    await page.getByRole("button", { name: /Honorarios con retención/ }).click();
+    await expect(page.locator('[data-v="ret"]')).toHaveText(/15 %/, { timeout: 8000 });
+    await expect(page.locator("[data-lab-flag]")).toContainText(/modelo 111/, { timeout: 8000 });
+    await page.getByRole("button", { name: "Sage", exact: true }).click();
+    await expect(page.locator("[data-lab-csv]")).toContainText('"2026-077"');
+
+    // calculadora: 60 clientes × 25 facturas × 3 min × 80 % = 60 h/mes
+    await expect(page.locator('[data-res="hours"]')).toHaveText("60");
+    await page.locator("#roi-clients").fill("120");
+    await expect(page.locator('[data-res="hours"]')).toHaveText("120");
+    await expect(page.locator("[data-roi-mail]")).toHaveAttribute("href", /120%20clientes/);
+
+    // precios visibles y enlace desde automatizaciones
+    await expect(page.locator("#precios")).toContainText("149 €");
+    await page.goto("/automatizaciones/");
+    await expect(page.locator('a[href="/despachos/"]').first()).toBeAttached();
   });
 });
 

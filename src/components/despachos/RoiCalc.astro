@@ -1,0 +1,257 @@
+---
+import Arrow from "../Arrow.astro";
+import { diagnosticoMail } from "../../data/despachos";
+
+/** Parte del tiempo de registro manual que se elimina (estimación prudente). */
+const SAVED = 0.8;
+const inputs = [
+  { id: "clients", label: "Clientes del despacho", min: 5, max: 300, step: 5, value: 60, unit: "" },
+  { id: "docs", label: "Facturas por cliente al mes", min: 5, max: 150, step: 5, value: 25, unit: "" },
+  { id: "mins", label: "Minutos por factura a mano", min: 1, max: 6, step: 0.5, value: 3, unit: " min" },
+  { id: "rate", label: "Coste de una hora del equipo", min: 15, max: 60, step: 1, value: 25, unit: " €" },
+];
+const v = Object.fromEntries(inputs.map((i) => [i.id, i.value])) as Record<string, number>;
+const hours = Math.round((v.clients * v.docs * v.mins * SAVED) / 60);
+const fmt = (n: number) => n.toLocaleString("es-ES");
+---
+
+<div class="roi" data-roi data-saved={SAVED}>
+  <div class="roi__in" role="group" aria-label="Datos de tu despacho">
+    {
+      inputs.map((i) => (
+        <div class="roi__field">
+          <span class="roi__label">
+            <label for={`roi-${i.id}`}>{i.label}</label>
+            <output for={`roi-${i.id}`} data-out={i.id}>
+              {fmt(i.value)}
+              {i.unit}
+            </output>
+          </span>
+          <input
+            type="range"
+            id={`roi-${i.id}`}
+            name={i.id}
+            min={i.min}
+            max={i.max}
+            step={i.step}
+            value={i.value}
+            data-unit={i.unit}
+            style={`--fill:${(((i.value - i.min) / (i.max - i.min)) * 100).toFixed(1)}%`}
+          />
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="roi__out" aria-live="polite">
+    <div class="roi__big">
+      <span class="roi__n" data-res="hours">{fmt(hours)}</span>
+      <span class="roi__u">horas al mes<br />que vuelven al despacho</span>
+    </div>
+    <dl class="roi__more">
+      <div>
+        <dt>Jornadas completas al mes</dt>
+        <dd data-res="days">{fmt(Math.round(hours / 8))}</dd>
+      </div>
+      <div>
+        <dt>Valor al año</dt>
+        <dd><span data-res="money">{fmt(hours * v.rate * 12)}</span> €</dd>
+      </div>
+    </dl>
+    <a class="btn btn--red btn--lg roi__cta" href={diagnosticoMail()} data-roi-mail data-magnetic data-track-label="despachos-roi">
+      Quiero recuperar esas horas <Arrow />
+    </a>
+    <p class="roi__note">
+      Estimación orientativa: suponemos que la automatización elimina el {SAVED * 100} % del tiempo de
+      registro manual. En el diagnóstico lo medimos con tus datos reales.
+    </p>
+  </div>
+</div>
+
+<script>
+  import { diagnosticoMail } from "../../data/despachos";
+
+  document.querySelectorAll<HTMLElement>("[data-roi]").forEach((roi) => {
+    const saved = Number(roi.dataset.saved ?? 0.8);
+    const ranges = Array.from(roi.querySelectorAll<HTMLInputElement>("input[type=range]"));
+    const out = (k: string) => roi.querySelector<HTMLElement>(`[data-res="${k}"]`);
+    const mail = roi.querySelector<HTMLAnchorElement>("[data-roi-mail]");
+    const nf = new Intl.NumberFormat("es-ES");
+    const shown: Record<string, number> = {};
+    let raf = 0;
+
+    // Los números se deslizan hasta su nuevo valor en lugar de saltar.
+    const tween = (k: string, to: number) => {
+      const el = out(k);
+      if (!el) return;
+      const from = shown[k] ?? to;
+      shown[k] = to;
+      const t0 = performance.now();
+      const step = (t: number) => {
+        const p = Math.min(1, (t - t0) / 380);
+        el.textContent = nf.format(Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) raf = requestAnimationFrame(step);
+      };
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(step);
+    };
+
+    const update = () => {
+      const v: Record<string, number> = {};
+      ranges.forEach((r) => {
+        v[r.name] = Number(r.value);
+        const pct = ((Number(r.value) - Number(r.min)) / (Number(r.max) - Number(r.min))) * 100;
+        r.style.setProperty("--fill", `${pct.toFixed(1)}%`);
+        const o = roi.querySelector<HTMLElement>(`[data-out="${r.name}"]`);
+        if (o) o.textContent = `${nf.format(v[r.name])}${r.dataset.unit ?? ""}`;
+      });
+      const hours = Math.round((v.clients * v.docs * v.mins * saved) / 60);
+      const days = Math.round(hours / 8);
+      const money = hours * v.rate * 12;
+      // un solo rAF a la vez: se anima la cifra principal y el resto se escribe directo
+      tween("hours", hours);
+      const d = out("days");
+      const m = out("money");
+      if (d) d.textContent = nf.format(days);
+      if (m) m.textContent = nf.format(money);
+      if (mail)
+        mail.href = diagnosticoMail(
+          `Según la calculadora de la web: ${v.clients} clientes, ${v.docs} facturas por cliente al mes y ${v.mins} min por factura. Ahorro estimado: ${nf.format(hours)} h/mes (${nf.format(money)} € al año).`
+        );
+    };
+    ranges.forEach((r) => r.addEventListener("input", update));
+    update();
+  });
+</script>
+
+<style>
+  .roi {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  @media (min-width: 960px) {
+    .roi {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+  }
+  .roi__in {
+    display: grid;
+    gap: 1.6rem;
+  }
+  .roi__field {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .roi__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-weight: 600;
+  }
+  .roi__label output {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2.2rem;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: linear-gradient(90deg, var(--red) var(--fill), var(--line) var(--fill));
+  }
+  input[type="range"]::-moz-range-track {
+    height: 4px;
+    background: linear-gradient(90deg, var(--red) var(--fill), var(--line) var(--fill));
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-top: calc(-0.8rem + 2px);
+    border-radius: 50%;
+    background: var(--ink);
+    border: 4px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+    transition: transform 0.3s var(--ease);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 4px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+  input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background: var(--red);
+  }
+  .roi__out {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .roi__big {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .roi__n {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: clamp(4.5rem, 2rem + 10vw, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    color: var(--red);
+    font-variant-numeric: tabular-nums;
+  }
+  .roi__u {
+    font-size: var(--fs-lg);
+    line-height: 1.25;
+    font-weight: 600;
+  }
+  .roi__more {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    border-top: 1px solid var(--night-line);
+    padding-top: 1.25rem;
+  }
+  .roi__more dt {
+    color: var(--night-muted);
+    font-size: var(--fs-sm);
+  }
+  .roi__more dd {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 1rem + 2vw, 2.5rem);
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .roi__cta {
+    --fill: var(--paper);
+  }
+  .roi__cta:hover {
+    color: var(--ink);
+  }
+  .roi__note {
+    font-size: var(--fs-xs);
+    color: var(--night-muted);
+    max-width: 52ch;
+  }
+</style>

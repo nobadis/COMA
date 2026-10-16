@@ -4,14 +4,16 @@ import { services } from "../data/services";
 import { basePlan, extras } from "../data/pricing";
 import { guides } from "../data/guides";
 import { places } from "../data/places";
+import { plans } from "../data/despachos";
 
 /** Resumen en texto plano para asistentes de IA (estándar llms.txt). El detalle está en /llms-full.txt. */
 export const GET: APIRoute = () => {
+  const despachoFrom = Math.min(...plans.flatMap((p) => (p.month ? [p.month] : [])));
   const regions = places.filter((p) => p.kind === "ccaa");
   const lines = [
     `# ${site.title}`,
     "",
-    `> Agencia de diseño web y marketing con sede en Palma de Mallorca desde ${site.since} (${years()} años). Desde ${site.spainSince} trabaja con autónomos y pymes de toda España. Webs profesionales desde ${basePlan.price} € ${basePlan.suffix}, SEO y posicionamiento en IA (GEO), agentes de IA, automatizaciones, notoriedad de marca y Kit Digital.`,
+    `> Comunicación, tecnología e IA para pymes, con sede en Palma de Mallorca desde ${site.since} (${years()} años). Desde ${site.spainSince} trabaja con autónomos y pymes de toda España. Webs profesionales desde ${basePlan.price} € ${basePlan.suffix}, SEO y posicionamiento en IA (GEO), agentes de IA, automatizaciones, notoriedad de marca y Kit Digital.`,
     "",
     "## Datos clave",
     `- Nombre comercial: ${site.brand} (COMA)`,
@@ -36,6 +38,7 @@ export const GET: APIRoute = () => {
     "## Servicios",
     ...services.map((s) => `- [${s.label}](${site.url}/${s.slug}/): ${s.summary}`),
     `- [Kit Digital](${site.url}/kit-digital/): ayuda para solicitar, implantar y justificar las ayudas Kit Digital.`,
+    `- [COMA para despachos](${site.url}/despachos/): automatización para asesorías, gestorías y despachos contables. Recepción de facturas por email o WhatsApp, lectura con IA, exportación a a3, Sage, Holded o Contasol, recordatorios a clientes y panel del cierre trimestral. Diagnóstico gratuito; planes desde ${despachoFrom} €/mes + puesta en marcha (sin IVA).`,
     "",
     "## Guías",
     ...guides.map((g) => `- [${g.title}](${site.url}/guias/${g.slug}/): ${g.description}`),

@@ -5,21 +5,30 @@ import { site, mailto } from "../data/site";
 interface Props {
   title?: string;
   subject?: string;
+  /** Texto bajo el titular (por defecto, el genérico de propuesta). */
+  lead?: string;
+  /** Botón principal (por defecto, al brief de contacto). */
+  action?: { href: string; label: string };
+  /** Enlace del email (por defecto, mailto con el asunto). */
+  mail?: string;
 }
-const { title = "Tu web, desde 99 €. ¿Empezamos?", subject = "Nuevo proyecto" } = Astro.props;
+const {
+  title = "Tu web, desde 99 €. ¿Empezamos?",
+  subject = "Nuevo proyecto",
+  lead = "Cuéntanos qué necesitas y te respondemos personalmente con una propuesta clara, sin compromiso. Desde Mallorca para toda España.",
+  action = { href: "/contacto/", label: "Pedir propuesta" },
+  mail,
+} = Astro.props;
 ---
 
 <section class="section cta" data-hide-sticky>
   <div class="wrap cta__inner">
     <p class="eyebrow" data-reveal>Empecemos</p>
     <h2 class="cta__title" data-split>{title}</h2>
-    <p class="lead" data-reveal style="--d:2">
-      Cuéntanos qué necesitas y te respondemos personalmente con una propuesta clara, sin
-      compromiso. Desde Mallorca para toda España.
-    </p>
+    <p class="lead" data-reveal style="--d:2">{lead}</p>
     <div class="cta__actions" data-reveal style="--d:3">
-      <a class="btn btn--red cta__btn" href="/contacto/" data-magnetic>Pedir propuesta <Arrow /></a>
-      <a class="link-arrow" href={mailto(subject)}>{site.email}</a>
+      <a class="btn btn--red cta__btn" href={action.href} data-magnetic>{action.label} <Arrow /></a>
+      <a class="link-arrow" href={mail ?? mailto(subject)}>{site.email}</a>
     </div>
   </div>
 </section>
