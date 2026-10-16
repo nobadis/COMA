@@ -13,7 +13,8 @@ const images = [classics, gourmet];
       <h2 id="flavors-title" class="h2">De las de siempre.<br /><span>A tus nuevas favoritas.</span></h2>
       <p class="lead">Empanadas clásicas y gourmet, un final dulce y algo fresco para acompañar. Vos elegís el plan.</p>
     </header>
-    <div class="flavors__grid">
+    <p class="flavors__hint" id="flavors-scroll-hint">Deslizá para descubrir la carta <span aria-hidden="true">→</span></p>
+    <div class="flavors__grid" role="region" aria-label="Categorías de la carta" aria-describedby="flavors-scroll-hint" tabindex="0">
       {productGroups.map((group, i) => (
         <article class:list={['flavors__card', 'reveal', `flavors__card--${i}`]} aria-labelledby={`flavors-group-${i}`}>
           {i < 2 && <div class="flavors__media"><Picture src={images[i]} alt={i === 0 ? 'Empanadas de Sabor Patricio recién preparadas' : 'Selección de empanadas en la vitrina de Sabor Patricio'} formats={['avif', 'webp']} widths={[480, 800]} sizes="(min-width: 900px) 45vw, 92vw" loading="lazy" /></div>}
@@ -34,7 +35,9 @@ const images = [classics, gourmet];
   .flavors__head { display: grid; gap: 18px; margin-bottom: clamp(32px, 5vw, 56px); }
   .flavors__head h2 { max-width: 20ch; line-height: 1.04; }
   .flavors__head h2 span { color: var(--blue); }
-  .flavors__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: stretch; }
+  .flavors__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: stretch; scroll-margin-top: calc(var(--header-h) + 16px); }
+  .flavors__hint { display: none; }
+  .flavors__grid:focus-visible { outline: 3px solid var(--blue); outline-offset: 6px; border-radius: var(--radius); }
   .flavors__card { min-width: 0; display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; background: var(--blue); color: var(--cream); }
   .flavors__card--1 { background: var(--night); }
   .flavors__media { position: relative; height: clamp(200px, 28vw, 280px); flex: none; overflow: hidden; }
@@ -51,5 +54,14 @@ const images = [classics, gourmet];
   .flavors__card--2 .flavors__kicker, .flavors__card--3 .flavors__kicker { color: var(--blue); }
   .flavors__card--2 .flavors__list li, .flavors__card--3 .flavors__list li { border-color: rgb(14 21 48 / 0.18); }
   @media (min-width: 360px) { .flavors__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 899px) {
+    .flavors__hint { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; color: var(--blue); font-size: 0.85rem; font-weight: 700; }
+    .flavors__grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(88%, 380px); gap: 16px; align-items: start; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--blue) transparent; }
+    .flavors__card { scroll-snap-align: start; }
+    /* Keep every card readable immediately while swiping, even before reveal runs. */
+    .flavors__grid .flavors__card { opacity: 1; transform: none; }
+    .flavors__media { height: 200px; }
+    .flavors__copy { padding: 24px; }
+  }
   @media (min-width: 900px) { .flavors__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
