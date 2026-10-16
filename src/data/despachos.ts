@@ -32,31 +32,30 @@ export const diagnosticoMail = (extra = "") =>
 
 export const channels = ["Email", "WhatsApp", "Foto", "PDF", "Papel", "Drive"];
 
-/** Lo que hacemos, en el orden en que viaja una factura. Todo con tecnología que existe hoy. */
+/**
+ * El producto, acotado a propósito: cinco piezas que se construyen una vez y se replican en cada
+ * despacho. Nada que dependa de usuarios y contraseñas de terceros ni de asesorar en nombre de nadie.
+ */
 export const modules: Item[] = [
   {
     title: "Canales integrados",
-    text: "Un WhatsApp del despacho, un email para cada cliente y una carpeta compartida. Y, si quieres, vamos a buscarlas: del buzón de correo del cliente y de los portales de sus proveedores. Todo cae en el mismo sitio, archivado por cliente y trimestre.",
+    text: "Un WhatsApp del despacho, un email para cada cliente y una carpeta compartida. Si el cliente quiere, también recogemos las facturas que le llegan a su correo. Todo cae en el mismo sitio, por cliente y trimestre.",
   },
   {
     title: "Extracción con IA y comprobaciones",
-    text: "Lee facturas, tickets y fotos torcidas. Saca emisor, NIF, bases, IVA y retenciones, y comprueba que el NIF es válido, que cuadra y que no está repetida.",
+    text: "Lee facturas, tickets y fotos. Saca emisor, NIF, bases, IVA y retenciones, propone la cuenta según el histórico del proveedor y marca solo lo que hay que revisar.",
   },
   {
-    title: "Un agente que atiende a tus clientes",
-    text: "Contesta al momento por WhatsApp o email: confirma lo recibido, pide la foto que se ve mal y recuerda lo que falta. Si hace falta una persona, te pasa la conversación.",
+    title: "Un agente que confirma y pide",
+    text: "Contesta al momento por WhatsApp o email: confirma lo recibido, pide la foto que no se lee y recuerda lo que falta. No asesora: las consultas pasan a tu equipo.",
   },
   {
-    title: "Integrado con tu programa y tu banco",
-    text: "Por API cuando existe (Holded) y por importación cuando no (a3, Sage, Contasol). Extractos del banco en Norma 43 para cruzar cobros y pagos con facturas.",
+    title: "Directo a tu programa contable",
+    text: "Fichero de importación para a3, Sage o Contasol, o directo por API a Holded. No cambias de software ni de forma de trabajar.",
   },
   {
-    title: "Reglas fiscales de aquí",
-    text: "Retenciones al 111 o al 115, operaciones intracomunitarias al 349, inversión del sujeto pasivo, facturas simplificadas. Lo marca solo porque lo hemos diseñado con un equipo contable.",
-  },
-  {
-    title: "Copiloto del despacho",
-    text: "Pregunta en lenguaje normal y obtén la respuesta con tus datos: qué falta, quién va tarde o cuánto IVA soportado lleva un cliente. Y un resumen trimestral claro para cada cliente.",
+    title: "Panel del cierre",
+    text: "Qué clientes están completos, a quién le falta qué y qué está revisado. Con recordatorios automáticos para que el trimestre no sea una sorpresa.",
   },
 ];
 
@@ -66,9 +65,7 @@ export const checks = [
   "IVA intracomunitario contra VIES",
   "Base + IVA − retención = total",
   "Factura no duplicada",
-  "Tipo de IVA coherente con el concepto",
   "Fecha dentro del trimestre",
-  "Cuenta aprendida del proveedor",
   "Retenciones al 111 o al 115",
 ];
 
@@ -76,16 +73,14 @@ export const checks = [
 export const stack = [
   "WhatsApp Business API",
   "Gmail y Outlook API",
-  "Email por cliente",
   "IA de visión",
   "n8n",
   "API de Holded",
   "Importación a3 · Sage · Contasol",
-  "Norma 43",
   "VIES",
 ];
 
-/** Por qué se nos compara con nosotros mismos: lo que hace una herramienta de captura genérica y lo que hacemos. */
+/** Lo que hace una herramienta de captura genérica y lo que hacemos. */
 export const compare: { what: string; tool: string; coma: string }[] = [
   {
     what: "WhatsApp",
@@ -95,12 +90,12 @@ export const compare: { what: string; tool: string; coma: string }[] = [
   {
     what: "Tu programa contable",
     tool: "Te adaptas a sus conectores",
-    coma: "Nos adaptamos al tuyo, por API o importación",
+    coma: "Nos adaptamos al tuyo",
   },
   {
     what: "Reglas fiscales",
     tool: "Genéricas, pensadas para muchos países",
-    coma: "Españolas: 111, 115, 349, simplificadas, ISP",
+    coma: "Españolas: 111, 115, simplificadas, VIES",
   },
   {
     what: "Perseguir documentación",
@@ -109,13 +104,8 @@ export const compare: { what: string; tool: string; coma: string }[] = [
   },
   {
     what: "Puesta en marcha",
-    tool: "Tú configuras, tú formas al equipo",
-    coma: "Lo montamos, lo mantenemos y lo mejoramos",
-  },
-  {
-    what: "Interlocutor",
-    tool: "Soporte por tickets",
-    coma: "Equipo técnico en Palma y equipo contable detrás",
+    tool: "Tú configuras y formas al equipo",
+    coma: "Lo montamos y lo mantenemos, con equipo contable detrás",
   },
 ];
 
@@ -139,9 +129,9 @@ export interface DeskPlan {
 }
 
 /**
- * Precios sin IVA. Lógica: la puesta en marcha paga las horas de montaje; la cuota cubre la
- * infraestructura (IA, WhatsApp, servidores) con margen; el volumen está acotado y el exceso se
- * cobra por documento, muy por encima de su coste. Así ningún plan es ilimitado.
+ * Precios sin IVA. La puesta en marcha paga las horas de montaje; la cuota cubre la infraestructura
+ * (IA, WhatsApp, servidores) con margen; el volumen está acotado y el exceso se cobra por documento,
+ * muy por encima de su coste. Ningún plan es ilimitado.
  */
 export const plans: DeskPlan[] = [
   {
@@ -154,9 +144,9 @@ export const plans: DeskPlan[] = [
       "30 minutos con nuestro equipo técnico y contable. Salimos con tu mapa de procesos y las horas que puedes recuperar.",
     includes: [
       "Revisión de cómo entra y se registra hoy la documentación",
-      "Estimación de horas y euros recuperables al mes",
+      "Estimación de horas recuperables al mes",
       "Propuesta con alcance, plazos y precio cerrado",
-      "Piloto opcional de 30 días con 5 clientes: 290 €, que se descuentan de la puesta en marcha",
+      "Piloto opcional de 30 días con 5 clientes: 290 €, descontables de la puesta en marcha",
     ],
     cta: "Pedir diagnóstico",
   },
@@ -169,10 +159,9 @@ export const plans: DeskPlan[] = [
     extra: 0.15,
     pitch: "Para dejar de buscar facturas. Todo llega, se lee y se ordena solo.",
     includes: [
-      "Email para cada cliente, WhatsApp de recepción y carpeta compartida",
-      "Extracción con IA y 8 comprobaciones automáticas",
+      "Email para cada cliente, WhatsApp de recepción y carpeta",
+      "Extracción con IA y comprobaciones automáticas",
       "Archivo por cliente y trimestre, exportación a Excel o CSV",
-      "Panel con lo recibido y lo pendiente",
     ],
     cta: "Quiero Recepción",
   },
@@ -186,10 +175,9 @@ export const plans: DeskPlan[] = [
     pitch: "Para dejar de teclear y de perseguir. El trimestre, bajo control.",
     includes: [
       "Todo lo de Recepción",
-      "Integración con tu programa contable (API o importación)",
+      "Exportación directa a tu programa contable",
       "Agente de WhatsApp y email con el nombre de tu despacho",
-      "Recordatorios automáticos a clientes (hasta 1.000 al mes)",
-      "Cuenta aprendida por proveedor, panel del cierre y copiloto",
+      "Panel del cierre y hasta 1.000 recordatorios al mes",
       "1 hora al mes de ajustes y soporte prioritario",
     ],
     cta: "Quiero Despacho",
@@ -202,34 +190,23 @@ export const escala = {
   name: "Escala",
   from: 490,
   docs: 4000,
-  text: "Más de 4.000 documentos al mes, varias oficinas o integraciones propias.",
+  text: "Más de 4.000 documentos al mes o varias oficinas.",
 };
 
 /** Las condiciones, a la vista: sin sorpresas ni para el despacho ni para COMA. */
 export const terms = [
   "Cuenta como documento cada factura o ticket procesado. Los duplicados detectados no cuentan.",
-  "Si un mes te pasas del volumen incluido, el exceso se cobra por documento. Te avisamos al llegar al 80 % y nunca cortamos el servicio.",
+  "Si un mes te pasas del volumen incluido, el exceso se cobra por documento. Te avisamos al 80 % y nunca cortamos el servicio.",
   "Pago anual por adelantado: 2 meses gratis.",
   "Sin permanencia: cuota mensual y baja con 30 días de aviso.",
-  "Flujos o integraciones nuevas fuera del plan: presupuesto cerrado antes de empezar.",
+  "Cambios fuera del plan: presupuesto cerrado antes de empezar.",
   "Mensajes de WhatsApp de plantilla por encima de lo incluido: coste de Meta repercutido, sin margen.",
 ];
 
-/** Se añaden cuando hacen falta. Con `href`, enlazan al servicio de COMA que ya existe. */
+/** Pocos extras y todos con precio. Con `href`, enlazan al servicio de COMA que ya existe. */
 export const onDemand: { name: string; note: string; href?: string }[] = [
-  { name: "Recogida automática de facturas (email y portales)", note: "9 € cliente/mes" },
-  { name: "Conciliación con el banco (Norma 43 o PSD2)", note: "Desde 79 €/mes" },
-  { name: "Resumen trimestral automático para cada cliente", note: "Desde 49 €/mes" },
-  {
-    name: "Agente de IA para consultas fiscales de clientes",
-    note: "A medida",
-    href: "/agentes-ia/",
-  },
-  { name: "Portal del cliente con tu marca", note: "Desde 990 €" },
-  { name: "Integraciones con tu CRM o ERP", note: "A medida", href: "/automatizaciones/" },
-  { name: "Firma electrónica de documentos", note: "Desde 29 €/mes" },
+  { name: "Recogida desde el correo del cliente", note: "9 € cliente/mes" },
   { name: "Digitalización del archivo histórico", note: "0,08 €/doc" },
-  { name: "Preparación para Verifactu y factura electrónica", note: "A medida" },
   { name: "Formación para tu equipo", note: "120 €/sesión" },
   { name: "Web para el despacho", note: "Desde 99 €", href: "/diseno-web/" },
 ];
@@ -255,48 +232,32 @@ export const steps: Item[] = [
 
 export const faq: Item[] = [
   {
-    title: "¿Podéis ir a buscar las facturas sin que el cliente las mande?",
-    text: "En buena parte, sí. Con permiso del cliente leemos su buzón de correo (Gmail u Outlook) y descargamos las facturas que le llegan, también las de enlace. De plataformas con API o exportación (Amazon, Google, Meta, Stripe, Shopify…) las traemos directamente, y para portales de suministros y telefonía usamos conectores especializados. Todo con acceso autorizado y revocable. Lo que no se pueda recoger solo, lo pide el agente.",
-  },
-  {
-    title: "¿Qué pasa si un mes proceso más documentos de los incluidos?",
-    text: "Nada grave: te avisamos al 80 %, no cortamos nada y el exceso se cobra por documento (0,15 € en Recepción y 0,10 € en Despacho). Si te pasas a menudo, te proponemos el plan que te sale más barato.",
-  },
-  {
     title: "¿Tengo que cambiar de programa contable?",
-    text: "No. Nos adaptamos al que ya usas (a3, Sage, Holded, Contasol u otros) y preparamos los datos en el formato que importa. Si tu programa no permite importar, lo vemos en el diagnóstico.",
+    text: "No. Preparamos el fichero de importación de a3, Sage o Contasol, o enviamos los datos por API a Holded. Si usas otro programa, lo vemos en el diagnóstico.",
   },
   {
     title: "¿Y si la IA se equivoca?",
-    text: "La IA propone y tu equipo decide. Todo lo que tiene dudas (un NIF ilegible, un tipo de IVA raro, una factura duplicada) se marca para revisarlo. Lo que está claro pasa solo; lo dudoso, nunca.",
+    text: "La IA propone y tu equipo decide. Lo que tiene dudas (un NIF que no cuadra, una factura repetida, una foto ilegible) se marca para revisarlo. Lo claro pasa solo; lo dudoso, nunca.",
+  },
+  {
+    title: "¿El agente asesora a mis clientes?",
+    text: "No. Confirma lo recibido, pide lo que falta y avisa. Cualquier consulta de asesoría pasa a tu equipo con la conversación completa.",
+  },
+  {
+    title: "¿Podéis ir a buscar las facturas sin que el cliente las mande?",
+    text: "Sí, desde su correo: con su permiso (Gmail u Outlook) detectamos las facturas que le llegan y las traemos solas. Los portales que piden usuario y contraseña no los tocamos: ahí el agente se lo pide al cliente.",
+  },
+  {
+    title: "¿Qué pasa si un mes proceso más documentos de los incluidos?",
+    text: "Te avisamos al 80 %, no cortamos nada y el exceso se cobra por documento (0,15 € en Recepción y 0,10 € en Despacho). Si te pasas a menudo, te proponemos el plan que te sale más barato.",
   },
   {
     title: "¿En qué os diferenciáis de Dext, Holded o las herramientas de captura?",
-    text: "Esas herramientas son buenas, pero te venden un programa más que tu equipo y tus clientes tienen que adoptar. Nosotros montamos el flujo completo sobre lo que ya usas: WhatsApp, email, tu programa contable y tu banco, con reglas fiscales españolas, y lo mantenemos. Si ya usas una de ellas, la integramos.",
+    text: "Esas herramientas son buenas, pero son un programa más que tu equipo y tus clientes tienen que adoptar. Nosotros montamos el flujo sobre lo que ya usas (WhatsApp, email y tu programa contable), con reglas fiscales españolas, y lo mantenemos.",
   },
   {
-    title: "¿Qué IA usáis? ¿Mis datos entrenan a nadie?",
-    text: "Usamos modelos de primer nivel en versión empresarial, con acuerdo de tratamiento de datos y sin uso de tu información para entrenar. Nunca la versión gratuita de un chat. Y el agente solo hace lo que le permitimos: confirmar, pedir y avisar.",
-  },
-  {
-    title: "¿Mis clientes tienen que instalar algo?",
-    text: "No. Siguen enviando las facturas por email, WhatsApp o foto, como hasta ahora. Les damos una dirección o un número y listo.",
-  },
-  {
-    title: "¿Es seguro? ¿Qué pasa con la protección de datos?",
-    text: "Trabajamos como encargados del tratamiento con contrato firmado, elegimos proveedores con servidores en la Unión Europea y damos acceso solo a quien lo necesita. Todo queda documentado.",
-  },
-  {
-    title: "¿Cuánto se tarda en ponerlo en marcha?",
-    text: "El piloto suele estar funcionando en un par de semanas. El despliegue completo depende del número de clientes y de lo que queramos conectar; te damos fechas concretas en la propuesta.",
-  },
-  {
-    title: "¿Sirve para un despacho pequeño?",
-    text: "Sobre todo para un despacho pequeño. Cuando sois dos o tres personas, cada hora que no se teclea es una hora para asesorar o para captar clientes.",
-  },
-  {
-    title: "¿Y Verifactu y la factura electrónica?",
-    text: "Los calendarios han cambiado varias veces. Montamos los procesos para que, cuando lleguen las obligaciones, tu despacho y tus clientes ya trabajen con datos digitales y ordenados.",
+    title: "¿Es seguro? ¿Qué IA usáis?",
+    text: "Firmamos contrato de encargado del tratamiento, usamos proveedores con servidores en la UE y modelos de IA en versión empresarial que no entrenan con tus datos. Nunca la versión gratuita de un chat.",
   },
   {
     title: "¿Hay permanencia?",
