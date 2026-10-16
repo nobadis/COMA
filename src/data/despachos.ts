@@ -32,31 +32,89 @@ export const diagnosticoMail = (extra = "") =>
 
 export const channels = ["Email", "WhatsApp", "Foto", "PDF", "Papel", "Drive"];
 
-/** Lo que hacemos, en el orden en que viaja una factura. */
+/** Lo que hacemos, en el orden en que viaja una factura. Todo con tecnología que existe hoy. */
 export const modules: Item[] = [
   {
-    title: "Un único buzón para todo",
-    text: "Email, WhatsApp, fotos o una carpeta compartida: tus clientes envían como quieran y todo llega al mismo sitio, renombrado y archivado por cliente y trimestre.",
+    title: "Canales integrados",
+    text: "Un WhatsApp del despacho, un email para cada cliente y una carpeta compartida. Tus clientes envían como siempre y todo cae en el mismo sitio, archivado por cliente y trimestre.",
   },
   {
-    title: "Lectura con IA",
-    text: "Extrae emisor, NIF, fecha, bases, tipos de IVA y retenciones. Propone la cuenta contable y marca solo lo dudoso para que lo revises.",
+    title: "Extracción con IA y comprobaciones",
+    text: "Lee facturas, tickets y fotos torcidas. Saca emisor, NIF, bases, IVA y retenciones, y comprueba que el NIF es válido, que cuadra y que no está repetida.",
   },
   {
-    title: "Directo a tu programa",
-    text: "Exportamos al formato de a3, Sage, Holded, Contasol o Excel. No cambias de software ni de forma de trabajar.",
+    title: "Un agente que atiende a tus clientes",
+    text: "Contesta al momento por WhatsApp o email: confirma lo recibido, pide la foto que se ve mal y recuerda lo que falta. Si hace falta una persona, te pasa la conversación.",
   },
   {
-    title: "Recordatorios que persiguen por ti",
-    text: "Cada cliente recibe un aviso con lo que le falta y cuándo. Amable, puntual y sin que nadie del despacho tenga que escribirlo.",
+    title: "Integrado con tu programa y tu banco",
+    text: "Por API cuando existe (Holded) y por importación cuando no (a3, Sage, Contasol). Extractos del banco en Norma 43 para cruzar cobros y pagos con facturas.",
   },
   {
-    title: "Conciliación asistida",
-    text: "Cruza movimientos del banco con facturas y señala lo que no cuadra. Tú decides, la máquina busca.",
+    title: "Reglas fiscales de aquí",
+    text: "Retenciones al 111 o al 115, operaciones intracomunitarias al 349, inversión del sujeto pasivo, facturas simplificadas. Lo marca solo porque lo hemos diseñado con un contable.",
   },
   {
-    title: "Panel del cierre",
-    text: "De un vistazo: qué clientes están completos, a quién le falta documentación y qué está revisado. El trimestre deja de ser una sorpresa.",
+    title: "Copiloto del despacho",
+    text: "Pregunta en lenguaje normal y obtén la respuesta con tus datos: qué falta, quién va tarde o cuánto IVA soportado lleva un cliente. Y un resumen trimestral claro para cada cliente.",
+  },
+];
+
+/** Comprobaciones automáticas de cada documento (todas son reglas o consultas reales). */
+export const checks = [
+  "NIF con dígito de control válido",
+  "IVA intracomunitario contra VIES",
+  "Base + IVA − retención = total",
+  "Factura no duplicada",
+  "Tipo de IVA coherente con el concepto",
+  "Fecha dentro del trimestre",
+  "Cuenta aprendida del proveedor",
+  "Retenciones al 111 o al 115",
+];
+
+/** Con qué lo construimos: piezas probadas y abiertas, sin cajas negras. */
+export const stack = [
+  "WhatsApp Business API",
+  "Email por cliente",
+  "IA de visión",
+  "n8n",
+  "API de Holded",
+  "Importación a3 · Sage · Contasol",
+  "Norma 43",
+  "VIES",
+];
+
+/** Por qué se nos compara con nosotros mismos: lo que hace una herramienta de captura genérica y lo que hacemos. */
+export const compare: { what: string; tool: string; coma: string }[] = [
+  {
+    what: "WhatsApp",
+    tool: "App propia o integración aparte",
+    coma: "Nativo: el cliente escribe al despacho como siempre",
+  },
+  {
+    what: "Tu programa contable",
+    tool: "Te adaptas a sus conectores",
+    coma: "Nos adaptamos al tuyo, por API o importación",
+  },
+  {
+    what: "Reglas fiscales",
+    tool: "Genéricas, pensadas para muchos países",
+    coma: "Españolas: 111, 115, 349, simplificadas, ISP",
+  },
+  {
+    what: "Perseguir documentación",
+    tool: "Otra herramienta más",
+    coma: "Agente y recordatorios en el mismo flujo",
+  },
+  {
+    what: "Puesta en marcha",
+    tool: "Tú configuras, tú formas al equipo",
+    coma: "Lo montamos, lo mantenemos y lo mejoramos",
+  },
+  {
+    what: "Interlocutor",
+    tool: "Soporte por tickets",
+    coma: "Un equipo en Palma y un contable detrás",
   },
 ];
 
@@ -98,9 +156,9 @@ export const plans: DeskPlan[] = [
     month: 59,
     pitch: "Para dejar de buscar facturas. Todo llega, se lee y se ordena solo.",
     includes: [
-      "Buzón único: email, WhatsApp y carpeta compartida",
-      "Lectura con IA y archivo por cliente y trimestre",
-      "Exportación a Excel o CSV",
+      "WhatsApp del despacho, email por cliente y carpeta compartida",
+      "Extracción con IA y 8 comprobaciones automáticas",
+      "Archivo por cliente y trimestre, exportación a Excel o CSV",
       "Hasta 1.000 documentos al mes",
     ],
     cta: "Quiero Recepción",
@@ -113,10 +171,10 @@ export const plans: DeskPlan[] = [
     pitch: "Para dejar de teclear y de perseguir. El trimestre, bajo control.",
     includes: [
       "Todo lo de Recepción",
-      "Exportación directa a tu programa contable",
-      "Cuenta contable sugerida y revisión solo de lo dudoso",
-      "Recordatorios automáticos a tus clientes",
-      "Panel del cierre trimestral",
+      "Integración con tu programa contable (API o importación)",
+      "Agente de WhatsApp y email que atiende y persigue por ti",
+      "Cuenta aprendida por proveedor y revisión solo de lo dudoso",
+      "Panel del cierre y copiloto del despacho",
       "Hasta 3.000 documentos al mes y soporte prioritario",
     ],
     cta: "Quiero Despacho",
@@ -126,13 +184,15 @@ export const plans: DeskPlan[] = [
 
 /** Se añaden cuando hacen falta. Con `href`, enlazan al servicio de COMA que ya existe. */
 export const onDemand: { name: string; note: string; href?: string }[] = [
-  { name: "Conciliación bancaria asistida", note: "A medida" },
+  { name: "Conciliación con el banco (Norma 43 o conexión PSD2)", note: "A medida" },
   { name: "Portal del cliente con tu marca", note: "A medida" },
   {
-    name: "Agente de IA que responde dudas de tus clientes",
+    name: "Agente de IA para consultas fiscales de clientes",
     note: "A medida",
     href: "/agentes-ia/",
   },
+  { name: "Resumen trimestral automático para cada cliente", note: "A medida" },
+  { name: "Integraciones a medida con tu CRM o ERP", note: "A medida", href: "/automatizaciones/" },
   { name: "Firma electrónica de documentos", note: "A medida" },
   { name: "Digitalización del archivo histórico", note: "Por volumen" },
   { name: "Preparación para Verifactu y factura electrónica", note: "A medida" },
@@ -167,6 +227,14 @@ export const faq: Item[] = [
   {
     title: "¿Y si la IA se equivoca?",
     text: "La IA propone y tu equipo decide. Todo lo que tiene dudas (un NIF ilegible, un tipo de IVA raro, una factura duplicada) se marca para revisarlo. Lo que está claro pasa solo; lo dudoso, nunca.",
+  },
+  {
+    title: "¿En qué os diferenciáis de Dext, Holded o las herramientas de captura?",
+    text: "Esas herramientas son buenas, pero te venden un programa más que tu equipo y tus clientes tienen que adoptar. Nosotros montamos el flujo completo sobre lo que ya usas: WhatsApp, email, tu programa contable y tu banco, con reglas fiscales españolas, y lo mantenemos. Si ya usas una de ellas, la integramos.",
+  },
+  {
+    title: "¿Qué IA usáis? ¿Mis datos entrenan a nadie?",
+    text: "Usamos modelos de primer nivel en versión empresarial, con acuerdo de tratamiento de datos y sin uso de tu información para entrenar. Nunca la versión gratuita de un chat. Y el agente solo hace lo que le permitimos: confirmar, pedir y avisar.",
   },
   {
     title: "¿Mis clientes tienen que instalar algo?",

@@ -25,6 +25,8 @@ interface Doc {
   folder: string;
   flag?: string;
   ok: string;
+  /** Comprobaciones automáticas: ok o aviso. */
+  checks: [string, "ok" | "warn"][];
 }
 
 const docs: Doc[] = [
@@ -34,10 +36,10 @@ const docs: Doc[] = [
     kind: "Factura",
     who: "Suministros Llevant SL",
     addr: "C/ del Comerç 12 · 07009 Palma",
-    nif: "B07412345",
+    nif: "B07412349",
     num: "F-2026/0418",
     date: "03/10/2026",
-    client: "Fontanería Coll SL · B57123456",
+    client: "Fontanería Coll SL · B57123457",
     lines: [
       { d: "Tubo multicapa 20 mm (rollo 100 m)", q: "2", a: "248,00" },
       { d: "Racores de latón, caja 50 uds.", q: "4", a: "164,40" },
@@ -49,6 +51,13 @@ const docs: Doc[] = [
     account: "600 · Compras de mercaderías",
     folder: "Fontanería Coll / 2026 / T4 / Compras",
     ok: "Todo cuadra: base + IVA = total",
+    checks: [
+      ["NIF válido", "ok"],
+      ["Base + IVA = total", "ok"],
+      ["No duplicada", "ok"],
+      ["IVA 21 % coherente", "ok"],
+      ["Cuenta aprendida del proveedor", "ok"],
+    ],
   },
   {
     id: "ticket",
@@ -56,7 +65,7 @@ const docs: Doc[] = [
     kind: "Factura simplificada",
     who: "Carburantes Migjorn SL",
     addr: "Ctra. Manacor km 7 · 07600 Llucmajor",
-    nif: "B07998877",
+    nif: "B07998875",
     num: "T-118-55021",
     date: "14/10/2026",
     client: "— (sin datos del cliente)",
@@ -69,6 +78,13 @@ const docs: Doc[] = [
     folder: "Bar Es Pla / 2026 / T4 / Gastos",
     flag: "Factura simplificada sin NIF del cliente: pedimos la completa para deducir el IVA",
     ok: "Recordatorio enviado al cliente",
+    checks: [
+      ["NIF del emisor válido", "ok"],
+      ["Base + IVA = total", "ok"],
+      ["No duplicada", "ok"],
+      ["Falta el NIF del cliente", "warn"],
+      ["Cuenta aprendida del proveedor", "ok"],
+    ],
   },
   {
     id: "profesional",
@@ -76,10 +92,10 @@ const docs: Doc[] = [
     kind: "Factura",
     who: "Marta Pons · Abogada",
     addr: "Av. Jaume III 4 · 07012 Palma",
-    nif: "43123456K",
+    nif: "43123456C",
     num: "2026-077",
     date: "09/10/2026",
-    client: "Clínica Sant Jaume SLP · B57654321",
+    client: "Clínica Sant Jaume SLP · B57654329",
     lines: [{ d: "Asesoramiento contrato de arrendamiento", q: "1", a: "600,00" }],
     base: "600,00",
     vatRate: "21 %",
@@ -90,6 +106,13 @@ const docs: Doc[] = [
     folder: "Clínica Sant Jaume / 2026 / T4 / Gastos",
     flag: "Retención IRPF del 15 % detectada: va al modelo 111 del trimestre",
     ok: "Retención anotada para el 111",
+    checks: [
+      ["NIF válido", "ok"],
+      ["Base + IVA − retención = total", "ok"],
+      ["No duplicada", "ok"],
+      ["Retención 15 % → modelo 111", "ok"],
+      ["Fecha dentro del trimestre", "ok"],
+    ],
   },
 ];
 
@@ -111,6 +134,7 @@ const payload = docs.map((d) => ({
   values: Object.fromEntries(rows.map((r) => [r.f, r.get(d)])),
   flag: d.flag ?? "",
   ok: d.ok,
+  checks: d.checks,
   csv: {
     a3: `${d.date};${d.num};${d.nif};${d.who};${d.account.slice(0, 3)};${d.base};${d.vatRate.replace(" %", "")};${d.vat};${d.ret ?? "0,00"};${d.total}`,
     sage: `"${d.date}","${d.num}","${d.nif}","${d.who}","${d.account.slice(0, 3)}0000","${d.base}","${d.vat}","${d.total}"`,
@@ -228,6 +252,10 @@ const formats = [
           ))
         }
       </dl>
+      <p class="sr-only">Comprobaciones automáticas:</p>
+      <ul class="lab__checks" data-lab-checks>
+        {first.checks.map(([t, st]) => <li class={`is-${st}`}>{t}</li>)}
+      </ul>
       <p class="lab__flag" data-lab-flag hidden></p>
       <p class="lab__ok" data-lab-ok>✓ {first.ok}</p>
       <div class="lab__export">
@@ -253,6 +281,7 @@ const formats = [
     values: Record<string, string>;
     flag: string;
     ok: string;
+    checks: [string, "ok" | "warn"][];
     csv: Record<string, string>;
   };
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -265,6 +294,7 @@ const formats = [
     const flag = lab.querySelector<HTMLElement>("[data-lab-flag]");
     const ok = lab.querySelector<HTMLElement>("[data-lab-ok]");
     const csv = lab.querySelector<HTMLElement>("[data-lab-csv]");
+    const checks = lab.querySelector<HTMLElement>("[data-lab-checks]");
     const order = ["who", "nif", "num", "date", "base", "vat", "ret", "total", "account", "folder"];
     let current = docs[0];
     let fmt = "a3";
@@ -294,6 +324,17 @@ const formats = [
       if (flag) flag.hidden = true;
       if (ok) ok.hidden = true;
       if (csv) csv.textContent = "";
+      if (checks) {
+        checks.replaceChildren(
+          ...doc.checks.map(([t, st], i) => {
+            const li = document.createElement("li");
+            li.className = `is-${st}`;
+            li.style.setProperty("--i", String(i));
+            li.textContent = t;
+            return li;
+          })
+        );
+      }
       lab.classList.remove("is-done");
       lab.classList.add("is-scan");
       if (status) status.textContent = "Leyendo documento…";
@@ -674,6 +715,46 @@ const formats = [
     from {
       background: rgb(225 17 45 / 0.18);
     }
+  }
+  .lab__checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .lab__checks li {
+    font-size: 0.74rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    transition:
+      color 0.4s var(--ease),
+      background 0.4s var(--ease),
+      border-color 0.4s var(--ease);
+    transition-delay: calc(var(--i, 0) * 120ms);
+  }
+  .lab__checks li::before {
+    content: "○ ";
+  }
+  .is-done .lab__checks li.is-ok,
+  .lab:not(.is-scan) .lab__checks li.is-ok {
+    color: #3ad07a;
+    border-color: rgb(58 208 122 / 0.3);
+    background: rgb(58 208 122 / 0.08);
+  }
+  .is-done .lab__checks li.is-ok::before,
+  .lab:not(.is-scan) .lab__checks li.is-ok::before {
+    content: "✓ ";
+  }
+  .is-done .lab__checks li.is-warn,
+  .lab:not(.is-scan) .lab__checks li.is-warn {
+    color: #ffb35c;
+    border-color: rgb(255 179 92 / 0.35);
+    background: rgb(255 179 92 / 0.08);
+  }
+  .is-done .lab__checks li.is-warn::before,
+  .lab:not(.is-scan) .lab__checks li.is-warn::before {
+    content: "⚑ ";
   }
   .lab__flag,
   .lab__ok {

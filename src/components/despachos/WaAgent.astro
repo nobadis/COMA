@@ -1,0 +1,263 @@
+---
+/**
+ * El agente del despacho en WhatsApp: el cliente manda fotos y PDF, el agente confirma lo leído,
+ * detecta lo que no sirve y pide lo que falta. Conversación ficticia que se reproduce sola.
+ */
+const script = [
+  { who: "user", kind: "photo", text: "Te mando lo de la gasolinera", file: "IMG_2041.jpg" },
+  {
+    who: "bot",
+    text: "¡Gracias, Joan! Leído: Carburantes Migjorn, 60,00 € ✓ Es un ticket sin tu NIF: para deducir el IVA pide la factura completa en caja.",
+  },
+  { who: "user", text: "Vale, mañana la pido 👍" },
+  {
+    who: "bot",
+    text: "Perfecto, te lo recuerdo el lunes. Para cerrar el trimestre solo te falta el alquiler del local de octubre 📎",
+  },
+  { who: "user", kind: "pdf", text: "", file: "Alquiler_octubre.pdf" },
+  { who: "bot", text: "Recibido ✓ Retención del alquiler anotada. Ya tienes el 4.º trimestre completo. ¡Gracias!" },
+  { who: "sys", text: "Bar Es Pla · T4 completo · Retención al modelo 115" },
+];
+---
+
+<div class="wa" data-wa>
+  <div class="wa__top">
+    <span class="wa__avatar" aria-hidden="true">P</span>
+    <span>
+      <strong>Asesoría Pons</strong>
+      <small><i class="wa__live"></i> WhatsApp · atendido por IA</small>
+    </span>
+    <span class="wa__tag">Ejemplo ilustrativo</span>
+  </div>
+  <p class="sr-only">Ejemplo de conversación entre un cliente y el agente del despacho:</p>
+  <ol class="wa__chat" data-wa-chat>
+    {
+      script.map((m) => (
+        <li class={`wa__msg wa__msg--${m.who}`}>
+          {m.kind === "photo" && (
+            <span class="wa__photo" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+          )}
+          {m.kind === "pdf" && (
+            <span class="wa__pdf">
+              <b aria-hidden="true">PDF</b>
+              {m.file}
+            </span>
+          )}
+          {m.kind === "photo" && <span class="sr-only">Foto {m.file}. </span>}
+          {m.text}
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<script>
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLElement>("[data-wa-chat]").forEach((chat) => {
+    const msgs = Array.from(chat.children) as HTMLElement[];
+    if (reduced) return;
+    msgs.forEach((m) => m.classList.add("is-wait"));
+    let timers: number[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+    const play = () => {
+      timers.forEach(clearTimeout);
+      timers = [];
+      msgs.forEach((m) => m.classList.add("is-wait"));
+      let t = 400;
+      msgs.forEach((m) => {
+        const isBot = m.classList.contains("wa__msg--bot");
+        if (isBot) {
+          at(t, () => chat.classList.add("is-typing"));
+          t += 1100;
+        }
+        at(t, () => {
+          chat.classList.remove("is-typing");
+          m.classList.remove("is-wait");
+        });
+        t += isBot ? 1500 : 900;
+      });
+      at(t + 4500, play);
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          io.disconnect();
+          play();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(chat);
+    window.addEventListener("pagehide", () => timers.forEach(clearTimeout));
+  });
+</script>
+
+<style>
+  .wa {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 30px;
+    padding: 0.75rem;
+    width: 100%;
+    max-width: 26rem;
+    justify-self: center;
+    box-shadow:
+      0 50px 100px -40px rgb(0 0 0 / 0.8),
+      0 0 0 8px var(--night-2),
+      0 0 0 9px var(--night-line);
+    transform: rotate(1.5deg);
+    font-size: var(--fs-sm);
+  }
+  .wa__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.4rem 0.4rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.3;
+  }
+  .wa__top small {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--muted);
+  }
+  .wa__avatar {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-variation-settings: "wdth" 125;
+  }
+  .wa__live {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #25d366;
+    box-shadow: 0 0 0 3px rgb(37 211 102 / 0.2);
+  }
+  .wa__tag {
+    margin-left: auto;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+  }
+  .wa__chat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.9rem 0.3rem 0.4rem;
+    min-height: 30rem;
+    line-height: 1.42;
+  }
+  .wa__msg {
+    max-width: 86%;
+    padding: 0.6rem 0.85rem;
+    border-radius: 16px;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.6s var(--ease);
+  }
+  .wa__msg.is-wait {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  .wa__msg--user {
+    align-self: flex-end;
+    background: #d9fdd3;
+    border-bottom-right-radius: 5px;
+  }
+  .wa__msg--bot {
+    background: #fff;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
+  }
+  .wa__msg--sys {
+    align-self: center;
+    max-width: none;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: #fff;
+    background: var(--red);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+  }
+  .wa__photo {
+    display: grid;
+    gap: 5px;
+    width: 9rem;
+    height: 6.5rem;
+    padding: 0.8rem;
+    margin-bottom: 0.4rem;
+    border-radius: 10px;
+    background: #fff;
+    transform: rotate(-3deg);
+    box-shadow: 0 6px 14px -6px rgb(0 0 0 / 0.3);
+    align-content: start;
+  }
+  .wa__photo i {
+    display: block;
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+  }
+  .wa__photo i:first-child {
+    width: 60%;
+    background: #bbb;
+  }
+  .wa__photo i:last-child {
+    width: 40%;
+    margin-top: 1.6rem;
+    margin-left: auto;
+    background: #999;
+  }
+  .wa__pdf {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+  }
+  .wa__pdf b {
+    font-size: 0.66rem;
+    color: #fff;
+    background: var(--red);
+    padding: 0.5rem 0.4rem;
+    border-radius: 6px;
+  }
+  .wa__chat.is-typing::after {
+    content: "";
+    width: 3.2rem;
+    height: 2rem;
+    border-radius: 16px;
+    border-bottom-left-radius: 5px;
+    background:
+      radial-gradient(circle 3px, #999 98%, transparent) 0.95rem 50% / 8px 8px no-repeat,
+      radial-gradient(circle 3px, #999 98%, transparent) 1.5rem 50% / 8px 8px no-repeat,
+      radial-gradient(circle 3px, #999 98%, transparent) 2.05rem 50% / 8px 8px no-repeat,
+      #fff;
+    animation: wa-typing 1s ease-in-out infinite;
+    order: 99;
+  }
+  .wa__chat.is-typing .wa__msg.is-wait {
+    order: 100;
+  }
+  @keyframes wa-typing {
+    50% {
+      opacity: 0.5;
+    }
+  }
+</style>

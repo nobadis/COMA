@@ -374,6 +374,16 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.locator('[data-res="hours"]')).toHaveText("120");
     await expect(page.locator("[data-roi-mail]")).toHaveAttribute("href", /120%20clientes/);
 
+    // copiloto: cada pregunta muestra su respuesta
+    await page.locator("#copiloto").scrollIntoViewIfNeeded();
+    await page.getByRole("button", { name: /retenciones van al 111/ }).click();
+    await expect(page.locator('[data-a="1"]')).toBeVisible({ timeout: 8000 });
+    await expect(page.locator('[data-a="1"]')).toContainText("267,00");
+
+    // agente de WhatsApp y comparativa
+    await expect(page.locator("[data-wa-chat] li")).toHaveCount(7);
+    await expect(page.locator("#diferencia tr")).toHaveCount(7);
+
     // precios visibles y enlace desde automatizaciones
     await expect(page.locator("#precios")).toContainText("149 €");
     await page.goto("/automatizaciones/");

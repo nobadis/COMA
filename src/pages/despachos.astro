@@ -9,12 +9,15 @@ import DeskInbox from "../components/despachos/DeskInbox.astro";
 import InvoiceLab from "../components/despachos/InvoiceLab.astro";
 import CloseBoard from "../components/despachos/CloseBoard.astro";
 import RoiCalc from "../components/despachos/RoiCalc.astro";
+import WaAgent from "../components/despachos/WaAgent.astro";
+import Copilot from "../components/despachos/Copilot.astro";
+import Trust from "../components/Trust.astro";
 import { site, trust, years } from "../data/site";
-import { diagnosticoMail, despachosSubject, modules, plans, onDemand, steps, faq, channels } from "../data/despachos";
+import { diagnosticoMail, despachosSubject, modules, plans, onDemand, steps, faq, channels, checks, stack, compare } from "../data/despachos";
 
 const title = "Automatización para asesorías y despachos contables";
 const description =
-  "Recepción, lectura con IA y registro de facturas para asesorías, gestorías y despachos. Exporta a a3, Sage, Holded o Contasol sin cambiar de programa. Diagnóstico gratuito.";
+  "WhatsApp y email integrados, extracción de facturas con IA, un agente que atiende a tus clientes e integración con a3, Sage, Holded o Contasol. Para asesorías y despachos. Diagnóstico gratuito.";
 const mail = diagnosticoMail();
 const eur = (n: number) => `${n.toLocaleString("es-ES")} €`;
 
@@ -79,8 +82,9 @@ const schema = [
         <p class="eyebrow" data-reveal>COMA para asesorías y despachos</p>
         <h1 data-split>Tus clientes envían facturas. Tu despacho deja de teclearlas<span class="comma">,</span></h1>
         <p class="lead" data-reveal style="--d:3">
-          Recibimos, leemos, ordenamos y preparamos cada factura para tu programa contable. Tú solo
-          revisas lo dudoso. Diseñado junto a un contable en ejercicio.
+          WhatsApp y email integrados, IA que extrae y comprueba cada factura, un agente que atiende a
+          tus clientes y todo conectado a tu programa contable. Tú solo revisas lo dudoso. Diseñado
+          junto a un contable en ejercicio.
         </p>
         <div class="dh__ctas" data-reveal style="--d:4">
           <a class="btn btn--red btn--lg" href={mail} data-magnetic data-track-label="despachos-hero">
@@ -93,13 +97,16 @@ const schema = [
           <li class="chip">Sin permanencia</li>
           <li class="chip">Datos en la UE</li>
         </ul>
+        <p class="dh__proof" data-reveal style="--d:6">
+          <strong>+{trust.pymes} pymes</strong> confían en COMA desde {site.since}
+        </p>
       </div>
       <div class="dh__art" data-reveal style="--d:2">
         <DeskInbox />
       </div>
     </div>
   </section>
-  <Marquee items={["Recepción de facturas", "Lectura con IA", "a3 · Sage · Holded · Contasol", "Recordatorios a clientes", "Conciliación", "Cierre trimestral", "Verifactu"]} />
+  <Marquee items={["WhatsApp integrado", "Extracción con IA", "Agentes", "a3 · Sage · Holded · Contasol", "Norma 43", "Modelos 111 · 115 · 349", "Copiloto del despacho"]} />
 
   <!-- ---------------------------------------------------------------- dolor -->
   <section class="section night pn" data-dark>
@@ -144,6 +151,29 @@ const schema = [
     </div>
   </section>
 
+  <!-- ------------------------------------------------------------- whatsapp -->
+  <section class="section night wz" data-dark>
+    <div class="wrap grid-2 wz__grid">
+      <div class="wz__copy">
+        <p class="eyebrow" data-reveal>Agente del despacho</p>
+        <h2 data-split>Tus clientes escriben por WhatsApp. Les contesta tu despacho, al momento<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Un agente de IA con el nombre y el tono de tu asesoría. Recibe, lee, confirma y pide lo que
+          falta, a cualquier hora. Tu equipo solo entra cuando hace falta criterio.
+        </p>
+        <ul class="wz__points" data-reveal style="--d:3">
+          <li><strong>Confirma cada documento</strong> con lo que ha leído.</li>
+          <li><strong>Detecta lo que no sirve</strong>: fotos borrosas, tickets sin NIF, facturas repetidas.</li>
+          <li><strong>Persigue con nombre y apellido</strong>: «te falta el alquiler de octubre».</li>
+          <li><strong>Te pasa la conversación</strong> cuando la pregunta es de asesoría.</li>
+        </ul>
+      </div>
+      <div data-reveal style="--d:2">
+        <WaAgent />
+      </div>
+    </div>
+  </section>
+
   <!-- -------------------------------------------------------------- módulos -->
   <section class="section sand" id="que-hacemos">
     <div class="wrap md">
@@ -151,13 +181,15 @@ const schema = [
         <p class="eyebrow" data-reveal>Qué automatizamos</p>
         <h2 data-split>Del WhatsApp del cliente al libro de registro<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Seis piezas que se montan por separado o juntas. Empezamos por la que más horas te quita.
+          Seis piezas que se montan juntas o por separado, a medida de tu despacho. Empezamos por la
+          que más horas te quita.
         </p>
         <p class="sr-only">Canales de entrada:</p>
         <ul class="md__channels" data-reveal style="--d:3">
           {channels.map((c) => <li>{c}</li>)}
         </ul>
       </div>
+      <div class="md__body">
       <ol class="md__list hs" data-hs>
         {
           modules.map((m, i) => (
@@ -169,6 +201,36 @@ const schema = [
           ))
         }
       </ol>
+      <div class="md__checks" data-reveal>
+        <p class="md__h">Cada documento pasa {checks.length} comprobaciones automáticas</p>
+        <ul>
+          {checks.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <div class="md__stack" data-reveal>
+        <p class="md__h">Construido con piezas probadas y abiertas</p>
+        <ul>
+          {stack.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- copiloto -->
+  <section class="section" id="copiloto">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Copiloto del despacho</p>
+        <h2 data-split>Pregúntale a tu despacho. Te contesta con tus datos<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Todo lo que entra queda ordenado y consultable. Pregunta como se lo preguntarías a un
+          compañero y obtén la respuesta, la tabla o el borrador para el cliente.
+        </p>
+      </div>
+      <div data-reveal>
+        <Copilot />
+      </div>
     </div>
   </section>
 
@@ -191,6 +253,41 @@ const schema = [
       <div data-reveal style="--d:2">
         <CloseBoard />
       </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ diferencia -->
+  <section class="section sand" id="diferencia">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-reveal>Por qué COMA</p>
+        <h2 data-split>No te vendemos otro programa. Conectamos los que ya tienes<span class="comma">,</span></h2>
+        <p class="lead" data-reveal style="--d:2">
+          Las herramientas de captura son buenas, pero son una pieza más que tu equipo y tus clientes
+          tienen que adoptar. Nosotros montamos el flujo entero, a medida, y lo mantenemos.
+        </p>
+      </div>
+      <table class="vs" data-reveal>
+        <caption class="sr-only">Comparativa entre una herramienta de captura genérica y COMA para despachos</caption>
+        <thead>
+          <tr class="vs__row vs__row--head">
+            <th scope="col"><span class="sr-only">Aspecto</span></th>
+            <th scope="col">Herramienta de captura genérica</th>
+            <th scope="col">COMA para despachos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            compare.map((c) => (
+              <tr class="vs__row">
+                <th scope="row">{c.what}</th>
+                <td class="vs__tool">{c.tool}</td>
+                <td class="vs__coma">{c.coma}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -303,6 +400,7 @@ const schema = [
     </div>
   </section>
 
+  <Trust />
   <Process eyebrow="Cómo empezamos" title="Sin saltos al vacío: primero un piloto" steps={steps} />
   <Faq items={faq} />
   <Cta
@@ -365,6 +463,112 @@ const schema = [
   }
   .dh__art {
     display: grid;
+  }
+  .dh__proof {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .dh__proof strong {
+    color: var(--ink);
+    border-bottom: 2px solid var(--red);
+  }
+
+  /* -------------------------------------------------------------- whatsapp */
+  .wz__grid {
+    align-items: center;
+  }
+  .wz__copy {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .wz__points {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .wz__points li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .wz__points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  /* ------------------------------------------------------------- diferencia */
+  .vs {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid var(--ink);
+    text-align: left;
+  }
+  .vs thead,
+  .vs tbody {
+    display: block;
+  }
+  .vs th,
+  .vs td {
+    display: block;
+    padding: 0;
+    font-weight: inherit;
+  }
+  .vs__row {
+    display: grid;
+    gap: 0.35rem 2rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 800px) {
+    .vs__row {
+      grid-template-columns: 0.8fr 1.1fr 1.3fr;
+      align-items: baseline;
+    }
+  }
+  .vs__row > th[scope="row"] {
+    font-variation-settings: "wdth" 112;
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    letter-spacing: -0.02em;
+  }
+  .vs__tool {
+    color: var(--muted);
+  }
+  .vs__tool::before {
+    content: "— ";
+  }
+  .vs__coma {
+    font-weight: 600;
+  }
+  .vs__coma::before {
+    content: "✓ ";
+    color: var(--red);
+    font-weight: 800;
+  }
+  .vs__row--head {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .vs__row--head > :last-child {
+    color: var(--red);
+  }
+  @media (max-width: 799px) {
+    .vs__row--head {
+      display: none;
+    }
+    .vs__tool,
+    .vs__coma {
+      font-size: var(--fs-sm);
+    }
   }
 
   /* ------------------------------------------------------------------ dolor */
@@ -508,6 +712,42 @@ const schema = [
     .md__item:hover h3 {
       color: var(--red);
     }
+  }
+
+  .md__body {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .md__h {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+  .md__checks ul,
+  .md__stack ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .md__checks li {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .md__checks li::before {
+    content: "✓ ";
+    color: var(--red);
+  }
+  .md__stack li {
+    font-size: var(--fs-sm);
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--ink);
+    font-weight: 600;
   }
 
   /* ---------------------------------------------------------------- cierre */
