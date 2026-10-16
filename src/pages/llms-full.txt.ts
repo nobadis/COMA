@@ -41,9 +41,14 @@ export const GET: APIRoute = () => {
   out.push("", "Planes (sin IVA, orientativos):");
   for (const p of despachos.plans)
     out.push(
-      `- ${p.name}: ${p.setup === null ? p.priceLabel : `${p.month} €/mes + ${p.setup} € de puesta en marcha`}. ${p.pitch}`
+      `- ${p.name}: ${p.setup === null ? p.priceLabel : `${p.month} €/mes + ${p.setup} € de puesta en marcha; ${p.docs} documentos/mes incluidos y ${p.extra} € por documento adicional`}. ${p.pitch}`
     );
-  out.push(`- Bajo demanda: ${despachos.onDemand.map((o) => o.name).join("; ")}.`, "");
+  out.push(
+    `- ${despachos.escala.name}: desde ${despachos.escala.from} €/mes. ${despachos.escala.text}`,
+    `- Bajo demanda: ${despachos.onDemand.map((o) => `${o.name} (${o.note})`).join("; ")}.`,
+    ...despachos.terms.map((t) => `- ${t}`),
+    ""
+  );
   for (const q of despachos.faq) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
 
   out.push("## Sectores");

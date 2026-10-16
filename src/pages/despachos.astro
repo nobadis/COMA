@@ -13,13 +13,16 @@ import WaAgent from "../components/despachos/WaAgent.astro";
 import Copilot from "../components/despachos/Copilot.astro";
 import Trust from "../components/Trust.astro";
 import { site, trust, years } from "../data/site";
-import { diagnosticoMail, despachosSubject, modules, plans, onDemand, steps, faq, channels, checks, stack, compare } from "../data/despachos";
+import { diagnosticoMail, despachosSubject, modules, plans, onDemand, steps, faq, channels, checks, stack, compare, escala, terms } from "../data/despachos";
 
 const title = "Automatización para asesorías y despachos contables";
 const description =
   "WhatsApp y email integrados, extracción de facturas con IA, un agente que atiende a tus clientes e integración con a3, Sage, Holded o Contasol. Para asesorías y despachos. Diagnóstico gratuito.";
 const mail = diagnosticoMail();
-const eur = (n: number) => `${n.toLocaleString("es-ES")} €`;
+// "always": en español Intl no separa los miles con 4 cifras (1490), y en precios queda raro.
+const num = (n: number) =>
+  n.toLocaleString("es-ES", { maximumFractionDigits: 2, minimumFractionDigits: n % 1 ? 2 : 0, useGrouping: "always" } as Intl.NumberFormatOptions);
+const eur = (n: number) => `${num(n)} €`;
 
 const pains = [
   { pain: "Facturas por email, WhatsApp, papel y fotos torcidas", fix: "Un único buzón, ordenado por cliente" },
@@ -84,7 +87,7 @@ const schema = [
         <p class="lead" data-reveal style="--d:3">
           WhatsApp y email integrados, IA que extrae y comprueba cada factura, un agente que atiende a
           tus clientes y todo conectado a tu programa contable. Tú solo revisas lo dudoso. Diseñado
-          junto a un contable en ejercicio.
+          junto a un equipo contable en ejercicio.
         </p>
         <div class="dh__ctas" data-reveal style="--d:4">
           <a class="btn btn--red btn--lg" href={mail} data-magnetic data-track-label="despachos-hero">
@@ -106,7 +109,7 @@ const schema = [
       </div>
     </div>
   </section>
-  <Marquee items={["WhatsApp integrado", "Extracción con IA", "Agentes", "a3 · Sage · Holded · Contasol", "Norma 43", "Modelos 111 · 115 · 349", "Copiloto del despacho"]} />
+  <Marquee items={["WhatsApp integrado", "Recogida automática", "Extracción con IA", "Agentes", "a3 · Sage · Holded · Contasol", "Norma 43", "Modelos 111 · 115 · 349", "Copiloto del despacho"]} />
 
   <!-- ---------------------------------------------------------------- dolor -->
   <section class="section night pn" data-dark>
@@ -315,8 +318,8 @@ const schema = [
         <p class="eyebrow" data-reveal>Precios</p>
         <h2 data-split>Precio claro para empezar. El resto, bajo demanda<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Una puesta en marcha y una cuota mensual sin permanencia. Antes de pagar nada, el diagnóstico
-          es gratis y el piloto se hace con tus clientes reales.
+          Una puesta en marcha, una cuota mensual sin permanencia y un volumen claro. Antes de pagar
+          nada, el diagnóstico es gratis; el piloto se hace con tus clientes reales.
         </p>
       </div>
       <ul class="pl">
@@ -336,6 +339,11 @@ const schema = [
                 )}
               </p>
               <p class="pl__setup">{p.setup === null ? "Sin compromiso" : `+ ${eur(p.setup)} de puesta en marcha`}</p>
+              {p.docs && (
+                <p class="pl__vol">
+                  <strong>{num(p.docs)} documentos/mes</strong> incluidos · después {eur(p.extra ?? 0)}/doc
+                </p>
+              )}
               <p class="pl__pitch">{p.pitch}</p>
               <ul class="pl__inc">
                 {p.includes.map((x) => <li>{x}</li>)}
@@ -351,6 +359,12 @@ const schema = [
           ))
         }
       </ul>
+      <a class="esc" href={diagnosticoMail(`Me interesa el plan ${escala.name}.`)} data-reveal data-track-label="despachos-plan-escala">
+        <span class="esc__name">{escala.name}</span>
+        <span class="esc__text">{escala.text}</span>
+        <span class="esc__price">Desde <strong>{eur(escala.from)}</strong>/mes</span>
+        <Arrow />
+      </a>
       <div class="od">
         <div class="od__head" data-reveal>
           <h3>Bajo demanda</h3>
@@ -367,9 +381,14 @@ const schema = [
           }
         </ul>
       </div>
+      <div class="tm" data-reveal>
+        <h3>Sin letra pequeña</h3>
+        <ul>
+          {terms.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
       <p class="pl__legal" data-reveal>
-        Precios sin IVA y orientativos. El precio final queda cerrado por escrito tras el diagnóstico.
-        Volúmenes mayores o varios despachos: a medida.
+        Precios sin IVA. El precio final queda cerrado por escrito tras el diagnóstico.
       </p>
     </div>
   </section>
@@ -378,9 +397,9 @@ const schema = [
   <section class="section tz">
     <div class="wrap tz__inner">
       <div class="tz__head">
-        <p class="eyebrow" data-reveal>Hecho con un contable</p>
+        <p class="eyebrow" data-reveal>Hecho con un equipo contable</p>
         <p class="tz__quote display" data-scrub>
-          Lo hemos diseñado con un contable en ejercicio, no en una sala de reuniones. Por eso
+          Lo hemos diseñado con un equipo contable en ejercicio, no en una sala de reuniones. Por eso
           automatiza lo que sobra y deja a tu equipo lo que importa: el criterio.
         </p>
         <p class="tz__sign" data-reveal>
@@ -847,6 +866,82 @@ const schema = [
     font-size: var(--fs-sm);
     color: var(--muted);
     margin-top: -0.4rem;
+  }
+  .pl__vol {
+    font-size: var(--fs-sm);
+    padding: 0.55rem 0.75rem;
+    border-left: 3px solid var(--red);
+    background: rgb(225 17 45 / 0.06);
+  }
+  .pl__card--hot .pl__vol {
+    background: rgb(225 17 45 / 0.14);
+  }
+  .esc {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.5rem 2rem;
+    margin-top: 1rem;
+    padding: 1.25rem clamp(1.25rem, 3vw, 2.25rem);
+    border: 1px solid var(--ink);
+    text-decoration: none;
+    transition:
+      background 0.4s var(--ease),
+      color 0.4s var(--ease);
+  }
+  @media (min-width: 900px) {
+    .esc {
+      grid-template-columns: auto 1fr auto auto;
+    }
+  }
+  .esc:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .esc__name {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    font-size: var(--fs-xl);
+    letter-spacing: -0.03em;
+  }
+  .esc__text {
+    color: var(--muted);
+  }
+  .esc:hover .esc__text {
+    color: var(--night-muted);
+  }
+  .esc__price strong {
+    font-variation-settings: "wdth" 125;
+    font-size: 1.5rem;
+    letter-spacing: -0.03em;
+  }
+  .tm {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: grid;
+    gap: 1rem;
+  }
+  .tm ul {
+    display: grid;
+    gap: 0.6rem 2.5rem;
+    font-size: var(--fs-sm);
+  }
+  @media (min-width: 800px) {
+    .tm ul {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .tm li {
+    position: relative;
+    padding-left: 1.4rem;
+  }
+  .tm li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--red);
   }
   .pl__pitch {
     font-weight: 600;

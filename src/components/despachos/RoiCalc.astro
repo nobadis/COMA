@@ -1,6 +1,6 @@
 ---
 import Arrow from "../Arrow.astro";
-import { diagnosticoMail } from "../../data/despachos";
+import { diagnosticoMail, plans, escala } from "../../data/despachos";
 
 /** Parte del tiempo de registro manual que se elimina (estimación prudente). */
 const SAVED = 0.8;
@@ -13,9 +13,13 @@ const inputs = [
 const v = Object.fromEntries(inputs.map((i) => [i.id, i.value])) as Record<string, number>;
 const hours = Math.round((v.clients * v.docs * v.mins * SAVED) / 60);
 const fmt = (n: number) => n.toLocaleString("es-ES");
+/** Planes con cuota para recomendar el que toca según el volumen. */
+const tiers = [
+  ...plans.flatMap((p) => (p.month && p.docs ? [{ name: p.name, month: p.month, docs: p.docs, extra: p.extra ?? 0 }] : [])),
+];
 ---
 
-<div class="roi" data-roi data-saved={SAVED}>
+<div class="roi" data-roi data-saved={SAVED} data-tiers={JSON.stringify(tiers)} data-escala={JSON.stringify(escala)}>
   <div class="roi__in" role="group" aria-label="Datos de tu despacho">
     {
       inputs.map((i) => (
@@ -58,6 +62,11 @@ const fmt = (n: number) => n.toLocaleString("es-ES");
         <dd><span data-res="money">{fmt(hours * v.rate * 12)}</span> €</dd>
       </div>
     </dl>
+    <div class="roi__plan">
+      <span>Plan recomendado: <strong data-res="plan">Despacho</strong></span>
+      <span>Coste <strong data-res="cost">249 €/mes</strong></span>
+      <span>Retorno <strong class="roi__x" data-res="x">×6</strong></span>
+    </div>
     <a class="btn btn--red btn--lg roi__cta" href={diagnosticoMail()} data-roi-mail data-magnetic data-track-label="despachos-roi">
       Quiero recuperar esas horas <Arrow />
     </a>
@@ -76,7 +85,17 @@ const fmt = (n: number) => n.toLocaleString("es-ES");
     const ranges = Array.from(roi.querySelectorAll<HTMLInputElement>("input[type=range]"));
     const out = (k: string) => roi.querySelector<HTMLElement>(`[data-res="${k}"]`);
     const mail = roi.querySelector<HTMLAnchorElement>("[data-roi-mail]");
-    const nf = new Intl.NumberFormat("es-ES");
+    type Tier = { name: string; month: number; docs: number; extra: number };
+    const tiers = JSON.parse(roi.dataset.tiers ?? "[]") as Tier[];
+    const escala = JSON.parse(roi.dataset.escala ?? "{}") as { name: string; from: number; docs: number };
+    // El plan más pequeño que cubre el volumen (el exceso se cobra por documento);
+    // por encima del umbral de Escala, a medida con su suelo.
+    const pick = (docs: number) => {
+      if (docs > escala.docs) return { name: escala.name, cost: escala.from, from: true };
+      const t = tiers.find((x) => docs <= x.docs) ?? tiers[tiers.length - 1];
+      return { name: t.name, cost: t.month + Math.max(0, docs - t.docs) * t.extra, from: false };
+    };
+    const nf = new Intl.NumberFormat("es-ES", { useGrouping: "always" } as Intl.NumberFormatOptions);
     const shown: Record<string, number> = {};
     let raf = 0;
 
@@ -114,9 +133,17 @@ const fmt = (n: number) => n.toLocaleString("es-ES");
       const m = out("money");
       if (d) d.textContent = nf.format(days);
       if (m) m.textContent = nf.format(money);
+      const plan = pick(v.clients * v.docs);
+      const monthValue = hours * v.rate;
+      const planEl = out("plan");
+      const costEl = out("cost");
+      const xEl = out("x");
+      if (planEl) planEl.textContent = plan.name;
+      if (costEl) costEl.textContent = `${plan.from ? "desde " : ""}${nf.format(Math.round(plan.cost))} €/mes`;
+      if (xEl) xEl.textContent = `×${nf.format(Math.max(0, Math.round((monthValue / plan.cost) * 10) / 10))}`;
       if (mail)
         mail.href = diagnosticoMail(
-          `Según la calculadora de la web: ${v.clients} clientes, ${v.docs} facturas por cliente al mes y ${v.mins} min por factura. Ahorro estimado: ${nf.format(hours)} h/mes (${nf.format(money)} € al año).`
+          `Según la calculadora de la web: ${v.clients} clientes, ${v.docs} facturas por cliente al mes y ${v.mins} min por factura. Ahorro estimado: ${nf.format(hours)} h/mes (${nf.format(money)} € al año). Plan orientativo: ${plan.name}.`
         );
     };
     ranges.forEach((r) => r.addEventListener("input", update));
@@ -242,6 +269,23 @@ const fmt = (n: number) => n.toLocaleString("es-ES");
     font-size: clamp(1.6rem, 1rem + 2vw, 2.5rem);
     letter-spacing: -0.04em;
     font-variant-numeric: tabular-nums;
+  }
+  .roi__plan {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--night-line);
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+  }
+  .roi__plan strong {
+    color: var(--paper);
+    font-variant-numeric: tabular-nums;
+  }
+  .roi__plan .roi__x {
+    color: #3ad07a;
   }
   .roi__cta {
     --fill: var(--paper);

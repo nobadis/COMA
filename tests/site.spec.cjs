@@ -370,8 +370,12 @@ test.describe("COMA - Comunicación en Mallorca", () => {
 
     // calculadora: 60 clientes × 25 facturas × 3 min × 80 % = 60 h/mes
     await expect(page.locator('[data-res="hours"]')).toHaveText("60");
+    await expect(page.locator('[data-res="plan"]')).toHaveText("Despacho");
+    await expect(page.locator('[data-res="x"]')).toHaveText("×6");
     await page.locator("#roi-clients").fill("120");
     await expect(page.locator('[data-res="hours"]')).toHaveText("120");
+    // 3.000 docs: Despacho con 1.500 de exceso a 0,10 € = 399 €/mes
+    await expect(page.locator('[data-res="cost"]')).toHaveText("399 €/mes");
     await expect(page.locator("[data-roi-mail]")).toHaveAttribute("href", /120%20clientes/);
 
     // copiloto: cada pregunta muestra su respuesta
@@ -385,7 +389,8 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(page.locator("#diferencia tr")).toHaveCount(7);
 
     // precios visibles y enlace desde automatizaciones
-    await expect(page.locator("#precios")).toContainText("149 €");
+    await expect(page.locator("#precios")).toContainText("249 €");
+    await expect(page.locator("#precios")).toContainText("Sin letra pequeña");
     await page.goto("/automatizaciones/");
     await expect(page.locator('a[href="/despachos/"]').first()).toBeAttached();
   });

@@ -8,7 +8,7 @@ const docs = [
   { src: "WhatsApp", who: "Bar Es Pla", what: "Ticket gasolinera", acc: "628 · Suministros", total: "60,00 €" },
   { src: "Foto", who: "Clínica Sant Jaume", what: "Alquiler octubre", acc: "621 · Arrendamientos", total: "1.210,00 €" },
   { src: "PDF", who: "Estudio Ramis", what: "Honorarios abogado", acc: "623 · Profesionales", total: "636,00 €" },
-  { src: "Drive", who: "Panadería Coll", what: "Factura de harina", acc: "600 · Compras", total: "842,15 €" },
+  { src: "Auto", who: "Panadería Coll", what: "Luz octubre · recogida del portal", acc: "628 · Suministros", total: "143,02 €" },
 ];
 ---
 
@@ -25,7 +25,7 @@ const docs = [
     {
       docs.map((d) => (
         <li class="ib__row">
-          <span class="ib__src">{d.src}</span>
+          <span class:list={["ib__src", { "ib__src--auto": d.src === "Auto" }]}>{d.src}</span>
           <span class="ib__main">
             <strong>{d.who}</strong>
             <small>{d.what}</small>
@@ -175,6 +175,11 @@ const docs = [
     border-radius: 999px;
     border: 1px solid var(--night-line);
     color: var(--night-muted);
+  }
+  .ib__src--auto {
+    color: #fff;
+    background: var(--red);
+    border-color: var(--red);
   }
   .ib__main {
     grid-area: main;
