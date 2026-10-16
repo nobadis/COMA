@@ -10,6 +10,7 @@ type Props = {
   description?: string;
   solidHeader?: boolean;
   hideMobileBar?: boolean;
+  noindex?: boolean;
 };
 
 const {
@@ -17,20 +18,23 @@ const {
   description = 'Empanadas argentinas clásicas y gourmet en Cala Major, Palma de Mallorca. Pizzas, combos, chocotorta y alfajores. Pedí por WhatsApp o vení a visitarnos.',
   solidHeader = false,
   hideMobileBar = false,
+  noindex = false,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const path = Astro.url.pathname === '/' ? '/' : `${Astro.url.pathname.replace(/\/$/, '')}/`;
+const canonical = new URL(path, Astro.site ?? site.url).href;
 const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
 
 const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
+  '@id': `${site.url}/#restaurant`,
   name: site.name,
   legalName: site.legal.company,
   taxID: site.legal.cif,
   slogan: site.tagline,
-  description,
+  description: 'Empanadas argentinas clásicas y gourmet, pizzas y postres argentinos en Cala Major, Palma de Mallorca.',
   url: site.url,
   image: ogImage,
   logo: new URL('/icon-512.png', Astro.site ?? site.url).href,
@@ -49,9 +53,13 @@ const jsonLd = {
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
   hasMap: site.mapsUrl,
   sameAs: [igLink],
+  knowsLanguage: ['es'],
   acceptsReservations: false,
   hasMenu: {
     '@type': 'Menu',
+    '@id': `${site.url}/carta/#menu`,
+    url: `${site.url}/carta/`,
+    inLanguage: 'es',
     hasMenuSection: productGroups.map((group) => ({
       '@type': 'MenuSection',
       name: group.name,
@@ -62,7 +70,7 @@ const jsonLd = {
     ? {
         openingHoursSpecification: site.hours.map((h) => ({
           '@type': 'OpeningHoursSpecification',
-          dayOfWeek: dayNames[h.day],
+          dayOfWeek: `https://schema.org/${dayNames[h.day]}`,
           opens: h.open,
           closes: h.close,
         })),
@@ -78,6 +86,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#264d9c" />
     <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
@@ -95,12 +104,16 @@ const jsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sabor Patricio, empanadas argentinas en Cala Major, Palma de Mallorca" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <script is:inline>
       document.documentElement.classList.replace('no-js', 'js');
     </script>
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': [jsonLd, { '@type': 'WebSite', '@id': `${site.url}/#website`, url: site.url, name: site.name, inLanguage: 'es', publisher: { '@id': `${site.url}/#restaurant` } }, { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: 'es', isPartOf: { '@id': `${site.url}/#website` }, about: { '@id': `${site.url}/#restaurant` } }] }).replace(/</g, '\u003c')} />
   </head>
   <body>
     <a class="skip" href="#main">Saltar al contenido</a>

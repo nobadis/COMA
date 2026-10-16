@@ -1,0 +1,31 @@
+---
+import { site, waLink } from '../config/site';
+const questions = [
+  { q: '¿Dónde comer empanadas argentinas en Cala Major?', a: `Sabor Patricio está en ${site.address.street}, Cala Major, ${site.address.postalCode}, Palma de Mallorca. Podés consultar la carta y acercarte al local.` },
+  { q: '¿Qué sabores de empanadas hay?', a: 'La carta incluye empanadas clásicas de carne criolla, pollo, jamón y queso, atún y caprese, y variedades gourmet como carne a cuchillo, sobrasada y vacío y provolone. Consultá la disponibilidad del día por WhatsApp.' },
+  { q: '¿Hay empanadas vegetarianas?', a: 'La carta incluye caprese, queso y cebolla y espinaca. Si tenés alergias o necesidades alimentarias, consultá ingredientes y posible contaminación cruzada con el local antes de elegir.' },
+  { q: '¿Cómo puedo contactar para pedir?', a: `El botón Pedir abre una conversación de WhatsApp al ${site.phone}. Escribí tu mensaje y el equipo te responderá. La web no acepta ni confirma pedidos, no tiene carrito activo ni cobra pagos.` },
+  { q: '¿Qué postres argentinos tienen?', a: 'Podés consultar por chocotorta y alfajores Havanna. Las variedades y la disponibilidad se confirman directamente con el local.' },
+  { q: '¿Hacen reparto a domicilio?', a: 'Consultá por WhatsApp las opciones disponibles, la zona, los horarios y las condiciones antes de contar con un envío. La web no ofrece contratación de reparto.' },
+];
+---
+<section class="section local-faq" aria-labelledby="faq-title">
+  <div class="wrap">
+    <p class="eyebrow">Antes de venir</p>
+    <h2 id="faq-title" class="h2">Empanadas argentinas<br />en Cala Major, Palma</h2>
+    <p class="lead">Encontranos en {site.address.street}, Palma de Mallorca. <a href="/carta/">Consultá nuestra carta</a> y <a href={site.mapsUrl} target="_blank" rel="noopener">cómo llegar al local</a>.</p>
+    <div class="questions">
+      {questions.map(({ q, a }) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+    <a class="btn btn--wa" href={waLink('¡Hola Sabor Patricio! Quería hacer una consulta.')} target="_blank" rel="noopener">Escribir por WhatsApp</a>
+  </div>
+</section>
+<style>
+  .local-faq { background: var(--cream); }
+  .local-faq .lead { margin: 24px 0; }
+  .local-faq .lead a { text-decoration: underline; }
+  .questions { margin: 32px 0; max-width: 900px; }
+  details { border-bottom: 1px solid rgb(14 21 48 / 0.18); padding: 20px 0; }
+  summary { cursor: pointer; font-weight: 800; font-size: 1.15rem; }
+  details p { padding-top: 16px; line-height: 1.7; max-width: 75ch; }
+</style>

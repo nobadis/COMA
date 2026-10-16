@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Flavors from '../components/Flavors.astro';
+import LocalFaq from '../components/LocalFaq.astro';
+import { site, waLink } from '../config/site';
+---
+<Base title="Carta de empanadas argentinas en Palma · Sabor Patricio" description="Descubrí la carta de Sabor Patricio en Cala Major: empanadas clásicas y gourmet, chocotorta y alfajores. Consultá disponibilidad por WhatsApp." solidHeader>
+  <section class="menu-intro section">
+    <div class="wrap">
+      <nav aria-label="Ruta de navegación"><a href="/">Inicio</a> / Carta</nav>
+      <p class="eyebrow">Sabor Patricio · Cala Major</p>
+      <h1 class="h2">Carta de empanadas<br />argentinas en Palma</h1>
+      <p class="lead">Clásicas, gourmet y postres argentinos en {site.address.street}, Cala Major, Palma de Mallorca. También podés consultar por nuestras pizzas y combos.</p>
+      <p>La selección puede variar. Escribinos para consultar precios, ingredientes y disponibilidad. Los pedidos se acuerdan directamente con el local por WhatsApp; esta web no tramita pedidos ni pagos.</p>
+      <a class="btn btn--wa" href={waLink('¡Hola Sabor Patricio! Quería consultar la carta y la disponibilidad de hoy.')} target="_blank" rel="noopener">Consultar por WhatsApp</a>
+    </div>
+  </section>
+  <Flavors />
+  <LocalFaq />
+</Base>
+<style>
+  .menu-intro { padding-top: calc(var(--header-h) + 48px); }
+  .menu-intro .wrap { display: grid; gap: 24px; justify-items: start; }
+  .menu-intro p { max-width: 70ch; line-height: 1.7; }
+  nav a { text-decoration: underline; }
+</style>

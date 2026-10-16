@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import { waLink } from '../config/site';
 ---
 
-<Base title="Página no encontrada · Sabor Patricio" solidHeader hideMobileBar>
+<Base title="Página no encontrada · Sabor Patricio" solidHeader hideMobileBar noindex>
   <section class="nf">
     <div class="wrap nf__in">
       <p class="nf__code">4<img src="/sol.svg" alt="0" width="160" height="160" />4</p>
@@ -11,7 +12,7 @@ import Icon from '../components/Icon.astro';
       <p class="lead">La página que buscás no existe. Pero las empanadas sí.</p>
       <div class="nf__ctas">
         <a class="btn btn--blue btn--lg" href="/">Volver al inicio</a>
-        <a class="btn btn--lg" href="/pedir">Hacer un pedido <Icon name="arrow" /></a>
+        <a class="btn btn--lg" href={waLink('¡Hola! Quiero hacer un pedido.')} target="_blank" rel="noopener">Pedir por WhatsApp <Icon name="arrow" /></a>
       </div>
     </div>
   </section>
