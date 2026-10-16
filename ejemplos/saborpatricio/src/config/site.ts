@@ -21,7 +21,7 @@ export const site = {
   },
   /**
    * Titular de la web (aviso legal, privacidad y cookies). Sabor Patricio es la marca comercial.
-   * Pendiente: email de contacto y datos de inscripción en el Registro Mercantil.
+   * Pendiente: datos de inscripción en el Registro Mercantil.
    */
   legal: {
     company: 'Marfer Obrador SL',
@@ -30,7 +30,7 @@ export const site = {
     postalCode: '07620',
     city: 'Llucmajor',
     region: 'Illes Balears',
-    email: '',
+    email: 'info@saborpatricio.com',
   },
   geo: { lat: 39.550975, lng: 2.5996066 },
   mapsUrl: 'https://maps.app.goo.gl/Vm3WYpSRKc8JbQHV7',

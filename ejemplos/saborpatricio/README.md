@@ -51,7 +51,7 @@ En el pie hay un crédito discreto «Web hecha por COMA» (`src/components/ComaC
 ## Pendiente
 
 - [x] Horario real (`hours`), según el perfil de Instagram @saborpatricio: lunes a jueves 10:30–22:30, viernes y sábado 10:30–23:30, domingo 10:30–23:00.
-- [ ] Email de contacto del titular (`site.legal.email`): la LSSI pide un email en el aviso legal
+- [x] Email de contacto del titular: info@saborpatricio.com
 - [ ] Datos de inscripción en el Registro Mercantil de Marfer Obrador SL (tomo, folio, hoja) para el aviso legal
 - [x] Dominio definitivo: https://saborpatricio.com
 - [ ] Reseñas de Google (`reviews`)

@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
   <div class="wrap ft__bottom">
     <div class="ft__legal">
       <p>© {year} {site.name} · Hecho con <span aria-label="amor">♥</span> y mucho repulgue</p>
-      <p class="ft__company">{site.legal.company} · CIF {site.legal.cif}</p>
+      <p class="ft__company">{site.legal.company} · <a href={`mailto:${site.legal.email}`}>{site.legal.email}</a></p>
       <nav class="ft__links" aria-label="Información legal">
         <a href="/aviso-legal">Aviso legal</a>
         <a href="/privacidad">Privacidad</a>
