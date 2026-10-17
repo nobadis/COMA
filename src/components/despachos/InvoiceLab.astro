@@ -167,7 +167,7 @@ const formats = [
     <div class="lab__desk">
       {
         docs.map((d, i) => (
-          <article class="pp" data-paper={d.id} hidden={i !== 0} aria-label={`Documento de ejemplo: ${d.tab}`}>
+          <article class:list={["pp", { "is-off": i !== 0 }]} data-paper={d.id} aria-label={`Documento de ejemplo: ${d.tab}`}>
             <header class="pp__head">
               <div>
                 <strong data-f="who">{d.who}</strong>
@@ -256,8 +256,24 @@ const formats = [
       <ul class="lab__checks" data-lab-checks>
         {first.checks.map(([t, st]) => <li class={`is-${st}`}>{t}</li>)}
       </ul>
-      <p class="lab__flag" data-lab-flag hidden></p>
-      <p class="lab__ok" data-lab-ok>✓ {first.ok}</p>
+      <div class="lab__msgs">
+        {
+          docs.map((d, i) => (
+            <p class:list={[d.flag ? "lab__flag" : "lab__clear", { "is-on": i === 0 }]} data-msg={d.id}>
+              {d.flag ?? "Nada que revisar"}
+            </p>
+          ))
+        }
+      </div>
+      <div class="lab__msgs">
+        {
+          docs.map((d, i) => (
+            <p class:list={["lab__ok", { "is-on": i === 0 }]} data-msg={d.id}>
+              ✓ {d.ok}
+            </p>
+          ))
+        }
+      </div>
       <div class="lab__export">
         <div class="lab__fmts" role="group" aria-label="Formato de exportación">
           <span>Exportar a</span>
@@ -291,8 +307,7 @@ const formats = [
     const tabs = Array.from(lab.querySelectorAll<HTMLButtonElement>("[data-doc]"));
     const fmts = Array.from(lab.querySelectorAll<HTMLButtonElement>("[data-fmt]"));
     const status = lab.querySelector<HTMLElement>("[data-lab-status]");
-    const flag = lab.querySelector<HTMLElement>("[data-lab-flag]");
-    const ok = lab.querySelector<HTMLElement>("[data-lab-ok]");
+    const msgs = Array.from(lab.querySelectorAll<HTMLElement>("[data-msg]"));
     const csv = lab.querySelector<HTMLElement>("[data-lab-csv]");
     const checks = lab.querySelector<HTMLElement>("[data-lab-checks]");
     const order = ["who", "nif", "num", "date", "base", "vat", "ret", "total", "account", "folder"];
@@ -300,6 +315,22 @@ const formats = [
     let fmt = "a3";
     let timers: number[] = [];
     const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+    // la línea exportada lleva sus propios temporizadores: cambiar de formato los cancela
+    let csvTimers: number[] = [];
+    const typeCsv = (text: string) => {
+      csvTimers.forEach(clearTimeout);
+      csvTimers = [];
+      if (!csv) return;
+      if (reduced) {
+        csv.textContent = text;
+        return;
+      }
+      const steps = Math.min(14, text.length);
+      for (let i = 1; i <= steps; i++) {
+        const part = text.slice(0, Math.round((text.length * i) / steps));
+        csvTimers.push(window.setTimeout(() => (csv.textContent = part), i * 28));
+      }
+    };
 
     const type = (el: HTMLElement, text: string) => {
       if (reduced) {
@@ -317,12 +348,13 @@ const formats = [
       timers = [];
       current = doc;
       const paper = lab.querySelector<HTMLElement>(`[data-paper="${doc.id}"]`);
-      lab.querySelectorAll<HTMLElement>("[data-paper]").forEach((p) => (p.hidden = p !== paper));
+      lab.querySelectorAll<HTMLElement>("[data-paper]").forEach((p) => p.classList.toggle("is-off", p !== paper));
       lab.querySelectorAll(".is-hit").forEach((n) => n.classList.remove("is-hit"));
       lab.querySelectorAll<HTMLElement>("[data-row]").forEach((r) => r.classList.remove("is-set"));
       lab.querySelectorAll<HTMLElement>("[data-v]").forEach((v) => (v.textContent = ""));
-      if (flag) flag.hidden = true;
-      if (ok) ok.hidden = true;
+      msgs.forEach((m) => m.classList.remove("is-on"));
+      csvTimers.forEach(clearTimeout);
+      csvTimers = [];
       if (csv) csv.textContent = "";
       if (checks) {
         checks.replaceChildren(
@@ -361,15 +393,8 @@ const formats = [
         lab.classList.remove("is-scan");
         lab.classList.add("is-done");
         if (status) status.textContent = doc.flag ? "Revisar 1 aviso" : "Listo para exportar";
-        if (flag) {
-          flag.textContent = doc.flag;
-          flag.hidden = !doc.flag;
-        }
-        if (ok) {
-          ok.textContent = `✓ ${doc.ok}`;
-          ok.hidden = false;
-        }
-        if (csv) type(csv, doc.csv[fmt]);
+        msgs.forEach((m) => m.classList.toggle("is-on", m.dataset.msg === doc.id));
+        typeCsv(doc.csv[fmt]);
       });
     };
 
@@ -384,7 +409,11 @@ const formats = [
       b.addEventListener("click", () => {
         fmt = b.dataset.fmt ?? "a3";
         fmts.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-        if (csv && lab.classList.contains("is-done")) csv.textContent = current.csv[fmt];
+        if (lab.classList.contains("is-done")) {
+          csvTimers.forEach(clearTimeout);
+          csvTimers = [];
+          if (csv) csv.textContent = current.csv[fmt];
+        }
       })
     );
 
@@ -491,8 +520,15 @@ const formats = [
     transform: rotate(-0.6deg);
     animation: pp-in 0.6s var(--ease);
   }
-  .pp[hidden] {
-    display: none;
+  .pp {
+    grid-area: 1 / 1;
+  }
+  .pp.is-off {
+    visibility: hidden;
+    animation: none;
+  }
+  .lab__note {
+    grid-row: 2;
   }
   @keyframes pp-in {
     from {
@@ -701,7 +737,9 @@ const formats = [
   .lab__field dd {
     font-weight: 600;
     min-height: 1.45em;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-variant-numeric: tabular-nums;
   }
   .lab__field[data-row="account"] dd,
@@ -721,7 +759,7 @@ const formats = [
     flex-wrap: wrap;
     gap: 0.4rem;
   }
-  .lab__checks li {
+  .lab__checks :global(li) {
     font-size: 0.74rem;
     padding: 0.25rem 0.6rem;
     border-radius: 999px;
@@ -733,27 +771,27 @@ const formats = [
       border-color 0.4s var(--ease);
     transition-delay: calc(var(--i, 0) * 120ms);
   }
-  .lab__checks li::before {
+  .lab__checks :global(li::before) {
     content: "○ ";
   }
-  .is-done .lab__checks li.is-ok,
-  .lab:not(.is-scan) .lab__checks li.is-ok {
+  .is-done .lab__checks :global(li.is-ok),
+  .lab:not(.is-scan) .lab__checks :global(li.is-ok) {
     color: #3ad07a;
     border-color: rgb(58 208 122 / 0.3);
     background: rgb(58 208 122 / 0.08);
   }
-  .is-done .lab__checks li.is-ok::before,
-  .lab:not(.is-scan) .lab__checks li.is-ok::before {
+  .is-done .lab__checks :global(li.is-ok::before),
+  .lab:not(.is-scan) .lab__checks :global(li.is-ok::before) {
     content: "✓ ";
   }
-  .is-done .lab__checks li.is-warn,
-  .lab:not(.is-scan) .lab__checks li.is-warn {
+  .is-done .lab__checks :global(li.is-warn),
+  .lab:not(.is-scan) .lab__checks :global(li.is-warn) {
     color: #ffb35c;
     border-color: rgb(255 179 92 / 0.35);
     background: rgb(255 179 92 / 0.08);
   }
-  .is-done .lab__checks li.is-warn::before,
-  .lab:not(.is-scan) .lab__checks li.is-warn::before {
+  .is-done .lab__checks :global(li.is-warn::before),
+  .lab:not(.is-scan) .lab__checks :global(li.is-warn::before) {
     content: "⚑ ";
   }
   .lab__flag,
@@ -776,9 +814,26 @@ const formats = [
     background: rgb(58 208 122 / 0.08);
     border: 1px solid rgb(58 208 122 / 0.25);
   }
-  .lab__flag[hidden],
-  .lab__ok[hidden] {
-    display: none;
+  .lab__msgs {
+    display: grid;
+  }
+  .lab__msgs > p {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+  }
+  .lab__msgs > p.is-on {
+    visibility: visible;
+    opacity: 1;
+  }
+  .lab__clear {
+    font-size: var(--fs-sm);
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    line-height: 1.4;
+    color: var(--muted);
+    border: 1px solid var(--line);
   }
   .lab__export {
     display: grid;
@@ -813,7 +868,9 @@ const formats = [
   }
   .lab__csv {
     display: block;
-    min-height: 3.6em;
+    /* altura fija: la línea exportada se escribe sin empujar nada */
+    height: calc(3 * 1.5em + 1.4rem);
+    overflow: hidden;
     padding: 0.7rem 0.85rem;
     background: var(--night-2);
     border: 1px solid var(--line);
@@ -822,6 +879,19 @@ const formats = [
     line-height: 1.5;
     color: #cfcac1;
     overflow-wrap: anywhere;
+  }
+  /* en móvil la cuenta y la carpeta ocupan dos líneas ya reservadas (la altura no cambia al escribir) */
+  @media (max-width: 520px) {
+    .lab__field[data-row="account"] dd,
+    .lab__field[data-row="folder"] dd {
+      white-space: normal;
+      min-height: 2.9em;
+    }
+  }
+  @media (max-width: 520px) {
+    .lab__csv {
+      height: calc(5 * 1.5em + 1.4rem);
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .pp,

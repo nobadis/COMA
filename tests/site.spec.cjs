@@ -350,47 +350,52 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     );
   });
 
-  test("despachos: demo de factura, calculadora de ahorro y CTAs al email", async ({ page }) => {
+  test("despachos: demo de factura, agente, precios acotados y CTAs al email", async ({
+    page,
+    isMobile,
+  }) => {
     await page.goto("/despachos/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       /deja de teclearlas/i
     );
     // los CTAs principales abren el email con el diagnóstico ya escrito
     const hero = page.getByRole("link", { name: /Diagnóstico gratis/i }).first();
-    await expect(hero).toHaveAttribute("href", /^mailto:info@comunicacionenmallorca\.com\?subject=Diagn/);
+    await expect(hero).toHaveAttribute(
+      "href",
+      /^mailto:info@comunicacionenmallorca\.com\?subject=Diagn/
+    );
     await expect(hero).toHaveAttribute("href", /Programa%20contable/);
 
     // demo: al elegir otro documento se lee y aparece el aviso de revisión
     await page.locator("#demo").scrollIntoViewIfNeeded();
     await page.getByRole("button", { name: /Honorarios con retención/ }).click();
     await expect(page.locator('[data-v="ret"]')).toHaveText(/15 %/, { timeout: 8000 });
-    await expect(page.locator("[data-lab-flag]")).toContainText(/modelo 111/, { timeout: 8000 });
+    await expect(page.locator('.lab__flag.is-on[data-msg="profesional"]')).toContainText(
+      /modelo 111/,
+      { timeout: 8000 }
+    );
     await page.getByRole("button", { name: "Sage", exact: true }).click();
     await expect(page.locator("[data-lab-csv]")).toContainText('"2026-077"');
 
-    // calculadora: 60 clientes × 25 facturas × 3 min × 80 % = 60 h/mes
-    await expect(page.locator('[data-res="hours"]')).toHaveText("60");
-    await expect(page.locator('[data-res="plan"]')).toHaveText("Despacho");
-    await expect(page.locator('[data-res="x"]')).toHaveText("×6");
-    await page.locator("#roi-clients").fill("120");
-    await expect(page.locator('[data-res="hours"]')).toHaveText("120");
-    // 3.000 docs: Despacho con 1.500 de exceso a 0,10 € = 399 €/mes
-    await expect(page.locator('[data-res="cost"]')).toHaveText("399 €/mes");
-    await expect(page.locator("[data-roi-mail]")).toHaveAttribute("href", /120%20clientes/);
-
-    // copiloto: cada pregunta muestra su respuesta
-    await page.locator("#copiloto").scrollIntoViewIfNeeded();
-    await page.getByRole("button", { name: /retenciones van al 111/ }).click();
-    await expect(page.locator('[data-a="1"]')).toBeVisible({ timeout: 8000 });
-    await expect(page.locator('[data-a="1"]')).toContainText("267,00");
-
-    // agente de WhatsApp y comparativa
+    // agente de WhatsApp y comparativa (5 filas + cabecera); sin calculadora ni copiloto
     await expect(page.locator("[data-wa-chat] li")).toHaveCount(7);
-    await expect(page.locator("#diferencia tr")).toHaveCount(7);
+    await expect(page.locator("#diferencia tr")).toHaveCount(6);
+    await expect(page.locator("#ahorro, #copiloto")).toHaveCount(0);
 
-    // precios visibles y enlace desde automatizaciones
-    await expect(page.locator("#precios")).toContainText("249 €");
-    await expect(page.locator("#precios")).toContainText("Sin letra pequeña");
+    // precios: volumen incluido, extras y condiciones plegados
+    const precios = page.locator("#precios");
+    await expect(precios).toContainText("249 €");
+    await expect(precios).toContainText("1.500 documentos/mes");
+    const extras = precios.locator("details", { hasText: "Bajo demanda" });
+    await expect(extras).not.toHaveAttribute("open", "");
+    await extras.locator("summary").click();
+    await expect(extras.getByText("Digitalización del archivo histórico")).toBeVisible();
+    if (isMobile) {
+      // en móvil los planes se deslizan en horizontal en lugar de apilarse
+      const display = await page.locator("[data-plans]").evaluate((el) => getComputedStyle(el).display);
+      expect(display).toBe("flex");
+    }
+
     await page.goto("/automatizaciones/");
     await expect(page.locator('a[href="/despachos/"]').first()).toBeAttached();
   });

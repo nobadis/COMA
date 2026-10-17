@@ -10,7 +10,7 @@ import { basePlan } from "../data/pricing";
       <h2 class="px__title">
         <span class="px__small" data-reveal>Tu web profesional por</span>
         <span class="sr-only">{basePlan.price} €</span>
-        <span class="px__num" aria-hidden="true" data-reveal style="--d:1"><span data-count={basePlan.price}>{basePlan.price}</span><span class="red">€</span></span>
+        <span class="px__num" aria-hidden="true" data-reveal style="--d:1"><span class="px__count" style={`min-width:${String(basePlan.price).length}ch`} data-count={basePlan.price}>{basePlan.price}</span><span class="red">€</span></span>
         <span class="px__iva" data-reveal style="--d:2">{basePlan.suffix}</span>
       </h2>
       <div class="px__grid">
@@ -38,15 +38,22 @@ import { basePlan } from "../data/pricing";
 </section>
 
 <style>
+  /* el bloque negro «crece» hasta el borde con clip-path: se ve igual, pero sin mover el resto de la página */
   .px {
     --p: 0;
     --e: clamp(0, calc((var(--p) - 0.12) * 3.2), 1);
-    padding-block: calc((1 - var(--e)) * clamp(2rem, 6vw, 5rem));
     background: var(--paper);
   }
   .px__box {
-    margin-inline: calc((1 - var(--e)) * var(--gutter));
-    padding-block: clamp(4rem, 9vw, 8rem);
+    --iy: calc((1 - var(--e)) * clamp(2rem, 6vw, 5rem));
+    --ix: calc((1 - var(--e)) * var(--gutter));
+    padding-block: calc(clamp(4rem, 9vw, 8rem) + clamp(2rem, 6vw, 5rem));
+    clip-path: inset(var(--iy) var(--ix));
+  }
+  .px__count {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
   }
   .px__in {
     display: grid;

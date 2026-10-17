@@ -38,7 +38,7 @@ export const GET: APIRoute = () => {
     "## Servicios",
     ...services.map((s) => `- [${s.label}](${site.url}/${s.slug}/): ${s.summary}`),
     `- [Kit Digital](${site.url}/kit-digital/): ayuda para solicitar, implantar y justificar las ayudas Kit Digital.`,
-    `- [COMA para despachos](${site.url}/despachos/): automatización para asesorías, gestorías y despachos contables. WhatsApp y email integrados, extracción de facturas con IA y comprobaciones automáticas (NIF, VIES, duplicados, retenciones 111/115), agente que atiende a los clientes, integración con a3, Sage, Holded o Contasol y Norma 43, copiloto del despacho y panel del cierre trimestral. Diagnóstico gratuito; planes desde ${despachoFrom} €/mes + puesta en marcha (sin IVA).`,
+    `- [COMA para despachos](${site.url}/despachos/): automatización para asesorías, gestorías y despachos contables. WhatsApp y email integrados, extracción de facturas con IA y comprobaciones automáticas (NIF, VIES, duplicados, retenciones 111/115), agente que confirma lo recibido y pide lo que falta, exportación a a3, Sage, Contasol u Holded y panel del cierre trimestral. Diagnóstico gratuito; planes desde ${despachoFrom} €/mes + puesta en marcha (sin IVA).`,
     "",
     "## Guías",
     ...guides.map((g) => `- [${g.title}](${site.url}/guias/${g.slug}/): ${g.description}`),

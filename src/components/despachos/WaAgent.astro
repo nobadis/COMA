@@ -238,8 +238,9 @@ const script = [
     padding: 0.5rem 0.4rem;
     border-radius: 6px;
   }
-  .wa__chat.is-typing::after {
+  .wa__chat::after {
     content: "";
+    visibility: hidden;
     width: 3.2rem;
     height: 2rem;
     border-radius: 16px;
@@ -251,6 +252,9 @@ const script = [
       #fff;
     animation: wa-typing 1s ease-in-out infinite;
     order: 99;
+  }
+  .wa__chat.is-typing::after {
+    visibility: visible;
   }
   .wa__chat.is-typing .wa__msg.is-wait {
     order: 100;
