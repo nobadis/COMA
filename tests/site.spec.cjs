@@ -392,7 +392,9 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(extras.getByText("Digitalización del archivo histórico")).toBeVisible();
     if (isMobile) {
       // en móvil los planes se deslizan en horizontal en lugar de apilarse
-      const display = await page.locator("[data-plans]").evaluate((el) => getComputedStyle(el).display);
+      const display = await page
+        .locator("[data-plans]")
+        .evaluate((el) => getComputedStyle(el).display);
       expect(display).toBe("flex");
     }
 
