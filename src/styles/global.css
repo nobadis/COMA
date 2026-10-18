@@ -851,6 +851,8 @@ html {
 @media (max-width: 899px) {
   .is-pinned {
     view-timeline: --pin block;
+    /* sin esto hereda el scroll-padding de la cabecera y el recorrido empieza 5rem antes */
+    view-timeline-inset: 0;
     padding-block: 0 !important;
     content-visibility: visible;
   }

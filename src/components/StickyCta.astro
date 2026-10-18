@@ -1,11 +1,31 @@
 ---
 import Arrow from "./Arrow.astro";
 import { basePlan } from "../data/pricing";
+import { ctaFor } from "../data/site";
+
+const alt = ctaFor(Astro.url.pathname);
 ---
 
 <div class="sticky-cta" data-sticky-cta>
-  <span>Tu web desde <strong>{basePlan.price} €</strong> <span class="muted-sm">{basePlan.suffix}</span></span>
-  <a class="btn btn--red" href="/precios/" tabindex="-1">Calcula la tuya <Arrow /></a>
+  {
+    alt ? (
+      <>
+        <span>Te respondemos <strong>personalmente</strong></span>
+        <a class="btn btn--red" href={alt.href} tabindex="-1">
+          {alt.label} <Arrow />
+        </a>
+      </>
+    ) : (
+      <>
+        <span>
+          Tu web desde <strong>{basePlan.price} €</strong> <span class="muted-sm">{basePlan.suffix}</span>
+        </span>
+        <a class="btn btn--red" href="/precios/" tabindex="-1">
+          Calcula la tuya <Arrow />
+        </a>
+      </>
+    )
+  }
 </div>
 
 <style>

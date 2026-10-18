@@ -78,6 +78,55 @@ export const navServices = [
   { href: "/despachos/", label: "Para despachos" },
 ];
 
+/**
+ * Llamada a la acción según la página: la web desde 99 € es la puerta por defecto, pero en cada
+ * servicio se invita a lo que ese visitante busca (cabecera y barra fija en móvil).
+ */
+export const ctaFor = (path: string) => {
+  const by: { prefix: string; short: string; label: string; href: string }[] = [
+    {
+      prefix: "/seo-geo/",
+      short: "Auditoría SEO",
+      label: "Pide tu auditoría SEO",
+      href: "/contacto/?plan=seo",
+    },
+    {
+      prefix: "/agentes-ia/",
+      short: "Tu agente de IA",
+      label: "Quiero mi agente de IA",
+      href: "/contacto/?plan=ia",
+    },
+    {
+      prefix: "/automatizaciones/",
+      short: "Automatiza",
+      label: "Automatiza una tarea",
+      href: "/contacto/?plan=auto",
+    },
+    {
+      prefix: "/notoriedad-de-marca/",
+      short: "Hablemos",
+      label: "Cuéntanos tu marca",
+      href: "/contacto/?plan=medios",
+    },
+    {
+      prefix: "/kit-digital/",
+      short: "Kit Digital",
+      label: "Pide tu Kit Digital",
+      href: "/contacto/?plan=kit",
+    },
+  ];
+  return by.find((c) => path.startsWith(c.prefix)) ?? null;
+};
+
+/** Atajos a cada servicio desde las llamadas a la acción genéricas (la web no es lo único). */
+export const ctaPicks = [
+  { label: "Web desde 99 €", href: "/contacto/?plan=web" },
+  { label: "SEO y GEO", href: "/contacto/?plan=seo" },
+  { label: "Agentes de IA", href: "/contacto/?plan=ia" },
+  { label: "Automatizaciones", href: "/contacto/?plan=auto" },
+  { label: "Marca y medios", href: "/contacto/?plan=medios" },
+];
+
 /** Clientes y referencias que se muestran como prueba social. */
 export const trust = {
   headline: "Mallorca Live Festival",
@@ -113,6 +162,10 @@ export const sectors = [
   {
     name: "Turismo y hoteles",
     text: "Reserva directa, idiomas y SEO para no depender de terceros.",
+  },
+  {
+    name: "Reformas y oficios",
+    text: "Electricistas, fontaneros, albañiles, carpinteros, pintores… Que te llamen a ti y no al de al lado.",
   },
   { name: "Comercio local", text: "Tienda online, catálogo y Google Maps para vender más." },
   { name: "Eventos y cultura", text: "Festivales, salas y promotoras con energía de cartel." },

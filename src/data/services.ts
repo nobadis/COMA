@@ -78,6 +78,7 @@ export const services: Service[] = [
       "Aún no tienes web o la tuya ya no te representa",
       "Tu web no aparece en Google ni te trae clientes",
       "Necesitas algo profesional, rápido y a buen precio",
+      "Eres electricista, fontanero, albañil o carpintero y quieres que te llamen a ti",
       "Quieres una web que crezca contigo: idiomas, blog, tienda, IA…",
     ],
     steps: [
@@ -163,7 +164,7 @@ export const services: Service[] = [
     forWhom: [
       "Tu competencia aparece en Google y tú no",
       "Quieres que la IA recomiende tu negocio",
-      "Dependes del boca a boca y necesitas clientes nuevos",
+      "Dependes del boca a boca y necesitas clientes nuevos (reformas, oficios, talleres…)",
       "Tienes web, pero no te trae contactos",
     ],
     steps: [
