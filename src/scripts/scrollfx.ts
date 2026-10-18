@@ -219,7 +219,8 @@ export function initPinned() {
       if (!track || !stick) continue;
       if (!on) {
         section.classList.remove("is-pinned");
-        section.style.removeProperty("height");
+        // En escritorio la altura de una galería [data-hscroll] la pone initScrollFx: no se toca.
+        if (!section.hasAttribute("data-hscroll")) section.style.removeProperty("height");
         section.style.removeProperty("--pin-d");
         continue;
       }

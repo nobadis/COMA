@@ -1,6 +1,6 @@
 ---
 import Arrow from "./Arrow.astro";
-import { site, mailto } from "../data/site";
+import { site, mailto, ctaPicks } from "../data/site";
 
 interface Props {
   title?: string;
@@ -11,13 +11,16 @@ interface Props {
   action?: { href: string; label: string };
   /** Enlace del email (por defecto, mailto con el asunto). */
   mail?: string;
+  /** Atajos a cada servicio bajo los botones (en páginas generales, no en las de un servicio). */
+  picks?: boolean;
 }
 const {
-  title = "Tu web, desde 99 €. ¿Empezamos?",
+  title = "¿Qué necesita tu negocio? Empecemos.",
   subject = "Nuevo proyecto",
-  lead = "Cuéntanos qué necesitas y te respondemos personalmente con una propuesta clara, sin compromiso. Desde Mallorca para toda España.",
+  lead = "Una web desde 99 €, que te encuentren en Google y en la IA, un agente que atienda por ti o quitarte tareas de encima. Cuéntanoslo y te respondemos personalmente con una propuesta clara, sin compromiso.",
   action = { href: "/contacto/", label: "Pedir propuesta" },
   mail,
+  picks = false,
 } = Astro.props;
 ---
 
@@ -30,6 +33,15 @@ const {
       <a class="btn btn--red cta__btn" href={action.href} data-magnetic>{action.label} <Arrow /></a>
       <a class="link-arrow" href={mail ?? mailto(subject)}>{site.email}</a>
     </div>
+    {
+      picks && (
+        <nav class="cta__picks" data-reveal style="--d:4" aria-label="Ve directo a lo que buscas">
+          {ctaPicks.map((p) => (
+            <a href={p.href}>{p.label}</a>
+          ))}
+        </nav>
+      )
+    }
   </div>
 </section>
 
@@ -67,6 +79,27 @@ const {
   .cta__actions .link-arrow {
     white-space: nowrap;
     font-size: min(var(--fs-md), 4.3vw);
+  }
+  .cta__picks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .cta__picks a {
+    display: inline-block;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    border-radius: 999px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background 0.3s var(--ease),
+      color 0.3s var(--ease);
+  }
+  .cta__picks a:hover {
+    background: #fff;
+    color: var(--red);
   }
   .cta .btn--red {
     --bg: var(--ink);

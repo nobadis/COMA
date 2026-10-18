@@ -15,7 +15,7 @@ import AgentDemo from "../components/AgentDemo.astro";
 import FlowDemo from "../components/FlowDemo.astro";
 import Trust from "../components/Trust.astro";
 import { services, type Service } from "../data/services";
-import { site } from "../data/site";
+import { site, ctaFor } from "../data/site";
 import { basePlan, extras } from "../data/pricing";
 import { places } from "../data/places";
 
@@ -221,7 +221,11 @@ const schema = [
   <Trust />
   <Process title="Así lo hacemos" steps={s.steps} />
   <Faq items={s.faq} />
-  <Cta title={s.ctaTitle} subject={s.label} />
+  <Cta
+    title={s.ctaTitle}
+    subject={s.label}
+    action={{ href: ctaFor(`/${s.slug}/`)?.href ?? "/contacto/?plan=web", label: "Pedir propuesta" }}
+  />
 </Base>
 
 <style>
