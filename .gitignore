@@ -7,3 +7,6 @@ __pycache__/
 dist/
 release/
 .astro/
+
+# Fotogramas y salidas locales de los vídeos (el publicado vive en public/video/)
+video/*/out/

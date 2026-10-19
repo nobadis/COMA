@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>COMA para despachos · vídeo</title>
+<!--
+  Vídeo promocional de COMA para despachos (44 s). Tono sereno: una idea por plano, fundidos lentos,
+  interfaz real del producto. Cada escena se dibuja en función del tiempo con window.render(t), así
+  render.cjs captura fotograma a fotograma. Abierto en el navegador se reproduce en bucle (sin audio).
+  Textos y datos de ejemplo: los mismos de /despachos/ (src/data/despachos.ts y componentes).
+-->
+<style>
+  @font-face {
+    font-family: "Archivo V";
+    src: url("../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+  }
+  :root {
+    --paper: #efece4;
+    --paper-2: #e4dfd3;
+    --ink: #0c0c0c;
+    --muted: #6b665e;
+    --line: rgba(12, 12, 12, 0.09);
+    --red: #e1112d;
+    --ok: #2f8f5b;
+    --ok-bg: #e3f1e8;
+    --warn: #a86a00;
+    --warn-bg: #fbefd6;
+    --shadow: 0 50px 110px rgba(40, 32, 20, 0.12), 0 10px 30px rgba(40, 32, 20, 0.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+  body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #f4f2ec, var(--paper) 70%); }
+  .sc { position: absolute; inset: 0; display: none; transform-origin: 50% 50%; }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .h { font-weight: 700; font-stretch: 106%; letter-spacing: -0.032em; line-height: 1.02; }
+  .w { display: inline-block; }
+  .c { color: var(--red); }
+  .eyebrow { font-weight: 700; font-stretch: 120%; text-transform: uppercase; letter-spacing: 0.16em; font-size: 22px; color: var(--red); }
+  .logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
+  .logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); }
+  .card { background: #fff; border-radius: 28px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .pill { display: inline-flex; align-items: center; gap: 8px; font-size: 21px; font-weight: 600; padding: 7px 16px; border-radius: 999px; white-space: nowrap; }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); }
+  .pill.warn { background: var(--warn-bg); color: var(--warn); }
+  .pill.info { background: #e6eef8; color: #2d5b94; }
+
+  /* columnas de los planos de producto */
+  .cap { position: absolute; left: 150px; top: 0; bottom: 0; width: 640px; display: flex; flex-direction: column; justify-content: center; }
+  .cap h2 { font-size: 78px; margin-top: 22px; }
+  .cap p { font-size: 32px; line-height: 1.35; margin-top: 30px; color: var(--muted); max-width: 560px; }
+  .ui { position: absolute; left: 900px; right: 140px; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; }
+
+  /* 1 · canales */
+  #s1 h1 { position: absolute; left: 0; right: 0; top: 270px; text-align: center; font-size: 96px; }
+  .docs { position: absolute; left: 0; right: 0; top: 520px; display: flex; justify-content: center; align-items: flex-start; gap: 70px; }
+  .doc-wa { width: 360px; padding: 18px; border-radius: 26px; }
+  .doc-wa .ph { height: 250px; border-radius: 16px; background: linear-gradient(160deg, #e2dccf, #cfc6b4); position: relative; overflow: hidden; }
+  .doc-wa .ph i { position: absolute; left: 70px; top: 26px; width: 190px; height: 250px; background: #fdfcf8; transform: rotate(-9deg); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+  .doc-wa .ph i::before { content: ""; position: absolute; inset: 26px 20px; background: repeating-linear-gradient(#cfc9bc 0 5px, transparent 5px 20px); }
+  .doc-wa p { font-size: 22px; padding: 14px 6px 2px; }
+  .doc-wa small, .doc-mail small { display: block; font-size: 17px; color: var(--muted); }
+  .doc-mail { width: 420px; padding: 30px 32px; font-size: 22px; line-height: 1.5; }
+  .doc-mail b { font-size: 25px; display: block; margin: 6px 0 4px; }
+  .doc-mail .att { display: inline-block; margin-top: 16px; background: var(--paper); border-radius: 10px; padding: 8px 14px; font-size: 19px; }
+  .doc-tk { width: 270px; padding: 30px 26px 44px; background: #fdfcf8; border-radius: 4px; font-family: Consolas, monospace; font-size: 18px; line-height: 1.6; color: #3c3a36; }
+
+  /* 2 · teclear */
+  #s2 h1 { font-size: 96px; }
+  .field { margin-top: 70px; width: 720px; padding: 26px 34px; text-align: left; }
+  .field label { font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .field div { font-size: 54px; font-family: Consolas, monospace; margin-top: 8px; height: 66px; }
+  .cur { display: inline-block; width: 3px; height: 54px; background: var(--ink); vertical-align: -8px; margin-left: 4px; }
+
+  /* 3 · logo */
+  #s3logo { font-size: 250px; }
+  #s3eb { margin-top: 26px; font-size: 28px; }
+
+  /* 4 · titular */
+  #s4 h1 { font-size: 112px; }
+  #s4 .l2 { color: var(--muted); }
+
+  /* 5 · whatsapp */
+  .phone { width: 520px; height: 920px; background: #0c0c0c; border-radius: 76px; padding: 14px; box-shadow: var(--shadow); }
+  .phone .scr { width: 100%; height: 100%; border-radius: 63px; overflow: hidden; background: #f3efe8; position: relative; }
+  .phone .bar { padding: 70px 30px 22px; display: flex; gap: 16px; align-items: center; background: #fff; border-bottom: 1px solid var(--line); }
+  .phone .av { width: 62px; height: 62px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 26px; }
+  .phone .bar b { font-size: 26px; display: block; }
+  .phone .bar small { font-size: 19px; color: var(--muted); }
+  .phone .bar small i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3cc46b; margin-right: 6px; }
+  .msgs { padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .bub { max-width: 84%; padding: 15px 19px 11px; border-radius: 22px; font-size: 23px; line-height: 1.34; box-shadow: 0 1px 1px rgba(0,0,0,.05); }
+  .bub.me { align-self: flex-end; background: #ddf4cf; border-bottom-right-radius: 7px; }
+  .bub.them { align-self: flex-start; background: #fff; border-bottom-left-radius: 7px; }
+  .bub small { display: block; text-align: right; font-size: 16px; color: #8a8a8a; margin-top: 3px; }
+  .bub .ph { width: 280px; height: 170px; border-radius: 12px; background: linear-gradient(160deg, #e2dccf, #cfc6b4); margin-bottom: 8px; position: relative; overflow: hidden; }
+  .bub .ph::after { content: ""; position: absolute; left: 80px; top: 18px; width: 120px; height: 170px; background: #fdfcf8; transform: rotate(-7deg); }
+  .bub .pdf { display: flex; gap: 12px; align-items: center; background: rgba(0,0,0,.05); border-radius: 12px; padding: 12px 14px; font-size: 21px; }
+  .bub .pdf b { background: var(--red); color: #fff; font-size: 15px; padding: 6px 8px; border-radius: 6px; }
+  .okc { color: var(--ok); font-weight: 700; }
+
+  /* 6 · IA */
+  .ai { display: flex; gap: 34px; align-items: flex-start; }
+  .inv { width: 420px; padding: 34px 32px; font-size: 18px; line-height: 1.5; position: relative; overflow: hidden; }
+  .inv h4 { font-size: 23px; }
+  .inv .m { color: var(--muted); }
+  .inv .r { display: flex; justify-content: space-between; }
+  .inv .t { border-top: 1.5px solid var(--ink); margin-top: 14px; padding-top: 10px; font-weight: 700; font-size: 23px; }
+  .inv .hl { position: relative; }
+  .inv .hl::after { content: ""; position: absolute; inset: -3px -8px; border-radius: 6px; background: rgba(225, 17, 45, 0.08); box-shadow: inset 0 0 0 2px rgba(225,17,45,.55); opacity: var(--o, 0); }
+  #beam { position: absolute; left: 0; right: 0; height: 90px; background: linear-gradient(rgba(225,17,45,0), rgba(225,17,45,.10)); border-bottom: 2px solid rgba(225,17,45,.7); }
+  .ext { width: 440px; padding: 28px 30px; }
+  .ext h5, .rv h5, .ex h5, .cb h5 { font-size: 19px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .ext .f { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 23px; }
+  .ext .f span { color: var(--muted); }
+  .ext .f b { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ext ul { margin-top: 20px; }
+  .ext li { list-style: none; display: flex; gap: 12px; align-items: center; font-size: 21px; padding: 6px 0; }
+  .ext li i { width: 26px; height: 26px; border-radius: 50%; background: var(--ok); color: #fff; font-style: normal; font-size: 15px; font-weight: 700; display: grid; place-items: center; flex: none; }
+
+  /* 7 · revisión */
+  .rv { width: 860px; padding: 32px 36px; }
+  .rv .row { display: grid; grid-template-columns: 1fr 150px 260px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 24px; }
+  .rv .row:last-child { border-bottom: 0; }
+  .rv .row b { font-weight: 600; display: block; }
+  .rv .row small { font-size: 18px; color: var(--muted); }
+  .rv .row .a { text-align: right; padding-right: 26px; font-variant-numeric: tabular-nums; }
+  .rv .row .s { text-align: right; }
+  .rv .row.flag { background: rgba(251, 239, 214, var(--g, 0)); margin: 0 -36px; padding-left: 36px; padding-right: 36px; }
+  .rv .note { font-size: 19px; color: var(--warn); margin-top: 6px; overflow: hidden; }
+
+  /* 8 · exportación */
+  .ex { width: 860px; padding: 32px 36px; }
+  .ex .r { display: grid; grid-template-columns: 1fr 150px 150px; font-size: 25px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .ex .r span { text-align: right; font-variant-numeric: tabular-nums; }
+  .ex .r.hd { font-size: 18px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+  .progs { display: flex; gap: 14px; margin-top: 28px; }
+  .chip { flex: 1; text-align: center; font-size: 26px; font-weight: 700; padding: 18px 0; border-radius: 16px; background: var(--paper); }
+  .chip.on { background: var(--ink); color: #fff; }
+  .done { margin-top: 22px; font-size: 24px; display: flex; align-items: center; gap: 12px; color: var(--ok); font-weight: 600; }
+
+  /* 9 · cierre */
+  .cbw { position: relative; }
+  .cb { width: 860px; padding: 32px 36px; }
+  .cb .kpi { font-size: 22px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+  .cb .kpi b { font-size: 34px; }
+  .cb .row { display: grid; grid-template-columns: 250px 1fr 250px; align-items: center; gap: 24px; padding: 16px 0; font-size: 23px; border-bottom: 1px solid var(--line); }
+  .cb .row:last-child { border-bottom: 0; }
+  .bar { height: 10px; border-radius: 10px; background: var(--paper); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 10px; background: var(--ink); }
+  .cb .s { text-align: right; }
+  .toast { position: absolute; right: -40px; bottom: -150px; width: 560px; padding: 24px 28px; font-size: 21px; line-height: 1.42; }
+  .toast span { display: block; font-size: 17px; font-weight: 700; color: #1f9d55; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
+
+  /* 10 · promesas */
+  #s10 .ln { font-size: 104px; margin: 6px 0; }
+
+  /* 11 · cierre */
+  #s11logo { font-size: 200px; }
+  #s11eb { margin-top: 22px; font-size: 26px; }
+  #s11t { font-size: 64px; margin-top: 56px; }
+  #s11b { margin-top: 52px; font-size: 32px; font-weight: 600; background: var(--ink); color: #fff; padding: 26px 52px; border-radius: 999px; display: inline-flex; gap: 16px; }
+  #s11b span { color: var(--red); }
+  #s11w { margin-top: 30px; font-size: 26px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · cómo llegan hoy las facturas -->
+  <section class="sc" id="s1">
+    <h1 class="h"><span class="w">Por WhatsApp.</span> <span class="w">Por email.</span> <span class="w">En papel<span class="c">,</span></span></h1>
+    <div class="docs">
+      <div class="dk"><div class="card doc-wa"><div class="ph"><i></i></div><p>Te mando lo de la gasolinera<small>Joan · 21:14</small></p></div></div>
+      <div class="dk"><div class="card doc-mail"><small>De: bar.espla@gmail.com</small><b>(sin asunto)</b>Te paso lo del mes 👍<br/><span class="att">📎 IMG_2231.jpg</span> <span class="att">📎 scan(3).pdf</span></div></div>
+      <div class="dk"><div class="card doc-tk">CARBURANTES MIGJORN<br/>Ctra. Manacor km 7<br/>------------------<br/>GASÓLEO A 38,02 L<br/>TOTAL ..... 60,00<br/>------------------<br/>GRACIAS POR SU VISITA</div></div>
+    </div>
+  </section>
+
+  <!-- 2 · el trabajo que sobra -->
+  <section class="sc" id="s2">
+    <div class="center">
+      <h1 class="h"><span class="w">Y alguien las teclea,</span> <span class="w" style="color:var(--muted)">una a una<span class="c">.</span></span></h1>
+      <div class="card field" id="s2f"><label>NIF del emisor</label><div><span id="s2t"></span><span class="cur" id="s2c"></span></div></div>
+    </div>
+  </section>
+
+  <!-- 3 · logo -->
+  <section class="sc" id="s3">
+    <div class="center">
+      <div id="s3logo" class="logo"><span id="s3w">COMA</span><svg id="s3c" viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+      <div id="s3eb" class="eyebrow">para asesorías y despachos</div>
+    </div>
+  </section>
+
+  <!-- 4 · la promesa -->
+  <section class="sc" id="s4">
+    <div class="center">
+      <h1 class="h"><span class="w" id="s4a">Tus clientes envían facturas.</span><br/><span class="w l2" id="s4b">Tu despacho deja de teclearlas<span class="c">,</span></span></h1>
+    </div>
+  </section>
+
+  <!-- 5 · agente de WhatsApp -->
+  <section class="sc" id="s5">
+    <div class="cap"><div class="eyebrow">Agente del despacho</div><h2 class="h">Tus clientes escriben. Tu despacho contesta<span class="c">,</span></h2><p>Por WhatsApp o email, a cualquier hora. Confirma lo recibido y pide lo que falta.</p></div>
+    <div class="ui"><div class="phone" id="s5ph"><div class="scr">
+      <div class="bar"><div class="av">P</div><div><b>Asesoría Pons</b><small><i></i>WhatsApp · atendido por IA</small></div></div>
+      <div class="msgs">
+        <div class="bub me" id="w1"><div class="ph"></div>Te mando lo de la gasolinera<small>21:14</small></div>
+        <div class="bub them" id="w2">¡Gracias, Joan! Leído: <b>Carburantes Migjorn, 60,00 €</b> <span class="okc">✓</span><small>21:14</small></div>
+        <div class="bub me" id="w3"><div class="pdf"><b>PDF</b>Alquiler_octubre.pdf</div><small>21:15</small></div>
+        <div class="bub them" id="w4">Recibido <span class="okc">✓</span> Ya tienes el 4.º trimestre completo. ¡Gracias!<small>21:15</small></div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 6 · extracción y comprobaciones -->
+  <section class="sc" id="s6">
+    <div class="cap"><div class="eyebrow">Extracción con IA</div><h2 class="h">La IA la lee y lo comprueba todo<span class="c">,</span></h2><p>Emisor, NIF, bases, IVA y retenciones. Y propone la cuenta.</p></div>
+    <div class="ui"><div class="ai">
+      <div class="card inv" id="inv">
+        <div id="beam"></div>
+        <h4 class="hl">Suministros Llevant SL</h4>
+        <div class="m">C/ del Comerç 12 · 07009 Palma</div>
+        <div class="hl" style="display:inline-block">NIF B07412349</div>
+        <div class="r" style="margin-top:18px"><span>Factura F-2026/0418</span><span>03/10/2026</span></div>
+        <div class="m" style="margin:12px 0 10px">Cliente: Fontanería Coll SL</div>
+        <div class="r"><span>Tubo multicapa 20 mm ×2</span><span>248,00</span></div>
+        <div class="r"><span>Racores de latón ×4</span><span>164,40</span></div>
+        <div class="r hl" style="margin-top:16px"><span>Base imponible</span><span>412,40</span></div>
+        <div class="r hl"><span>IVA 21 %</span><span>86,60</span></div>
+        <div class="r t hl"><span>Total</span><span>499,00 €</span></div>
+      </div>
+      <div class="card ext" id="ext">
+        <h5>Datos extraídos</h5>
+        <div class="f"><span>Emisor</span><b>Suministros Llevant SL</b></div>
+        <div class="f"><span>NIF</span><b>B07412349</b></div>
+        <div class="f"><span>Base · IVA 21 %</span><b>412,40 · 86,60</b></div>
+        <div class="f"><span>Total</span><b>499,00 €</b></div>
+        <div class="f"><span>Cuenta</span><b>600 · Compras</b></div>
+        <ul>
+          <li><i>✓</i>NIF con dígito de control válido</li>
+          <li><i>✓</i>Base + IVA = total</li>
+          <li><i>✓</i>Factura no duplicada</li>
+          <li><i>✓</i>Fecha dentro del trimestre</li>
+        </ul>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 7 · revisión -->
+  <section class="sc" id="s7">
+    <div class="cap"><div class="eyebrow">Tu equipo decide</div><h2 class="h">Lo claro pasa solo. Lo dudoso, lo revisas tú<span class="c">,</span></h2><p>Nada se registra sin pasar las comprobaciones.</p></div>
+    <div class="ui"><div class="card rv" id="rv">
+      <h5>Documentos de hoy <span class="pill ok">4 listos · 1 para revisar</span></h5>
+      <div class="row"><div><b>Suministros Llevant SL</b><small>Fontanería Coll</small></div><div class="a">499,00 €</div><div class="s"><span class="pill ok">✓ Listo</span></div></div>
+      <div class="row flag" id="rvf"><div><b>Carburantes Migjorn</b><small>Bar Es Pla</small><div class="note" id="rvn">Ticket sin NIF del cliente: pedimos la factura completa</div></div><div class="a">60,00 €</div><div class="s"><span class="pill warn">Revisar</span></div></div>
+      <div class="row"><div><b>Marta Pons · Abogada</b><small>Clínica Sant Jaume</small></div><div class="a">636,00 €</div><div class="s"><span class="pill ok">✓ Retención al 111</span></div></div>
+      <div class="row"><div><b>Alquiler local · octubre</b><small>Bar Es Pla</small></div><div class="a">900,00 €</div><div class="s"><span class="pill ok">✓ Retención al 115</span></div></div>
+      <div class="row"><div><b>Papelería Ramis</b><small>Estudio Ramis</small></div><div class="a">38,40 €</div><div class="s"><span class="pill ok">✓ Listo</span></div></div>
+    </div></div>
+  </section>
+
+  <!-- 8 · exportación -->
+  <section class="sc" id="s8">
+    <div class="cap"><div class="eyebrow">Tu programa de siempre</div><h2 class="h">Directo a tu programa contable<span class="c">,</span></h2><p>a3, Sage, Holded o Contasol. No cambias de software ni migras nada.</p></div>
+    <div class="ui"><div class="card ex" id="ex">
+      <h5>Asiento propuesto · F-2026/0418</h5>
+      <div class="r hd"><span style="text-align:left">Cuenta</span><span>Debe</span><span>Haber</span></div>
+      <div class="r"><b>600 · Compras de mercaderías</b><span>412,40</span><span></span></div>
+      <div class="r"><b>472 · H.P. IVA soportado</b><span>86,60</span><span></span></div>
+      <div class="r"><b>400 · Suministros Llevant SL</b><span></span><span>499,00</span></div>
+      <div class="progs"><div class="chip" id="pa3">a3</div><div class="chip">Sage</div><div class="chip">Holded</div><div class="chip">Contasol</div></div>
+      <div class="done" id="exd"><span class="pill ok">✓ Exportado</span> Listo para importar en a3</div>
+    </div></div>
+  </section>
+
+  <!-- 9 · panel del cierre -->
+  <section class="sc" id="s9">
+    <div class="cap"><div class="eyebrow">Panel del cierre</div><h2 class="h">Sabes quién falta antes de que falte<span class="c">,</span></h2><p>Los recordatorios salen solos, con el tono de tu despacho.</p></div>
+    <div class="ui"><div class="cbw" id="cbw">
+      <div class="card cb">
+        <h5>Cierre 4.º trimestre <span class="kpi"><b id="cbk">3</b>/6 completos</span></h5>
+        <div class="row"><span>Panadería Coll</span><div class="bar"><i data-p="100"></i></div><span class="s"><span class="pill ok">Completo</span></span></div>
+        <div class="row"><span>Clínica Sant Jaume</span><div class="bar"><i data-p="100"></i></div><span class="s"><span class="pill ok">Revisado</span></span></div>
+        <div class="row"><span>Bar Es Pla</span><div class="bar"><i data-p="82" id="cbi"></i></div><span class="s" id="cbs"><span class="pill warn">Faltan 2</span></span></div>
+        <div class="row"><span>Fontanería Coll</span><div class="bar"><i data-p="94"></i></div><span class="s"><span class="pill warn">Falta 1</span></span></div>
+        <div class="row"><span>Estudio Ramis</span><div class="bar"><i data-p="100"></i></div><span class="s"><span class="pill ok">Completo</span></span></div>
+        <div class="row"><span>Joyería Vidal</span><div class="bar"><i data-p="61"></i></div><span class="s"><span class="pill info">Recordatorio enviado</span></span></div>
+      </div>
+      <div class="card toast" id="toast"><span>WhatsApp · automático</span>Hola, Joan. Para cerrar el trimestre nos faltan 2 facturas de octubre. Con una foto vale. ¡Gracias!</div>
+    </div></div>
+  </section>
+
+  <!-- 10 · sin letra pequeña -->
+  <section class="sc" id="s10">
+    <div class="center">
+      <div class="h ln" id="p1">Sin cambiar de programa<span class="c">.</span></div>
+      <div class="h ln" id="p2">Sin permanencia<span class="c">.</span></div>
+      <div class="h ln" id="p3">Datos protegidos en la UE<span class="c">.</span></div>
+    </div>
+  </section>
+
+  <!-- 11 · cierre -->
+  <section class="sc" id="s11">
+    <div class="center">
+      <div id="s11logo" class="logo"><span>COMA</span><svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+      <div id="s11eb" class="eyebrow">para asesorías y despachos</div>
+      <div id="s11t" class="h">Recupera el trimestre<span class="c">.</span></div>
+      <div id="s11b">Pide tu diagnóstico gratis <span>→</span></div>
+      <div id="s11w">comunicacionenmallorca.com/despachos</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const DURATION = 48;
+  const $ = (id) => document.getElementById(id);
+  const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const p = (x, a, b) => cl((x - a) / (b - a));
+  const ease = (x) => 1 - Math.pow(1 - x, 3.2);
+  const smooth = (x) => x * x * (3 - 2 * x);
+  const lerp = (a, b, k) => a + (b - a) * k;
+
+  /** Aparición serena: sube un poco, se enfoca y gana opacidad. */
+  function rise(el, t, at, dur = 0.9, dist = 28) {
+    const k = ease(p(t, at, at + dur));
+    el.style.opacity = k;
+    el.style.transform = `translateY(${(1 - k) * dist}px)`;
+    el.style.filter = k < 1 ? `blur(${(1 - k) * 8}px)` : "none";
+  }
+  const show = (el, on) => (el.style.display = on ? "" : "none");
+
+  const scenes = [];
+  /** Escena entre `a` y `z` (s); `upd` recibe el tiempo local. */
+  const S = (id, a, z, upd) => scenes.push({ el: $(id), a, z, upd });
+
+  // 1 · canales
+  const s1w = [...document.querySelectorAll("#s1 .w")];
+  const s1d = [...document.querySelectorAll("#s1 .dk")];
+  S("s1", 0, 4.8, (t) => {
+    s1w.forEach((w, i) => rise(w, t, 0.35 + i * 0.85, 0.9, 24));
+    s1d.forEach((d, i) => {
+      rise(d, t, 0.45 + i * 0.85, 1.1, 60);
+      d.style.transform += ` translateY(${Math.sin(t * 1.3 + i * 1.7) * 6}px) rotate(${[-2.5, 1.5, 3][i]}deg)`;
+    });
+  });
+
+  // 2 · teclear
+  const nif = "B07412349";
+  S("s2", 4.6, 8.4, (t) => {
+    document.querySelectorAll("#s2 .w").forEach((w, i) => rise(w, t, 0.2 + i * 0.6));
+    rise($("s2f"), t, 0.8, 0.9, 30);
+    $("s2t").textContent = nif.slice(0, Math.floor(cl((t - 1.4) / 0.16, 0, nif.length)));
+    $("s2c").style.opacity = (t * 1.6) % 1 < 0.55 ? 1 : 0;
+  });
+
+  // 3 · logo: las letras se enfocan y la coma cae y se asienta
+  S("s3", 8.2, 11.6, (t) => {
+    const k = ease(p(t, 0.2, 1.4));
+    $("s3w").style.opacity = k;
+    $("s3w").style.letterSpacing = `${lerp(0.12, -0.02, k)}em`;
+    $("s3w").style.filter = k < 1 ? `blur(${(1 - k) * 10}px)` : "none";
+    const ct = t - 1.1;
+    const y = ct < 0 ? -1 : -Math.exp(-ct * 6) * Math.cos(ct * 14);
+    $("s3c").style.opacity = ct < 0 ? 0 : cl(ct * 6);
+    $("s3c").style.transform = `translateY(${y * 120}px)`;
+    rise($("s3eb"), t, 1.7, 0.9, 16);
+  });
+
+  // 4 · titular
+  S("s4", 11.4, 15.2, (t) => {
+    rise($("s4a"), t, 0.3, 1.0);
+    rise($("s4b"), t, 1.3, 1.0);
+  });
+
+  // 5 · WhatsApp
+  S("s5", 15.0, 20.4, (t) => {
+    rise(document.querySelector("#s5 .cap"), t, 0.2, 1.0);
+    rise($("s5ph"), t, 0.3, 1.2, 80);
+    [["w1", 1.0], ["w2", 2.0], ["w3", 3.0], ["w4", 3.8]].forEach(([id, at]) => {
+      show($(id), t >= at);
+      rise($(id), t, at, 0.45, 18);
+    });
+  });
+
+  // 6 · IA
+  const hls = [...document.querySelectorAll("#inv .hl")];
+  const fs = [...document.querySelectorAll("#ext .f")];
+  const ck = [...document.querySelectorAll("#ext li")];
+  S("s6", 20.2, 25.8, (t) => {
+    rise(document.querySelector("#s6 .cap"), t, 0.2, 1.0);
+    rise($("inv"), t, 0.3, 1.0, 60);
+    rise($("ext"), t, 0.6, 1.0, 60);
+    const sc = p(t, 1.0, 2.6);
+    $("beam").style.top = `${lerp(-90, 640, smooth(sc))}px`;
+    $("beam").style.opacity = sc > 0 && sc < 1 ? 1 : 0;
+    hls.forEach((h, i) => h.style.setProperty("--o", cl(p(t, 1.1 + i * 0.3, 1.4 + i * 0.3)) * (1 - p(t, 3.2, 3.8))));
+    fs.forEach((f, i) => rise(f, t, 1.3 + i * 0.3, 0.5, 10));
+    ck.forEach((c, i) => {
+      rise(c, t, 3.0 + i * 0.32, 0.45, 10);
+      c.querySelector("i").style.transform = `scale(${ease(p(t, 3.0 + i * 0.32, 3.3 + i * 0.32))})`;
+    });
+  });
+
+  // 7 · revisión
+  const rvr = [...document.querySelectorAll("#rv .row")];
+  S("s7", 25.6, 30.6, (t) => {
+    rise(document.querySelector("#s7 .cap"), t, 0.2, 1.0);
+    rise($("rv"), t, 0.3, 1.0, 60);
+    rvr.forEach((r, i) => rise(r, t, 0.8 + i * 0.22, 0.5, 12));
+    const g = p(t, 2.4, 3.0);
+    $("rvf").style.setProperty("--g", g);
+    $("rvn").style.maxHeight = `${ease(g) * 40}px`;
+    $("rvn").style.opacity = g;
+  });
+
+  // 8 · exportación
+  const exr = [...document.querySelectorAll("#ex .r")];
+  S("s8", 30.4, 35.2, (t) => {
+    rise(document.querySelector("#s8 .cap"), t, 0.2, 1.0);
+    rise($("ex"), t, 0.3, 1.0, 60);
+    exr.forEach((r, i) => rise(r, t, 0.8 + i * 0.2, 0.5, 10));
+    $("pa3").classList.toggle("on", t >= 2.1);
+    $("pa3").style.transform = `scale(${t >= 2.1 && t < 2.3 ? 0.96 : 1})`;
+    rise($("exd"), t, 2.7, 0.6, 10);
+  });
+
+  // 9 · panel del cierre: el recordatorio sale solo y Bar Es Pla se completa
+  const bars = [...document.querySelectorAll("#cbw .bar i")];
+  S("s9", 35.0, 40.4, (t) => {
+    rise(document.querySelector("#s9 .cap"), t, 0.2, 1.0);
+    rise($("cbw"), t, 0.3, 1.0, 60);
+    bars.forEach((b, i) => (b.style.width = `${Number(b.dataset.p) * ease(p(t, 0.8 + i * 0.12, 1.9 + i * 0.12))}%`));
+    rise($("toast"), t, 2.2, 0.7, 30);
+    const fin = p(t, 3.9, 4.6);
+    if (t >= 3.9) {
+      $("toast").style.opacity = 1 - fin;
+      $("cbi").style.width = `${lerp(82, 100, ease(fin))}%`;
+      $("cbs").innerHTML = '<span class="pill ok">Completo</span>';
+      $("cbk").textContent = "4";
+    } else {
+      $("cbs").innerHTML = t >= 2.4 ? '<span class="pill info">Recordatorio enviado</span>' : '<span class="pill warn">Faltan 2</span>';
+      $("cbk").textContent = "3";
+    }
+  });
+
+  // 10 · promesas
+  S("s10", 40.2, 43.6, (t) => {
+    ["p1", "p2", "p3"].forEach((id, i) => rise($(id), t, 0.25 + i * 0.7, 0.8, 22));
+  });
+
+  // 11 · cierre (se queda hasta el final)
+  S("s11", 43.4, 99, (t) => {
+    rise($("s11logo"), t, 0.2, 1.1, 20);
+    rise($("s11eb"), t, 0.7, 0.9, 14);
+    rise($("s11t"), t, 1.2, 0.9, 18);
+    rise($("s11b"), t, 1.9, 0.9, 18);
+    rise($("s11w"), t, 2.4, 0.9, 12);
+  });
+
+  window.render = (t) => {
+    for (const s of scenes) {
+      const on = t >= s.a && t < s.z;
+      s.el.style.display = on ? "block" : "none";
+      if (!on) continue;
+      // fundido con desenfoque al entrar y salir, y un empuje lento de cámara
+      const kin = s.a === 0 ? 1 : smooth(p(t, s.a, s.a + 0.5));
+      const kout = s.z > DURATION ? 1 : smooth(p(s.z - t, 0, 0.5));
+      const k = Math.min(kin, kout);
+      s.el.style.opacity = k;
+      s.el.style.filter = k < 1 ? `blur(${(1 - k) * 10}px)` : "none";
+      s.el.style.transform = `scale(${1 + 0.025 * p(t, s.a, Math.min(s.z, DURATION))})`;
+      s.upd(t - s.a);
+    }
+  };
+  window.DURATION = DURATION;
+
+  if (!navigator.webdriver) {
+    const t0 = performance.now();
+    const loop = () => { window.render(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); };
+    document.fonts.ready.then(loop);
+  } else {
+    window.render(0);
+  }
+</script>
+</body>
+</html>

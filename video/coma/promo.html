@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>COMA · vídeo promocional</title>
+<!--
+  Vídeo promocional general de COMA (34 s, rejilla de 120 BPM). Idea: la tecnología al servicio de
+  las personas. Las máquinas hacen lo repetitivo para que la pyme gane tiempo para sus clientes, su
+  equipo y los suyos. Hilo: el día a día que agobia → la promesa → cuatro servicios con interfaz →
+  lo que ganas → nuestra filosofía → prueba → cierre. Cifras de src/data/site.ts y pricing.ts.
+  window.render(t) dibuja cada fotograma; video/render.cjs los captura.
+-->
+<style>
+  @font-face {
+    font-family: "Archivo V";
+    src: url("../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+  }
+  :root {
+    --paper: #efece4;
+    --ink: #0c0c0c;
+    --muted: #6b665e;
+    --night-muted: #a8a39b;
+    --line: rgba(12, 12, 12, 0.09);
+    --red: #e1112d;
+    --ok: #2f8f5b;
+    --ok-bg: #e3f1e8;
+    --shadow: 0 50px 110px rgba(40, 32, 20, 0.14), 0 10px 30px rgba(40, 32, 20, 0.07);
+    --serif: Georgia, "Times New Roman", serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+  body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+  .sc { position: absolute; inset: 0; display: none; transform-origin: 50% 50%; background: var(--paper); }
+  .sc.dark { background: var(--ink); color: var(--paper); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .h { font-weight: 700; font-stretch: 108%; letter-spacing: -0.035em; line-height: 0.98; }
+  .c { color: var(--red); }
+  .eyebrow { font-weight: 700; font-stretch: 120%; text-transform: uppercase; letter-spacing: 0.16em; font-size: 24px; color: var(--red); }
+  .logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
+  .logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); }
+  .card { background: #fff; border-radius: 26px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .slot { position: relative; display: inline-block; }
+  .slot > span { position: absolute; left: 50%; top: 0; white-space: nowrap; }
+
+  /* 1 · el día a día */
+  #dEb { font-size: 30px; margin-bottom: 40px; }
+  #dWord { font-size: 108px; height: 124px; width: 1800px; }
+
+  /* 2 · la promesa */
+  #p1 { font-size: 110px; color: var(--muted); }
+  #p2 { font-size: 110px; margin-top: 20px; max-width: 1600px; }
+
+  /* servicios: comunes */
+  .cap { position: absolute; left: 150px; top: 0; bottom: 0; width: 700px; display: flex; flex-direction: column; justify-content: center; }
+  .cap h2 { font-size: 96px; margin-top: 24px; }
+  .cap p { font-size: 30px; line-height: 1.35; margin-top: 28px; color: var(--muted); }
+  .ui { position: absolute; left: 920px; right: 120px; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; }
+
+  /* 3 · web espectacular: electricidad y fontanería */
+  #s3 .cap { width: 520px; left: 120px; }
+  #s3 .cap h2 { font-size: 82px; }
+  .br { position: absolute; left: 700px; top: 170px; width: 1080px; height: 690px; border-radius: 22px; overflow: hidden; background: #0b1020; box-shadow: 0 70px 140px rgba(10, 16, 40, .3), 0 14px 34px rgba(10, 16, 40, .14); }
+  .br .top { height: 46px; background: #161b2b; display: flex; align-items: center; gap: 9px; padding: 0 18px; }
+  .br .top i { width: 12px; height: 12px; border-radius: 50%; background: #2d3448; }
+  .br .url { margin-left: 16px; background: #222a3d; border-radius: 8px; padding: 5px 16px; font-size: 16px; color: #a9b2c8; width: 360px; }
+  .view { position: absolute; left: 0; right: 0; top: 46px; bottom: 0; overflow: hidden; }
+  .page { position: absolute; left: 0; right: 0; top: 0; }
+  .heroV { position: relative; height: 644px; overflow: hidden; color: #fff; background: radial-gradient(ellipse at 78% 42%, #1d2a52 0%, #0b1020 62%); }
+  .heroV .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(120,150,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,.07) 1px, transparent 1px); background-size: 44px 44px; }
+  .heroV .lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .glow { position: absolute; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,64,.55), rgba(255,190,40,.12) 45%, rgba(255,190,40,0) 70%); }
+  .bulb { position: absolute; width: 190px; margin-left: -95px; }
+  .navV { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; justify-content: space-between; padding: 24px 44px; font-size: 16px; z-index: 2; }
+  .navV b { font-size: 26px; font-weight: 800; font-stretch: 120%; letter-spacing: .02em; }
+  .navV b i { font-style: normal; color: #ffd23f; }
+  .navV span { color: #c2c9db; }
+  .navV em { font-style: normal; background: #ffd23f; color: #121212; font-weight: 700; padding: 10px 20px; border-radius: 999px; }
+  .copyV { position: absolute; left: 56px; top: 130px; width: 560px; z-index: 2; }
+  .copyV small { display: block; font-size: 15px; letter-spacing: .22em; text-transform: uppercase; color: #ffd23f; font-weight: 700; margin-bottom: 18px; }
+  .copyV h3 { font-size: 92px; font-weight: 800; font-stretch: 110%; letter-spacing: -0.04em; line-height: .92; }
+  .copyV h3 i { font-style: normal; color: #ffd23f; }
+  .copyV p { font-size: 21px; color: #c2c9db; margin-top: 22px; }
+  .badge { position: absolute; z-index: 3; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(12px); border-radius: 16px; padding: 14px 18px; font-size: 17px; color: #fff; }
+  .badge b { display: block; font-size: 24px; }
+  .badge .st5 { color: #ffd23f; }
+  .ask { position: absolute; left: 56px; right: 56px; bottom: 40px; z-index: 2; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); backdrop-filter: blur(14px); border-radius: 18px; padding: 14px 14px 14px 22px; font-size: 18px; }
+  .ask > span { color: #c2c9db; margin-right: 6px; }
+  .ask .chipV { color: #fff; background: rgba(255,255,255,.1); border-radius: 999px; padding: 9px 16px; }
+  .ask .chipV.on { background: #fff; color: #0b1020; font-weight: 600; }
+  .ask .go { margin-left: auto; background: #ffd23f; color: #121212; font-weight: 800; border-radius: 12px; padding: 12px 22px; }
+  .svc { background: #f4f2ec; padding: 50px 56px 70px; color: #121826; }
+  .svc h4 { font-size: 50px; font-weight: 800; letter-spacing: -0.03em; }
+  .svc p { font-size: 19px; color: #5d6474; margin: 8px 0 26px; }
+  .svc .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .svc .it { background: #fff; border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(10,16,40,.06); }
+  .svc .ico { width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; font-size: 32px; margin-bottom: 16px; }
+  .svc .it b { display: block; font-size: 23px; }
+  .svc .it span { display: block; font-size: 17px; color: #5d6474; margin-top: 6px; }
+  .svc .it em { display: inline-block; margin-top: 14px; font-style: normal; font-size: 15px; font-weight: 700; color: #0b1020; background: #ffd23f; border-radius: 999px; padding: 6px 12px; }
+  .phone { position: absolute; left: 1560px; top: 400px; width: 290px; height: 600px; border-radius: 46px; background: #0c0c0c; padding: 10px; box-shadow: 0 60px 120px rgba(10,16,40,.38); }
+  .phone .scr { position: relative; width: 100%; height: 100%; border-radius: 37px; overflow: hidden; }
+  .phone .heroV { height: 100%; }
+  .phone .navV { padding: 46px 20px 0; font-size: 12px; }
+  .phone .navV b { font-size: 18px; }
+  .phone .copyV { left: 22px; right: 22px; top: 300px; width: auto; }
+  .phone .copyV small { font-size: 10px; margin-bottom: 10px; }
+  .phone .copyV h3 { font-size: 44px; }
+  .phone .bulb { width: 100px; margin-left: -50px; }
+  .phone .glow { width: 280px; height: 280px; margin: -140px 0 0 -140px; }
+  .phone .callM { position: absolute; left: 22px; right: 22px; bottom: 40px; background: #ffd23f; color: #121212; text-align: center; font-weight: 800; border-radius: 999px; padding: 15px; font-size: 17px; z-index: 2; }
+  #price { position: absolute; left: 1490px; top: 120px; background: var(--red); color: #fff; border-radius: 999px; padding: 22px 34px; font-size: 36px; font-weight: 700; box-shadow: 0 20px 40px rgba(225,17,45,.3); z-index: 5; }
+  #price small { font-size: 20px; font-weight: 500; opacity: .85; }
+
+  /* 4 · seo */
+  .sr { width: 820px; display: flex; flex-direction: column; gap: 26px; }
+  .sr .q { padding: 24px 30px; display: flex; gap: 18px; align-items: center; font-size: 30px; }
+  .sr .q svg { width: 30px; flex: none; }
+  .sr .res { padding: 26px 30px; }
+  .sr .res small { font-size: 18px; color: var(--muted); }
+  .sr .res b { display: block; font-size: 28px; color: #1a4fbf; font-weight: 600; margin: 4px 0; }
+  .sr .res span { font-size: 20px; color: var(--muted); }
+  .sr .ai { padding: 26px 30px; }
+  .sr .ai .who { font-size: 18px; font-weight: 700; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; }
+  .sr .ai .who i { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(var(--red), #f59e0b, var(--red)); }
+  .sr .ai p { font-size: 25px; line-height: 1.4; margin-top: 10px; }
+  .sr .ai mark { background: #fde2e5; color: var(--ink); padding: 0 6px; border-radius: 6px; font-weight: 600; }
+  .stars { color: #f5a623; }
+
+  /* 5 · agente */
+  .chat { width: 620px; padding: 30px; background: #f3efe8; }
+  .chat .hd { display: flex; justify-content: space-between; font-size: 19px; color: var(--muted); margin-bottom: 18px; }
+  .chat .hd b { color: var(--ink); }
+  .chat .msgs { display: flex; flex-direction: column; gap: 14px; min-height: 400px; }
+  .bub { max-width: 82%; padding: 16px 20px; border-radius: 22px; font-size: 25px; line-height: 1.34; }
+  .bub.me { align-self: flex-end; background: #ddf4cf; border-bottom-right-radius: 7px; }
+  .bub.them { align-self: flex-start; background: #fff; border-bottom-left-radius: 7px; }
+  .dots { align-self: flex-start; background: #fff; border-radius: 22px; padding: 20px 22px; display: flex; gap: 8px; }
+  .dots i { width: 11px; height: 11px; border-radius: 50%; background: #aaa; }
+
+  /* 6 · automatización */
+  .flow { position: relative; width: 820px; height: 600px; }
+  .node { position: absolute; left: 0; width: 820px; padding: 22px 28px; display: flex; align-items: center; gap: 22px; font-size: 28px; font-weight: 600; }
+  .node .ic { width: 58px; height: 58px; border-radius: 16px; background: var(--paper); display: grid; place-items: center; font-size: 28px; flex: none; }
+  .node .st { margin-left: auto; font-size: 20px; font-weight: 600; padding: 7px 16px; border-radius: 999px; background: var(--paper); color: var(--muted); }
+  .node .st.ok { background: var(--ok-bg); color: var(--ok); }
+  .wire { position: absolute; left: 56px; width: 4px; background: rgba(12,12,12,.12); border-radius: 4px; overflow: hidden; }
+  .wire i { display: block; width: 100%; background: var(--red); }
+
+  /* 7 · lo que ganas */
+  #gEb { font-size: 44px; margin-bottom: 30px; color: var(--paper); letter-spacing: .02em; text-transform: none; font-weight: 600; font-stretch: 100%; }
+  #gWord { font-size: 240px; height: 250px; width: 1800px; }
+
+  /* 8 · filosofía */
+  #v1 { font-size: 132px; max-width: 1500px; }
+  #v2 { font-size: 34px; margin-top: 46px; color: var(--muted); }
+
+  /* 9 · prueba */
+  #pN { font-size: 400px; font-weight: 800; font-stretch: 112%; letter-spacing: -0.05em; line-height: .85; font-variant-numeric: tabular-nums; }
+  #pL { font-size: 64px; margin-top: 30px; }
+  #pS { font-size: 32px; margin-top: 26px; color: var(--night-muted); }
+
+  /* 10 · cierre */
+  #cLogo { font-size: 220px; }
+  #cEb { margin-top: 26px; font-size: 26px; }
+  #cT { margin-top: 44px; font-size: 56px; }
+  #cB { font-size: 36px; font-weight: 700; background: var(--red); color: #fff; padding: 26px 56px; border-radius: 999px; }
+  #cBw { position: relative; margin-top: 50px; }
+  #cR { position: absolute; inset: 0; border-radius: 999px; border: 4px solid var(--red); opacity: 0; }
+  #cM { margin-top: 22px; font-size: 24px; color: var(--muted); }
+  #cM b { color: var(--ink); font-weight: 600; }
+  #cW { margin-top: 26px; font-size: 26px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · el día a día de una pyme -->
+  <section class="sc dark" id="s1">
+    <div class="center">
+      <div class="eyebrow" id="dEb">Cada día, en tu pyme</div>
+      <div class="h slot" id="dWord">
+        <span>Mensajes sin contestar.</span><span>Facturas por teclear.</span><span>Clientes que no te encuentran.</span><span>Tareas que se repiten<span class="c">.</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · la promesa -->
+  <section class="sc" id="s2">
+    <div class="center">
+      <div class="h" id="p1">No necesitas más horas.</div>
+      <div class="h" id="p2">Necesitas tecnología que trabaje para ti<span class="c">,</span></div>
+    </div>
+  </section>
+
+  <!-- 3 · una web que enamora: electricidad y fontanería -->
+  <section class="sc" id="s3">
+    <div class="cap"><div class="eyebrow">Diseño web</div><h2 class="h">Una web que enamora. Desde 99 €<span class="c">,</span></h2><p>Rápida, a medida y lista para que te llamen desde el móvil.</p></div>
+    <div class="br" id="br">
+      <div class="top"><i></i><i></i><i></i><span class="url">volta-instalaciones.es</span></div>
+      <div class="view"><div class="page" id="pg">
+        <div class="heroV">
+          <div class="grid"></div>
+          <svg class="lines" viewBox="0 0 1080 644" preserveAspectRatio="none">
+            <path class="cur" d="M-20 600 C 220 600, 330 470, 520 470 S 760 330, 830 300" fill="none" stroke="#ffd23f" stroke-width="4" stroke-linecap="round" stroke-dasharray="16 22"/>
+            <path class="cur2" d="M-20 640 C 260 640, 380 540, 600 540 S 900 470, 1100 430" fill="none" stroke="#4cc9ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 18"/>
+          </svg>
+          <div class="glow" id="gl" style="left:830px;top:250px"></div>
+          <svg class="bulb" id="bu" style="left:830px;top:120px" viewBox="0 0 100 150"><path d="M50 6 C24 6 8 26 8 48 C8 66 20 76 28 90 C32 97 33 104 33 110 H67 C67 104 68 97 72 90 C80 76 92 66 92 48 C92 26 76 6 50 6 Z" fill="rgba(255,236,170,.18)" stroke="#ffd23f" stroke-width="4"/><path d="M38 110 V70 L46 78 L50 66 L54 78 L62 70 V110" fill="none" stroke="#fff3c4" stroke-width="3" stroke-linejoin="round"/><rect x="33" y="114" width="34" height="8" rx="3" fill="#c9cfdc"/><rect x="35" y="125" width="30" height="8" rx="3" fill="#aab2c4"/><rect x="40" y="136" width="20" height="7" rx="3" fill="#8a93a8"/></svg>
+          <div class="navV"><b><i>⚡</i> VOLTA</b><span>Servicios · Urgencias · Opiniones</span><em>Llamar 24 h</em></div>
+          <div class="copyV" id="cV"><small>Electricidad y fontanería · Palma</small><h3>Luz y agua,<br/><i>sin esperas.</i></h3><p>Un técnico en tu casa hoy mismo. Presupuesto cerrado antes de empezar.</p></div>
+          <div class="badge" id="bd1" style="left:700px;top:420px"><b><span class="st5">★★★★★</span> 4,9</b>212 reseñas en Google</div>
+          <div class="badge" id="bd2" style="left:900px;top:150px"><b>24 h</b>Urgencias</div>
+          <div class="ask" id="ak"><span>¿Qué necesitas?</span><span class="chipV" id="ch1">⚡ Avería eléctrica</span><span class="chipV">💧 Fuga de agua</span><span class="chipV">🔥 Calentador</span><span class="go">Pedir técnico →</span></div>
+        </div>
+        <div class="svc">
+          <h4>Lo arreglamos hoy.</h4>
+          <p>Electricistas y fontaneros de confianza, con garantía por escrito.</p>
+          <div class="grid3">
+            <div class="it"><div class="ico" style="background:#fff4c2">⚡</div><b>Instalaciones eléctricas</b><span>Cuadros, boletines y certificados</span><em>Presupuesto gratis</em></div>
+            <div class="it"><div class="ico" style="background:#d9f2ff">💧</div><b>Fontanería</b><span>Fugas, baños y cocinas</span><em>Presupuesto gratis</em></div>
+            <div class="it"><div class="ico" style="background:#ffe1d6">🔥</div><b>Aerotermia y calderas</b><span>Ahorra en tu factura</span><em>Presupuesto gratis</em></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="phone" id="ph"><div class="scr"><div class="heroV">
+      <div class="grid"></div>
+      <div class="glow" id="gl2" style="left:135px;top:200px"></div>
+      <svg class="bulb" id="bu2" style="left:135px;top:120px" viewBox="0 0 100 150"><path d="M50 6 C24 6 8 26 8 48 C8 66 20 76 28 90 C32 97 33 104 33 110 H67 C67 104 68 97 72 90 C80 76 92 66 92 48 C92 26 76 6 50 6 Z" fill="rgba(255,236,170,.18)" stroke="#ffd23f" stroke-width="4"/><path d="M38 110 V70 L46 78 L50 66 L54 78 L62 70 V110" fill="none" stroke="#fff3c4" stroke-width="3" stroke-linejoin="round"/><rect x="33" y="114" width="34" height="8" rx="3" fill="#c9cfdc"/><rect x="35" y="125" width="30" height="8" rx="3" fill="#aab2c4"/></svg>
+      <div class="navV"><b><i>⚡</i> VOLTA</b><span>☰</span></div>
+      <div class="copyV"><small>Electricidad y fontanería</small><h3>Luz y agua,<br/><i>sin esperas.</i></h3></div>
+      <div class="callM">📞 Llamar ahora</div>
+    </div></div></div>
+    <div id="price">Desde 99 € <small>+ IVA</small></div>
+  </section>
+
+  <!-- 4 · SEO y GEO -->
+  <section class="sc" id="s4">
+    <div class="cap"><div class="eyebrow">SEO y GEO</div><h2 class="h">Que te encuentren. En Google y en ChatGPT<span class="c">,</span></h2></div>
+    <div class="ui"><div class="sr">
+      <div class="card q" id="sq"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="#6b665e" stroke-width="2"/><path d="M16 16l4 4" stroke="#6b665e" stroke-width="2" stroke-linecap="round"/></svg><span id="sqt"></span></div>
+      <div class="card res" id="sres"><small>tuclinica.es</small><b>Tu Clínica · Dentista en Palma</b><span><span class="stars">★★★★★</span> 4,9 · Abierto ahora · Cita online</span></div>
+      <div class="card ai" id="sai"><div class="who"><i></i>Asistente de IA</div><p>Para un dentista en Palma, te recomiendo <mark>Tu Clínica</mark>: cita online, muy buenas opiniones y abierta por la tarde.</p></div>
+    </div></div>
+  </section>
+
+  <!-- 5 · agente de IA -->
+  <section class="sc" id="s5">
+    <div class="cap"><div class="eyebrow">Agentes de IA</div><h2 class="h">Atiende a las 3:00. Tú, a descansar<span class="c">,</span></h2></div>
+    <div class="ui"><div class="card chat" id="ch">
+      <div class="hd"><b>Tu Clínica · asistente</b><span>03:12</span></div>
+      <div class="msgs">
+        <div class="bub me" id="a1">¿Tenéis cita mañana por la tarde?</div>
+        <div class="dots" id="ad"><i></i><i></i><i></i></div>
+        <div class="bub them" id="a2">¡Sí! A las 17:30 o a las 18:15. ¿Te reservo una?</div>
+        <div class="bub me" id="a3">17:30 👍</div>
+        <div class="bub them" id="a4">Hecho <b style="color:var(--ok)">✓</b> Te llega la confirmación por WhatsApp.</div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 6 · automatizaciones -->
+  <section class="sc" id="s6">
+    <div class="cap"><div class="eyebrow">Automatizaciones</div><h2 class="h">Lo repetitivo, para las máquinas<span class="c">,</span></h2><p>Terminas el trabajo y la factura sale sola: emitida, enviada y vigilada.</p></div>
+    <div class="ui"><div class="flow" id="fl">
+      <div class="wire" style="top:100px;height:440px"><i id="fw"></i></div>
+      <div class="card node" style="top:0"><span class="ic">🧰</span>Trabajo terminado<span class="st">Nuevo</span></div>
+      <div class="card node" style="top:160px"><span class="ic">🧾</span>Factura emitida · 186,34 €<span class="st">Esperando</span></div>
+      <div class="card node" style="top:320px"><span class="ic">📲</span>Enviada por email y WhatsApp<span class="st">Esperando</span></div>
+      <div class="card node" style="top:480px"><span class="ic">⏰</span>Recordatorio si no se paga<span class="st">Esperando</span></div>
+    </div></div>
+  </section>
+
+  <!-- 7 · lo que ganas -->
+  <section class="sc dark" id="s7">
+    <div class="center">
+      <div class="eyebrow" id="gEb">Y tú ganas tiempo para</div>
+      <div class="h slot" id="gWord">
+        <span>tus clientes.</span><span>tu equipo.</span><span>crecer.</span><span>los tuyos<span class="c">.</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · filosofía -->
+  <section class="sc" id="s8">
+    <div class="center">
+      <div class="h" id="v1">Tecnología al servicio de las personas<span class="c">,</span></div>
+      <div id="v2">Nuestro oficio desde 1997: de las revistas a la inteligencia artificial.</div>
+    </div>
+  </section>
+
+  <!-- 9 · prueba -->
+  <section class="sc dark" id="s9">
+    <div class="center">
+      <div id="pN">+0</div>
+      <div class="h" id="pL">pymes ya trabajan con COMA<span class="c">.</span></div>
+      <div id="pS">De Mallorca a toda España</div>
+    </div>
+  </section>
+
+  <!-- 10 · cierre -->
+  <section class="sc" id="s10">
+    <div class="center">
+      <div id="cLogo" class="logo"><span>COMA</span><svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+      <div id="cEb" class="eyebrow">Comunicación, tecnología e IA para pymes</div>
+      <div id="cT" class="h">La tecnología trabaja. Tú, a lo tuyo<span class="c">.</span></div>
+      <div id="cBw"><div id="cR"></div><div id="cB">Cuéntanos qué te quita tiempo →</div></div>
+      <div id="cM"><b>Propuesta gratis y sin compromiso</b> · Te respondemos en persona</div>
+      <div id="cW">comunicacionenmallorca.com/contacto</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const DURATION = 34;
+  const $ = (id) => document.getElementById(id);
+  const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const p = (x, a, b) => cl((x - a) / (b - a));
+  const ease = (x) => 1 - Math.pow(1 - x, 3.4);
+  const smooth = (x) => x * x * (3 - 2 * x);
+  const lerp = (a, b, k) => a + (b - a) * k;
+
+  /** Entrada rápida y limpia: sube, se enfoca y gana opacidad. */
+  function rise(el, t, at, dur = 0.5, dist = 30) {
+    const k = ease(p(t, at, at + dur));
+    el.style.opacity = k;
+    el.style.transform = `translateY(${(1 - k) * dist}px)`;
+    el.style.filter = k < 1 ? `blur(${(1 - k) * 8}px)` : "none";
+  }
+  const show = (el, on) => (el.style.display = on ? "" : "none");
+
+  /** Ranura de palabras centradas: cada `step` s entra la siguiente y la anterior sale hacia arriba. */
+  function slot(root, t, at, step) {
+    const items = [...root.children];
+    const i = Math.max(0, Math.min(items.length - 1, Math.floor((t - at) / step)));
+    items.forEach((el, j) => {
+      const local = t - at - j * step;
+      const kin = ease(p(local, 0, 0.24));
+      const kout = j < items.length - 1 ? ease(p(local, step, step + 0.18)) : 0;
+      const o = t < at ? 0 : j === i ? Math.max(kin, 0) : j === i - 1 ? 1 - kout : 0;
+      el.style.opacity = o;
+      el.style.transform = `translateX(-50%) translateY(${(1 - kin) * 70 - kout * 70}px)`;
+      el.style.filter = o < 1 ? `blur(${(1 - o) * 6}px)` : "none";
+    });
+  }
+
+  const scenes = [];
+  const S = (id, a, z, upd) => scenes.push({ el: $(id), a, z, upd });
+
+  // 1 · el día a día (0–3.6)
+  S("s1", 0, 3.6, (t) => {
+    rise($("dEb"), t, 0.1, 0.45, 14);
+    slot($("dWord"), t, 0.15, 0.85);
+    $("dWord").style.transform = `scale(${1 + 0.025 * t})`;
+  });
+
+  // 2 · la promesa (3.6–7)
+  S("s2", 3.6, 7, (t) => {
+    rise($("p1"), t, 0.15, 0.5, 40);
+    rise($("p2"), t, 1.15, 0.55, 40);
+  });
+
+  // 3 · web (7–10.6): se enciende la luz, la corriente y el agua fluyen, la página baja y llega el móvil
+  /** Bombilla que parpadea al encenderse y luego respira. */
+  function light(t, glow, bulb) {
+    const on = t < 0.55 ? 0.06 : t < 0.62 ? 1 : t < 0.68 ? 0.2 : 1;
+    glow.style.opacity = on;
+    glow.style.transform = `scale(${1 + 0.05 * Math.sin(t * 4)})`;
+    bulb.style.filter = on > 0.5 ? "drop-shadow(0 0 22px rgba(255,214,64,.9))" : "none";
+  }
+  S("s3", 7, 10.6, (t) => {
+    rise(document.querySelector("#s3 .cap"), t, 0.05, 0.5, 30);
+    const k = ease(p(t, 0.1, 0.8));
+    $("br").style.opacity = k;
+    $("br").style.transform = `translateY(${(1 - k) * 90}px) scale(${lerp(0.96, 1, k)})`;
+    light(t, $("gl"), $("bu"));
+    light(t, $("gl2"), $("bu2"));
+    document.querySelector("#s3 .cur").style.strokeDashoffset = -t * 160;
+    document.querySelector("#s3 .cur2").style.strokeDashoffset = -t * 110;
+    rise($("cV"), t, 0.45, 0.6, 30);
+    rise($("ak"), t, 0.8, 0.5, 20);
+    rise($("bd1"), t, 0.85, 0.5, 20);
+    rise($("bd2"), t, 1.0, 0.5, 20);
+    $("ch1").classList.toggle("on", t >= 1.25);
+    $("pg").style.transform = `translateY(${-smooth(p(t, 1.6, 2.6)) * 470}px)`;
+    const kp = ease(p(t, 1.3, 1.9));
+    $("ph").style.opacity = kp;
+    $("ph").style.transform = `translateY(${(1 - kp) * 160}px) rotate(${lerp(6, 2, kp)}deg)`;
+    const kq = p(t, 2.3, 2.65);
+    $("price").style.opacity = cl(kq * 2);
+    $("price").style.transform = `scale(${kq <= 0 ? 0.6 : lerp(0.6, 1, 1 + 2.4 * Math.pow(kq - 1, 3) + 1.4 * Math.pow(kq - 1, 2))}) rotate(-5deg)`;
+  });
+
+  // 4 · SEO y GEO (10.6–13.4)
+  const q = "dentista en Palma";
+  S("s4", 10.6, 13.4, (t) => {
+    rise(document.querySelector("#s4 .cap"), t, 0.05, 0.5, 30);
+    rise($("sq"), t, 0.15, 0.5, 60);
+    $("sqt").textContent = q.slice(0, Math.floor(cl((t - 0.45) / 0.035, 0, q.length)));
+    rise($("sres"), t, 1.15, 0.45, 24);
+    rise($("sai"), t, 1.65, 0.5, 24);
+  });
+
+  // 5 · agente (13.4–16.4)
+  S("s5", 13.4, 16.4, (t) => {
+    rise(document.querySelector("#s5 .cap"), t, 0.05, 0.5, 30);
+    rise($("ch"), t, 0.15, 0.6, 80);
+    [["a1", 0.55], ["a2", 1.3], ["a3", 1.9], ["a4", 2.35]].forEach(([id, at]) => { show($(id), t >= at); rise($(id), t, at, 0.3, 14); });
+    show($("ad"), t >= 0.85 && t < 1.3);
+    $("ad").querySelectorAll("i").forEach((d, i) => (d.style.transform = `translateY(${Math.sin(t * 8 - i * 0.6) * -5}px)`));
+  });
+
+  // 6 · automatización (16.4–19.4)
+  const nodes = [...document.querySelectorAll("#fl .node")];
+  S("s6", 16.4, 19.4, (t) => {
+    rise(document.querySelector("#s6 .cap"), t, 0.05, 0.5, 30);
+    rise(document.querySelector("#s6 .cap p"), t, 0.4, 0.5, 16);
+    nodes.forEach((n, i) => rise(n, t, 0.15 + i * 0.1, 0.45, 40));
+    $("fw").style.height = `${smooth(p(t, 0.8, 2.3)) * 100}%`;
+    nodes.forEach((n, i) => {
+      const done = t >= 0.75 + i * 0.5;
+      const st = n.querySelector(".st");
+      st.className = "st" + (done ? " ok" : "");
+      st.textContent = done ? ["✓ Cerrado", "✓ Emitida", "✓ Enviada", "✓ Programado"][i] : i === 0 ? "Nuevo" : "Esperando";
+    });
+  });
+
+  // 7 · lo que ganas (19.4–23)
+  S("s7", 19.4, 23, (t) => {
+    rise($("gEb"), t, 0.1, 0.45, 14);
+    slot($("gWord"), t, 0.2, 0.8);
+    $("gWord").style.transform = `scale(${1 + 0.025 * t})`;
+  });
+
+  // 8 · filosofía (23–26)
+  S("s8", 23, 26, (t) => {
+    rise($("v1"), t, 0.15, 0.7, 40);
+    rise($("v2"), t, 1.0, 0.6, 16);
+  });
+
+  // 9 · prueba (26–28.8)
+  S("s9", 26, 28.8, (t) => {
+    $("pN").textContent = "+" + Math.round(100 * ease(p(t, 0.1, 1.1)));
+    $("pN").style.transform = `scale(${1 + 0.03 * t})`;
+    rise($("pL"), t, 0.6, 0.5, 20);
+    rise($("pS"), t, 1.2, 0.5, 14);
+  });
+
+  // 10 · cierre (28.8–34)
+  S("s10", 28.8, 99, (t) => {
+    rise($("cLogo"), t, 0.1, 0.7, 20);
+    rise($("cEb"), t, 0.45, 0.5, 14);
+    rise($("cT"), t, 0.85, 0.5, 18);
+    rise($("cBw"), t, 1.35, 0.5, 20);
+    rise($("cM"), t, 1.7, 0.5, 12);
+    rise($("cW"), t, 2.0, 0.5, 12);
+    // el botón se pulsa: invita a hacer lo mismo
+    const press = t >= 2.6 && t < 2.78;
+    $("cB").style.transform = `scale(${press ? 0.95 : 1 + (t > 2.9 ? 0.02 * Math.sin((t - 2.9) * Math.PI * 1.2) : 0)})`;
+    $("cB").style.background = t >= 2.6 ? "var(--ink)" : "var(--red)";
+    const r = p(t, 2.6, 3.3);
+    $("cR").style.opacity = r > 0 && r < 1 ? 1 - r : 0;
+    $("cR").style.transform = `scale(${1 + r * 0.35}, ${1 + r * 0.9})`;
+  });
+
+  window.render = (t) => {
+    for (const s of scenes) {
+      // pequeño solape para fundir: la escena entra 0.12 s antes de su corte
+      const a = s.a === 0 ? 0 : s.a - 0.12;
+      const on = t >= a && t < s.z;
+      s.el.style.display = on ? "block" : "none";
+      if (!on) continue;
+      const k = s.a === 0 ? 1 : smooth(p(t, a, s.a + 0.08));
+      s.el.style.zIndex = Math.round(s.a * 10);
+      s.el.style.opacity = k;
+      s.el.style.transform = `scale(${lerp(1.02, 1, k) + 0.02 * p(t, s.a, Math.min(s.z, DURATION))})`;
+      s.upd(Math.max(0, t - s.a));
+    }
+  };
+  window.DURATION = DURATION;
+
+  if (!navigator.webdriver) {
+    const t0 = performance.now();
+    const loop = () => { window.render(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); };
+    document.fonts.ready.then(loop);
+  } else {
+    window.render(0);
+  }
+</script>
+</body>
+</html>

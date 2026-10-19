@@ -48,6 +48,12 @@ Maquetas completas de webs de clientes servidas en `/ejemplos-web/<id>/<proyecto
 - Añadir o actualizar uno desde GitHub: `npm run ejemplo -- <proyecto> <url-del-repo>`. Al actualizar se conserva el id, así que el enlace del cliente no cambia. Con `--negocio="Nombre"` se fija el nombre de la etiqueta de la marca de agua (queda en `ejemplos.json`).
 - `scripts/build-ejemplos.cjs` (dentro de `npm run build` y del `Dockerfile`) compila cada ejemplo con su `base` y reescribe las rutas absolutas para que la navegación funcione dentro de la subcarpeta.
 
+## Vídeos promocionales
+
+- `video/coma/` es el vídeo general (34 s) y `video/despachos/` el de COMA para despachos. Cada uno tiene `promo.html` (escenas animadas; abierto en el navegador se reproduce sin sonido) y `sound.py` (banda sonora sintetizada con numpy).
+- Para regenerarlo: `node video/render.cjs video/coma/promo.html <carpeta-fotogramas>`, `python video/coma/sound.py sonido.wav` y montaje con ffmpeg (H.264 + AAC, `-movflags +faststart`). Las salidas locales (`video/*/out/`) no se suben.
+- El vídeo publicado es `public/video/coma-promo.mp4` (con `coma-promo.jpg` de portada). Se abre desde el botón «COMA en 34 segundos» del pie, en un diálogo que solo descarga el MP4 al pulsarlo.
+
 ## Analítica y cookies
 
 Microsoft Clarity se inyecta en el HTML con `CLARITY_PROJECT_ID`, y el resto de etiquetas (ver docs/ADS.md) se cargan por variables `PUBLIC_*`. **Nada se carga si el usuario no acepta las cookies** (`coma_cookie_consent` en `localStorage`).

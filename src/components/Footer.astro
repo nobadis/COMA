@@ -14,6 +14,10 @@ const links = [
   <div class="wrap">
     <div class="ftr__top">
       <a href="/" class="ftr__logo" aria-label="COMA, ir al inicio"><Logo /></a>
+      <button type="button" class="ftr__play" data-video-open data-track="video_play" data-track-label="footer">
+        <span class="ftr__play-ic" aria-hidden="true"></span>
+        COMA en 34 segundos
+      </button>
       <a class="btn btn--red" href={mailto("Nuevo proyecto")}>
         {site.email}
         <Arrow />
@@ -33,7 +37,49 @@ const links = [
       {`${site.brand} · ${site.legalName} · CIF ${site.cif} · ${site.address.street}, ${site.address.postalCode} ${site.address.city}`}
     </p>
   </div>
+
+  <!-- Vídeo promocional: el MP4 solo se descarga al abrir el diálogo. -->
+  <dialog class="vd" data-video aria-label="Vídeo: COMA en 34 segundos">
+    <div class="vd__box">
+      <button type="button" class="vd__close" data-video-close aria-label="Cerrar vídeo">×</button>
+      <video
+        class="vd__video"
+        controls
+        playsinline
+        preload="none"
+        width="1920"
+        height="1080"
+        data-src="/video/coma-promo.mp4"
+        data-poster="/video/coma-promo.jpg"></video>
+      <p class="vd__foot">
+        <span>Tecnología al servicio de las personas.</span>
+        <a href="/contacto/" data-track="video_cta" data-track-label="footer-video">Cuéntanos qué te quita tiempo <Arrow /></a>
+      </p>
+    </div>
+  </dialog>
 </footer>
+
+<script>
+  document.querySelectorAll<HTMLDialogElement>("[data-video]").forEach((dialog) => {
+    const video = dialog.querySelector<HTMLVideoElement>("video");
+    if (!video) return;
+    const open = () => {
+      if (!video.src) {
+        video.poster = video.dataset.poster ?? "";
+        video.src = video.dataset.src ?? "";
+      }
+      dialog.showModal();
+      void video.play().catch(() => {});
+    };
+    document.querySelectorAll("[data-video-open]").forEach((b) => b.addEventListener("click", open));
+    dialog.querySelector("[data-video-close]")?.addEventListener("click", () => dialog.close());
+    // clic fuera del vídeo (en el fondo) cierra
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener("close", () => video.pause());
+  });
+</script>
 
 <style>
   .ftr {
@@ -94,6 +140,109 @@ const links = [
     cursor: pointer;
     font-size: inherit;
     color: var(--night-muted);
+  }
+  /* botón discreto del vídeo: texto pequeño con un play, entre el logo y el email */
+  .ftr__play {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-inline-end: auto;
+    background: none;
+    border: 0;
+    padding: 0.4rem 0;
+    cursor: pointer;
+    font: inherit;
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+    transition: color 0.3s;
+  }
+  .ftr__play:hover {
+    color: var(--paper);
+  }
+  .ftr__play-ic {
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: 1px solid var(--night-line);
+    border-radius: 50%;
+    transition:
+      border-color 0.3s,
+      background 0.3s;
+  }
+  .ftr__play-ic::before {
+    content: "";
+    margin-left: 0.15rem;
+    border-style: solid;
+    border-width: 0.3rem 0 0.3rem 0.5rem;
+    border-color: transparent transparent transparent currentColor;
+  }
+  .ftr__play:hover .ftr__play-ic {
+    border-color: var(--red);
+    background: var(--red);
+  }
+  @media (min-width: 600px) {
+    .ftr__play {
+      margin-inline-start: 1.5rem;
+    }
+  }
+
+  .vd {
+    width: min(100% - 2rem, 1100px);
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    margin: auto;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .vd::backdrop {
+    background: rgb(12 12 12 / 0.86);
+    backdrop-filter: blur(6px);
+  }
+  .vd__box {
+    position: relative;
+  }
+  .vd__video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background: var(--ink);
+  }
+  .vd__close {
+    position: absolute;
+    top: -2.75rem;
+    right: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0;
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .vd__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding-top: 0.9rem;
+    font-size: var(--fs-sm);
+    color: var(--night-muted);
+  }
+  .vd__foot a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--paper);
+    text-decoration: none;
+  }
+  .vd__foot a:hover {
+    color: var(--red);
   }
   .ftr__bottom {
     padding-top: 1rem;
