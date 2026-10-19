@@ -1,0 +1,224 @@
+---
+import Arrow from "../Arrow.astro";
+import { diagnosticoMail, ivaFlow, ivaScope } from "../../data/despachos";
+
+const mail = diagnosticoMail(
+  "Me interesa el módulo Modelo 303: rellenado, revisión y presentación automática. Quiero validar compatibilidad, representación y presupuesto."
+);
+---
+
+<section class="section iva" id="modelo-303" aria-labelledby="iva-title">
+  <div class="wrap">
+    <div class="iva__intro">
+      <div class="iva__copy">
+        <p class="eyebrow" data-reveal>Modelo 303 · Automatiza el siguiente paso</p>
+        <h2 id="iva-title" data-split>El IVA no termina en una hoja de cálculo<span class="comma">,</span></h2>
+        <p class="lead" data-reveal>
+          Deja de pasar cifras de una pantalla a otra. Conectamos tu contabilidad con el rellenado
+          y la presentación del Modelo 303: datos preparados, incidencias a la vista y justificante
+          en su sitio. Tu equipo pone el criterio y da el visto bueno. El flujo hace el resto.
+        </p>
+        <ul class="iva__benefits" data-reveal>
+          <li><strong>Menos copiar y pegar.</strong> Los importes parten de los libros validados.</li>
+          <li><strong>Más cierres bajo control.</strong> Cada cliente tiene un estado y un responsable.</li>
+          <li><strong>Del envío a la evidencia.</strong> La respuesta y el justificante vuelven al expediente.</li>
+        </ul>
+        <a class="btn btn--red" href={mail} data-track-label="despachos-modelo303">
+          Quiero automatizar mis 303 <Arrow />
+        </a>
+        <p class="iva__note">Módulo a medida · Compatibilidad y autorizaciones verificadas en el diagnóstico.</p>
+      </div>
+
+      <div class="iva-demo" data-iva-demo role="group" aria-label="Demostración del flujo del Modelo 303">
+        <div class="iva-demo__top">
+          <span class="iva-demo__number" aria-hidden="true">303</span>
+          <div><strong>Tu próximo cierre, conectado</strong><small>Empresa de ejemplo · Periodo trimestral</small></div>
+        </div>
+        <p class="iva-demo__label">Simulación interactiva · Datos ficticios · Sin conexión con la AEAT</p>
+        <dl class="iva-demo__amounts">
+          <div><dt>IVA devengado</dt><dd>4.200,00 €</dd></div>
+          <div><dt>IVA deducible validado</dt><dd>1.680,00 €</dd></div>
+          <div><dt>Cuotas anteriores aplicadas</dt><dd>320,00 €</dd></div>
+          <div class="iva-demo__total"><dt>Resultado a ingresar</dt><dd>2.200,00 €</dd></div>
+        </dl>
+        <p class="iva-demo__note">Ejemplo simplificado: régimen general, sin ajustes adicionales. El resultado real depende de cada expediente.</p>
+        <ol class="iva-demo__steps">
+          <li>01 <span>Contabilidad validada</span><strong>Lista</strong></li>
+          <li>02 <span>Borrador y controles</span><strong>Listos</strong></li>
+          <li>03 <span>Aprobación del despacho</span><strong data-iva-approval>Pendiente</strong></li>
+          <li>04 <span>Presentación y justificante</span><strong data-iva-filing>En espera</strong></li>
+        </ol>
+        <div class="iva-demo__interactive" data-iva-controls hidden>
+          <label class="iva-demo__check">
+            <input type="checkbox" data-iva-issue />
+            Simular una incidencia pendiente
+          </label>
+          <label class="iva-demo__check">
+            <input type="checkbox" data-iva-consent />
+            He revisado el borrador de ejemplo y autorizo la simulación
+          </label>
+          <button class="btn btn--red" type="button" data-iva-submit disabled>Simular presentación</button>
+          <p class="iva-demo__status" role="status" aria-live="polite" aria-atomic="true" data-iva-status>
+            Revisa el borrador y marca la aprobación para continuar.
+          </p>
+          <div class="iva-demo__receipt" data-iva-receipt hidden>
+            <strong>Justificante de ejemplo archivado</strong>
+            <span>Referencia interna: DEMO-303 · Sin validez fiscal</span>
+            <span>Presentación simulada aceptada · Pago pendiente de comprobación</span>
+          </div>
+          <button class="iva-demo__reset" type="button" data-iva-reset hidden>Reiniciar demostración</button>
+        </div>
+        <noscript><p>En el servicio, tu equipo revisa y aprueba antes de presentar. Activa JavaScript para probar la simulación.</p></noscript>
+      </div>
+    </div>
+
+    <div class="iva__flow">
+      <p class="eyebrow">Del documento al justificante</p>
+      <h3 class="iva__heading">Un proceso completo. El control sigue en tu despacho.</h3>
+      <ol class="iva__flow-list">
+        {ivaFlow.map((step, i) => (
+          <li data-reveal>
+            <span class="iva__index">0{i + 1}</span>
+            <h4>{step.title}</h4>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="iva__scope">
+      <div class="iva__scope-head">
+        <p class="eyebrow">Lo dejamos resuelto antes de activar</p>
+        <h3 class="iva__heading">Automatizar también es saber cuándo parar.</h3>
+        <p>No basta con rellenar casillas. Configuramos las reglas, los permisos y las excepciones de tu cartera para que cada envío tenga respaldo.</p>
+        <a class="link-arrow" href="https://sede.agenciatributaria.gob.es/Sede/iva.html" target="_blank" rel="noopener noreferrer">Información oficial de IVA en la AEAT <Arrow /></a>
+      </div>
+      <ul class="iva__scope-list">
+        {ivaScope.map((item) => <li><h4>{item.title}</h4><p>{item.text}</p></li>)}
+      </ul>
+    </div>
+
+    <div class="iva__offer" data-reveal>
+      <div>
+        <p class="eyebrow">Empieza con un cierre en paralelo</p>
+        <h3>Primero lo contrastamos. Después lo automatizamos.</h3>
+        <p>Probamos con una muestra acordada y comparamos el borrador con tu proceso actual. Activamos el envío cuando el despacho valida los resultados, la integración y los permisos.</p>
+        <p><strong>Presupuesto propio, fuera de las cuotas base.</strong> Clientes, regímenes, integración, mantenimiento y soporte definidos por escrito. Si no hay canal compatible de presentación, acordamos un alcance de preparación y exportación.</p>
+      </div>
+      <a class="btn btn--red" href={mail} data-track-label="despachos-modelo303-piloto">Valorar el 303 en mi despacho <Arrow /></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-iva-demo]").forEach((demo) => {
+    const controls = demo.querySelector<HTMLElement>("[data-iva-controls]")!;
+    const consent = demo.querySelector<HTMLInputElement>("[data-iva-consent]")!;
+    const issue = demo.querySelector<HTMLInputElement>("[data-iva-issue]")!;
+    const submit = demo.querySelector<HTMLButtonElement>("[data-iva-submit]")!;
+    const reset = demo.querySelector<HTMLButtonElement>("[data-iva-reset]")!;
+    const status = demo.querySelector<HTMLElement>("[data-iva-status]")!;
+    const receipt = demo.querySelector<HTMLElement>("[data-iva-receipt]")!;
+    const approval = demo.querySelector<HTMLElement>("[data-iva-approval]")!;
+    const filing = demo.querySelector<HTMLElement>("[data-iva-filing]")!;
+    let completed = false;
+
+    const update = () => {
+      submit.disabled = completed || issue.checked || !consent.checked;
+      approval.textContent = issue.checked ? "Bloqueada" : consent.checked ? "Aprobada" : "Pendiente";
+      filing.textContent = completed ? "Simulada" : issue.checked ? "Bloqueada" : "En espera";
+      status.textContent = completed
+        ? "Simulación completada. No se ha enviado ninguna declaración ni realizado ningún pago."
+        : issue.checked
+          ? "Presentación bloqueada: tu equipo debe resolver la incidencia antes de aprobar."
+          : consent.checked
+            ? "Borrador de ejemplo aprobado. Puedes simular el envío."
+            : "Revisa el borrador y marca la aprobación para continuar.";
+    };
+    issue.addEventListener("change", () => {
+      consent.checked = false;
+      consent.disabled = issue.checked;
+      update();
+    });
+    consent.addEventListener("change", update);
+    submit.addEventListener("click", () => {
+      if (completed || issue.checked || !consent.checked) return;
+      completed = true;
+      issue.disabled = true;
+      consent.disabled = true;
+      receipt.hidden = false;
+      reset.hidden = false;
+      update();
+      reset.focus({ preventScroll: true });
+    });
+    reset.addEventListener("click", () => {
+      completed = false;
+      issue.disabled = false;
+      consent.disabled = false;
+      issue.checked = false;
+      consent.checked = false;
+      receipt.hidden = true;
+      reset.hidden = true;
+      update();
+      consent.focus({ preventScroll: true });
+    });
+    controls.hidden = false;
+  });
+</script>
+
+<style>
+  .iva { border-top: 1px solid var(--line); }
+  .iva__intro { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .iva__copy { display: grid; gap: 1.5rem; justify-items: start; min-width: 0; }
+  .iva h2 { font-size: clamp(2.2rem, 4.5vw, 4.5rem); max-width: 16ch; }
+  .iva__benefits { display: grid; gap: 0.8rem; }
+  .iva__benefits li { padding-left: 1rem; border-left: 2px solid var(--red); }
+  .iva__note { font-size: var(--fs-sm); color: var(--muted); }
+  .iva-demo { min-width: 0; padding: clamp(1rem, 3vw, 2rem); background: var(--ink); color: var(--paper); border-radius: 20px; }
+  .iva-demo__top { display: flex; align-items: center; gap: 1rem; }
+  .iva-demo__number { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.06em; color: #ff6b7f; }
+  .iva-demo__top small { display: block; color: var(--night-muted); font-size: var(--fs-xs); }
+  .iva-demo__label, .iva-demo__note { font-size: var(--fs-xs); color: var(--night-muted); margin-top: 0.75rem; }
+  .iva-demo__amounts { margin-top: 1.5rem; font-variant-numeric: tabular-nums; }
+  .iva-demo__amounts > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.65rem 0; border-bottom: 1px solid var(--night-line); }
+  .iva-demo__amounts dt { font-size: var(--fs-sm); }
+  .iva-demo__amounts dd { white-space: nowrap; font-weight: 700; }
+  .iva-demo__total dd { font-size: clamp(1.35rem, 3vw, 1.8rem); color: #ff6b7f; }
+  .iva-demo__steps { display: grid; gap: 0.75rem; margin-top: 1.5rem; font-size: var(--fs-xs); }
+  .iva-demo__steps li { display: flex; gap: 0.6rem; color: var(--night-muted); }
+  .iva-demo__steps span { flex: 1; color: var(--paper); }
+  .iva-demo__steps strong { font-weight: 600; }
+  .iva-demo__interactive { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--night-line); }
+  .iva-demo__check { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 1rem; font-size: var(--fs-sm); cursor: pointer; }
+  .iva-demo input { width: 1.1rem; height: 1.1rem; flex: none; margin-top: 0.2rem; accent-color: var(--red); }
+  .iva-demo .btn { width: 100%; }
+  .iva-demo .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .iva-demo__status { margin-top: 1rem; font-size: var(--fs-sm); }
+  .iva-demo__receipt { margin-top: 1rem; padding: 1rem; border-left: 3px solid #73dfa2; background: rgb(115 223 162 / 0.08); font-size: var(--fs-sm); }
+  .iva-demo__receipt span { display: block; margin-top: 0.4rem; color: var(--night-muted); }
+  .iva-demo__reset { margin-top: 1rem; color: var(--paper); text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+  .iva__flow { margin-top: clamp(3rem, 7vw, 6rem); }
+  .iva__heading { font-size: clamp(1.6rem, 2.8vw, 2.7rem); margin: 0.75rem 0 1.5rem; max-width: 25ch; }
+  .iva__flow-list { display: grid; gap: 1.5rem; }
+  .iva__flow-list li { padding-top: 1.25rem; border-top: 2px solid var(--ink); }
+  .iva__index { color: var(--red); font-size: var(--fs-xs); font-weight: 700; }
+  .iva h4 { font-size: var(--fs-lg); margin: 0.75rem 0; }
+  .iva__flow-list p, .iva__scope p { color: var(--muted); }
+  .iva__scope { display: grid; gap: 2rem; margin-top: clamp(3rem, 7vw, 6rem); }
+  .iva__scope-head .link-arrow { margin-top: 1.5rem; font-size: var(--fs-sm); }
+  .iva__scope-list { display: grid; gap: 1.25rem; }
+  .iva__scope-list li { border-top: 1px solid var(--line); }
+  .iva__offer { margin-top: 3rem; padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--ink); display: grid; gap: 1.5rem; align-items: center; background: var(--paper-2); }
+  .iva__offer h3 { font-size: clamp(1.5rem, 2.5vw, 2.2rem); margin: 0.75rem 0; }
+  .iva__offer p + p { margin-top: 0.75rem; }
+  .iva__offer .btn { justify-self: start; }
+  @media (min-width: 800px) {
+    .iva__intro { grid-template-columns: 1fr 1fr; }
+    .iva__flow-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .iva__scope { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; }
+  }
+  @media (max-width: 399px) {
+    .iva-demo__amounts > div { gap: 0.5rem; }
+    .iva-demo__amounts dt { font-size: var(--fs-xs); }
+  }
+</style>

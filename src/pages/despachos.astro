@@ -9,13 +9,14 @@ import DeskInbox from "../components/despachos/DeskInbox.astro";
 import InvoiceLab from "../components/despachos/InvoiceLab.astro";
 import CloseBoard from "../components/despachos/CloseBoard.astro";
 import WaAgent from "../components/despachos/WaAgent.astro";
+import Modelo303 from "../components/despachos/Modelo303.astro";
 import Trust from "../components/Trust.astro";
 import { site, trust, years } from "../data/site";
 import { diagnosticoMail, despachosSubject, modules, plans, onDemand, steps, faq, channels, checks, stack, compare, escala, terms } from "../data/despachos";
 
-const title = "Automatización para asesorías y despachos contables";
+const title = "Automatización para despachos y Modelo 303";
 const description =
-  "WhatsApp y email integrados, extracción de facturas con IA, un agente que atiende a tus clientes e integración con a3, Sage, Holded o Contasol. Para asesorías y despachos. Diagnóstico gratuito.";
+  "Automatiza facturas y el Modelo 303: rellenado, revisión y presentación con aprobación de tu despacho. Integración a medida y diagnóstico gratuito.";
 const mail = diagnosticoMail();
 // "always": en español Intl no separa los miles con 4 cifras (1490), y en precios queda raro.
 const num = (n: number) =>
@@ -27,6 +28,7 @@ const pains = [
   { pain: "Teclear NIF, bases e IVA, una a una", fix: "La IA lo lee; tú revisas lo dudoso" },
   { pain: "Perseguir al cliente por el ticket que falta", fix: "Recordatorios automáticos" },
   { pain: "El último día del trimestre, todo a la vez", fix: "Documentación al día, cada semana" },
+  { pain: "Volver a copiar los mismos importes en el 303", fix: "Borrador automático, revisión y presentación conectadas" },
   { pain: "Cero tiempo para asesorar", fix: "Horas libres para lo que de verdad se paga" },
 ];
 
@@ -84,14 +86,14 @@ const schema = [
         <h1 data-split>Tus clientes envían facturas. Tu despacho deja de teclearlas<span class="comma">,</span></h1>
         <p class="lead" data-reveal style="--d:3">
           WhatsApp y email integrados, IA que lee y comprueba cada factura, un agente que pide lo que
-          falta y todo directo a tu programa contable. Tú solo revisas lo dudoso. Diseñado junto a un
-          equipo contable en ejercicio.
+          falta y todo directo a tu programa contable. Y con el módulo Modelo 303, del borrador de IVA
+          a la presentación tras tu aprobación. Menos tareas repetidas. Más tiempo para asesorar.
         </p>
         <div class="dh__ctas" data-reveal style="--d:4">
           <a class="btn btn--red btn--lg" href={mail} data-magnetic data-track-label="despachos-hero">
             Diagnóstico gratis <Arrow />
           </a>
-          <a class="link-arrow" href="#demo">Pruébalo con una factura</a>
+          <a class="link-arrow" href="#modelo-303">Descubre el Modelo 303 automático</a>
         </div>
         <ul class="dh__chips chips" data-reveal style="--d:5">
           <li class="chip">Sin cambiar de programa</li>
@@ -107,7 +109,7 @@ const schema = [
       </div>
     </div>
   </section>
-  <Marquee items={["WhatsApp integrado", "Email por cliente", "Extracción con IA", "Agente que pide lo que falta", "a3 · Sage · Holded · Contasol", "Modelos 111 · 115", "Panel del cierre"]} />
+  <Marquee items={["WhatsApp integrado", "Email por cliente", "Extracción con IA", "Agente que pide lo que falta", "a3 · Sage · Holded · Contasol", "Modelos 111 · 115", "Modelo 303 automático", "Panel del cierre"]} />
 
   <!-- ---------------------------------------------------------------- dolor -->
   <section class="section night pn" data-dark>
@@ -180,10 +182,10 @@ const schema = [
     <div class="wrap md">
       <div class="md__head">
         <p class="eyebrow" data-reveal>Qué automatizamos</p>
-        <h2 data-split>Del WhatsApp del cliente al libro de registro<span class="comma">,</span></h2>
+        <h2 data-split>Del WhatsApp del cliente al cierre del IVA<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Cinco piezas que trabajan juntas, ajustadas a tu despacho. Empezamos por la que más horas te
-          quita.
+          Recepción, contabilidad y cierre fiscal conectados. Empezamos por lo que más horas te quita
+          y añadimos el módulo 303 cuando el flujo documental está listo.
         </p>
         <p class="sr-only">Canales de entrada:</p>
         <ul class="md__channels" data-reveal style="--d:3">
@@ -240,6 +242,8 @@ const schema = [
     </div>
   </section>
 
+  <Modelo303 />
+
   <!-- ------------------------------------------------------------ diferencia -->
   <section class="section" id="diferencia">
     <div class="wrap">
@@ -283,7 +287,8 @@ const schema = [
         <h2 data-split>Precio claro, volumen claro, sin permanencia<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
           Una puesta en marcha y una cuota mensual con los documentos incluidos. Antes de pagar nada,
-          el diagnóstico es gratis y el piloto se hace con tus clientes reales.
+          el diagnóstico es gratis y el piloto se hace con tus clientes reales. El módulo 303 se
+          presupuesta aparte según tu cartera, regímenes e integración.
         </p>
       </div>
       <ul class="pl" data-plans>
@@ -333,7 +338,7 @@ const schema = [
       <div class="xt" data-reveal>
         <details class="xt__item">
           <summary>
-            <span>Bajo demanda <small>{onDemand.length} extras con precio</small></span>
+            <span>Bajo demanda <small>{onDemand.length} opciones con alcance claro</small></span>
             <i aria-hidden="true"></i>
           </summary>
           <ul class="xt__list">
@@ -395,7 +400,7 @@ const schema = [
   <Cta
     title="Recupera el trimestre. Empieza por un diagnóstico gratis"
     subject={despachosSubject}
-    lead="Escríbenos y responde a cinco preguntas que ya te dejamos en el email. En 30 minutos sabrás cuántas horas puedes recuperar y cuánto cuesta, por escrito."
+    lead="Cuéntanos qué programa usas y cuántos modelos 303 gestionas. En el diagnóstico vemos qué puedes automatizar, cómo conectar la presentación y qué inversión necesita tu despacho. Alcance y precio, por escrito."
     action={{ href: mail, label: "Pedir diagnóstico" }}
     mail={mail}
   />

@@ -23,6 +23,8 @@ export const diagnosticoMail = (extra = "") =>
       "- Número de clientes: ",
       "- Programa contable (a3, Sage, Holded, Contasol…): ",
       "- Cómo nos llegan hoy las facturas: ",
+      "- Número de modelos 303 por periodo y regímenes de IVA: ",
+      "- Cómo revisamos y presentamos hoy los impuestos: ",
       "- Lo que más tiempo nos quita: ",
       ...(extra ? ["", extra] : []),
       "",
@@ -33,8 +35,8 @@ export const diagnosticoMail = (extra = "") =>
 export const channels = ["Email", "WhatsApp", "Foto", "PDF", "Papel", "Drive"];
 
 /**
- * El producto, acotado a propósito: cinco piezas que se construyen una vez y se replican en cada
- * despacho. Nada que dependa de usuarios y contraseñas de terceros ni de asesorar en nombre de nadie.
+ * El producto, acotado a propósito: piezas conectadas que se adaptan a cada despacho.
+ * La presentación fiscal requiere validar integración, representación y aprobación del despacho.
  */
 export const modules: Item[] = [
   {
@@ -52,6 +54,10 @@ export const modules: Item[] = [
   {
     title: "Directo a tu programa contable",
     text: "Fichero de importación para a3, Sage o Contasol, o directo por API a Holded. No cambias de software ni de forma de trabajar.",
+  },
+  {
+    title: "Modelo 303: del borrador al justificante",
+    text: "Rellenado automático desde la contabilidad validada, controles de IVA y presentación tras tu aprobación, mediante una integración compatible y con representación autorizada. El justificante queda en el expediente. Alcance y precio a medida.",
   },
   {
     title: "Panel del cierre",
@@ -95,7 +101,7 @@ export const compare: { what: string; tool: string; coma: string }[] = [
   {
     what: "Reglas fiscales",
     tool: "Genéricas, pensadas para muchos países",
-    coma: "Españolas: 111, 115, simplificadas, VIES",
+    coma: "111, 115, VIES y un flujo a medida para preparar y presentar el 303",
   },
   {
     what: "Perseguir documentación",
@@ -200,14 +206,16 @@ export const terms = [
   "Pago anual por adelantado: 2 meses gratis.",
   "Sin permanencia: cuota mensual y baja con 30 días de aviso.",
   "Cambios fuera del plan: presupuesto cerrado antes de empezar.",
+  "El módulo Modelo 303 se presupuesta aparte: clientes, regímenes, integración, puesta en marcha y mantenimiento definidos por escrito. No está incluido en las cuotas base.",
   "Mensajes de WhatsApp de plantilla por encima de lo incluido: coste de Meta repercutido, sin margen.",
 ];
 
-/** Pocos extras y todos con precio. Con `href`, enlazan al servicio de COMA que ya existe. */
+/** Extras con precio o presupuesto definido antes de contratar. Con `href`, enlazan al servicio de COMA que ya existe. */
 export const onDemand: { name: string; note: string; href?: string }[] = [
   { name: "Recogida desde el correo del cliente", note: "9 € cliente/mes" },
   { name: "Digitalización del archivo histórico", note: "0,08 €/doc" },
   { name: "Formación para tu equipo", note: "120 €/sesión" },
+  { name: "Rellenado y presentación del Modelo 303", note: "A medida", href: "#modelo-303" },
   { name: "Web para el despacho", note: "Desde 99 €", href: "/diseno-web/" },
 ];
 
@@ -218,7 +226,7 @@ export const steps: Item[] = [
   },
   {
     title: "Piloto con 5 clientes",
-    text: "30 días con clientes reales por 290 €, que se descuentan de la puesta en marcha si seguimos.",
+    text: "30 días con clientes reales por 290 €, que se descuentan de la puesta en marcha si seguimos. Si contratas el módulo 303, acordamos además una validación en paralelo con tu proceso fiscal actual antes de activar la presentación.",
   },
   {
     title: "Puesta en marcha",
@@ -230,7 +238,65 @@ export const steps: Item[] = [
   },
 ];
 
+export const ivaFlow: Item[] = [
+  {
+    title: "Recoge y concilia",
+    text: "Facturas emitidas y recibidas, libros de IVA y datos del periodo. Contrastamos los totales con tu contabilidad y señalamos documentos pendientes antes del cierre.",
+  },
+  {
+    title: "Rellena y comprueba",
+    text: "Prepara el borrador del 303 con los datos validados: IVA devengado y deducible, rectificaciones y cuotas a compensar cuando proceda. Cada importe conserva su origen para que puedas revisarlo.",
+  },
+  {
+    title: "Tu equipo da el visto bueno",
+    text: "Una cola por cliente y periodo, con incidencias, resultado y responsable. Tu equipo valida la deducibilidad y el tratamiento fiscal. Si quedan incidencias, la presentación se detiene.",
+  },
+  {
+    title: "Presenta y guarda la prueba",
+    text: "Con tu aprobación y la representación vigente, la integración compatible tramita el envío. Recoge la respuesta de la AEAT y archiva el justificante y el CSV de verificación cuando la presentación se confirma.",
+  },
+];
+
+export const ivaScope: Item[] = [
+  {
+    title: "Encaje fiscal antes de conectar",
+    text: "Revisamos periodicidad, régimen y casuística: régimen general o simplificado, prorrata, criterio de caja, inversión del sujeto pasivo y operaciones intracomunitarias. Solo automatizamos los supuestos validados; las excepciones pasan al asesor.",
+  },
+  {
+    title: "Representación y firma bien resueltas",
+    text: "Validamos con tu despacho el certificado admitido, los apoderamientos o la colaboración social que correspondan. Configuramos permisos y custodia segura por la vía acordada; no se envían certificados ni claves por email.",
+  },
+  {
+    title: "Resultado, pago y plazos",
+    text: "El flujo distingue ingreso, compensación, devolución o ausencia de actividad cuando corresponda. La modalidad de pago y el NRC, si procede, se validan aparte. Los avisos siguen el calendario de la AEAT y los plazos de domiciliación aplicables.",
+  },
+  {
+    title: "Un expediente que se puede seguir",
+    text: "Datos de origen, versión aprobada, responsable, respuesta y justificante por cliente y periodo. Ante un rechazo o una respuesta incierta, avisamos y comprobamos el estado antes de reintentar para evitar duplicados.",
+  },
+];
+
 export const faq: Item[] = [
+  {
+    title: "¿Podéis rellenar y presentar el Modelo 303 automáticamente?",
+    text: "Sí: planteamos un módulo a medida que prepara el borrador desde la contabilidad validada y tramita la presentación tras la aprobación de tu equipo. Antes comprobamos la compatibilidad del software, el canal de presentación y la representación. Si no existe una vía compatible, el alcance se limita a preparar y exportar el borrador para su presentación por el despacho.",
+  },
+  {
+    title: "¿El Modelo 303 está incluido en los 249 € al mes?",
+    text: "No. Las cuotas publicadas cubren recepción y automatización documental. El módulo 303 tiene presupuesto propio según clientes, periodicidad, regímenes e integración. Dejamos por escrito qué se automatiza, qué revisa el equipo y cuánto cuesta la puesta en marcha y el mantenimiento.",
+  },
+  {
+    title: "¿Se presenta algo sin que lo revisemos?",
+    text: "No. La aprobación del despacho es un paso obligatorio. El sistema prepara, comprueba y avisa; vuestro equipo valida el criterio fiscal y autoriza el envío. Los casos fuera del alcance acordado y las incidencias pendientes bloquean la presentación automática.",
+  },
+  {
+    title: "¿Presentado significa que el IVA ya está pagado?",
+    text: "No. Presentación y pago son estados distintos. Se controla la modalidad elegida y la información de pago o domiciliación necesaria. Una respuesta de aceptación acredita la presentación; el cargo o pago debe comprobarse por su vía correspondiente.",
+  },
+  {
+    title: "¿Qué ocurre si la AEAT rechaza el envío o no responde?",
+    text: "El expediente queda pendiente y el responsable recibe una alerta. Conservamos el detalle de la incidencia y verificamos si existe presentación antes de reintentar. Solo marcamos como presentado cuando hay confirmación y justificante; si hace falta, tu equipo continúa por la vía habitual.",
+  },
   {
     title: "¿Tengo que cambiar de programa contable?",
     text: "No. Preparamos el fichero de importación de a3, Sage o Contasol, o enviamos los datos por API a Holded. Si usas otro programa, lo vemos en el diagnóstico.",
