@@ -37,7 +37,7 @@ export const services: Service[] = [
       "Diseño de páginas web profesionales desde 99 € + IVA para autónomos y pymes en Mallorca y toda España. Webs rápidas, adaptadas a móvil y preparadas para Google y la IA.",
     eyebrow: "Diseño web · Desde 99 € + IVA",
     h1: "Webs que enamoran a tus clientes. Desde 99 €",
-    lead: "Diseñamos webs rápidas, bonitas y pensadas para convertir visitas en clientes. Precio cerrado y muy competitivo para que tú te dediques a tu negocio y nosotros a que se vea.",
+    lead: "Rápidas, con diseño propio y pensadas para que te contacten. Precio cerrado desde el primer día.",
     tags: [
       "Webs corporativas",
       "Landing pages",
@@ -130,7 +130,7 @@ export const services: Service[] = [
       "Posicionamiento SEO local y GEO (Generative Engine Optimization) para pymes: aparece en Google, Google Maps y en las respuestas de ChatGPT, Gemini y Perplexity.",
     eyebrow: "SEO local + GEO (posicionamiento en IA)",
     h1: "Que te encuentren en Google… y en la respuesta de la IA",
-    lead: "Tus clientes ya no solo buscan en Google: preguntan a ChatGPT, Gemini o Perplexity. Optimizamos tu web, tu ficha y tu contenido para que tu empresa aparezca en los dos sitios.",
+    lead: "Preparamos tu web, tu ficha de Google y tu contenido para salir en el buscador y en la respuesta de la IA.",
     tags: ["SEO local", "Google Maps", "GEO", "ChatGPT", "Contenido", "Datos estructurados"],
     deliverablesTitle: "Visibilidad donde tus clientes preguntan",
     deliverables: [
@@ -209,7 +209,7 @@ export const services: Service[] = [
       "Diseñamos agentes de inteligencia artificial para atención al cliente, ventas y reservas en web, WhatsApp y email. Multidioma, integrados con tus herramientas y con supervisión humana.",
     eyebrow: "Agentes de inteligencia artificial",
     h1: "Agentes de IA que atienden, venden y reservan 24/7",
-    lead: "Diseñamos asistentes inteligentes entrenados con la información de tu negocio. Responden a tus clientes en la web, WhatsApp o email, cualifican oportunidades y pasan el testigo a tu equipo cuando hace falta.",
+    lead: "Entrenados con tu negocio. Atienden por web, WhatsApp o email y pasan el testigo a tu equipo cuando hace falta.",
     tags: ["Atención al cliente", "Ventas", "Reservas", "WhatsApp", "Multidioma", "Integraciones"],
     deliverablesTitle: "Un agente para cada parte de tu negocio",
     deliverables: [
@@ -292,7 +292,7 @@ export const services: Service[] = [
       "Automatizamos captación, CRM, email, facturación e informes conectando tus herramientas con Make, n8n, Zapier o APIs. Procesos más rápidos y sin errores para pymes.",
     eyebrow: "Automatización de procesos",
     h1: "Automatiza lo repetitivo. Dedica tu tiempo a lo que importa",
-    lead: "Conectamos tus herramientas para que los datos fluyan solos: formularios, CRM, facturas, emails, informes. Menos tareas manuales, menos errores y procesos que crecen contigo.",
+    lead: "Formularios, CRM, facturas e informes conectados. Menos copiar y pegar, menos olvidos.",
     tags: [
       "CRM",
       "Email marketing",
@@ -381,7 +381,7 @@ export const services: Service[] = [
       "Branding, gabinete de prensa, campañas en radio y prensa, redes sociales y publicidad digital para empresas de Mallorca. Comunicación desde 1997: revistas, radio, televisión y digital.",
     eyebrow: "Notoriedad de empresa",
     h1: "Que tu empresa sea la primera que les venga a la cabeza",
-    lead: "Desde 1997 hemos hecho revistas, radio, programas de televisión, campañas y, hoy, todo lo digital. Construimos marcas reconocibles y conseguimos que se hable de ellas.",
+    lead: "Marca, prensa, radio y digital para que te recuerden primero. Lo hacemos desde 1997.",
     tags: ["Branding", "Prensa", "Radio", "Redes sociales", "Publicidad digital", "Contenido"],
     deliverablesTitle: "Todo lo que hace que una marca se recuerde",
     deliverables: [

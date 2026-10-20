@@ -10,8 +10,7 @@ export const basePlan = {
   name: "Web Esencial",
   price: 99,
   suffix: "+ IVA",
-  pitch:
-    "Abaratamos el coste de tener una web profesional para que tú te dediques a lo importante: tu negocio. Nosotros, a que se vea.",
+  pitch: "Web profesional, a tu marca, para que te contacten. Tú te ocupas del negocio.",
   includes: [
     "Diseño profesional adaptado a tu marca",
     "Web de hasta 4 páginas clásicas (Inicio, Servicios, Nosotros y Contacto), perfecta en móvil",

@@ -28,7 +28,7 @@ const current = (href: string) =>
       </ul>
     </nav>
 
-    <a href="/precios/" class="hdr__cta">
+    <a href="/precios/" class="hdr__cta" data-track="cta_click" data-track-label="header-precios">
       <span>Web desde {basePlan.price} €</span>
       <Arrow />
     </a>
@@ -53,7 +53,7 @@ const current = (href: string) =>
         }
       </ul>
       <div class="menu__foot">
-        <a class="btn btn--red btn--lg" href="/precios/">Calcula tu web desde {basePlan.price} € <Arrow /></a>
+        <a class="btn btn--red btn--lg" href="/precios/" data-track="cta_click" data-track-label="menu-precios">Calcula tu web desde {basePlan.price} € <Arrow /></a>
         <a href={`mailto:${site.email}`}>{site.email}</a>
         <span>{site.address.street} · {site.address.city}</span>
       </div>

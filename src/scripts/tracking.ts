@@ -217,19 +217,27 @@ export function track(name: string, params: Params = {}) {
   if (ads.ga4 || ads.gads) gtag("event", name, payload);
 
   if (name === "generate_lead") {
+    const lead = {
+      content_name: params.content_name ?? params.interest ?? params.label,
+      content_category: params.form,
+    };
     if (ads.gads && ads.gadsLeadLabel)
       gtag("event", "conversion", { send_to: `${ads.gads}/${ads.gadsLeadLabel}` });
-    W.fbq?.("track", "Lead");
-    tt("track", "SubmitForm");
+    W.fbq?.("track", "Lead", lead);
+    tt("track", "SubmitForm", lead);
     if (ads.linkedinLeadId)
       W.lintrk?.("track", { conversion_id: Number(ads.linkedinLeadId) || ads.linkedinLeadId });
-    (W.uetq as { push?: AnyFn } | undefined)?.push?.("event", "generate_lead", {});
+    (W.uetq as { push?: AnyFn } | undefined)?.push?.("event", "generate_lead", lead);
   } else if (name === "contact_click") {
     W.fbq?.("track", "Contact");
     tt("track", "Contact");
     (W.uetq as { push?: AnyFn } | undefined)?.push?.("event", "contact_click", {});
   } else if (name === "cta_click") {
     W.fbq?.("trackCustom", "CtaClick", params);
+  } else if (name === "view_offer") {
+    const offer = { content_name: params.label, content_category: "offer" };
+    W.fbq?.("track", "ViewContent", offer);
+    tt("track", "ViewContent", offer);
   }
 }
 W.comaTrack = track;

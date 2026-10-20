@@ -1,8 +1,8 @@
 # SEO y GEO: qué hay hecho y qué falta fuera del código
 
-## Principio: la web no cambia por fuera
+## Principio: el SEO no rellena la página
 
-Todo el posicionamiento se hace sin tocar lo que ve el visitante en las páginas existentes (inicio, servicios, precios, Kit Digital, contacto y legales): mismo contenido, mismo diseño, mismo JavaScript y CSS. Un test lo vigila comparando con `main` en local (ver abajo). Lo que cambia es invisible: `<head>` (metadatos y datos estructurados), `robots.txt`, sitemap, `llms*.txt` y páginas nuevas a las que se llega desde Google y las IA, no desde el menú.
+El posicionamiento no consiste en alargar lo que ve el visitante. Títulos, descripciones, datos estructurados, `robots.txt`, sitemap y `llms*.txt` viven en el `<head>` y en el rastreo. Las páginas de zona, servicio local y guías existen para quien llega desde Google o una IA. El texto visible se mantiene corto: cada bloque dice una cosa que el anterior no ha dicho. El pie enlaza a `/sobre-coma/`, `/guias/` y `/zonas/`; el menú no.
 
 ## Ya está en el código
 
@@ -33,7 +33,7 @@ Cada mes, pregunta a ChatGPT, Gemini, Claude, Copilot y Perplexity lo que pregun
 
 ## Enlazado interno
 
-Las páginas nuevas no están enlazadas desde el menú ni el pie, para no alterar la web. Se descubren por el sitemap, IndexNow y `llms.txt`, y se enlazan entre sí (zonas ↔ servicios ↔ guías). Si algún día quieres más fuerza, un enlace discreto en el pie a `/zonas/` y `/guias/` ayudaría, pero es decisión de diseño.
+El menú sigue igual (Inicio, Servicios, Precios, Kit Digital, Contacto). En el pie hay tres enlaces discretos a `/sobre-coma/`, `/guias/` y `/zonas/` para que Google y las IA lleguen a esas páginas desde la home, además del sitemap, IndexNow y `llms.txt`. Las páginas de zona, servicio local y guías se enlazan entre sí.
 
 ## Mantenimiento
 

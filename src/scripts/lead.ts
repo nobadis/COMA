@@ -59,7 +59,12 @@ export async function submitLead(l: Lead): Promise<void> {
       /* si falla el servicio, no se pierde el lead: se cae al correo */
     }
   }
-  track("generate_lead", { form: l.source, via: "mailto", interest: l.intereses.join("|") });
+  track("generate_lead", {
+    form: l.source,
+    via: "mailto",
+    interest: l.intereses.join("|"),
+    content_name: l.intereses[0] ?? l.source,
+  });
   window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(leadSubject(l))}&body=${encodeURIComponent(leadBody(l))}`;
 }
 

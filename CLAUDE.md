@@ -16,5 +16,5 @@ La marca de agua de las demos la añade `scripts/build-ejemplos.cjs` al compilar
 
 ## Web de COMA
 
-- La web visible no cambia por SEO: el posicionamiento va en `<head>`, rastreo y páginas nuevas (docs/SEO-GEO.md).
+- El SEO no alarga la página: va en `<head>`, rastreo y páginas nuevas. El texto visible se queda corto. El pie enlaza a `/sobre-coma/`, `/guias/` y `/zonas/`; el menú no (docs/SEO-GEO.md).
 - Push a `main` directamente cuando el usuario lo pide ("como siempre").

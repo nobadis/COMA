@@ -67,7 +67,7 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
       ),
       eyebrow: `Diseño web ${where}`,
       h1: `Diseño web ${where}, desde ${basePlan.price} €`,
-      lead: `Webs a medida, rápidas y pensadas para que te contacten. Precio cerrado y a la vista para negocios ${where}, con diseño propio (nunca plantillas) y lista para aparecer en Google y en la IA.`,
+      lead: `Webs a medida para negocios ${where}, desde ${basePlan.price} € + IVA. Diseño propio, rápidas y listas para Google y la IA.`,
       why: {
         title: `Una web que se entienda ${where}`,
         paragraphs: [
@@ -124,7 +124,7 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
       ),
       eyebrow: `SEO local + GEO ${where}`,
       h1: `Que te encuentren ${where}: en Google y en la IA`,
-      lead: `Tus clientes ${where} ya no solo buscan en Google: preguntan a ChatGPT, Gemini o Claude. Trabajamos tu web, tu ficha de Google y tu contenido para que tu negocio aparezca en los dos sitios.`,
+      lead: `Tus clientes ${where} buscan en Google y preguntan a la IA. Preparamos tu ficha, tu web y tu contenido para salir en los dos.`,
       why: {
         title: `Cómo se compite ${where}`,
         paragraphs: [
@@ -185,7 +185,7 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
     ),
     eyebrow: `Agentes de IA ${where}`,
     h1: `Agentes de IA que atienden y reservan ${where}, 24/7`,
-    lead: `Asistentes entrenados con la información de tu negocio. Responden a tus clientes ${where} en la web, WhatsApp o email, cualifican oportunidades y pasan el testigo a tu equipo cuando hace falta.`,
+    lead: `Un asistente con la información de tu negocio atiende ${where} por web, WhatsApp o email, y avisa a tu equipo cuando hace falta una persona.`,
     why: {
       title: `Dónde ayuda un agente ${where}`,
       paragraphs: [

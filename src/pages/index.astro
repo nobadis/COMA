@@ -19,31 +19,31 @@ import { basePlan } from "../data/pricing";
 const faq = [
   {
     title: `¿De verdad hacéis una web por ${basePlan.price} €?`,
-    text: `Sí. La ${basePlan.name} cuesta ${basePlan.price} € ${basePlan.suffix}: una web profesional de hasta 4 páginas clásicas (Inicio, Servicios, Nosotros y Contacto), adaptada a móvil, con formulario de contacto, SEO básico y SSL. Si necesitas más (tienda, reservas, idiomas, blog, alojamiento, correo corporativo, IA…), lo añades aparte con presupuesto cerrado.`,
+    text: `Sí. La ${basePlan.name} son ${basePlan.price} € ${basePlan.suffix}: hasta 4 páginas (Inicio, Servicios, Nosotros y Contacto), móvil, formulario, SEO básico y SSL. Tienda, reservas, idiomas o IA se añaden con precio cerrado.`,
   },
   {
     title: "¿Trabajáis solo en Mallorca?",
-    text: `No. Nacimos en Mallorca en ${site.since} y desde ${site.spainSince} trabajamos con empresas de toda España, en remoto y con la misma cercanía.`,
+    text: `No. La sede está en Palma desde ${site.since}. Desde ${site.spainSince} trabajamos con toda España, en remoto.`,
   },
   {
     title: "¿Qué es el GEO y por qué le importa a mi negocio?",
-    text: "GEO (Generative Engine Optimization) es posicionar tu empresa en las respuestas de asistentes de IA como ChatGPT, Gemini o Perplexity. Cada vez más clientes preguntan a la IA antes de elegir; si no apareces, eligen a otro.",
+    text: "Es aparecer en las respuestas de ChatGPT, Gemini o Perplexity. Cada vez más clientes preguntan a la IA antes de llamar. Si no sales, eligen a otro.",
   },
   {
     title: "¿Con qué tipo de empresas trabajáis?",
-    text: `Con autónomos y pymes de cualquier sector: farmacias, clínicas dentales, despachos profesionales, consultorías, restauración, turismo, comercio y eventos como ${trust.headline}. Más de ${trust.pymes} pymes ya confían en nosotros.`,
+    text: `Autónomos y pymes: farmacias, clínicas, despachos, restauración, turismo, comercio y eventos como ${trust.headline}. Más de ${trust.pymes} pymes ya trabajan con nosotros.`,
   },
   {
     title: "¿Por qué sois tan baratos?",
-    text: "Porque queremos que autónomos y pymes dejen de ver la web como un gasto y se dediquen a lo importante: su negocio. Abaratamos costes con un proceso propio, sin plantillas ni intermediarios, y te damos el precio cerrado desde el primer día.",
+    text: "Proceso propio, sin plantillas ni intermediarios, y el precio cerrado desde el primer día.",
   },
   {
     title: "¿Qué diferencia a COMA de otras agencias?",
-    text: `Llevamos ${years()} años comunicando: revistas, radio, programas de televisión, webs, marketing digital y ahora IA. Unimos criterio de marca, tecnología y precios pensados para pymes en un único equipo.`,
+    text: `${years()} años comunicando: revistas, radio, televisión, webs y ahora IA. Marca, tecnología y precio de pyme, en un solo equipo.`,
   },
   {
     title: "¿Cómo empezamos?",
-    text: "Escríbenos o rellena el brief de contacto. Te respondemos personalmente con una propuesta clara, con objetivos, plazos y precio cerrado.",
+    text: "Rellena el brief o escríbenos. Te respondemos en persona con objetivos, plazos y precio cerrado.",
   },
 ];
 
@@ -65,15 +65,13 @@ const schema = [
   schema={schema}
 >
   <Hero />
-  <Portal
-    text="Una web espectacular no tiene por qué ser cara. Abaratamos costes para que los autónomos y las pymes se dediquen a lo importante: su negocio. Diseño con carácter, estructura sencilla y un único objetivo: que te contacten."
-  />
+  <Portal text="Diseño con carácter, fácil de leer y un solo camino: que te contacten." />
   <ServicesStack />
   <PriceExpand />
   <Proof />
   <Manifesto
     eyebrow="Quiénes somos"
-    text={`Desde ${site.since} contamos historias de empresas. Empezamos con revistas, seguimos con la radio y la televisión, y llevamos más de ${trust.pymes} pymes a internet. Hoy sumamos SEO, inteligencia artificial y automatización. Lo que no ha cambiado: que tu marca se entienda, se recuerde y se elija.`}
+    text={`Desde ${site.since} contamos historias de empresas. Hoy sumamos web, SEO e IA. Lo que no cambia: que tu marca se entienda y se elija.`}
   />
   <Timeline />
   <Sectors />

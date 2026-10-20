@@ -27,7 +27,7 @@ const {
     <h2 class="cta__title" data-split>{title}</h2>
     <p class="lead" data-reveal style="--d:2">{lead}</p>
     <div class="cta__actions" data-reveal style="--d:3">
-      <a class="btn btn--red cta__btn" href={action.href} data-magnetic>{action.label} <Arrow /></a>
+      <a class="btn btn--red cta__btn" href={action.href} data-magnetic data-track="cta_click" data-track-label={action.label}>{action.label} <Arrow /></a>
       <a class="link-arrow" href={mail ?? mailto(subject)}>{site.email}</a>
     </div>
   </div>

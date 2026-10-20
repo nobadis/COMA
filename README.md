@@ -34,11 +34,11 @@ npm run validate     # formato + tipos + lint + build + tests E2E (escritorio y 
 
 ## SEO y GEO
 
-Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). Las páginas existentes no cambian por fuera: todo va en `<head>`, archivos de rastreo y páginas nuevas. En resumen: ~350 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). Contenido local en `src/data/places.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
+Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). El posicionamiento va en `<head>`, archivos de rastreo y páginas nuevas; el texto visible se mantiene corto. En resumen: ~350 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). El pie enlaza a Sobre COMA, guías y zonas. Contenido local en `src/data/places.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
 
 ## Anuncios y outbound
 
-Ver [docs/ADS.md](docs/ADS.md): GTM/GA4/Google Ads/Meta/TikTok/LinkedIn/Bing por variables `PUBLIC_*`, Consent Mode v2, eventos y atribución UTM, landings `/lp/*` y personalización para outbound.
+Ver [docs/ADS.md](docs/ADS.md): medición por variables `PUBLIC_*`, eventos (`generate_lead`, `view_offer`, `cta_click`), landings `/lp/*` y la estrategia de arranque (web a 99 € en Google Search y Meta).
 
 ## Webs de ejemplo para clientes
 
