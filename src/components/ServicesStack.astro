@@ -233,21 +233,32 @@ const panels = [
       opacity: 1;
     }
   }
-  /* apilado a pantalla completa también en móvil (si cabe en pantalla) */
+  /* apilado a pantalla completa (si cabe). El panel es más alto que la pantalla para que
+     el texto de abajo se lea antes de que suba el siguiente. */
   @media (min-height: 640px) {
     .pn {
-      position: sticky;
-      top: 0;
+      position: relative;
+      display: block;
+      min-height: calc(100svh + 42vh);
     }
     .pn__in {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      box-sizing: border-box;
       transform: scale(calc(1 - var(--cover) * 0.05));
       transform-origin: 50% 0;
     }
   }
+  /* en móvil la barra fija tapa el precio si el texto llega al borde */
+  @media (min-height: 640px) and (max-width: 999px) {
+    .pn__in {
+      padding-bottom: 6.5rem;
+    }
+  }
   @media (min-width: 900px) and (min-height: 640px) {
     .pn {
-      height: 100svh;
-      overflow: hidden;
+      height: calc(100svh + 42vh);
     }
   }
   .svs__more {
