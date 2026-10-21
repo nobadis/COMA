@@ -233,33 +233,25 @@ const panels = [
       opacity: 1;
     }
   }
-  /* apilado: la card se queda fija y la siguiente sube por encima.
-     El margen es el rato de lectura antes de que empiece a taparla. */
+  /* apilado a pantalla completa: la card se queda fija y la siguiente sube por encima.
+     El hueco de abajo es lo primero que tapa, así el texto se lee durante el efecto. */
   @media (min-height: 640px) {
     .pn {
       position: sticky;
       top: 0;
-      z-index: 1;
-      margin-bottom: 36vh;
-    }
-    .pn:last-child {
-      margin-bottom: 0;
+      height: 100svh;
+      overflow: hidden;
     }
     .pn__in {
+      height: 100%;
+      padding-bottom: 22vh;
       transform: scale(calc(1 - var(--cover) * 0.05));
       transform-origin: 50% 0;
     }
   }
-  /* el texto de abajo queda por encima de la barra fija del móvil */
   @media (min-height: 640px) and (max-width: 999px) {
     .pn__in {
-      padding-bottom: 6.5rem;
-    }
-  }
-  @media (min-width: 900px) and (min-height: 640px) {
-    .pn {
-      height: 100svh;
-      overflow: hidden;
+      padding-bottom: calc(5.75rem + 18vh);
     }
   }
   .svs__more {
