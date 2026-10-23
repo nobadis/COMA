@@ -34,6 +34,11 @@ const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sabor Patricio, empanadas argentinas de obrador en Mallorca" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="format-detection" content="telephone=no" />
     <script is:inline>
       document.documentElement.classList.replace('no-js', 'js');
     </script>
@@ -81,6 +86,23 @@ const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
       const px = [...document.querySelectorAll<HTMLElement>('[data-px]')];
       const bar = document.querySelector<HTMLElement>('[data-mbar]');
       const hero = document.querySelector<HTMLElement>('[data-hero]');
+      const avoid = new Set<Element>();
+      let typing = false;
+      if (bar && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) e.isIntersecting ? avoid.add(e.target) : avoid.delete(e.target);
+          onScroll();
+        });
+        document.querySelectorAll('[data-franq], footer').forEach((el) => io.observe(el));
+      }
+      addEventListener('focusin', (e) => {
+        typing = (e.target as HTMLElement).matches('input, select, textarea');
+        onScroll();
+      });
+      addEventListener('focusout', () => {
+        typing = false;
+        onScroll();
+      });
       let ticking = false;
       const onScroll = () => {
         ticking = false;
@@ -93,7 +115,7 @@ const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
             el.style.transform = `translate3d(0, ${((r.top + r.height / 2 - vh / 2) * k).toFixed(1)}px, 0)`;
           }
         }
-        bar?.classList.toggle('is-on', !hero || hero.getBoundingClientRect().bottom < vh * 0.4);
+        bar?.classList.toggle('is-on', (!hero || hero.getBoundingClientRect().bottom < vh * 0.4) && !avoid.size && !typing);
       };
       addEventListener(
         'scroll',

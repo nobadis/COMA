@@ -195,6 +195,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     filter: blur(30px);
   }
   .hero__in {
+    grid-template-columns: minmax(0, 1fr);
     position: relative;
     z-index: 1;
     display: grid;
@@ -210,9 +211,9 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     border: 1px solid var(--line-inv);
     border-radius: 999px;
     background: rgb(255 255 255 / 0.04);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--celeste-300);
     animation: up 1s var(--ease) both;
@@ -389,6 +390,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     margin-top: 18px;
     padding: 4px 2px 8px;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
   }
@@ -400,8 +402,8 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    min-height: 38px;
-    padding: 0 14px;
+    min-height: 44px;
+    padding: 0 16px;
     border: 1px solid var(--line-inv);
     border-radius: 999px;
     background: transparent;

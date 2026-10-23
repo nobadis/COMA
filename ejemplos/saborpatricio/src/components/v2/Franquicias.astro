@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 import Seal from './Seal.astro';
 import sunSvg from '../../assets/sol-rays.svg?raw';
-import { site } from '../../config/site';
+import { site, waLink } from '../../config/site';
 
 const email = site.legal.email;
 const perks = [
@@ -93,11 +93,27 @@ const perks = [
         Quiero saber más <Icon name="arrow" size={20} />
       </button>
       <p class="form__hint" data-hint>Se abrirá tu correo con el mensaje listo para enviar a {email}.</p>
+      <div class="form__alt">
+        <button type="button" class="form__copy" data-copy={email}>Copiar email</button>
+        <a href={waLink('¡Hola! Me interesa abrir una franquicia de Sabor Patricio. ¿Me contáis más?')} target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={18} /> Escribinos por WhatsApp
+        </a>
+      </div>
     </form>
   </div>
 </section>
 
 <script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) =>
+    b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(b.dataset.copy!);
+        b.textContent = '¡Copiado!';
+      } catch {
+        location.href = `mailto:${b.dataset.copy}`;
+      }
+    }),
+  );
   const form = document.querySelector<HTMLFormElement>('[data-franq]');
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -143,6 +159,7 @@ const perks = [
     animation: spin 120s linear infinite;
   }
   .fr__grid {
+    grid-template-columns: minmax(0, 1fr);
     position: relative;
     z-index: 1;
     display: grid;
@@ -182,6 +199,7 @@ const perks = [
   .fr__mail {
     display: inline-flex;
     align-items: center;
+    min-height: 48px;
     gap: 10px;
     margin-top: 36px;
     font-family: var(--serif);
@@ -276,14 +294,16 @@ const perks = [
     display: flex;
     gap: 12px;
     align-items: flex-start;
+    padding: 8px 0;
+    cursor: pointer;
     font-size: 0.9rem;
     color: rgb(255 255 255 / 0.75);
   }
   .check input {
     flex: none;
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
+    width: 22px;
+    height: 22px;
+    margin-top: 0;
     accent-color: var(--celeste);
   }
   .check a {
@@ -295,6 +315,28 @@ const perks = [
   .form__hint {
     font-size: 0.85rem;
     color: rgb(255 255 255 / 0.55);
+  }
+  .form__alt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+  .form__alt a,
+  .form__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--celeste-300);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgb(185 214 242 / 0.4);
+    cursor: pointer;
   }
   .form__hint.is-ok {
     color: var(--celeste-300);

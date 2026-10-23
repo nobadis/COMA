@@ -72,6 +72,7 @@ import { igLink, site, telLink, waLink } from '../../config/site';
     background: var(--white);
   }
   .vs__grid {
+    grid-template-columns: minmax(0, 1fr);
     display: grid;
     gap: 56px;
     align-items: center;
@@ -106,6 +107,9 @@ import { igLink, site, telLink, waLink } from '../../config/site';
     font-weight: 600;
   }
   .vc a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-size: 1.1rem;
     font-weight: 650;
     text-decoration: none;

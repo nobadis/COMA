@@ -73,6 +73,28 @@ const photos = [
   .gl__rail:hover .gl__track {
     animation-play-state: paused;
   }
+  @media (hover: none) {
+    .gl__rail {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      scrollbar-width: none;
+    }
+    .gl__rail::-webkit-scrollbar {
+      display: none;
+    }
+    .gl__track {
+      animation: none;
+      padding-inline: var(--gutter);
+    }
+    .gl__item {
+      scroll-snap-align: start;
+    }
+    .gl__item[aria-hidden='true'] {
+      display: none;
+    }
+  }
   .gl__item {
     width: clamp(220px, 22vw, 320px);
     aspect-ratio: 3 / 4;

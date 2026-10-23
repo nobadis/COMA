@@ -70,6 +70,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
 
     <div class="wrap sb__bar" aria-hidden="true">
       <span class="sb__progress"><i data-sb-progress></i></span>
+      <span class="sb__hint">Deslizá para ver más →</span>
     </div>
   </div>
 </section>
@@ -133,6 +134,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     overflow: clip;
   }
   .sb__head {
+    grid-template-columns: minmax(0, 1fr);
     display: grid;
     gap: 8px;
     align-items: end;
@@ -144,6 +146,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     margin-top: 48px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
     padding-inline: var(--gutter);
     scroll-padding-inline: var(--gutter);
@@ -265,6 +268,16 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
 
   .sb__bar {
     margin-top: 36px;
+  }
+  .sb__hint {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .sb.is-pinned .sb__hint {
+    display: none;
   }
   .sb__progress {
     display: block;

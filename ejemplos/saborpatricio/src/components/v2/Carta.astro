@@ -109,6 +109,7 @@ import { menuV2, site, waLink } from '../../config/site';
     background: var(--white);
   }
   .ct__grid {
+    grid-template-columns: minmax(0, 1fr);
     display: grid;
     gap: 56px;
   }
@@ -140,10 +141,18 @@ import { menuV2, site, waLink } from '../../config/site';
     border-radius: 999px;
     background: var(--hielo);
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
   }
   .tabs::-webkit-scrollbar {
     display: none;
+  }
+  @media (max-width: 599px) {
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 26px;
+    }
   }
   .tab {
     flex: 1 0 auto;

@@ -25,7 +25,7 @@ Requiere Node 22.12 o superior.
 
 ## Publicar
 
-Railway despliega automáticamente `main` de `nobadis/SABOR-PATRICIO`. `railway.json` fija `npm run build` y `npm start`; el servidor entrega `dist/`, redirige `/pedir/` a WhatsApp y devuelve 404 real. GitHub debe tener `main` como rama predeterminada.
+Railway despliega automáticamente `main` de `nobadis/SABOR-PATRICIO`. `railway.json` fija `npm run build` y `npm start`; el servidor entrega `dist/` (HTML, CSS, JS y SVG comprimidos con Brotli o gzip), redirige `/pedir/` a WhatsApp y devuelve 404 real. GitHub debe tener `main` como rama predeterminada.
 
 Guía de keywords, SEO local y tareas de Search Console: [docs/SEO-GEO.md](docs/SEO-GEO.md).
 
