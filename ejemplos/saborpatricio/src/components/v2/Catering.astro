@@ -30,7 +30,6 @@ const mail = `mailto:${site.legal.email}?subject=${encodeURIComponent('Catering 
       <div class="cat__b rv-img">
         <Picture src={quilmes} alt="" formats={['avif', 'webp']} widths={[320, 480]} sizes="(min-width: 960px) 20vw, 50vw" loading="lazy" />
       </div>
-      <p class="cat__note">¡Para compartir!</p>
     </div>
 
     <div class="cat__copy">
@@ -117,15 +116,6 @@ const mail = `mailto:${site.legal.email}?subject=${encodeURIComponent('Catering 
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  .cat__note {
-    position: absolute;
-    left: 6%;
-    bottom: 6%;
-    font-family: var(--brush);
-    font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.8rem);
-    color: var(--azul);
-    transform: rotate(-6deg);
   }
 
   .uses {

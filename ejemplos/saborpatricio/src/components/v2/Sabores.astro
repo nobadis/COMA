@@ -61,7 +61,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
             Humita <span>&</span> Cheeseburger
           </h3>
           <p class="fc__ing">De la humita de toda la vida a la cheeseburger gourmet: clásicas, gourmet y postres argentinos.</p>
-          <a class="btn btn--white" href="#carta">
+          <a class="btn" href="#carta">
             Ver la carta completa <Icon name="arrow" size={18} />
           </a>
         </li>
@@ -242,16 +242,21 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     align-content: end;
     gap: 16px;
     padding: 36px 30px;
-    background:
-      radial-gradient(80% 60% at 80% 10%, rgb(246 180 14 / 0.28), transparent 70%),
-      linear-gradient(160deg, var(--azul) 0%, var(--navy-700) 100%);
+    background: var(--white);
+    color: var(--navy);
     border-color: transparent;
   }
   .fc--more h3 {
     font-size: clamp(1.9rem, 1.6rem + 0.9vw, 2.5rem);
   }
   .fc--more h3 span {
-    color: var(--sol);
+    color: var(--azul);
+  }
+  .fc--more .fc__tag {
+    color: var(--azul);
+  }
+  .fc--more .fc__ing {
+    color: var(--muted);
   }
   .fc--more .btn {
     justify-self: start;
@@ -271,7 +276,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
   .sb__progress i {
     display: block;
     height: 100%;
-    background: linear-gradient(90deg, var(--celeste), var(--sol));
+    background: var(--celeste);
     transform: scaleX(0);
     transform-origin: left;
   }

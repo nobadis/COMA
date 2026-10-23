@@ -12,7 +12,6 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
 <section class="hero grain" aria-labelledby="hero-title" data-hero>
   <div class="hero__bg" aria-hidden="true">
     <div class="hero__light"></div>
-    <span class="hero__word" data-px="-0.12">Empanadas</span>
   </div>
 
   <div class="wrap hero__in">
@@ -170,6 +169,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     display: grid;
     align-items: center;
     padding: calc(var(--header-h) + 28px) 0 96px;
+    border-bottom: 1px solid var(--line-inv);
     background: var(--navy);
     color: var(--white);
     overflow: clip;
@@ -193,21 +193,6 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     border-radius: 50%;
     background: radial-gradient(closest-side, rgb(246 180 14 / 0.2), transparent);
     filter: blur(30px);
-  }
-  .hero__word {
-    position: absolute;
-    left: 50%;
-    bottom: -0.16em;
-    translate: -50% 0;
-    font-size: clamp(5rem, 17vw, 16rem);
-    font-weight: 800;
-    letter-spacing: -0.06em;
-    line-height: 1;
-    text-transform: uppercase;
-    white-space: nowrap;
-    color: transparent;
-    -webkit-text-stroke: 1px rgb(140 185 230 / 0.09);
-    user-select: none;
   }
   .hero__in {
     position: relative;
@@ -370,7 +355,7 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
   }
   .stage :global(.stage__seal) {
     position: absolute;
-    top: 0;
+    top: 10%;
     right: 2%;
     transform: translateZ(120px) rotate(8deg);
   }
@@ -500,6 +485,11 @@ const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
     }
   }
 
+  @media (min-width: 1080px) {
+    .hero {
+      padding-top: calc(var(--header-h) + 64px);
+    }
+  }
   @media (min-width: 960px) {
     .hero__in {
       grid-template-columns: 1fr 1fr;

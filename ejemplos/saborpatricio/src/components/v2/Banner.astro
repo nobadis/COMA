@@ -1,96 +1,99 @@
 ---
 import { Picture } from 'astro:assets';
 import vino from '../../assets/photos/vino.jpg';
-import sunSvg from '../../assets/sol-rays.svg?raw';
+import sol from '../../assets/sol-rays.svg?raw';
 ---
 
-<section class="bn on-dark" aria-label="Sentite en casa">
-  <div class="bn__media" aria-hidden="true">
-    <div class="bn__px" data-px="0.18">
-      <Picture src={vino} alt="" formats={['avif', 'webp']} widths={[600]} sizes="100vw" loading="lazy" />
-    </div>
-  </div>
-  <div class="wrap bn__in">
-    <span class="bn__sun rv" aria-hidden="true" set:html={sunSvg} />
-    <p class="bn__quote rv" style="--d:1">Sentite <em>en casa.</em></p>
-    <p class="bn__brush rv" style="--d:2">…o viajá a Argentina en un bocado</p>
+<section class="qt sec" aria-label="Sentite en casa">
+  <div class="wrap qt__grid">
+    <figure class="qt__photo rv-img">
+      <Picture
+        src={vino}
+        alt="Empanadas recién horneadas con una copa de vino tinto argentino"
+        formats={['avif', 'webp']}
+        widths={[420, 600]}
+        sizes="(min-width: 960px) 32vw, 86vw"
+        loading="lazy"
+      />
+    </figure>
+
+    <blockquote class="qt__body">
+      <span class="qt__sun rv" aria-hidden="true" set:html={sol} />
+      <p class="qt__text rv" style="--d:1">
+        Sentite en casa… <em>o viajá a Argentina en un bocado.</em>
+      </p>
+      <footer class="qt__by rv" style="--d:2">
+        <span></span> Sabor Patricio · Cala Major
+      </footer>
+    </blockquote>
   </div>
 </section>
 
 <style>
-  .bn {
-    position: relative;
-    display: grid;
-    align-items: center;
-    min-height: min(74vh, 680px);
-    color: var(--white);
-    overflow: clip;
-    isolation: isolate;
+  .qt {
+    background: var(--white);
   }
-  .bn__media {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
+  .qt__grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+  .qt__photo {
+    margin: 0;
+    max-width: 460px;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-lg);
     overflow: hidden;
   }
-  .bn__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, rgb(6 15 36 / 0.9) 0%, rgb(10 26 58 / 0.55) 55%, rgb(10 26 58 / 0.25) 100%),
-      linear-gradient(0deg, rgb(6 15 36 / 0.6), transparent 40%);
-  }
-  .bn__px {
-    position: absolute;
-    inset: -18% 0;
-  }
-  .bn__px :global(img) {
+  .qt__photo :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.85);
   }
-  .bn__in {
-    padding-block: 120px;
+  .qt__body {
+    margin: 0;
   }
-  .bn__sun {
+  .qt__sun {
     display: block;
-    width: 44px;
-    color: var(--sol);
+    width: 34px;
     margin-bottom: 28px;
+    color: var(--sol);
   }
-  .bn__sun :global(svg) {
-    width: 44px;
-    height: 44px;
-    animation: spin 30s linear infinite;
+  .qt__sun :global(svg) {
+    width: 34px;
+    height: 34px;
   }
-  .bn__quote {
-    font-size: clamp(2.8rem, 1.4rem + 5vw, 6.4rem);
-    font-weight: 750;
-    line-height: 0.9;
-    letter-spacing: -0.045em;
-    text-transform: uppercase;
-  }
-  .bn__quote em {
-    display: block;
+  .qt__text {
+    max-width: 18ch;
     font-family: var(--serif);
-    font-weight: 400;
-    font-size: 1.08em;
-    letter-spacing: -0.03em;
-    text-transform: none;
-    color: var(--celeste);
+    font-size: clamp(2.1rem, 1.4rem + 2.6vw, 3.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--navy);
   }
-  .bn__brush {
-    margin-top: 22px;
-    font-family: var(--brush);
-    font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
-    line-height: 1.1;
-    color: var(--sol-soft);
-    transform: rotate(-2deg);
-    transform-origin: left;
+  .qt__text em {
+    color: var(--azul);
   }
-  .js .bn__brush.rv.is-in {
-    transform: rotate(-2deg);
+  .qt__by {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 32px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .qt__by span {
+    width: 36px;
+    height: 1px;
+    background: currentColor;
+  }
+  @media (min-width: 960px) {
+    .qt__grid {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 112px;
+    }
   }
 </style>

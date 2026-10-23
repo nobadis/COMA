@@ -9,12 +9,12 @@ const year = new Date().getFullYear();
 
 <footer class="ft">
   <div class="wrap">
-    <p class="ft__big" aria-hidden="true">Sabor <em>Patricio</em></p>
+    <p class="ft__big">Auténtica empanada argentina, <em>hecha en Mallorca con el corazón allá.</em></p>
 
     <div class="ft__grid">
       <div class="ft__brand">
         <Image src={logo} alt="Sabor Patricio" width={96} height={96} loading="lazy" />
-        <p>Auténtica empanada argentina.<br />Hecha en nuestro obrador de Mallorca, con el corazón allá.</p>
+        <p>{site.address.street}<br />{site.address.postalCode} {site.address.area}, {site.address.city}</p>
       </div>
       <nav aria-label="Secciones">
         <h3>Explorá</h3>
@@ -61,19 +61,15 @@ const year = new Date().getFullYear();
     overflow: clip;
   }
   .ft__big {
-    font-size: clamp(2.6rem, 1rem + 6.4vw, 7.4rem);
-    font-weight: 750;
-    line-height: 0.85;
-    letter-spacing: -0.06em;
-    text-transform: uppercase;
+    max-width: 22ch;
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 1.3rem + 2.2vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
     color: var(--white);
-    white-space: nowrap;
   }
   .ft__big em {
-    font-family: var(--serif);
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: -0.03em;
     color: var(--celeste);
   }
   .ft__grid {

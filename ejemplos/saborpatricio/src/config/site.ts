@@ -190,6 +190,6 @@ export const menuV2: { id: string; name: string; intro: string; items: MenuItemV
     id: 'bebidas',
     name: 'Para acompañar',
     intro: 'Algo fresco para completar el plan.',
-    items: [{ name: 'Agua' }, { name: 'Agua con gas' }, { name: 'Refrescos' }, { name: 'Té frío' }],
+    items: [{ name: 'Vino argentino' }, { name: 'Agua' }, { name: 'Agua con gas' }, { name: 'Refrescos' }, { name: 'Té frío' }],
   },
 ];
