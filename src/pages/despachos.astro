@@ -83,10 +83,9 @@ const schema = [
     <div class="wrap dh__inner">
       <div class="dh__copy">
         <p class="eyebrow" data-reveal>COMA para asesorías y despachos</p>
-        <h1 data-split>Tus clientes envían facturas. Tu despacho deja de teclearlas<span class="comma">,</span></h1>
+        <h1 data-split>Menos teclear. Más asesorar<span class="comma">,</span></h1>
         <p class="lead" data-reveal style="--d:3">
-          WhatsApp y email integrados, IA que lee cada factura y un agente que pide lo que falta. Con
-          el módulo 303, del borrador a la presentación cuando tú apruebas.
+          Documentos, contabilidad y cierre conectados. La IA prepara el trabajo; tu equipo revisa y aprueba.
         </p>
         <div class="dh__ctas" data-reveal style="--d:4">
           <a class="btn btn--red btn--lg" href={mail} data-magnetic data-track-label="despachos-hero">
@@ -117,8 +116,7 @@ const schema = [
         <p class="eyebrow" data-reveal>Si esto te suena</p>
         <h2 data-split>El trimestre no debería ser una avalancha<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Las asesorías pequeñas pierden horas cada semana en trabajo que no aporta criterio. Lo
-          tachamos de la lista.
+          Menos perseguir documentos y copiar datos. Más tiempo para tus clientes.
         </p>
       </div>
       <ul class="pn__list">
@@ -143,8 +141,7 @@ const schema = [
         <p class="eyebrow" data-reveal>Pruébalo</p>
         <h2 data-split>Elige una factura. Mira cómo se registra sola<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Así trabaja cada documento que te envía un cliente: se lee, se comprueba, se propone la
-          cuenta y queda listo para tu programa. Y si algo no cuadra, te avisa.
+          Lectura, comprobación y propuesta de cuenta. Probá la demo: lo dudoso queda marcado para revisión.
         </p>
       </div>
       <div data-reveal>
@@ -158,10 +155,9 @@ const schema = [
     <div class="wrap grid-2 wz__grid">
       <div class="wz__copy">
         <p class="eyebrow" data-reveal>Agente del despacho</p>
-        <h2 data-split>Tus clientes escriben por WhatsApp. Les contesta tu despacho, al momento<span class="comma">,</span></h2>
+        <h2 data-split>Documentos recibidos. Clientes atendidos<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Un agente de IA con el nombre y el tono de tu asesoría. Recibe, lee, confirma y pide lo que
-          falta, a cualquier hora. Tu equipo solo entra cuando hace falta criterio.
+          Recibe documentos, confirma y pide lo que falta. Las consultas de asesoría pasan a tu equipo.
         </p>
         <ul class="wz__points" data-reveal style="--d:3">
           <li><strong>Confirma cada documento</strong> con lo que ha leído.</li>
@@ -183,8 +179,7 @@ const schema = [
         <p class="eyebrow" data-reveal>Qué automatizamos</p>
         <h2 data-split>Del WhatsApp del cliente al cierre del IVA<span class="comma">,</span></h2>
         <p class="lead" data-reveal style="--d:2">
-          Recepción, contabilidad y cierre fiscal conectados. Empezamos por lo que más horas te quita
-          y añadimos el módulo 303 cuando el flujo documental está listo.
+          Empezamos por lo que más horas te quita. Ampliamos cuando el flujo está validado.
         </p>
         <p class="sr-only">Canales de entrada:</p>
         <ul class="md__channels" data-reveal style="--d:3">
@@ -203,6 +198,8 @@ const schema = [
           ))
         }
       </ol>
+      <details class="md__details">
+        <summary>Comprobaciones y tecnología</summary>
       <div class="md__checks" data-reveal>
         <p class="md__h">Cada documento pasa {checks.length} comprobaciones automáticas</p>
         <ul>
@@ -215,6 +212,7 @@ const schema = [
           {stack.map((c) => <li>{c}</li>)}
         </ul>
       </div>
+      </details>
       </div>
     </div>
   </section>
@@ -429,6 +427,9 @@ const schema = [
 </script>
 
 <style>
+  .md__details { grid-column: 1 / -1; padding: 1.5rem 0; border-top: 1px solid var(--line); }
+  .md__details summary { cursor: pointer; font-weight: 700; }
+  .md__details[open] summary { margin-bottom: 1.5rem; }
   /* ---------------------------------------------------------------- portada */
   .dh {
     padding-top: clamp(8.5rem, 15vw, 11rem);

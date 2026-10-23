@@ -11,40 +11,17 @@ import KitBanner from "../components/KitBanner.astro";
 import Faq from "../components/Faq.astro";
 import Cta from "../components/Cta.astro";
 import ServicesStack from "../components/ServicesStack.astro";
-import PriceExpand from "../components/PriceExpand.astro";
 import Proof from "../components/Proof.astro";
-import { site, trust, years } from "../data/site";
+import { site } from "../data/site";
 import { basePlan } from "../data/pricing";
 
 const faq = [
-  {
-    title: `¿De verdad hacéis una web por ${basePlan.price} €?`,
-    text: `Sí. La ${basePlan.name} son ${basePlan.price} € ${basePlan.suffix}: hasta 4 páginas (Inicio, Servicios, Nosotros y Contacto), móvil, formulario, SEO básico y SSL. Tienda, reservas, idiomas o IA se añaden con precio cerrado.`,
-  },
-  {
-    title: "¿Trabajáis solo en Mallorca?",
-    text: `No. La sede está en Palma desde ${site.since}. Desde ${site.spainSince} trabajamos con toda España, en remoto.`,
-  },
-  {
-    title: "¿Qué es el GEO y por qué le importa a mi negocio?",
-    text: "Es aparecer en las respuestas de ChatGPT, Gemini o Perplexity. Cada vez más clientes preguntan a la IA antes de llamar. Si no sales, eligen a otro.",
-  },
-  {
-    title: "¿Con qué tipo de empresas trabajáis?",
-    text: `Autónomos y pymes: farmacias, clínicas, despachos, restauración, turismo, comercio y eventos como ${trust.headline}. Más de ${trust.pymes} pymes ya trabajan con nosotros.`,
-  },
-  {
-    title: "¿Por qué sois tan baratos?",
-    text: "Proceso propio, sin plantillas ni intermediarios, y el precio cerrado desde el primer día.",
-  },
-  {
-    title: "¿Qué diferencia a COMA de otras agencias?",
-    text: `${years()} años comunicando: revistas, radio, televisión, webs y ahora IA. Marca, tecnología y precio de pyme, en un solo equipo.`,
-  },
-  {
-    title: "¿Cómo empezamos?",
-    text: "Rellena el brief o escríbenos. Te respondemos en persona con objetivos, plazos y precio cerrado.",
-  },
+  { title: "¿Qué tipo de proyectos desarrolla COMA?", text: "Webs, software a medida, integraciones, agentes de IA y automatización. Partimos del proceso que necesitas mejorar y definimos contigo qué construir, cómo entregarlo y cómo mantenerlo." },
+  { title: "¿Cómo se presupuesta un proyecto a medida?", text: "Definimos objetivos, alcance, entregables y criterios de aceptación. Separamos implantación, infraestructura y soporte para que conozcas el coste de ponerlo en marcha y de operarlo." },
+  { title: "¿Os encargáis de la entrega y el mantenimiento?", text: "Acordamos las pruebas, documentación y puesta en marcha. El soporte, mantenimiento y evolución se definen en la propuesta, tanto si lo operamos nosotros como si lo recibe tu equipo técnico." },
+  { title: "¿Podemos empezar por un piloto?", text: "Sí. Cuando conviene validar una integración o un uso de IA, delimitamos un piloto con objetivos y pruebas antes de ampliar el proyecto." },
+  { title: "¿Trabajáis solo en Mallorca?", text: `Tenemos sede en Palma desde ${site.since} y trabajamos con empresas de toda España.` },
+  { title: "¿También hacéis webs sencillas?", text: `Sí. La ${basePlan.name} parte de ${basePlan.price} € ${basePlan.suffix}. Puedes consultar alcance y extras en Precios. Los proyectos de software e IA se valoran a medida.` },
 ];
 
 const schema = [
@@ -61,27 +38,27 @@ const schema = [
 ---
 
 <Base
-  description={`Diseño web desde ${basePlan.price} € + IVA, SEO y posicionamiento en IA (GEO), agentes de IA y automatizaciones para autónomos y pymes. Agencia en Mallorca desde ${site.since}, ahora en toda España.`}
+  title="Consultoría tecnológica, software a medida e IA"
+  description="COMA: consultoría tecnológica en Mallorca para toda España. Software a medida, IA, automatización y diseño web. Del diagnóstico a la entrega, soporte y mantenimiento."
   schema={schema}
 >
   <Hero />
-  <Portal text="Diseño con carácter, fácil de entender y un solo camino: que te contacten." />
+  <Portal text="Menos trabajo repetitivo. Más tiempo para las personas que hacen avanzar tu empresa." />
   <ServicesStack />
-  <PriceExpand />
   <Proof />
   <Manifesto
     eyebrow="Quiénes somos"
-    text={`Desde ${site.since} contamos historias de empresas. Hoy sumamos web, SEO e IA. Lo que no cambia: que tu marca se entienda y se elija.`}
+    text={`Desde ${site.since} contamos historias de empresas. Hoy unimos diseño, desarrollo e IA para mejorar cómo trabajan. Tecnología útil, de principio a fin.`}
   />
   <Timeline />
   <Sectors />
   <Process
-    title="De la primera llamada a tu web publicada"
+    title="De la idea a una solución en marcha"
     steps={[
-      { title: "Nos cuentas", text: "Tu negocio, tus clientes y lo que quieres conseguir. Sin tecnicismos ni compromiso." },
-      { title: "Diseñamos", text: "Te enseñamos una propuesta visual y la ajustamos contigo hasta que te encante." },
-      { title: "Publicamos", text: "Web online, rápida y lista para Google y la IA. Con SSL y formulario funcionando." },
-      { title: "Creces", text: "Añade SEO, idiomas, tienda, agentes de IA o automatizaciones cuando lo necesites." },
+      { title: "Entendemos", text: "Revisamos el trabajo real, los sistemas y el objetivo. Definimos alcance, costes y criterios de aceptación." },
+      { title: "Validamos", text: "Diseñamos la solución y, cuando hace falta, un piloto. Probamos lo importante antes de ampliar." },
+      { title: "Entregamos", text: "Desarrollamos, integramos y comprobamos contigo. Puesta en marcha, documentación y formación acordadas." },
+      { title: "Acompañamos", text: "Soporte, mantenimiento y mejoras con alcance definido. Para nuestro equipo o para el tuyo." },
     ]}
   />
   <Trust />

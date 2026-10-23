@@ -2,7 +2,6 @@
 import Arrow from "./Arrow.astro";
 import Marquee from "./Marquee.astro";
 import { site, trust } from "../data/site";
-import { basePlan } from "../data/pricing";
 
 const words = ["note", "vea", "encuentre", "elija", "recuerde"];
 ---
@@ -16,7 +15,7 @@ const words = ["note", "vea", "encuentre", "elija", "recuerde"];
 
   <div class="wrap hero__inner">
     <div class="hero__meta" data-reveal>
-      <span class="eyebrow">Comunicación, tecnología e IA para pymes</span>
+      <span class="eyebrow">Consultoría tecnológica · innovación aplicada</span>
       <span class="hero__where hide-sm">Mallorca → toda España · desde {site.since}</span>
     </div>
 
@@ -36,23 +35,23 @@ const words = ["note", "vea", "encuentre", "elija", "recuerde"];
     <div class="hero__row">
       <div class="hero__copy" data-reveal style="--d:4">
         <p class="lead">
-          Abaratamos el coste de tener una web espectacular para que autónomos y pymes se dediquen a
-          lo importante: su negocio. Claras, rápidas y visibles en Google y en la IA.
+          Diseñamos webs, software e IA que resuelven trabajo real. Conectamos tus herramientas para
+          que tu equipo gane tiempo y tu empresa, rentabilidad. Del primer paso al soporte.
         </p>
         <p class="hero__trust">
           Más de <strong>{trust.pymes} pymes</strong> ya confían en nosotros.
         </p>
       </div>
       <div class="hero__cta" data-reveal style="--d:5">
-        <a href="/precios/" class="btn btn--red btn--lg" data-magnetic data-track="cta_click" data-track-label="hero-precios">
-          Calcula tu web desde {basePlan.price} € <Arrow />
+        <a href="/contacto/" class="btn btn--red btn--lg" data-magnetic data-track="cta_click" data-track-label="hero-precios">
+          Hablemos de tu proyecto <Arrow />
         </a>
         <a href="#servicios" class="link-arrow">Qué hacemos</a>
       </div>
     </div>
   </div>
 
-  <Marquee items={["Diseño web", "SEO", "GEO", "Agentes de IA", "Automatización"]} big />
+  <Marquee items={["Software a medida", "Integraciones", "Agentes de IA", "Automatización", "Diseño web"]} big />
 </section>
 
 <style>

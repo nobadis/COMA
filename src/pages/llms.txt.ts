@@ -13,7 +13,7 @@ export const GET: APIRoute = () => {
   const lines = [
     `# ${site.title}`,
     "",
-    `> Comunicación, tecnología e IA para pymes, con sede en Palma de Mallorca desde ${site.since} (${years()} años). Desde ${site.spainSince} trabaja con autónomos y pymes de toda España. Webs profesionales desde ${basePlan.price} € ${basePlan.suffix}, SEO y posicionamiento en IA (GEO), agentes de IA, automatizaciones, notoriedad de marca y Kit Digital.`,
+    `> Consultoría tecnológica, software a medida, diseño e IA para empresas, con sede en Palma de Mallorca desde ${site.since} (${years()} años). Desde ${site.spainSince} trabaja con empresas de toda España. Webs profesionales desde ${basePlan.price} € ${basePlan.suffix}, SEO y posicionamiento en IA (GEO), agentes de IA, automatizaciones, notoriedad de marca y Kit Digital.`,
     "",
     "## Datos clave",
     `- Nombre comercial: ${site.brand} (COMA)`,

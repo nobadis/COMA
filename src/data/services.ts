@@ -287,12 +287,12 @@ export const services: Service[] = [
     tagline: "Lo repetitivo, que lo haga otro.",
     summary:
       "Conectamos tus herramientas para que leads, facturas, emails e informes fluyan solos. Menos tareas manuales, cero olvidos.",
-    seoTitle: "Automatización de procesos para pymes en Mallorca",
+    seoTitle: "Software a medida e integración de procesos en Mallorca",
     seoDescription:
-      "Automatizamos captación, CRM, email, facturación e informes conectando tus herramientas con Make, n8n, Zapier o APIs. Procesos más rápidos y sin errores para pymes.",
+      "Software a medida, integraciones y automatización para empresas. Definimos alcance, validamos con pruebas y acordamos entrega, documentación y mantenimiento.",
     eyebrow: "Automatización de procesos",
     h1: "Automatiza lo repetitivo. Dedica tu tiempo a lo que importa",
-    lead: "Formularios, CRM, facturas e informes conectados. Menos copiar y pegar, menos olvidos.",
+    lead: "Software y procesos conectados para que tu equipo trabaje mejor. Del diagnóstico y las integraciones a la entrega, documentación y soporte acordados.",
     tags: [
       "CRM",
       "Email marketing",
@@ -324,8 +324,8 @@ export const services: Service[] = [
         text: "Clasificación de emails, resúmenes de documentos, extracción de datos de PDFs y respuestas sugeridas.",
       },
       {
-        title: "Integraciones a medida",
-        text: "Make, n8n, Zapier o APIs propias: elegimos la herramienta adecuada para tu caso, no la de moda.",
+        title: "Software e integraciones a medida",
+        text: "Aplicaciones internas, paneles y conexiones con tus sistemas mediante APIs. Elegimos desarrollo propio o herramientas existentes según el alcance y el coste de operación.",
       },
     ],
     forWhomTitle: "Ideal si…",

@@ -48,7 +48,7 @@ const {
 } = Astro.props;
 const noindex = noindexProp || minimal;
 const stickyCta = stickyProp && !minimal;
-const fullTitle = title ? `${title} | COMA` : `${site.title} · Diseño web desde ${basePlan.price} €, SEO e IA`;
+const fullTitle = title ? `${title} | COMA` : `${site.title} · Consultoría tecnológica, diseño e IA`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image ?? "/og-coma.png", site.url).href;
 const orgId = `${site.url}/#org`;

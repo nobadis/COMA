@@ -11,8 +11,8 @@ export const GET: APIRoute = () => {
   const out: string[] = [
     `# ${site.title}: información completa`,
     "",
-    `COMA (Comunicación en Mallorca) es un estudio de comunicación, tecnología e IA para pymes con sede en ${site.address.city} desde ${site.since} (${years()} años), operada por ${site.legalName} (CIF ${site.cif}). Dirección: ${site.address.street}, ${site.address.postalCode} ${site.address.city}, ${site.address.region}. Email: ${site.email}. Web: ${site.url}.`,
-    `Desde ${site.spainSince} trabaja con autónomos y pymes de toda España, en remoto. Empezó en revistas, siguió con radio y televisión y hoy hace webs, SEO, posicionamiento en IA (GEO), agentes de IA y automatizaciones. Referencias: ${trust.references.filter((r) => !r.startsWith("+")).join(", ")} y más de ${trust.pymes} pymes.`,
+    `COMA (Comunicación en Mallorca) es una consultora de soluciones tecnológicas, diseño e IA para empresas con sede en ${site.address.city} desde ${site.since} (${years()} años), operada por ${site.legalName} (CIF ${site.cif}). Dirección: ${site.address.street}, ${site.address.postalCode} ${site.address.city}, ${site.address.region}. Email: ${site.email}. Web: ${site.url}.`,
+    `Desde ${site.spainSince} trabaja con empresas de toda España, en remoto. Empezó en revistas, siguió con radio y televisión y hoy desarrolla webs, software a medida, integraciones, agentes de IA y automatizaciones. Define alcance, pruebas, entrega y condiciones de soporte y mantenimiento en cada propuesta. Referencias: ${trust.references.filter((r) => !r.startsWith("+")).join(", ")} y más de ${trust.pymes} pymes.`,
     "",
     "## Precios (sin IVA)",
     `- ${basePlan.name}: ${basePlan.price} € ${basePlan.suffix}. ${basePlan.includes.join(". ")}.`,

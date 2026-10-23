@@ -11,19 +11,19 @@ const history = [
   { y: "Radio", t: "Programas y campañas en antena", d: "Aprendimos a comunicar con voz, ritmo y cercanía." },
   { y: "TV", t: "Programas de televisión", d: "Producción audiovisual y formatos para toda la isla." },
   { y: "Digital", t: "Webs, redes y marketing online", d: `Más de ${trust.pymes} pymes llevadas a internet.` },
-  { y: "IA", t: "Agentes, automatización y GEO", d: "Inteligencia artificial aplicada a lo que le importa a una pyme." },
+  { y: "IA", t: "Agentes, automatización y GEO", d: "Software, integraciones e IA para mejorar el trabajo diario." },
   { y: String(site.spainSince), t: "De Mallorca a toda España", d: "El mismo equipo y la misma cercanía para empresas de todo el país." },
 ];
 const principles = [
   { t: "Precio claro desde el primer día", d: `La web empieza en ${basePlan.price} € ${basePlan.suffix} y cada extra tiene su precio visible. Sin letra pequeña.` },
-  { t: "Nada de plantillas", d: "Diseñamos cada web desde cero con un proceso propio. Por eso es rápida, única y barata." },
+  { t: "Nada de plantillas", d: "Diseñamos cada web desde cero con un proceso propio. Diseño, rendimiento y facilidad de uso se trabajan juntos." },
   { t: "Respuesta personal", d: "Escribes y te contestamos personas, con una propuesta clara de objetivos, plazos y precio." },
   { t: "Lo que no podemos prometer, no lo prometemos", d: "Nadie serio garantiza el primer puesto en Google ni en la IA. Sí trabajamos de forma medible y transparente." },
 ];
 const faq = [
   {
     title: "¿Quién es COMA?",
-    text: `COMA (Comunicación en Mallorca) es una agencia con sede en Palma de Mallorca, operada por ${site.legalName} (CIF ${site.cif}). Llevamos ${years()} años (desde ${site.since}) comunicando empresas: revistas, radio, televisión, webs, marketing digital e inteligencia artificial.`,
+    text: `COMA (Comunicación en Mallorca) es una consultora de soluciones tecnológicas y comunicación con sede en Palma de Mallorca, operada por ${site.legalName} (CIF ${site.cif}). Llevamos ${years()} años (desde ${site.since}) comunicando empresas: revistas, radio, televisión, webs, marketing digital e inteligencia artificial.`,
   },
   {
     title: "¿Dónde estáis?",
@@ -59,7 +59,7 @@ const schema = [
 
 <Base
   title={`Sobre COMA: ${years()} años comunicando empresas desde Mallorca`}
-  description={`Quiénes somos: agencia de Palma de Mallorca fundada en ${site.since}. Revistas, radio, televisión, webs, SEO e IA para más de ${trust.pymes} pymes. Datos de empresa y cómo trabajamos.`}
+  description={`Quiénes somos: consultoría tecnológica y comunicación en Palma de Mallorca fundada en ${site.since}. Diseño web, software a medida, integraciones e IA. Trayectoria desde ${site.since}, datos de empresa y cómo trabajamos.`}
   crumbs={[{ name: "Sobre COMA", path: "/sobre-coma/" }]}
   schema={schema}
 >
@@ -67,7 +67,7 @@ const schema = [
     <p class="eyebrow" data-reveal>Sobre COMA</p>
     <h1 data-split>{years()} años contando historias de empresas<span class="comma">.</span></h1>
     <p class="lead" data-reveal style="--d:3">
-      Nacimos en Mallorca en {site.since} editando revistas. Hoy hacemos webs, SEO, posicionamiento en IA, agentes y automatizaciones para autónomos y pymes de toda España.
+      Nacimos en Mallorca en {site.since} editando revistas. Hoy unimos diseño, software a medida e IA para empresas de toda España. Definimos, desarrollamos y entregamos soluciones con soporte y mantenimiento acordados.
     </p>
   </section>
 

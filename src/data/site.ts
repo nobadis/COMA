@@ -70,10 +70,10 @@ export const nav = [
 
 /** Todas las páginas de servicio (menú móvil y pie). */
 export const navServices = [
+  { href: "/automatizaciones/", label: "Soluciones a medida" },
+  { href: "/agentes-ia/", label: "IA aplicada" },
   { href: "/diseno-web/", label: "Diseño web" },
-  { href: "/seo-geo/", label: "SEO y GEO" },
-  { href: "/agentes-ia/", label: "Agentes de IA" },
-  { href: "/automatizaciones/", label: "Automatizaciones" },
+  { href: "/seo-geo/", label: "Visibilidad digital" },
   { href: "/notoriedad-de-marca/", label: "Notoriedad y medios" },
   { href: "/despachos/", label: "Para despachos" },
 ];

@@ -1,48 +1,35 @@
 ---
 import Arrow from "./Arrow.astro";
 import Motif from "./Motif.astro";
-import { basePlan } from "../data/pricing";
 
 const panels = [
   {
-    href: "/diseno-web/",
-    kind: "web",
-    theme: "paper",
-    n: "01",
+    href: "/automatizaciones/", kind: "auto", theme: "paper", n: "01",
+    title: "Soluciones a medida",
+    line: "Tu operativa, mejor conectada.",
+    text: "Software, integraciones y automatización para quitar tareas, errores y pasos de más.",
+    meta: "Del diagnóstico a la puesta en marcha",
+  },
+  {
+    href: "/agentes-ia/", kind: "ia", theme: "red", n: "02",
+    title: "IA aplicada",
+    line: "Más capacidad para tu equipo.",
+    text: "Agentes que atienden, leen documentos y preparan trabajo. Con revisión humana donde importa.",
+    meta: "Integrada en tus procesos · a medida",
+  },
+  {
+    href: "/diseno-web/", kind: "web", theme: "paper", n: "03",
     title: "Diseño web",
-    line: "Webs espectaculares y fáciles de usar.",
-    text: "Diseño propio, sin plantillas. Se entiende a la primera y empuja al contacto.",
-    meta: `Desde ${basePlan.price} € + IVA`,
+    line: "Diseño que convence. Tecnología que responde.",
+    text: "Webs con carácter, rápidas y fáciles de usar. De la primera impresión al contacto.",
+    meta: "Diseño propio · desarrollo · lanzamiento",
   },
   {
-    href: "/seo-geo/",
-    kind: "seo",
-    theme: "ink",
-    n: "02",
-    title: "SEO y GEO",
-    line: "Que te encuentren en Google… y en ChatGPT.",
-    text: "Ficha de Google, contenido y datos para que la IA te cite.",
-    meta: "Presupuesto cerrado, desde 99 €/mes",
-  },
-  {
-    href: "/agentes-ia/",
-    kind: "ia",
-    theme: "red",
-    n: "03",
-    title: "Agentes de IA",
-    line: "Un asistente que atiende a tus clientes 24/7.",
-    text: "Responde, filtra contactos y agenda citas con la voz de tu marca.",
-    meta: "A medida · sobre presupuesto",
-  },
-  {
-    href: "/automatizaciones/",
-    kind: "auto",
-    theme: "paper",
-    n: "04",
-    title: "Automatizaciones",
-    line: "Lo repetitivo, que se haga solo.",
-    text: "Leads, emails y facturas conectados. Menos tareas a mano.",
-    meta: "A medida · sobre presupuesto",
+    href: "/seo-geo/", kind: "seo", theme: "ink", n: "04",
+    title: "Visibilidad digital",
+    line: "Que te encuentren cuando te necesitan.",
+    text: "SEO, presencia local y contenido para buscadores y respuestas de IA. Con seguimiento y criterio.",
+    meta: "Como parte de tu estrategia de crecimiento",
   },
 ] as const;
 ---
@@ -50,7 +37,7 @@ const panels = [
 <section class="svs" id="servicios" aria-labelledby="svs-title">
   <div class="svs__intro wrap">
     <p class="eyebrow" data-reveal>Lo que hacemos</p>
-    <h2 id="svs-title" data-split>Cuatro formas de hacer que tu empresa se note<span class="comma">.</span></h2>
+    <h2 id="svs-title" data-split>Tecnología que se traduce en resultados<span class="comma">.</span></h2>
   </div>
 
   <ol class="svs__stack" data-stack>

@@ -27,18 +27,18 @@ test.beforeEach(async ({ page }) => {
 test.describe("COMA - Comunicación en Mallorca", () => {
   test("home con branding, hero y servicios", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/COMA - Comunicación en Mallorca/i);
+    await expect(page).toHaveTitle(/Consultoría tecnológica, software a medida e IA/i);
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       /Hacemos que tu empresa se note/i
     );
-    await expect(page.getByRole("link", { name: /Calcula tu web desde 99/ }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Hablemos de tu proyecto/ }).first()).toBeVisible();
     await expect(page.getByText(/Mallorca Live Festival/).first()).toBeVisible();
     const servicios = page.locator("#servicios");
     for (const name of [
       "Diseño web",
-      "SEO y GEO",
-      "Agentes de IA",
-      "Automatizaciones",
+      "Visibilidad digital",
+      "IA aplicada",
+      "Soluciones a medida",
       "Notoriedad de marca",
     ]) {
       await expect(servicios.getByRole("link", { name: new RegExp(name, "i") })).toBeAttached();
@@ -356,7 +356,7 @@ test.describe("COMA - Comunicación en Mallorca", () => {
   }) => {
     await page.goto("/despachos/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
-      /deja de teclearlas/i
+      /Menos teclear. Más asesorar/i
     );
     // los CTAs principales abren el email con el diagnóstico ya escrito
     const hero = page.getByRole("link", { name: /Diagnóstico gratis/i }).first();
@@ -392,7 +392,9 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(extras.getByText("Digitalización del archivo histórico")).toBeVisible();
     if (isMobile) {
       // en móvil los planes se deslizan en horizontal en lugar de apilarse
-      const display = await page.locator("[data-plans]").evaluate((el) => getComputedStyle(el).display);
+      const display = await page
+        .locator("[data-plans]")
+        .evaluate((el) => getComputedStyle(el).display);
       expect(display).toBe("flex");
     }
 
