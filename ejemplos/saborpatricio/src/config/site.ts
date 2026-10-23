@@ -138,3 +138,41 @@ export const productGroups = [
     items: ['Agua', 'Agua con gas', 'Refrescos', 'Té frío'],
   },
 ];
+
+/**
+ * Carta de la landing /v2: clásicas + Humita, gourmet + Cheeseburger.
+ * Separada para no alterar la home actual ni /carta.
+ */
+export const productGroupsV2 = [
+  {
+    name: 'Empanadas clásicas',
+    intro: 'Los sabores de siempre, con la receta de casa.',
+    items: [
+      'Carne criolla',
+      'Carne picante',
+      'Pollo suave',
+      'Pollo picante',
+      'Jamón y queso',
+      'Queso y cebolla',
+      'Atún',
+      'Caprese',
+      'Espinaca',
+      'Humita',
+    ],
+  },
+  {
+    name: 'Empanadas gourmet',
+    intro: 'Rellenos con más carácter para cuando querés algo distinto.',
+    items: ['Carne a cuchillo', 'Barbacoa', 'Sobrasada', 'Vacío y provolone', 'Cheeseburger'],
+  },
+  {
+    name: 'Postres argentinos',
+    intro: 'El cierre dulce que no puede faltar.',
+    items: ['Chocotorta', 'Alfajores Havanna', 'Havanna de nuez', 'Havanna con sal', 'Havanna súper dulce de leche'],
+  },
+  {
+    name: 'Para acompañar',
+    intro: 'Algo fresco para completar el plan.',
+    items: ['Agua', 'Agua con gas', 'Refrescos', 'Té frío'],
+  },
+];

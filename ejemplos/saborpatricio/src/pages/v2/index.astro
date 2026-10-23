@@ -1,0 +1,564 @@
+---
+import Mark from "../../components/v2/Mark.astro";
+import V2Base from "../../layouts/V2Base.astro";
+import { Image, Picture } from "astro:assets";
+import criolla from "../../assets/flavors/criolla.png";
+import pollo from "../../assets/flavors/pollo.png";
+import caprese from "../../assets/flavors/caprese.png";
+import horno from "../../assets/photos/horno.jpg";
+import caja from "../../assets/photos/caja-abierta.jpg";
+import vino from "../../assets/photos/vino.jpg";
+import logo from "../../assets/brand/logo-blanco-800.png";
+import { site, waLink, igLink, productGroupsV2 } from "../../config/site";
+const order = waLink("¡Hola Sabor Patricio! Quiero hacer un pedido.");
+const photos = [criolla, pollo, caprese];
+const featured = [
+  {
+    name: "Carne criolla",
+    note: "La de toda la vida",
+    description:
+      "Carne, cebolla, huevo, pimiento y aceitunas. El sabor al que siempre volvés.",
+  },
+  {
+    name: "Pollo suave",
+    note: "Un clásico que abraza",
+    description:
+      "Pollo, cebolla, huevo y pimiento. Suave, sabrosa y con ese gustito a casa.",
+  },
+  {
+    name: "Caprese",
+    note: "Simplemente irresistible",
+    description:
+      "Tomate, mozzarella y albahaca. Tres ingredientes que se entienden de maravilla.",
+  },
+];
+const catering = waLink(
+  "¡Hola! Quisiera consultar un catering. Mi evento es el día …, en …, para … personas.",
+);
+---
+
+<V2Base>
+  <div class="topline">
+    ALMA ARGENTINA. CORAZÓN MALLORQUÍN. <span>CALA MAJOR · PALMA</span>
+  </div>
+  <header class="masthead">
+    <a class="brand" href="/v2/" aria-label="Sabor Patricio, inicio">
+      <img src="/logo-negro.png" width="62" height="62" alt="" />
+      <span>
+        SABOR PATRICIO<small>AUTÉNTICA EMPANADA ARGENTINA</small>
+      </span>
+    </a>
+    <button
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="navigation"
+    >
+      Menú <Mark name="menu" />
+    </button>
+    <nav id="navigation" aria-label="Principal">
+      <a href="#carta">La carta</a>
+      <a href="#obrador">Nuestro obrador</a>
+      <a href="#catering">Catering</a>
+      <a href="#franquicias">Franquicias</a>
+      <a class="nav-order" href={order} target="_blank" rel="noopener">
+        Hacé tu pedido <Mark name="arrow" />
+      </a>
+    </nav>
+  </header>
+  <main id="contenido">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          <span class="little-sun" aria-hidden="true"></span> DE ARGENTINA, CON
+          AMOR
+        </p>
+        <h1 id="hero-title">
+          Hay sabores
+          <br />
+          que te hacen
+          <br />
+          <em>sentir en casa.</em>
+        </h1>
+        <p class="hero-description">
+          Y hay casas que quedan a un océano de distancia.
+          <br class="desktop-break" /> Las nuestras se encuentran en cada
+          empanada.
+        </p>
+        <div class="hero-actions">
+          <a class="button blue" href="#carta">
+            Encontrá tu favorita <Mark name="arrow" />
+          </a>
+          <a class="text-link" href="#obrador">
+            Conocé nuestra historia <Mark name="down" />
+          </a>
+        </div>
+        <div class="hero-foot">
+          <span class="flag" aria-hidden="true">
+            ☀
+          </span>
+          <span>
+            Receta argentina.
+            <br />
+            <strong>Elaboradas por nosotros en Mallorca.</strong>
+          </span>
+        </div>
+      </div>
+      <div class="hero-art">
+        <span class="art-word" aria-hidden="true">
+          BUEN
+          <br />
+          SABOR.
+        </span>
+        <div class="orbit orbit-one" aria-hidden="true"></div>
+        <div class="orbit orbit-two" aria-hidden="true"></div>
+        <div class="love-stamp">
+          <span>EN CADA EMPANADA</span>
+          <strong>
+            110<span>gr</span>
+          </strong>
+          <em>de puro amor</em>
+          <img src="/sol.svg" width="26" height="26" alt="" />
+        </div>
+        <Image
+          class="hero-empanada"
+          src={criolla}
+          alt="Empanada de carne criolla abierta, con su masa dorada y su relleno"
+          widths={[480, 720, 1000]}
+          sizes="(min-width: 900px) 52vw, 95vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <span class="hand-note">
+          Bien rellena.
+          <br />
+          Bien nuestra. <Mark name="curve" />
+        </span>
+        <div class="art-caption">
+          <span>01 / LA CRIOLLA</span>
+          <span>EL PRIMER AMOR NUNCA SE OLVIDA</span>
+        </div>
+      </div>
+    </section>
+    <div
+      class="ribbon"
+      role="img"
+      aria-label="110gr de puro amor. Obrador propio en Mallorca. Receta argentina."
+    >
+      <div aria-hidden="true">
+        {[0, 1].map(() => (
+          <span>
+            110gr de puro amor{" "}
+            <i>
+              <Mark name="sun" />
+            </i>{" "}
+            Obrador propio en Mallorca{" "}
+            <i>
+              <Mark name="sun" />
+            </i>{" "}
+            Receta argentina{" "}
+            <i>
+              <Mark name="sun" />
+            </i>{" "}
+            Un bocado, mil recuerdos{" "}
+            <i>
+              <Mark name="sun" />
+            </i>
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <section id="carta" class="menu-section section-pad">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 — NUESTRA CARTA</p>
+          <h2>
+            El amor tiene
+            <br />
+            <em>muchos rellenos.</em>
+          </h2>
+        </div>
+        <p>
+          Clásicas que no fallan. Combinaciones que sorprenden.
+          <br />
+          Elegí las tuyas y armá una mesa bien argentina.
+        </p>
+      </div>
+      <div class="favorites">
+        {featured.map((f, i) => (
+          <article class="flavor-card">
+            <div class="flavor-image">
+              <span class="flavor-number">0{i + 1}</span>
+              <Image
+                src={photos[i]}
+                alt={`Empanada abierta de ${f.name}`}
+                widths={[320, 500, 700]}
+                sizes="(min-width: 800px) 29vw, 85vw"
+                loading="lazy"
+              />
+              <span class="flavor-note">{f.note}</span>
+            </div>
+            <div class="flavor-title">
+              <h3>{f.name}</h3>
+              <Mark name="arrow" />
+            </div>
+            <p>{f.description}</p>
+          </article>
+        ))}
+      </div>
+      <div class="full-menu">
+        <div class="menu-intro">
+          <p class="eyebrow">¿CUÁL TE TIENTA HOY?</p>
+          <h3>
+            Una para cada antojo.
+            <br />
+            <em>Unas cuantas para vos.</em>
+          </h3>
+          <p>110gr de puro amor, en cada una.</p>
+        </div>
+        <div
+          class="menu-switcher"
+          role="group"
+          aria-label="Categorías de la carta"
+        >
+          {productGroupsV2.map((g, i) => (
+            <button
+              type="button"
+              data-category={i}
+              aria-pressed={i === 0}
+              aria-controls={`menu-${i}`}
+            >
+              {g.name.replace("Empanadas ", "")}
+              <span>{String(g.items.length).padStart(2, "0")}</span>
+            </button>
+          ))}
+        </div>
+        <div class="menu-panels">
+          {productGroupsV2.map((g, i) => (
+            <section
+              id={`menu-${i}`}
+              class="menu-panel"
+              data-panel={i}
+              aria-label={g.name}
+            >
+              <h4>{g.name}</h4>
+              <ul>
+                {g.items.map((name) => (
+                  <li>
+                    <span>{name}</span>
+                    {["Humita", "Cheeseburger"].includes(name) ? (
+                      <small>¡PROBALA!</small>
+                    ) : (
+                      <span aria-hidden="true" class="menu-dot">
+                        ✧
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+        <div class="menu-bottom">
+          <p>
+            ¿Dudas sobre ingredientes o alérgenos? Consultanos antes de pedir.
+          </p>
+          <a class="text-link" href={order} target="_blank" rel="noopener">
+            Pedí por WhatsApp <Mark name="arrow" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="obrador" class="workshop section-pad">
+      <div class="workshop-image">
+        <Picture
+          src={horno}
+          alt="Nuestras empanadas doradas al horno"
+          formats={["avif", "webp"]}
+          widths={[480, 800, 1100]}
+          sizes="(min-width: 900px) 45vw, 90vw"
+          loading="lazy"
+        />
+        <span class="photo-label">MALLORCA, NUESTRA CASA.</span>
+        <div class="origin-stamp">
+          RECETA
+          <br />
+          <em>argentina</em>
+          <span>OBRADOR PROPIO</span>
+        </div>
+      </div>
+      <div class="workshop-copy">
+        <p class="eyebrow">02 — DE NUESTRO OBRADOR A TU MESA</p>
+        <h2>
+          Venimos de lejos.
+          <br />
+          <em>Cocinamos cerca.</em>
+        </h2>
+        <p>
+          Trajimos una manera de entender la comida: con sabor, con tiempo y con
+          ganas de compartir. Hoy la hacemos nuestra en el obrador de Mallorca.
+        </p>
+        <p>
+          Elaboramos nuestras empanadas nosotros mismos. Cuidamos la masa,
+          elegimos los ingredientes y buscamos ese equilibrio entre un exterior
+          dorado y un relleno que no se queda corto.
+        </p>
+        <div class="values">
+          <div>
+            <Mark name="oven" />
+            <h3>Obrador propio</h3>
+            <p>Hechas por nosotros, aquí en Mallorca.</p>
+          </div>
+          <div>
+            <Mark name="heart" />
+            <h3>110gr de puro amor</h3>
+            <p>El tamaño justo. Todo el sabor.</p>
+          </div>
+          <div>
+            <Mark name="sun" />
+            <h3>Alma argentina</h3>
+            <p>Una receta que nos hace sentir en casa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto" aria-label="Nuestra forma de compartir">
+      <div class="manifesto-lines" aria-hidden="true"></div>
+      <img src="/sol.svg" width="64" height="64" alt="" />
+      <p>
+        La vida sabe mejor
+        <br />
+        <em>cuando se comparte.</em>
+      </p>
+      <span>UNA MESA LARGA. UNA BUENA CHARLA. OTRA EMPANADA.</span>
+    </section>
+
+    <section id="catering" class="catering section-pad">
+      <div class="catering-copy">
+        <p class="eyebrow">03 — CATERING CON ACENTO ARGENTINO</p>
+        <h2>
+          Vos ponés
+          <br />
+          el motivo.
+          <br />
+          <em>Nosotros, el sabor.</em>
+        </h2>
+        <p>
+          Un cumple, una reunión de equipo, un «porque sí». Llevá nuestras
+          empanadas a tu próximo encuentro y dejá que la conversación siga
+          alrededor de la mesa.
+        </p>
+        <ul class="occasions">
+          <li>Celebraciones</li>
+          <li>Empresas</li>
+          <li>Encuentros</li>
+        </ul>
+        <a class="button blue" href={catering} target="_blank" rel="noopener">
+          Contanos tu plan <Mark name="arrow" />
+        </a>
+        <small>Consultá opciones y disponibilidad para tu evento.</small>
+      </div>
+      <div class="catering-photo">
+        <Picture
+          src={caja}
+          alt="Caja de empanadas Sabor Patricio para compartir"
+          formats={["avif", "webp"]}
+          widths={[480, 800, 1100]}
+          sizes="(min-width: 900px) 48vw, 90vw"
+          loading="lazy"
+        />
+        <span class="catering-caption">
+          DONDE SE JUNTAN LOS TUYOS,
+          <br />
+          <em>ahí queremos estar.</em>
+        </span>
+      </div>
+    </section>
+
+    <section id="franquicias" class="franchise section-pad">
+      <div>
+        <p class="eyebrow">04 — SIGAMOS CRECIENDO JUNTOS</p>
+        <h2>
+          ¿Querés
+          <br />
+          <em>franquiciarte?</em>
+        </h2>
+        <p>
+          Hay sabores que merecen llegar más lejos. Si compartís nuestra pasión
+          por la buena comida y querés formar parte de Sabor Patricio,
+          conversemos.
+        </p>
+        <a
+          class="button light"
+          href="mailto:info@saborpatricio.com?subject=Quiero%20conocer%20las%20franquicias%20de%20Sabor%20Patricio"
+        >
+          Te contamos más <Mark name="arrow" />
+        </a>
+        <a class="email-link" href="mailto:info@saborpatricio.com">
+          info@saborpatricio.com
+        </a>
+      </div>
+      <div class="brand-medallion">
+        <Image
+          src={logo}
+          alt="Sabor Patricio · Auténtica Empanada Argentina · Est. 2025"
+          width={400}
+          loading="lazy"
+        />
+        <span>MÁS MESAS. LA MISMA ESENCIA.</span>
+      </div>
+    </section>
+
+    <section id="visitanos" class="visit section-pad">
+      <div class="visit-title">
+        <p class="eyebrow">05 — NOS VEMOS EN CALA MAJOR</p>
+        <h2>
+          Tu rincón argentino.
+          <br />
+          <em>Acá, en Mallorca.</em>
+        </h2>
+        <a class="text-link" href={site.mapsUrl} target="_blank" rel="noopener">
+          Vení a conocernos <Mark name="arrow" />
+        </a>
+      </div>
+      <div class="visit-details">
+        <div>
+          <h3>Encontranos</h3>
+          <address>
+            {site.address.street}
+            <br />
+            Cala Major, Palma de Mallorca
+          </address>
+        </div>
+        <div>
+          <h3>Siempre hay un buen momento</h3>
+          <dl>
+            <div>
+              <dt>Lunes a jueves</dt>
+              <dd>10:30 — 22:30</dd>
+            </div>
+            <div>
+              <dt>Viernes y sábado</dt>
+              <dd>10:30 — 23:30</dd>
+            </div>
+            <div>
+              <dt>Domingo</dt>
+              <dd>10:30 — 23:00</dd>
+            </div>
+          </dl>
+        </div>
+        <a href={order} target="_blank" rel="noopener">
+          Pedidos por WhatsApp <Mark name="arrow" />
+        </a>
+      </div>
+      <div class="visit-photo">
+        <Picture
+          src={vino}
+          alt="Empanadas argentinas acompañadas de una copa de vino"
+          formats={["avif", "webp"]}
+          widths={[400, 700]}
+          sizes="(min-width: 1100px) 25vw, 90vw"
+          loading="lazy"
+        />
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-top">
+      <a class="footer-wordmark" href="/v2/">
+        SABOR PATRICIO<span>UN PEDACITO DE ARGENTINA EN MALLORCA.</span>
+      </a>
+      <a href={igLink} target="_blank" rel="noopener">
+        Seguinos en Instagram <Mark name="arrow" />
+      </a>
+      <a href="#contenido">
+        Volver arriba <Mark name="up" />
+      </a>
+    </div>
+    <div class="footer-bottom">
+      <span>
+        © {new Date().getFullYear()} Sabor Patricio · Marfer Obrador SL
+      </span>
+      <div>
+        <a href="/aviso-legal/">Aviso legal</a>
+        <a href="/privacidad/">Privacidad</a>
+        <a href="/cookies/">Cookies</a>
+      </div>
+      <span>
+        Con mucho amor. Y buen relleno. <span class="yellow">☀</span>
+      </span>
+    </div>
+  </footer>
+  <script>
+    const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+    const nav = document.querySelector<HTMLElement>("#navigation");
+    function closeMenu() {
+      toggle?.setAttribute("aria-expanded", "false");
+      nav?.classList.remove("is-open");
+    }
+    toggle?.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") !== "true";
+      toggle.setAttribute("aria-expanded", String(open));
+      nav?.classList.toggle("is-open", open);
+    });
+    nav
+      ?.querySelectorAll("a")
+      .forEach((link) => link.addEventListener("click", closeMenu));
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        toggle?.getAttribute("aria-expanded") === "true"
+      ) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+    const categories =
+      document.querySelectorAll<HTMLButtonElement>("[data-category]");
+    const panels = document.querySelectorAll<HTMLElement>("[data-panel]");
+    function selectCategory(id: string) {
+      categories.forEach((button) =>
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.category === id),
+        ),
+      );
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== id;
+      });
+    }
+    categories.forEach((button) =>
+      button.addEventListener("click", () =>
+        selectCategory(button.dataset.category!),
+      ),
+    );
+    selectCategory("0");
+    document.querySelector(".menu-switcher")?.classList.add("is-ready");
+    if (
+      !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      "IntersectionObserver" in window
+    ) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(
+          ".section-heading, .flavor-card, .workshop-copy, .catering-copy, .franchise > div, .visit-title",
+        )
+        .forEach((el) => {
+          el.classList.add("will-reveal");
+          observer.observe(el);
+        });
+    }
+  </script>
+</V2Base>

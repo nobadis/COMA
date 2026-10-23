@@ -1,0 +1,31 @@
+---
+type Props = {
+  name: "arrow" | "down" | "up" | "heart" | "oven" | "sun" | "menu" | "curve";
+};
+const { name } = Astro.props;
+const paths = {
+  arrow: "M5 19 19 5M5 5h14v14",
+  down: "M12 3v18M5 14l7 7 7-7",
+  up: "M12 21V3M5 10l7-7 7 7",
+  heart: "M12 21S2 15 2 8a5 5 0 0 1 10-1A5 5 0 0 1 22 8c0 7-10 13-10 13Z",
+  oven: "M3 3h18v18H3ZM3 8h18M7 5.5h.1M11 5.5h.1M7 12h10v6H7Z",
+  sun: "M12 1v3M12 20v3M1 12h3M20 12h3M4 4l2 2M18 18l2 2M4 20l2-2M18 6l2-2M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0",
+  menu: "M3 7h18M3 17h18",
+  curve: "M3 21C18 21 20 13 18 3M12 8l6-5 4 7",
+};
+---
+
+<svg
+  class="mark"
+  width="22"
+  height="22"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d={paths[name]} />
+</svg>

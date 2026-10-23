@@ -6,6 +6,7 @@ Hecha con [Astro](https://astro.build): HTML estático, ~8 KB de JS, imágenes A
 ## Páginas
 
 - `/` — Landing con hero 3D, clásicas y gourmet, postres, bebidas, combos, pizza, historia, galería y ubicación. Sin precios ni carrito; los pedidos van directamente a WhatsApp.
+- `/v2/` — Rediseño en pruebas, inspirado en Malvón y Tío Bigotes: navy, azul y blanco con destellos de sol, obrador en Mallorca, carta (con Humita y Cheeseburger), catering y franquicias (formulario a info@saborpatricio.com). Sin pizza. No sustituye la home, no se indexa ni sale en el sitemap.
 - `/carta/` — Carta indexable y preguntas frecuentes locales.
 - `/pedir` — Redirige a WhatsApp. De momento no se admiten pedidos desde la web; el formulario con carrito está aparcado en `src/pages/_pedir-formulario.astro` (el guion bajo evita que se publique) para retomarlo más adelante.
 
