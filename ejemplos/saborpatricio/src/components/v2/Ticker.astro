@@ -1,0 +1,71 @@
+---
+import sunSvg from '../../assets/sol-rays.svg?raw';
+type Props = { items: string[]; tone?: 'white' | 'azul' };
+const { items, tone = 'white' } = Astro.props;
+const row = [...items, ...items];
+---
+
+<div class:list={['tk', `tk--${tone}`]} aria-label={items.join(' · ')} role="note">
+  <div class="tk__track" aria-hidden="true">
+    {
+      [0, 1].map(() =>
+        row.map((t) => (
+          <span class="tk__item">
+            {t}
+            <span class="tk__sun" set:html={sunSvg} />
+          </span>
+        )),
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .tk {
+    position: relative;
+    z-index: 2;
+    overflow: clip;
+    padding: 14px 0;
+    background: var(--white);
+    color: var(--navy);
+  }
+  .tk--azul {
+    background: var(--azul);
+    color: var(--white);
+  }
+  .tk__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 48s linear infinite;
+  }
+  .tk:hover .tk__track {
+    animation-play-state: paused;
+  }
+  .tk__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    padding-right: 28px;
+    font-size: clamp(0.8rem, 0.76rem + 0.2vw, 0.92rem);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .tk__item:nth-child(even) {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+    letter-spacing: 0;
+  }
+  .tk__sun {
+    width: 16px;
+    color: var(--sol);
+  }
+  .tk__sun :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import inauguracion from '../../assets/photos/inauguracion.jpg';
+import stack from '../../assets/photos/stack.jpg';
+import horno from '../../assets/photos/horno.jpg';
+import cajaAbierta from '../../assets/photos/caja-abierta.jpg';
+import mordida from '../../assets/photos/mordida.jpg';
+import vitrina from '../../assets/photos/vitrina.jpg';
+import vino from '../../assets/photos/vino.jpg';
+import quilmes from '../../assets/photos/caja-quilmes.jpg';
+import { igLink, site } from '../../config/site';
+
+const photos = [
+  { src: inauguracion, alt: 'El local de Cala Major lleno el día de la inauguración' },
+  { src: stack, alt: 'Empanadas de carne abiertas, una sobre otra' },
+  { src: vitrina, alt: 'Vitrina con empanadas recién horneadas' },
+  { src: vino, alt: 'Empanadas con una copa de vino tinto' },
+  { src: mordida, alt: 'Empanada recién abierta, humeante' },
+  { src: cajaAbierta, alt: 'Caja de empanadas Sabor Patricio' },
+  { src: horno, alt: 'Empanadas doradas recién salidas del horno' },
+  { src: quilmes, alt: 'Caja de empanadas con cerveza Quilmes' },
+];
+---
+
+<section class="gl sec" aria-labelledby="gl-title">
+  <div class="wrap gl__head">
+    <div class="head">
+      <p class="kicker rv">@{site.instagram}</p>
+      <h2 id="gl-title" class="title rv" style="--d:1">Así se vive <em>Sabor Patricio</em></h2>
+    </div>
+    <a class="link rv" href={igLink} target="_blank" rel="noopener"><Icon name="instagram" size={20} /> Seguinos en Instagram</a>
+  </div>
+
+  <div class="gl__rail">
+    <ul class="gl__track">
+      {
+        [...photos, ...photos].map((p, i) => (
+          <li class="gl__item" aria-hidden={i >= photos.length ? 'true' : undefined}>
+            <Picture src={p.src} alt={i >= photos.length ? '' : p.alt} formats={['avif', 'webp']} widths={[300, 450]} sizes="(min-width: 960px) 22vw, 60vw" loading="lazy" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .gl {
+    background: var(--paper);
+    overflow: clip;
+  }
+  .gl__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .gl__head .head {
+    margin-bottom: 0;
+  }
+  .gl__head .link {
+    color: var(--azul);
+  }
+  .gl__track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: marquee 70s linear infinite;
+  }
+  .gl__rail:hover .gl__track {
+    animation-play-state: paused;
+  }
+  .gl__item {
+    width: clamp(220px, 22vw, 320px);
+    aspect-ratio: 3 / 4;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .gl__item:nth-child(even) {
+    margin-top: 48px;
+  }
+  .gl__item :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s var(--ease);
+  }
+  .gl__item:hover :global(img) {
+    transform: scale(1.06);
+  }
+</style>

@@ -1,0 +1,392 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import vitrina from '../../assets/photos/vitrina.jpg';
+import stack from '../../assets/photos/stack.jpg';
+import mordida from '../../assets/photos/mordida.jpg';
+import horno from '../../assets/photos/horno.jpg';
+import { menuV2, site } from '../../config/site';
+
+const flavorsCount = menuV2.filter((g) => g.id === 'clasicas' || g.id === 'gourmet').reduce((n, g) => n + g.items.length, 0);
+
+const steps = [
+  {
+    n: '01',
+    t: 'Elaboradas cada día',
+    d: 'En nuestro obrador de Mallorca, en pequeñas tandas y con calma. Doradas, finas y con ese crujido que se escucha al primer mordisco.',
+    img: vitrina,
+    alt: 'Bandejas de empanadas recién horneadas en el obrador',
+  },
+  {
+    n: '02',
+    t: 'Relleno criollo',
+    d: 'Carne cortada como se debe, cebolla, huevo, aceituna. Recetas argentinas de verdad, sin atajos y con ingredientes elegidos uno a uno.',
+    img: stack,
+    alt: 'Empanadas de carne abiertas con el relleno jugoso a la vista',
+  },
+  {
+    n: '03',
+    t: 'Repulgue con oficio',
+    d: 'Cada empanada se cierra con su repulgue, la firma de cada sabor. 110 gr de puro amor, todas iguales, ninguna en serie.',
+    img: mordida,
+    alt: 'Empanada abierta recién salida, sostenida en el obrador',
+  },
+  {
+    n: '04',
+    t: 'Recién horneadas',
+    d: 'Del obrador al horno de Cala Major. Te llegan calentitas, como en cualquier esquina de Buenos Aires.',
+    img: horno,
+    alt: 'Empanadas doradas recién salidas del horno',
+  },
+];
+
+const pillars = [
+  { icon: 'store', t: 'Obrador propio', d: `Todo se elabora en nuestro obrador de ${site.legal.city}, Mallorca.` },
+  { icon: 'scale', t: '110 gr de puro amor', d: 'Generosas, bien rellenas. Una empanada que llena de verdad.' },
+  { icon: 'medal', t: 'Calidad constante', d: 'Mismo peso, mismo punto y el mismo cuidado en cada tanda.' },
+  { icon: 'heart', t: 'Alma argentina', d: 'Recetas de allá, con el producto de acá.' },
+] as const;
+---
+
+<section id="obrador" class="ob sec" aria-labelledby="ob-title">
+  <div class="wrap">
+    <div class="ob__intro">
+      <div class="head">
+        <p class="kicker rv">Nuestro obrador · Mallorca</p>
+        <h2 id="ob-title" class="title rv" style="--d:1">Del obrador, <em>a tu mesa</em></h2>
+      </div>
+      <p class="lead rv" style="--d:2">
+        Cada empanada de Sabor Patricio nace en nuestro obrador en Mallorca, elaborada con la paciencia de las recetas de casa
+        y horneada en el punto justo. Así sabe distinto.
+      </p>
+    </div>
+
+    <dl class="stats">
+      <div class="stat rv">
+        <dt class="sr-only">Peso</dt>
+        <dd><b>110</b><span>gr</span></dd>
+        <p>de puro amor en cada una</p>
+      </div>
+      <div class="stat rv" style="--d:1">
+        <dt class="sr-only">Sabores</dt>
+        <dd><b>{flavorsCount}</b><span>sabores</span></dd>
+        <p>entre clásicas y gourmet</p>
+      </div>
+      <div class="stat rv" style="--d:2">
+        <dt class="sr-only">Obrador</dt>
+        <dd><b>100</b><span>%</span></dd>
+        <p>elaboradas en nuestro obrador</p>
+      </div>
+      <div class="stat rv" style="--d:3">
+        <dt class="sr-only">Desde</dt>
+        <dd><b>{site.founded}</b></dd>
+        <p>sirviendo Argentina en Mallorca</p>
+      </div>
+    </dl>
+  </div>
+
+  <div class="wrap proc" data-proc>
+    <div class="proc__media" aria-hidden="true">
+      <div class="proc__frame">
+        {
+          steps.map((s, i) => (
+            <div class:list={['proc__img', { 'is-on': i === 0 }]} data-proc-img>
+              <Picture src={s.img} alt="" formats={['avif', 'webp']} widths={[480, 600]} sizes="(min-width: 960px) 40vw, 90vw" loading="lazy" />
+            </div>
+          ))
+        }
+        <span class="proc__count" data-proc-n>01</span>
+      </div>
+    </div>
+    <ol class="proc__steps">
+      {
+        steps.map((s, i) => (
+          <li class:list={['step', { 'is-on': i === 0 }]} data-step={i}>
+            <span class="step__n">{s.n}</span>
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+            <div class="step__img">
+              <Picture src={s.img} alt={s.alt} formats={['avif', 'webp']} widths={[480, 600]} sizes="90vw" loading="lazy" />
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <div class="wrap">
+    <ul class="pillars">
+      {
+        pillars.map((p, i) => (
+          <li class="pillar rv" style={`--d:${i}`}>
+            <span class="pillar__ic">
+              <Icon name={p.icon} size={28} />
+            </span>
+            <h3>{p.t}</h3>
+            <p>{p.d}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  const proc = document.querySelector<HTMLElement>('[data-proc]');
+  if (proc) {
+    const steps = [...proc.querySelectorAll<HTMLElement>('[data-step]')];
+    const imgs = [...proc.querySelectorAll<HTMLElement>('[data-proc-img]')];
+    const n = proc.querySelector<HTMLElement>('[data-proc-n]')!;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const i = Number((e.target as HTMLElement).dataset.step);
+          steps.forEach((s, j) => s.classList.toggle('is-on', i === j));
+          imgs.forEach((s, j) => s.classList.toggle('is-on', i === j));
+          n.textContent = `0${i + 1}`;
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+    steps.forEach((s) => io.observe(s));
+  }
+</script>
+
+<style>
+  .ob {
+    background: var(--paper);
+  }
+  .ob__intro {
+    display: grid;
+    gap: 8px;
+    align-items: end;
+  }
+  .ob__intro .head {
+    margin-bottom: 0;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: clamp(56px, 7vw, 96px) 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .stat {
+    padding: 28px 18px 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .stat dd {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 0;
+    color: var(--navy);
+  }
+  .stat b {
+    font-size: clamp(2.3rem, 1.7rem + 2.2vw, 3.6rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+  }
+  .stat span {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 0.9rem + 0.6vw, 1.5rem);
+    color: var(--azul);
+  }
+  .stat p {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .stat:first-child b {
+    background: linear-gradient(180deg, var(--navy) 55%, var(--azul));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Proceso */
+  .proc {
+    display: grid;
+    gap: 40px;
+    margin-block: clamp(72px, 10vw, 140px);
+  }
+  .proc__media {
+    display: none;
+  }
+  .proc__steps {
+    display: grid;
+    gap: 56px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .step {
+    display: grid;
+    gap: 12px;
+  }
+  .step__n {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--azul);
+  }
+  .step h3 {
+    font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+  }
+  .step p {
+    max-width: 44ch;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+  .step__img {
+    margin-top: 14px;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 4.4;
+  }
+  .step__img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pillars {
+    display: grid;
+    gap: 14px;
+  }
+  .pillar {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 30px 26px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    transition:
+      transform 0.5s var(--ease),
+      box-shadow 0.5s var(--ease),
+      border-color 0.5s;
+  }
+  .pillar:hover {
+    transform: translateY(-6px);
+    border-color: transparent;
+    box-shadow: 0 30px 60px -30px rgb(10 26 58 / 0.35);
+  }
+  .pillar__ic {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    background: var(--hielo);
+    color: var(--azul);
+  }
+  .pillar:first-child .pillar__ic {
+    background: var(--navy);
+    color: var(--sol);
+  }
+  .pillar h3 {
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+  .pillar p {
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+
+  @media (min-width: 700px) {
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .stat {
+      padding: 36px 24px;
+      border-bottom: 0;
+      border-left: 1px solid var(--line);
+    }
+    .stat:first-child {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .pillars {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 960px) {
+    .ob__intro {
+      grid-template-columns: 1.3fr 1fr;
+      gap: 64px;
+    }
+    .proc {
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .proc__media {
+      display: block;
+    }
+    .proc__frame {
+      position: sticky;
+      top: calc(50vh - 250px);
+      aspect-ratio: 4 / 4.6;
+      max-width: 440px;
+      max-height: 500px;
+      border-radius: 36px;
+      overflow: hidden;
+      background: var(--navy);
+      box-shadow: var(--shadow);
+    }
+    .proc__img {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.08);
+      transition:
+        opacity 0.8s var(--ease),
+        transform 1.4s var(--ease);
+    }
+    .proc__img.is-on {
+      opacity: 1;
+      transform: none;
+    }
+    .proc__img :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .proc__count {
+      position: absolute;
+      left: 24px;
+      bottom: 18px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--white);
+      text-shadow: 0 6px 30px rgb(0 0 0 / 0.4);
+    }
+    .proc__steps {
+      gap: 0;
+    }
+    .step {
+      min-height: 64vh;
+      align-content: center;
+      opacity: 0.28;
+      transition: opacity 0.6s var(--ease);
+    }
+    .step.is-on {
+      opacity: 1;
+    }
+    .step__img {
+      display: none;
+    }
+    .pillars {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

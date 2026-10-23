@@ -140,39 +140,56 @@ export const productGroups = [
 ];
 
 /**
- * Carta de la landing /v2: clásicas + Humita, gourmet + Cheeseburger.
+ * Carta de /v2 (rediseño en pruebas): clásicas + Humita, gourmet + Cheeseburger, sin pizza.
  * Separada para no alterar la home actual ni /carta.
  */
-export const productGroupsV2 = [
+export type MenuItemV2 = { name: string };
+export const menuV2: { id: string; name: string; intro: string; items: MenuItemV2[] }[] = [
   {
-    name: 'Empanadas clásicas',
-    intro: 'Los sabores de siempre, con la receta de casa.',
+    id: 'clasicas',
+    name: 'Clásicas',
+    intro: 'Las de siempre, con la receta de casa. Las que piden los que saben.',
     items: [
-      'Carne criolla',
-      'Carne picante',
-      'Pollo suave',
-      'Pollo picante',
-      'Jamón y queso',
-      'Queso y cebolla',
-      'Atún',
-      'Caprese',
-      'Espinaca',
-      'Humita',
+      { name: 'Carne criolla' },
+      { name: 'Carne picante' },
+      { name: 'Pollo suave' },
+      { name: 'Pollo picante' },
+      { name: 'Jamón y queso' },
+      { name: 'Queso y cebolla' },
+      { name: 'Atún' },
+      { name: 'Caprese' },
+      { name: 'Espinaca' },
+      { name: 'Humita' },
     ],
   },
   {
-    name: 'Empanadas gourmet',
-    intro: 'Rellenos con más carácter para cuando querés algo distinto.',
-    items: ['Carne a cuchillo', 'Barbacoa', 'Sobrasada', 'Vacío y provolone', 'Cheeseburger'],
+    id: 'gourmet',
+    name: 'Gourmet',
+    intro: 'Rellenos con más carácter, para cuando querés algo distinto.',
+    items: [
+      { name: 'Carne a cuchillo' },
+      { name: 'Barbacoa' },
+      { name: 'Sobrasada' },
+      { name: 'Vacío y provolone' },
+      { name: 'Cheeseburger' },
+    ],
   },
   {
-    name: 'Postres argentinos',
+    id: 'postres',
+    name: 'Postres',
     intro: 'El cierre dulce que no puede faltar.',
-    items: ['Chocotorta', 'Alfajores Havanna', 'Havanna de nuez', 'Havanna con sal', 'Havanna súper dulce de leche'],
+    items: [
+      { name: 'Chocotorta' },
+      { name: 'Alfajores Havanna' },
+      { name: 'Havanna de nuez' },
+      { name: 'Havanna con sal' },
+      { name: 'Havanna súper dulce de leche' },
+    ],
   },
   {
+    id: 'bebidas',
     name: 'Para acompañar',
     intro: 'Algo fresco para completar el plan.',
-    items: ['Agua', 'Agua con gas', 'Refrescos', 'Té frío'],
+    items: [{ name: 'Agua' }, { name: 'Agua con gas' }, { name: 'Refrescos' }, { name: 'Té frío' }],
   },
 ];

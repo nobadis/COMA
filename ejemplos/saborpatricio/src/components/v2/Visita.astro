@@ -1,0 +1,169 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import Hours from '../Hours.astro';
+import map from '../../assets/photos/mapa.jpg';
+import { igLink, site, telLink, waLink } from '../../config/site';
+---
+
+<section id="visitanos" class="vs sec" aria-labelledby="vs-title">
+  <div class="wrap vs__grid">
+    <div class="vs__copy">
+      <div class="head">
+        <p class="kicker rv">Tienda · {site.address.area}</p>
+        <h2 id="vs-title" class="title rv" style="--d:1">Vení <em>a buscarlas</em></h2>
+        <p class="lead rv" style="--d:2">
+          Recién horneadas, a dos pasos del mar. Pasá por la tienda o encargalas por WhatsApp y te las tenemos listas.
+        </p>
+      </div>
+
+      <div class="vs__cards">
+        <div class="vc rv">
+          <Icon name="pin" />
+          <div>
+            <h3>Dirección</h3>
+            <address>
+              {site.address.street}<br />
+              {site.address.postalCode} {site.address.area}, {site.address.city}
+            </address>
+          </div>
+        </div>
+        <div class="vc rv" style="--d:1">
+          <Icon name="phone" />
+          <div>
+            <h3>Teléfono y WhatsApp</h3>
+            <a href={telLink}>{site.phone}</a>
+          </div>
+        </div>
+        <div class="vc vc--hours rv" style="--d:2">
+          <Icon name="clock" />
+          <div>
+            <h3>Horario</h3>
+            <Hours />
+          </div>
+        </div>
+      </div>
+
+      <div class="vs__ctas rv">
+        <a class="btn btn--azul" href={site.mapsUrl} target="_blank" rel="noopener"><Icon name="pin" size={20} /> Cómo llegar</a>
+        <a class="btn btn--wa" href={waLink(`¡Hola ${site.name}! Quiero encargar empanadas.`)} target="_blank" rel="noopener"
+          ><Icon name="whatsapp" size={20} /> Encargar</a
+        >
+        <a class="btn btn--ghost" href={igLink} target="_blank" rel="noopener"><Icon name="instagram" size={20} /> Instagram</a>
+      </div>
+    </div>
+
+    <a class="vs__map rv-img" href={site.mapsUrl} target="_blank" rel="noopener" aria-label="Abrir la ubicación en Google Maps">
+      <Picture
+        src={map}
+        alt="Mapa de Cala Major con la ubicación de Sabor Patricio"
+        formats={['avif', 'webp']}
+        widths={[480, 768]}
+        sizes="(min-width: 960px) 44vw, 92vw"
+        loading="lazy"
+      />
+      <span class="vs__pill"><Icon name="arrowUpRight" size={18} /> Abrir en Google Maps</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .vs {
+    background: var(--white);
+  }
+  .vs__grid {
+    display: grid;
+    gap: 56px;
+    align-items: center;
+  }
+  .vs__cards {
+    display: grid;
+    gap: 12px;
+  }
+  .vc {
+    display: flex;
+    gap: 16px;
+    padding: 20px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    color: var(--azul);
+  }
+  .vc > div {
+    flex: 1;
+    min-width: 0;
+    color: var(--ink);
+  }
+  .vc h3 {
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .vc address {
+    font-style: normal;
+    font-weight: 600;
+  }
+  .vc a {
+    font-size: 1.1rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+  .vs__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .vs__ctas .btn--ghost {
+    color: var(--navy);
+  }
+  .vs__map {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .vs__map :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s var(--ease);
+  }
+  .vs__map:hover :global(img) {
+    transform: scale(1.05);
+  }
+  .vs__pill {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    translate: -50% 0;
+  }
+  @media (min-width: 700px) {
+    .vs__cards {
+      grid-template-columns: 1fr 1fr;
+    }
+    .vc--hours {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (min-width: 960px) {
+    .vs__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 96px;
+    }
+  }
+</style>

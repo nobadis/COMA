@@ -1,0 +1,312 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { flavors } from '../../config/site';
+
+const imgs = import.meta.glob<{ default: ImageMetadata }>('../../assets/flavors/*.png', { eager: true });
+const img = (id: string) => imgs[`../../assets/flavors/${id}.png`].default;
+---
+
+<section id="sabores" class="sb on-dark grain" aria-labelledby="sb-title" data-sb>
+  <div class="sb__pin" data-sb-pin>
+    <div class="wrap sb__head">
+      <div class="head">
+        <p class="kicker rv">Los sabores de la casa</p>
+        <h2 id="sb-title" class="title rv" style="--d:1">Elegí <em>la tuya</em></h2>
+      </div>
+      <p class="lead rv" style="--d:2">
+        Un bocado y estás en Argentina. Estas son las que más se piden; en la carta te esperan muchas más.
+      </p>
+    </div>
+
+    <div class="sb__viewport" data-sb-vp>
+      <ul class="sb__track" data-sb-track>
+        {
+          flavors.map((f, i) => (
+            <li class="fc">
+              <div class="fc__media">
+                <span class="fc__n">0{i + 1}</span>
+                <Picture
+                  src={img(f.id)}
+                  alt={`Empanada de ${f.name.toLowerCase()} abierta`}
+                  formats={['avif', 'webp']}
+                  widths={[360, 540]}
+                  sizes="(min-width: 960px) 30vw, 80vw"
+                  loading="lazy"
+                />
+              </div>
+              <div class="fc__body">
+                <p class="fc__tag">
+                  {f.tag}
+                  {f.spicy && (
+                    <span class="fc__flag">
+                      <Icon name="chili" size={16} /> Picante
+                    </span>
+                  )}
+                  {f.veggie && (
+                    <span class="fc__flag">
+                      <Icon name="leaf" size={16} /> Veggie
+                    </span>
+                  )}
+                </p>
+                <h3>{f.name}</h3>
+                <p class="fc__ing">{f.ingredients}</p>
+              </div>
+            </li>
+          ))
+        }
+        <li class="fc fc--more">
+          <p class="fc__tag">Y muchas más</p>
+          <h3>
+            Humita <span>&</span> Cheeseburger
+          </h3>
+          <p class="fc__ing">De la humita de toda la vida a la cheeseburger gourmet: clásicas, gourmet y postres argentinos.</p>
+          <a class="btn btn--white" href="#carta">
+            Ver la carta completa <Icon name="arrow" size={18} />
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="wrap sb__bar" aria-hidden="true">
+      <span class="sb__progress"><i data-sb-progress></i></span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const sb = document.querySelector<HTMLElement>('[data-sb]')!;
+  const vp = sb.querySelector<HTMLElement>('[data-sb-vp]')!;
+  const track = sb.querySelector<HTMLElement>('[data-sb-track]')!;
+  const bar = sb.querySelector<HTMLElement>('[data-sb-progress]')!;
+  const desk = matchMedia('(min-width: 960px)');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dist = 0;
+
+  // En escritorio la sección queda fija y el scroll vertical desplaza las tarjetas en horizontal
+  const measure = () => {
+    const on = desk.matches && !reduce;
+    sb.classList.toggle('is-pinned', on);
+    const pad = parseFloat(getComputedStyle(vp).paddingLeft) || 0;
+    dist = on ? Math.max(0, track.scrollWidth + pad * 2 - vp.clientWidth) : 0;
+    sb.style.height = on ? `${innerHeight + dist}px` : '';
+    if (!on) track.style.transform = '';
+    tick();
+  };
+  const tick = () => {
+    if (dist) {
+      const p = Math.min(1, Math.max(0, -sb.getBoundingClientRect().top / dist));
+      track.style.transform = `translate3d(${(-p * dist).toFixed(1)}px,0,0)`;
+      bar.style.transform = `scaleX(${p})`;
+    } else {
+      const max = vp.scrollWidth - vp.clientWidth;
+      bar.style.transform = `scaleX(${max > 0 ? vp.scrollLeft / max : 0})`;
+    }
+  };
+  let raf = 0;
+  const onScroll = () => {
+    if (!raf)
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        tick();
+      });
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  vp.addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', measure);
+  desk.addEventListener('change', measure);
+  addEventListener('load', measure);
+  measure();
+</script>
+
+<style>
+  .sb {
+    position: relative;
+    background: var(--navy);
+    color: var(--white);
+    isolation: isolate;
+  }
+  .sb__pin {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(88px, 12vw, 140px) 64px;
+    overflow: clip;
+  }
+  .sb__head {
+    display: grid;
+    gap: 8px;
+    align-items: end;
+  }
+  .sb__head .head {
+    margin-bottom: 0;
+  }
+  .sb__viewport {
+    margin-top: 48px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .sb__viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .sb__track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    will-change: transform;
+  }
+  .fc {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    width: min(78vw, 320px);
+    border: 1px solid var(--line-inv);
+    border-radius: var(--r-lg);
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.02));
+    scroll-snap-align: start;
+    overflow: hidden;
+    transition:
+      border-color 0.4s,
+      transform 0.6s var(--ease);
+  }
+  .fc:hover {
+    border-color: rgb(255 255 255 / 0.4);
+  }
+  .fc__media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1 / 0.82;
+    padding: 28px 34px;
+    background: radial-gradient(70% 60% at 50% 55%, #2a56b1 0%, transparent 70%);
+  }
+  .fc__media :global(img) {
+    width: 100%;
+    filter: drop-shadow(0 24px 24px rgb(0 0 0 / 0.45));
+    transition: transform 0.9s var(--ease);
+  }
+  .fc:hover .fc__media :global(img) {
+    transform: scale(1.07) rotate(-3deg);
+  }
+  .fc__n {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--celeste);
+  }
+  .fc__body {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 8px 26px 30px;
+  }
+  .fc__tag {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--celeste);
+  }
+  .fc__flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.08);
+    color: var(--white);
+    letter-spacing: 0.06em;
+  }
+  .fc h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 1.4rem + 0.6vw, 2.1rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .fc__ing {
+    color: rgb(255 255 255 / 0.66);
+    font-size: 0.97rem;
+  }
+  .fc--more {
+    grid-template-rows: none;
+    align-content: end;
+    gap: 16px;
+    padding: 36px 30px;
+    background:
+      radial-gradient(80% 60% at 80% 10%, rgb(246 180 14 / 0.28), transparent 70%),
+      linear-gradient(160deg, var(--azul) 0%, var(--navy-700) 100%);
+    border-color: transparent;
+  }
+  .fc--more h3 {
+    font-size: clamp(1.9rem, 1.6rem + 0.9vw, 2.5rem);
+  }
+  .fc--more h3 span {
+    color: var(--sol);
+  }
+  .fc--more .btn {
+    justify-self: start;
+    margin-top: 8px;
+  }
+
+  .sb__bar {
+    margin-top: 36px;
+  }
+  .sb__progress {
+    display: block;
+    height: 2px;
+    background: var(--line-inv);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sb__progress i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--celeste), var(--sol));
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  @media (min-width: 960px) {
+    .sb__head {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+    .fc {
+      width: clamp(300px, 24vw, 360px);
+    }
+    .sb.is-pinned .sb__pin {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: center;
+      padding-block: calc(var(--header-h) + 8px) 40px;
+    }
+    .sb.is-pinned .sb__viewport {
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+    .sb.is-pinned .sb__viewport {
+      padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    }
+  }
+  @media (min-width: 960px) and (max-height: 860px) {
+    .sb.is-pinned .fc__media {
+      aspect-ratio: 1 / 0.62;
+    }
+    .sb.is-pinned .sb__viewport {
+      margin-top: 32px;
+    }
+  }
+</style>

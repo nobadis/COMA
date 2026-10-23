@@ -1,0 +1,281 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import Seal from './Seal.astro';
+import cajaAbierta from '../../assets/photos/caja-abierta.jpg';
+import { menuV2, site, waLink } from '../../config/site';
+---
+
+<section id="carta" class="ct sec" aria-labelledby="ct-title">
+  <div class="wrap ct__grid">
+    <div class="ct__side">
+      <div class="head">
+        <p class="kicker rv">La carta</p>
+        <h2 id="ct-title" class="title rv" style="--d:1">Clásicas, gourmet <em>y algo dulce</em></h2>
+        <p class="lead rv" style="--d:2">
+          Todas nuestras empanadas salen del obrador con el mismo cuidado y el mismo peso: 110 gr de puro amor.
+        </p>
+      </div>
+      <div class="ct__photo rv-img">
+        <Picture
+          src={cajaAbierta}
+          alt="Caja de Sabor Patricio abierta con una docena de empanadas"
+          formats={['avif', 'webp']}
+          widths={[420, 600]}
+          sizes="(min-width: 960px) 34vw, 90vw"
+          loading="lazy"
+          data-px="-0.06"
+        />
+        <Seal class="ct__seal" tone="dark" />
+      </div>
+    </div>
+
+    <div class="ct__menu" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Secciones de la carta">
+        {
+          menuV2.map((g, i) => (
+            <button
+              type="button"
+              role="tab"
+              class="tab"
+              id={`tab-${g.id}`}
+              aria-controls={`panel-${g.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              {g.name}
+              <span>{g.items.length}</span>
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        menuV2.map((g, i) => (
+          <div class="panel" role="tabpanel" id={`panel-${g.id}`} aria-labelledby={`tab-${g.id}`} hidden={i !== 0}>
+            <p class="panel__intro">{g.intro}</p>
+            <ol class="items">
+              {g.items.map((it, j) => (
+                <li class="item" style={`--j:${j}`}>
+                  <span class="item__n">{String(j + 1).padStart(2, '0')}</span>
+                  <span class="item__name">{it.name}</span>
+                  <span class="item__dots" aria-hidden="true" />
+                  {g.id === 'gourmet' && <span class="item__tag">Gourmet</span>}
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))
+      }
+
+      <div class="ct__cta">
+        <a class="btn btn--lg" href={waLink(`¡Hola ${site.name}! Quiero hacer un pedido 🥟`)} target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={20} /> Hacé tu pedido
+        </a>
+        <p>Recogida en Cala Major · Pedidos por WhatsApp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => {
+        const on = i === j;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls')!)!;
+        panel.hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const k = e.key;
+        if (k === 'ArrowRight' || k === 'ArrowLeft') {
+          e.preventDefault();
+          select((i + (k === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length, true);
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .ct {
+    background: var(--white);
+  }
+  .ct__grid {
+    display: grid;
+    gap: 56px;
+  }
+  .ct__side .head {
+    margin-bottom: 40px;
+  }
+  .ct__photo {
+    position: relative;
+    aspect-ratio: 4 / 4.2;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .ct__photo :global(img) {
+    width: 100%;
+    height: 118%;
+    margin-top: -9%;
+    object-fit: cover;
+  }
+  .ct__photo :global(.ct__seal) {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: var(--hielo);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    flex: 1 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+  }
+  .tab span {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--azul);
+  }
+  .tab[aria-selected='true'] {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .tab[aria-selected='true'] span {
+    color: var(--celeste);
+  }
+
+  .panel {
+    padding-top: 32px;
+  }
+  .panel__intro {
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    animation: itemIn 0.7s var(--ease) both;
+    animation-delay: calc(var(--j) * 40ms);
+  }
+  .item__n {
+    flex: none;
+    width: 2ch;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .item__name {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    transition:
+      color 0.3s,
+      transform 0.4s var(--ease);
+  }
+  .item:hover .item__name {
+    color: var(--azul);
+    transform: translateX(6px);
+  }
+  .item__dots {
+    flex: 1;
+    min-width: 20px;
+    border-bottom: 1px dotted rgb(11 23 54 / 0.25);
+    transform: translateY(-6px);
+  }
+  .item__new,
+  .item__tag {
+    flex: none;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .item__new {
+    background: var(--sol);
+    color: var(--navy);
+  }
+  .item__tag {
+    background: var(--hielo);
+    color: var(--azul);
+  }
+  .ct__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+    margin-top: 40px;
+  }
+  .ct__cta p {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  @keyframes itemIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .ct__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 96px;
+      align-items: start;
+    }
+    .ct__side {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+    }
+    .ct__photo {
+      aspect-ratio: 16 / 11;
+    }
+  }
+</style>

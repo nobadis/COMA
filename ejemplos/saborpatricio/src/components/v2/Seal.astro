@@ -1,0 +1,70 @@
+---
+/** Sello circular «110 gr de puro amor»: el texto gira, el centro queda quieto. */
+type Props = { class?: string; tone?: 'light' | 'dark' };
+const { class: className, tone = 'light' } = Astro.props;
+const id = `seal-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class:list={['seal', `seal--${tone}`, className]} aria-label="110 gramos de puro amor" role="img">
+  <svg class="seal__ring" viewBox="0 0 200 200" aria-hidden="true">
+    <defs>
+      <path id={id} d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+    </defs>
+    <text>
+      <textPath href={`#${id}`} startOffset="0">110 GR DE PURO AMOR ✦ OBRADOR EN MALLORCA ✦ </textPath>
+    </text>
+  </svg>
+  <span class="seal__core" aria-hidden="true">
+    <b>110</b><i>gr</i>
+  </span>
+</div>
+
+<style>
+  .seal {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: clamp(92px, 8.5vw, 124px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--navy);
+    box-shadow: 0 20px 50px -18px rgb(6 15 36 / 0.55);
+  }
+  .seal--dark {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .seal__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: spin 22s linear infinite;
+  }
+  .seal__ring text {
+    font-family: var(--sans);
+    font-size: 15.2px;
+    font-weight: 700;
+    letter-spacing: 2.6px;
+    fill: currentColor;
+  }
+  .seal__core {
+    display: grid;
+    justify-items: center;
+    line-height: 0.8;
+  }
+  .seal__core b {
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+  }
+  .seal__core i {
+    font-family: var(--serif);
+    font-size: clamp(0.95rem, 0.8rem + 0.4vw, 1.15rem);
+    color: var(--sol);
+  }
+  .seal--light .seal__core i {
+    color: var(--azul);
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+import '../styles/v2.css';
+import Header from '../components/v2/Header.astro';
+import Footer from '../components/v2/Footer.astro';
+import Icon from '../components/v2/Icon.astro';
+import { site, waLink } from '../config/site';
+
+const title = `${site.name} · Empanadas argentinas de obrador en Mallorca`;
+const description =
+  'Empanadas argentinas elaboradas en nuestro obrador de Mallorca. 110 gr de puro amor. Carta clásica y gourmet, catering para eventos y franquicias.';
+const canonical = new URL('/v2/', Astro.site ?? site.url).href;
+const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <!-- Rediseño en pruebas: no se indexa ni sale en el sitemap -->
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0a1a3a" />
+    <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Saltar al contenido</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <a
+      class="mbar"
+      href={waLink(`¡Hola ${site.name}! Quiero hacer un pedido 🥟`)}
+      target="_blank"
+      rel="noopener"
+      data-mbar
+    >
+      <Icon name="whatsapp" size={22} /> Pedí por WhatsApp
+    </a>
+
+    <script>
+      // Entradas al hacer scroll
+      const els = document.querySelectorAll<HTMLElement>('.rv, .rv-img');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.04 },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-in'));
+      }
+
+      // Parallax suave: [data-px="0.15"] se desplaza a esa fracción del scroll relativo
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const px = [...document.querySelectorAll<HTMLElement>('[data-px]')];
+      const bar = document.querySelector<HTMLElement>('[data-mbar]');
+      const hero = document.querySelector<HTMLElement>('[data-hero]');
+      let ticking = false;
+      const onScroll = () => {
+        ticking = false;
+        const vh = innerHeight;
+        if (!reduce) {
+          for (const el of px) {
+            const r = el.parentElement!.getBoundingClientRect();
+            if (r.bottom < -100 || r.top > vh + 100) continue;
+            const k = Number(el.dataset.px);
+            el.style.transform = `translate3d(0, ${((r.top + r.height / 2 - vh / 2) * k).toFixed(1)}px, 0)`;
+          }
+        }
+        bar?.classList.toggle('is-on', !hero || hero.getBoundingClientRect().bottom < vh * 0.4);
+      };
+      addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(onScroll);
+          }
+        },
+        { passive: true },
+      );
+      onScroll();
+    </script>
+
+    <style is:global>
+      .mbar {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 56px;
+        border-radius: 999px;
+        background: var(--wa);
+        color: #052e14;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 18px 40px -12px rgb(6 15 36 / 0.5);
+        transform: translateY(140%);
+        transition: transform 0.5s var(--ease);
+      }
+      .mbar.is-on {
+        transform: none;
+      }
+      @media (min-width: 900px) {
+        .mbar {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>

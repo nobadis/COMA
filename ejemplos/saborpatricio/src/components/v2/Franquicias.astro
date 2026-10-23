@@ -1,0 +1,317 @@
+---
+import Icon from './Icon.astro';
+import Seal from './Seal.astro';
+import sunSvg from '../../assets/sol-rays.svg?raw';
+import { site } from '../../config/site';
+
+const email = site.legal.email;
+const perks = [
+  { icon: 'store', t: 'Producto de obrador', d: 'Elaborado en nuestro obrador de Mallorca, con la misma calidad en cada empanada.' },
+  { icon: 'hands', t: 'Acompañamiento real', d: 'Te contamos el modelo con calma y te acompañamos desde el primer día.' },
+  { icon: 'heart', t: 'Una marca con alma', d: 'Argentina de verdad, cercana y con un producto que la gente recuerda.' },
+] as const;
+---
+
+<section id="franquicias" class="fr sec on-dark grain" aria-labelledby="fr-title">
+  <div class="fr__sun" aria-hidden="true" set:html={sunSvg} data-px="-0.08" />
+
+  <div class="wrap fr__grid">
+    <div class="fr__copy">
+      <div class="head">
+        <p class="kicker rv">Franquicias · Contacto</p>
+        <h2 id="fr-title" class="title fr__title rv" style="--d:1">¿Querés franquiciarte? <em>Te contamos más.</em></h2>
+        <p class="lead rv" style="--d:2">
+          Si te enamoraste de nuestras empanadas y te imaginás un Sabor Patricio en tu ciudad, escribinos. Charlamos sin
+          compromiso.
+        </p>
+      </div>
+
+      <ul class="perks">
+        {
+          perks.map((p, i) => (
+            <li class="perk rv" style={`--d:${i}`}>
+              <span>
+                <Icon name={p.icon} size={24} />
+              </span>
+              <div>
+                <h3>{p.t}</h3>
+                <p>{p.d}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a class="fr__mail rv" href={`mailto:${email}`}><Icon name="mail" size={20} /> {email}</a>
+    </div>
+
+    <form
+      class="form rv"
+      action={`mailto:${email}`}
+      method="post"
+      enctype="text/plain"
+      data-franq
+      aria-labelledby="form-title"
+    >
+      <Seal class="form__seal" />
+      <h3 id="form-title" class="form__title">Contanos de vos</h3>
+      <div class="form__row">
+        <label class="field">
+          <span>Nombre</span>
+          <input name="nombre" autocomplete="name" required />
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+      </div>
+      <div class="form__row">
+        <label class="field">
+          <span>Teléfono</span>
+          <input name="telefono" type="tel" autocomplete="tel" />
+        </label>
+        <label class="field">
+          <span>Ciudad o zona</span>
+          <input name="zona" autocomplete="address-level2" required />
+        </label>
+      </div>
+      <label class="field">
+        <span>¿Tenés local?</span>
+        <select name="local">
+          <option>Todavía no</option>
+          <option>Estoy buscando</option>
+          <option>Sí, ya tengo local</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Contanos un poco más</span>
+        <textarea name="mensaje" rows="4" placeholder="Tu experiencia, cuándo te gustaría abrir, dudas…"></textarea>
+      </label>
+      <label class="check">
+        <input type="checkbox" name="privacidad" required />
+        <span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span>
+      </label>
+      <button class="btn btn--white btn--lg form__send" type="submit">
+        Quiero saber más <Icon name="arrow" size={20} />
+      </button>
+      <p class="form__hint" data-hint>Se abrirá tu correo con el mensaje listo para enviar a {email}.</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-franq]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const v = (k: string) => String(d.get(k) ?? '').trim();
+    const to = form.action.replace(/^mailto:/, '');
+    const subject = `Franquicia Sabor Patricio · ${v('zona')}`;
+    const body = [
+      `Nombre: ${v('nombre')}`,
+      `Email: ${v('email')}`,
+      `Teléfono: ${v('telefono') || '—'}`,
+      `Ciudad o zona: ${v('zona')}`,
+      `¿Tiene local?: ${v('local')}`,
+      '',
+      v('mensaje'),
+    ].join('\n');
+    location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const hint = form.querySelector<HTMLElement>('[data-hint]')!;
+    hint.textContent = `¡Gracias! Si tu correo no se abrió, escribinos directamente a ${to}.`;
+    hint.classList.add('is-ok');
+  });
+</script>
+
+<style>
+  .fr {
+    background: var(--navy);
+    color: var(--white);
+    overflow: clip;
+    isolation: isolate;
+  }
+  .fr__sun {
+    position: absolute;
+    right: -18vmax;
+    top: -10vmax;
+    z-index: -1;
+    width: 60vmax;
+    color: var(--sol);
+    opacity: 0.06;
+  }
+  .fr__sun :global(svg) {
+    width: 100%;
+    height: auto;
+    animation: spin 120s linear infinite;
+  }
+  .fr__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 56px;
+  }
+  .fr__title {
+    font-size: clamp(2rem, 1.3rem + 2.4vw, 3.5rem);
+  }
+  .perks {
+    display: grid;
+    gap: 22px;
+  }
+  .perk {
+    display: flex;
+    gap: 18px;
+  }
+  .perk > span {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--line-inv);
+    border-radius: 50%;
+    color: var(--celeste);
+  }
+  .perk h3 {
+    font-size: 1.15rem;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+  .perk p {
+    margin-top: 4px;
+    color: rgb(255 255 255 / 0.66);
+    font-size: 0.97rem;
+  }
+  .fr__mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 36px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(255 255 255 / 0.3);
+    transition: border-color 0.3s;
+  }
+  .fr__mail:hover {
+    border-color: var(--sol);
+  }
+
+  .form {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    padding: clamp(28px, 4vw, 48px);
+    border: 1px solid var(--line-inv);
+    border-radius: 32px;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.03));
+    backdrop-filter: blur(12px);
+  }
+  .form :global(.form__seal) {
+    position: absolute;
+    top: -40px;
+    right: 22px;
+    width: 88px;
+  }
+  .form__title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.6rem, 1.4rem + 0.6vw, 2.1rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .form__row {
+    display: grid;
+    gap: 16px;
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+  .field > span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgb(255 255 255 / 0.7);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 16px;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: 14px;
+    background: rgb(6 15 36 / 0.35);
+    color: var(--white);
+    font-size: 1rem;
+    transition:
+      border-color 0.25s,
+      background-color 0.25s;
+  }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23b9d6f2' stroke-width='1.8'%3E%3Cpath d='m2 5 5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  .field select option {
+    color: var(--ink);
+  }
+  .field textarea {
+    resize: vertical;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: rgb(255 255 255 / 0.4);
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--celeste);
+    background: rgb(6 15 36 / 0.55);
+  }
+  .check {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    color: rgb(255 255 255 / 0.75);
+  }
+  .check input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    accent-color: var(--celeste);
+  }
+  .check a {
+    color: var(--white);
+  }
+  .form__send {
+    margin-top: 6px;
+  }
+  .form__hint {
+    font-size: 0.85rem;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .form__hint.is-ok {
+    color: var(--celeste-300);
+  }
+
+  @media (min-width: 600px) {
+    .form__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 960px) {
+    .fr__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 96px;
+      align-items: center;
+    }
+  }
+</style>
