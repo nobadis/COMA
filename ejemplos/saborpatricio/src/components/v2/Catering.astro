@@ -6,11 +6,11 @@ import quilmes from '../../assets/photos/caja-quilmes.jpg';
 import { site, waLink } from '../../config/site';
 
 const uses = [
-  { icon: 'briefcase', t: 'Empresas y oficinas', d: 'Reuniones, desayunos de trabajo y afterworks.' },
-  { icon: 'party', t: 'Cumpleaños y fiestas', d: 'Lo que siempre se termina primero en la mesa.' },
-  { icon: 'users', t: 'Eventos y celebraciones', d: 'Bodas, comuniones, eventos de marca y más.' },
-  { icon: 'tray', t: 'Bandejas para compartir', d: 'Surtidas a tu gusto, de clásicas y gourmet.' },
-] as const;
+  { t: 'Empresas y oficinas', d: 'Reuniones, desayunos de trabajo y afterworks.' },
+  { t: 'Cumpleaños y fiestas', d: 'Lo que siempre se termina primero en la mesa.' },
+  { t: 'Eventos y celebraciones', d: 'Bodas, comuniones, eventos de marca y más.' },
+  { t: 'Bandejas para compartir', d: 'Surtidas a tu gusto, de clásicas y gourmet.' },
+];
 
 const steps = [
   { t: 'Contanos tu plan', d: 'Fecha, número de personas y qué te apetece.' },
@@ -46,11 +46,8 @@ const mail = `mailto:${site.legal.email}?subject=${encodeURIComponent('Catering 
         {
           uses.map((u, i) => (
             <li class="use rv" style={`--d:${i}`}>
-              <Icon name={u.icon} size={26} />
-              <div>
-                <h3>{u.t}</h3>
-                <p>{u.d}</p>
-              </div>
+              <h3>{u.t}</h3>
+              <p>{u.d}</p>
             </li>
           ))
         }
@@ -120,25 +117,23 @@ const mail = `mailto:${site.legal.email}?subject=${encodeURIComponent('Catering 
 
   .uses {
     display: grid;
-    gap: 12px;
+    border-top: 1px solid rgb(10 26 58 / 0.14);
   }
   .use {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-    padding: 20px 22px;
-    border-radius: var(--r);
-    background: var(--white);
-    color: var(--azul);
+    display: grid;
+    gap: 4px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgb(10 26 58 / 0.14);
   }
   .use h3 {
-    font-size: 1.08rem;
-    letter-spacing: -0.015em;
-    line-height: 1.2;
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.6rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
     color: var(--navy);
   }
   .use p {
-    margin-top: 4px;
     font-size: 0.93rem;
     color: var(--muted);
   }
@@ -172,16 +167,13 @@ const mail = `mailto:${site.legal.email}?subject=${encodeURIComponent('Catering 
     place-items: center;
     width: 40px;
     height: 40px;
+    border: 1px solid rgb(31 69 148 / 0.35);
     border-radius: 50%;
-    background: var(--navy);
-    color: var(--white);
+    background: var(--hielo);
+    color: var(--azul);
     font-family: var(--serif);
     font-style: italic;
     font-size: 1.2rem;
-  }
-  .flow li:last-child span {
-    background: var(--sol);
-    color: var(--navy);
   }
   .flow h4 {
     padding-top: 8px;
@@ -204,8 +196,10 @@ const mail = `mailto:${site.legal.email}?subject=${encodeURIComponent('Catering 
   }
 
   @media (min-width: 700px) {
-    .uses {
-      grid-template-columns: 1fr 1fr;
+    .use {
+      grid-template-columns: 1fr 1.1fr;
+      align-items: baseline;
+      gap: 24px;
     }
   }
   @media (min-width: 960px) {

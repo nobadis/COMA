@@ -1,6 +1,5 @@
 ---
 import { Picture } from 'astro:assets';
-import Icon from './Icon.astro';
 import vitrina from '../../assets/photos/vitrina.jpg';
 import stack from '../../assets/photos/stack.jpg';
 import mordida from '../../assets/photos/mordida.jpg';
@@ -40,12 +39,6 @@ const steps = [
   },
 ];
 
-const pillars = [
-  { icon: 'store', t: 'Obrador propio', d: `Todo se elabora en nuestro obrador de ${site.legal.city}, Mallorca.` },
-  { icon: 'scale', t: '110 gr de puro amor', d: 'Generosas, bien rellenas. Una empanada que llena de verdad.' },
-  { icon: 'medal', t: 'Calidad constante', d: 'Mismo peso, mismo punto y el mismo cuidado en cada tanda.' },
-  { icon: 'heart', t: 'Alma argentina', d: 'Recetas de allá, con el producto de acá.' },
-] as const;
 ---
 
 <section id="obrador" class="ob sec" aria-labelledby="ob-title">
@@ -75,7 +68,7 @@ const pillars = [
       <div class="stat rv" style="--d:2">
         <dt class="sr-only">Obrador</dt>
         <dd><b>100</b><span>%</span></dd>
-        <p>elaboradas en nuestro obrador</p>
+        <p>elaboradas en nuestro obrador de {site.legal.city}</p>
       </div>
       <div class="stat rv" style="--d:3">
         <dt class="sr-only">Desde</dt>
@@ -114,21 +107,6 @@ const pillars = [
     </ol>
   </div>
 
-  <div class="wrap">
-    <ul class="pillars">
-      {
-        pillars.map((p, i) => (
-          <li class="pillar rv" style={`--d:${i}`}>
-            <span class="pillar__ic">
-              <Icon name={p.icon} size={28} />
-            </span>
-            <h3>{p.t}</h3>
-            <p>{p.d}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
 </section>
 
 <script>
@@ -211,7 +189,7 @@ const pillars = [
   .proc {
     display: grid;
     gap: 40px;
-    margin-block: clamp(72px, 10vw, 140px);
+    margin-top: clamp(72px, 10vw, 140px);
   }
   .proc__media {
     display: none;
@@ -256,50 +234,6 @@ const pillars = [
     object-fit: cover;
   }
 
-  .pillars {
-    display: grid;
-    gap: 14px;
-  }
-  .pillar {
-    display: grid;
-    gap: 10px;
-    align-content: start;
-    padding: 30px 26px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    background: var(--white);
-    transition:
-      transform 0.5s var(--ease),
-      box-shadow 0.5s var(--ease),
-      border-color 0.5s;
-  }
-  .pillar:hover {
-    transform: translateY(-6px);
-    border-color: transparent;
-    box-shadow: 0 30px 60px -30px rgb(10 26 58 / 0.35);
-  }
-  .pillar__ic {
-    display: grid;
-    place-items: center;
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-    border-radius: 50%;
-    background: var(--hielo);
-    color: var(--azul);
-  }
-  .pillar:first-child .pillar__ic {
-    background: var(--navy);
-    color: var(--sol);
-  }
-  .pillar h3 {
-    font-size: 1.25rem;
-    letter-spacing: -0.02em;
-  }
-  .pillar p {
-    color: var(--muted);
-    font-size: 0.97rem;
-  }
 
   @media (min-width: 700px) {
     .stats {
@@ -313,9 +247,6 @@ const pillars = [
     .stat:first-child {
       border-left: 0;
       padding-left: 0;
-    }
-    .pillars {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (min-width: 960px) {
@@ -384,9 +315,6 @@ const pillars = [
     }
     .step__img {
       display: none;
-    }
-    .pillars {
-      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>

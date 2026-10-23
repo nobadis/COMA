@@ -6,10 +6,10 @@ import { site } from '../../config/site';
 
 const email = site.legal.email;
 const perks = [
-  { icon: 'store', t: 'Producto de obrador', d: 'Elaborado en nuestro obrador de Mallorca, con la misma calidad en cada empanada.' },
-  { icon: 'hands', t: 'Acompañamiento real', d: 'Te contamos el modelo con calma y te acompañamos desde el primer día.' },
-  { icon: 'heart', t: 'Una marca con alma', d: 'Argentina de verdad, cercana y con un producto que la gente recuerda.' },
-] as const;
+  { t: 'Producto de obrador', d: 'Elaborado en nuestro obrador de Mallorca, con la misma calidad en cada empanada.' },
+  { t: 'Acompañamiento real', d: 'Te contamos el modelo con calma y te acompañamos desde el primer día.' },
+  { t: 'Una marca con alma', d: 'Argentina de verdad, cercana y con un producto que la gente recuerda.' },
+];
 ---
 
 <section id="franquicias" class="fr sec on-dark grain" aria-labelledby="fr-title">
@@ -30,9 +30,7 @@ const perks = [
         {
           perks.map((p, i) => (
             <li class="perk rv" style={`--d:${i}`}>
-              <span>
-                <Icon name={p.icon} size={24} />
-              </span>
+              <span>0{i + 1}</span>
               <div>
                 <h3>{p.t}</h3>
                 <p>{p.d}</p>
@@ -155,20 +153,20 @@ const perks = [
   }
   .perks {
     display: grid;
-    gap: 22px;
+    border-top: 1px solid var(--line-inv);
   }
   .perk {
     display: flex;
-    gap: 18px;
+    gap: 22px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line-inv);
   }
   .perk > span {
     flex: none;
-    display: grid;
-    place-items: center;
-    width: 52px;
-    height: 52px;
-    border: 1px solid var(--line-inv);
-    border-radius: 50%;
+    padding-top: 2px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
     color: var(--celeste);
   }
   .perk h3 {
