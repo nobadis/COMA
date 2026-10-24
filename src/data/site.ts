@@ -88,7 +88,6 @@ export const trust = {
     "RCD Mallorca",
     "Ajuntament de Calvià",
     "Ajuntament d'Andratx",
-    "Berkeley",
     "Silicon Valley",
     "Universitat Politècnica de València",
     "Consultorías",
@@ -108,7 +107,6 @@ export const trust = {
     },
     { name: "Meliá Hotels International", logo: "/clientes/melia.svg", w: 167, h: 23, size: 1.55 },
     { name: "RCD Mallorca", logo: "/clientes/rcd-mallorca.svg", w: 108, h: 143, size: 3.1 },
-    { name: "Berkeley" },
     {
       name: "Ajuntament de Calvià",
       logo: "/clientes/calvia.svg",
@@ -126,7 +124,13 @@ export const trust = {
       size: 2.6,
       label: "Ajuntament d'Andratx",
     },
-    { name: "Universitat Politècnica de València" },
+    {
+      name: "Universitat Politècnica de València",
+      logo: "/clientes/upv.svg",
+      w: 164,
+      h: 52,
+      size: 2.5,
+    },
   ],
 };
 
