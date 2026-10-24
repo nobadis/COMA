@@ -1,29 +1,41 @@
 ---
 import { trust } from "../data/site";
-
-const row = [...trust.references, ...trust.references];
 ---
 
 <section class="tr" aria-labelledby="tr-title">
   <div class="wrap tr__head">
     <p id="tr-title" class="eyebrow">Han confiado en nosotros</p>
     <p class="tr__note">
-      De universidades a farmacias, consultorías y eventos: <strong>más de {trust.pymes} pymes</strong>{" "}
-      y proyectos con alcance internacional.
+      Además de <strong>más de {trust.pymes} pymes</strong>, marcas internacionales, instituciones y
+      grandes eventos.
     </p>
   </div>
-  <ul class="sr-only">
-    {trust.references.map((r) => <li>{r}</li>)}
-  </ul>
-  <div class="tr__mq" aria-hidden="true">
+  <div class="tr__mq">
     <div class="tr__track">
       {
-        [0, 1].map(() => (
-          <div class="tr__group">
-            {row.map((r) => (
-              <span class="tr__item">{r}</span>
+        [0, 1].map((copy) => (
+          <ul class="tr__group" aria-hidden={copy ? "true" : undefined}>
+            {trust.wall.map((b) => (
+              <li class="tr__item">
+                {b.logo ? (
+                  <span class="tr__logo">
+                    <img
+                      src={b.logo}
+                      alt={copy ? "" : b.name}
+                      width={b.w}
+                      height={b.h}
+                      loading="lazy"
+                      decoding="async"
+                      style={`--h:${b.size}rem`}
+                    />
+                    {b.label && <span class="tr__label">{b.label}</span>}
+                  </span>
+                ) : (
+                  <span class="tr__word">{b.name}</span>
+                )}
+              </li>
             ))}
-          </div>
+          </ul>
         ))
       }
     </div>
@@ -41,7 +53,7 @@ const row = [...trust.references, ...trust.references];
     justify-content: space-between;
     align-items: baseline;
     gap: 0.75rem 2rem;
-    margin-bottom: 1.75rem;
+    margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
   }
   .tr__note {
     color: var(--muted);
@@ -58,39 +70,76 @@ const row = [...trust.references, ...trust.references];
   .tr__track {
     display: flex;
     width: max-content;
-    animation: tr 60s linear infinite;
+    animation: tr 70s linear infinite;
   }
   .tr__mq:hover .tr__track {
     animation-play-state: paused;
   }
   .tr__group {
     display: flex;
+    align-items: center;
   }
   .tr__item {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    padding-inline: clamp(1.25rem, 3vw, 2.5rem);
-    font-variation-settings: "wdth" 112;
-    font-weight: 600;
-    font-size: clamp(1.15rem, 0.9rem + 1.1vw, 1.75rem);
-    letter-spacing: -0.02em;
-    white-space: nowrap;
-    color: var(--muted);
-    transition: color 0.3s;
+    height: 3.5rem;
+    padding-inline: clamp(1.75rem, 4vw, 3.25rem);
     position: relative;
-  }
-  .tr__item:hover {
-    color: var(--ink);
   }
   .tr__item::after {
     content: "";
     position: absolute;
     right: 0;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--red);
     translate: 50% 0;
+  }
+  .tr__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition:
+      filter 0.4s var(--ease),
+      opacity 0.4s var(--ease);
+  }
+  .tr__logo img {
+    height: var(--h);
+    width: auto;
+    mix-blend-mode: multiply;
+  }
+  .tr__label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 9ch;
+    color: var(--ink);
+  }
+  .tr__word {
+    font-variation-settings: "wdth" 112;
+    font-weight: 600;
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: var(--muted);
+    opacity: 0.8;
+    transition:
+      color 0.3s,
+      opacity 0.3s;
+  }
+  @media (hover: hover) {
+    .tr__item:hover .tr__logo {
+      filter: none;
+      opacity: 1;
+    }
+    .tr__item:hover .tr__word {
+      color: var(--ink);
+      opacity: 1;
+    }
   }
   @keyframes tr {
     to {
@@ -98,9 +147,20 @@ const row = [...trust.references, ...trust.references];
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .tr__mq {
+      mask-image: none;
+    }
     .tr__track {
       animation: none;
+      width: auto;
+    }
+    .tr__group {
       flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 1rem;
+    }
+    .tr__group[aria-hidden] {
+      display: none;
     }
   }
 </style>

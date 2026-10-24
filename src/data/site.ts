@@ -83,6 +83,11 @@ export const trust = {
   headline: "Mallorca Live Festival",
   pymes: 100,
   references: [
+    "Mallorca Live Festival",
+    "Meliá Hotels International",
+    "RCD Mallorca",
+    "Ajuntament de Calvià",
+    "Ajuntament d'Andratx",
     "Berkeley",
     "Silicon Valley",
     "Universitat Politècnica de València",
@@ -90,8 +95,38 @@ export const trust = {
     "Farmacias",
     "Clínicas dentales",
     "Despachos profesionales",
-    "Mallorca Live Festival",
     "+100 pymes",
+  ],
+  /** Franja de logos (Trust). Sin `logo` se muestra como texto. `size`: alto visual en rem. */
+  wall: [
+    {
+      name: "Mallorca Live Festival",
+      logo: "/clientes/mallorca-live-occident.png",
+      w: 221,
+      h: 66,
+      size: 2.1,
+    },
+    { name: "Meliá Hotels International", logo: "/clientes/melia.svg", w: 167, h: 23, size: 1.55 },
+    { name: "RCD Mallorca", logo: "/clientes/rcd-mallorca.svg", w: 108, h: 143, size: 3.1 },
+    { name: "Berkeley" },
+    {
+      name: "Ajuntament de Calvià",
+      logo: "/clientes/calvia.svg",
+      w: 73,
+      h: 136,
+      size: 2.7,
+      label: "Ajuntament de Calvià",
+    },
+    { name: "Silicon Valley" },
+    {
+      name: "Ajuntament d'Andratx",
+      logo: "/clientes/andratx.png",
+      w: 75,
+      h: 105,
+      size: 2.6,
+      label: "Ajuntament d'Andratx",
+    },
+    { name: "Universitat Politècnica de València" },
   ],
 };
 

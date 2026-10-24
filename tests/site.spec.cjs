@@ -32,7 +32,7 @@ test.describe("COMA - Comunicación en Mallorca", () => {
       /Hacemos que tu empresa se note/i
     );
     await expect(page.getByRole("link", { name: /Hablemos de tu proyecto/ }).first()).toBeVisible();
-    await expect(page.getByText(/Mallorca Live Festival/).first()).toBeVisible();
+    await expect(page.getByRole("img", { name: /Mallorca Live Festival/ }).first()).toBeVisible();
     const servicios = page.locator("#servicios");
     for (const name of [
       "Diseño web",
