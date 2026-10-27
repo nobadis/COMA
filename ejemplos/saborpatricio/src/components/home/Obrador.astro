@@ -4,9 +4,9 @@ import vitrina from '../../assets/photos/vitrina.jpg';
 import stack from '../../assets/photos/stack.jpg';
 import mordida from '../../assets/photos/mordida.jpg';
 import horno from '../../assets/photos/horno.jpg';
-import { menuV2, site } from '../../config/site';
+import { menu, site } from '../../config/site';
 
-const flavorsCount = menuV2.filter((g) => g.id === 'clasicas' || g.id === 'gourmet').reduce((n, g) => n + g.items.length, 0);
+const flavorsCount = menu.filter((g) => g.id === 'clasicas' || g.id === 'gourmet').reduce((n, g) => n + g.items.length, 0);
 
 const steps = [
   {

@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://saborpatricio.com',
   trailingSlash: 'always',
-  integrations: [sitemap({ filter: (page) => !/\/(pedir|404|v2)\/?$/.test(new URL(page).pathname) })],
+  integrations: [sitemap({ filter: (page) => !/\/(pedir|404)\/?$/.test(new URL(page).pathname) })],
   build: { inlineStylesheets: 'always' },
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
 });

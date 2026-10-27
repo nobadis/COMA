@@ -115,38 +115,15 @@ export const flavors: Flavor[] = [
  */
 export const reviews: { author: string; text: string; rating: number }[] = [];
 
-// Selección de productos publicada en Uber Eats, sin precios.
-export const productGroups = [
-  {
-    name: 'Empanadas clásicas',
-    intro: 'Los sabores que siempre dan ganas de volver a pedir.',
-    items: ['Carne criolla', 'Carne picante', 'Pollo suave', 'Pollo picante', 'Jamón y queso', 'Queso y cebolla', 'Atún', 'Caprese', 'Espinaca'],
-  },
-  {
-    name: 'Empanadas gourmet',
-    intro: 'Rellenos especiales para salir de lo de siempre.',
-    items: ['Carne a cuchillo', 'Barbacoa', 'Sobrasada', 'Vacío y provolone'],
-  },
-  {
-    name: 'Postres argentinos',
-    intro: 'Siempre queda lugar para algo dulce.',
-    items: ['Chocotorta', 'Alfajores Havanna', 'Havanna de nuez', 'Havanna con sal', 'Havanna súper dulce de leche'],
-  },
-  {
-    name: 'Para acompañar',
-    intro: 'Algo fresco para completar tu plan.',
-    items: ['Agua', 'Agua con gas', 'Refrescos', 'Té frío'],
-  },
-];
-
 /**
- * Carta de /v2 (rediseño en pruebas): clásicas + Humita, gourmet + Cheeseburger, sin pizza.
- * Separada para no alterar la home actual ni /carta.
+ * Carta (sin precios). Alimenta la home, /carta y los datos estructurados.
+ * `name` es la pestaña de la home; `title` el encabezado completo de /carta y de schema.org.
  */
-export type MenuItemV2 = { name: string };
-export const menuV2: { id: string; name: string; intro: string; items: MenuItemV2[] }[] = [
+export type MenuItem = { name: string };
+export const menu: { id: string; name: string; title: string; intro: string; items: MenuItem[] }[] = [
   {
     id: 'clasicas',
+    title: 'Empanadas clásicas',
     name: 'Clásicas',
     intro: 'Las de siempre, con la receta de casa. Las que piden los que saben.',
     items: [
@@ -164,6 +141,7 @@ export const menuV2: { id: string; name: string; intro: string; items: MenuItemV
   },
   {
     id: 'gourmet',
+    title: 'Empanadas gourmet',
     name: 'Gourmet',
     intro: 'Rellenos con más carácter, para cuando querés algo distinto.',
     items: [
@@ -176,6 +154,7 @@ export const menuV2: { id: string; name: string; intro: string; items: MenuItemV
   },
   {
     id: 'postres',
+    title: 'Postres argentinos',
     name: 'Postres',
     intro: 'El cierre dulce que no puede faltar.',
     items: [
@@ -188,8 +167,12 @@ export const menuV2: { id: string; name: string; intro: string; items: MenuItemV
   },
   {
     id: 'bebidas',
+    title: 'Para acompañar',
     name: 'Para acompañar',
     intro: 'Algo fresco para completar el plan.',
     items: [{ name: 'Vino argentino' }, { name: 'Agua' }, { name: 'Agua con gas' }, { name: 'Refrescos' }, { name: 'Té frío' }],
   },
 ];
+
+/** Formato que usan /carta y schema.org: encabezado completo y lista de nombres. */
+export const productGroups = menu.map((g) => ({ name: g.title, intro: g.intro, items: g.items.map((i) => i.name) }));

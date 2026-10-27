@@ -1,14 +1,15 @@
 ---
-import '../styles/v2.css';
-import Header from '../components/v2/Header.astro';
-import Footer from '../components/v2/Footer.astro';
-import Icon from '../components/v2/Icon.astro';
+import '../styles/home.css';
+import Header from '../components/home/Header.astro';
+import Footer from '../components/home/Footer.astro';
+import Icon from '../components/home/Icon.astro';
 import { site, waLink } from '../config/site';
+import { jsonLd } from '../config/schema';
 
-const title = `${site.name} · Empanadas argentinas de obrador en Mallorca`;
+const title = `${site.name} · Empanadas argentinas en Cala Major, Palma de Mallorca`;
 const description =
-  'Empanadas argentinas elaboradas en nuestro obrador de Mallorca. 110 gr de puro amor. Carta clásica y gourmet, catering para eventos y franquicias.';
-const canonical = new URL('/v2/', Astro.site ?? site.url).href;
+  'Empanadas argentinas clásicas y gourmet elaboradas en nuestro obrador de Mallorca y recién horneadas en Cala Major, Palma. 110 gr de puro amor. Catering para eventos y franquicias.';
+const canonical = new URL('/', Astro.site ?? site.url).href;
 const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
 ---
 
@@ -19,14 +20,15 @@ const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <!-- Rediseño en pruebas: no se indexa ni sale en el sitemap -->
-    <meta name="robots" content="noindex, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#0a1a3a" />
     <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content={site.name} />
@@ -42,6 +44,7 @@ const ogImage = new URL('/og.jpg', Astro.site ?? site.url).href;
     <script is:inline>
       document.documentElement.classList.replace('no-js', 'js');
     </script>
+    <script type="application/ld+json" set:html={jsonLd({ base: Astro.site ?? site.url, canonical, title, description })} />
   </head>
   <body>
     <a class="skip" href="#main">Saltar al contenido</a>

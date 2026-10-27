@@ -5,9 +5,9 @@ Hecha con [Astro](https://astro.build): HTML estático, ~8 KB de JS, imágenes A
 
 ## Páginas
 
-- `/` — Landing con hero 3D, clásicas y gourmet, postres, bebidas, combos, pizza, historia, galería y ubicación. Sin precios ni carrito; los pedidos van directamente a WhatsApp.
-- `/v2/` — Rediseño premium en pruebas (sustituye a la prueba anterior), inspirado en Malvón y Tío Bigotes: azul marino, azul y blanco con el sol solo como destello; header con logo centrado, hero 3D, obrador en Mallorca con proceso en scroll, sabores en carrusel horizontal, carta con Humita (clásicas) y Cheeseburger (gourmet), vino argentino en bebidas, «110 gr de puro amor», catering, galería, tienda y franquicias (formulario a info@saborpatricio.com). Sin pizza. Código en `src/pages/v2/`, `src/components/v2/`, `src/layouts/V2Layout.astro` y `src/styles/v2.css`; carta en `menuV2` (`src/config/site.ts`). No sustituye la home, no se indexa ni sale en el sitemap.
-- `/carta/` — Carta indexable y preguntas frecuentes locales.
+- `/` — Home: azul marino, azul y blanco con el sol solo como destello. Header con logo centrado, hero 3D con los sabores, obrador en Mallorca con el proceso en scroll, sabores en carrusel, carta (clásicas con Humita, gourmet con Cheeseburger, postres y bebidas con vino argentino), «110 gr de puro amor», catering, galería, tienda y franquicias (formulario a info@saborpatricio.com). Sin precios ni carrito; los pedidos van a WhatsApp. Código en `src/pages/index.astro`, `src/components/home/`, `src/layouts/Home.astro` y `src/styles/home.css`.
+- `/carta/` — Carta indexable y preguntas frecuentes locales (mismo listado que la home, desde `menu`).
+- `/v2/` — Ya no existe: redirige (301) a la home.
 - `/pedir` — Redirige a WhatsApp. De momento no se admiten pedidos desde la web; el formulario con carrito está aparcado en `src/pages/_pedir-formulario.astro` (el guion bajo evita que se publique) para retomarlo más adelante.
 
 La selección de productos se basa en [Uber Eats](https://www.ubereats.com/es/store/sabor-patricio-empanadas/RKJ6avdNUqKkgAAOAqE3jg); los horarios se han incorporado desde la imagen del perfil de Instagram facilitada por el negocio.
@@ -41,7 +41,8 @@ Todo el contenido del negocio está en **`src/config/site.ts`**:
 - `url`: dominio definitivo (cambialo también en `astro.config.mjs` y `public/robots.txt`).
 - `hours`: horario real. Con horario cargado, la web muestra «Abierto ahora / Cerrado ahora» (hora de Madrid).
 - `reviews`: reseñas reales de Google (texto literal). Si está vacío, se muestra solo el botón a Google.
-- `flavors`: sabores, ingredientes y color de cada tarjeta. Las fotos están en `src/assets/flavors/<id>.png`.
+- `flavors`: sabores destacados del hero y del carrusel. Las fotos están en `src/assets/flavors/<id>.png`.
+- `menu`: carta completa (home, /carta y datos estructurados de Google).
 
 ## Legal
 

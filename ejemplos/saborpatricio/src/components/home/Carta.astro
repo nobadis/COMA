@@ -3,7 +3,7 @@ import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
 import Seal from './Seal.astro';
 import cajaAbierta from '../../assets/photos/caja-abierta.jpg';
-import { menuV2, site, waLink } from '../../config/site';
+import { menu, site, waLink } from '../../config/site';
 ---
 
 <section id="carta" class="ct sec" aria-labelledby="ct-title">
@@ -33,7 +33,7 @@ import { menuV2, site, waLink } from '../../config/site';
     <div class="ct__menu" data-tabs>
       <div class="tabs" role="tablist" aria-label="Secciones de la carta">
         {
-          menuV2.map((g, i) => (
+          menu.map((g, i) => (
             <button
               type="button"
               role="tab"
@@ -51,7 +51,7 @@ import { menuV2, site, waLink } from '../../config/site';
       </div>
 
       {
-        menuV2.map((g, i) => (
+        menu.map((g, i) => (
           <div class="panel" role="tabpanel" id={`panel-${g.id}`} aria-labelledby={`tab-${g.id}`} hidden={i !== 0}>
             <p class="panel__intro">{g.intro}</p>
             <ol class="items">

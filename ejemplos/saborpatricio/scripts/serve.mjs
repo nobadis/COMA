@@ -23,6 +23,8 @@ http.createServer(async (req, res) => {
       const target = page.match(/href="(https:\/\/wa\.me\/[^\"]+)"/)?.[1];
       if (target) { res.writeHead(302, { Location: target.replaceAll('&amp;', '&'), 'X-Robots-Tag': 'noindex' }); res.end(); return; }
     }
+    // /v2 fue la versión de pruebas del diseño actual: los enlaces antiguos llevan a la home.
+    if (/^\/v2(\/|$)/.test(path)) { res.writeHead(301, { Location: '/' }); res.end(); return; }
     let file = resolve(root, '.' + path);
     if (file !== root && !file.startsWith(root + sep)) { res.writeHead(400); res.end(); return; }
     let info = await stat(file).catch(() => null);
