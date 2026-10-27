@@ -88,7 +88,6 @@ export const trust = {
     "RCD Mallorca",
     "Ajuntament de Calvià",
     "Ajuntament d'Andratx",
-    "Silicon Valley",
     "Universitat Politècnica de València",
     "Consultorías",
     "Farmacias",
@@ -115,7 +114,6 @@ export const trust = {
       size: 2.7,
       label: "Ajuntament de Calvià",
     },
-    { name: "Silicon Valley" },
     {
       name: "Ajuntament d'Andratx",
       logo: "/clientes/andratx.png",
