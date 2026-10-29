@@ -1,0 +1,118 @@
+/* Estilo de los PDF de COMA Rebar Stock: A4, tipografía Archivo, negro, papel y rojo COMA. */
+@font-face {
+  font-family: "Archivo V";
+  src: url("../../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+}
+:root {
+  --paper: #efece4;
+  --paper-2: #e4dfd3;
+  --paper-3: #f7f5f0;
+  --ink: #0c0c0c;
+  --muted: #5d5851;
+  --line: rgba(12, 12, 12, 0.14);
+  --red: #e1112d;
+  --ok: #2f8f5b;
+  --ok-bg: #e3f1e8;
+  --warn: #a86a00;
+  --warn-bg: #fbefd6;
+  --bad-bg: #fde4e7;
+  --info: #2d5b94;
+  --info-bg: #e6eef8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); font-size: 10pt; line-height: 1.5; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+@page { size: A4; margin: 20mm 17mm 19mm; }
+
+/* ------------------------------------------------------------- portada */
+.cover { width: 210mm; height: 297mm; background: var(--ink); color: var(--paper); position: relative; overflow: hidden; padding: 22mm 20mm; }
+.cover .logo { font-size: 30pt; }
+.cover .kind { margin-top: 62mm; }
+.cover h1 { font-size: 44pt; line-height: 0.98; letter-spacing: -0.035em; font-weight: 750; font-stretch: 104%; margin-top: 6mm; max-width: 160mm; }
+.cover h1 .c { color: var(--red); }
+.cover .sub { font-size: 14pt; color: #a8a39b; margin-top: 8mm; max-width: 140mm; line-height: 1.4; }
+.cover .meta { position: absolute; left: 20mm; right: 20mm; bottom: 22mm; display: flex; justify-content: space-between; font-size: 9pt; color: #a8a39b; border-top: 1px solid rgba(239, 236, 228, 0.2); padding-top: 5mm; }
+.cover .meta b { color: var(--paper); display: block; font-size: 10pt; }
+.cover .art { position: absolute; right: -10mm; top: 18mm; width: 120mm; opacity: 0.95; }
+.cover .img { position: absolute; left: 20mm; right: 20mm; top: 158mm; height: 92mm; border-radius: 4mm; overflow: hidden; border: 1px solid rgba(239, 236, 228, 0.15); }
+.cover .img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+
+.logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
+.logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); }
+.eyebrow { font-weight: 700; font-stretch: 120%; text-transform: uppercase; letter-spacing: 0.16em; font-size: 8pt; color: var(--red); }
+
+/* ------------------------------------------------------------- cuerpo */
+h1.sec { font-size: 24pt; letter-spacing: -0.03em; line-height: 1.05; font-weight: 750; font-stretch: 104%; margin: 2mm 0 5mm; }
+h1.sec .n { color: var(--red); margin-right: 3mm; }
+.secwrap { break-before: page; }
+.secwrap.first { break-before: auto; }
+.secwrap.flow { break-before: auto; margin-top: 11mm; }
+h2 { font-size: 13.5pt; letter-spacing: -0.015em; font-weight: 700; margin: 7mm 0 2.5mm; break-after: avoid; }
+h3 { font-size: 10.5pt; font-weight: 700; margin: 4.5mm 0 1.5mm; break-after: avoid; }
+p { margin: 0 0 2.6mm; }
+p.lead { font-size: 12.5pt; line-height: 1.42; color: var(--ink); margin-bottom: 5mm; }
+.muted { color: var(--muted); }
+small, .small { font-size: 8.5pt; }
+ul.l { margin: 1mm 0 3mm 0; padding-left: 0; list-style: none; }
+ul.l li { position: relative; padding-left: 5mm; margin: 1.1mm 0; }
+ul.l li::before { content: ""; position: absolute; left: 0.5mm; top: 2.1mm; width: 2.2mm; height: 2.2mm; background: var(--red); }
+ul.l.ck li::before { content: "✓"; background: none; color: var(--ok); top: 0; font-weight: 700; }
+ul.l.x li::before { content: "✕"; background: none; color: var(--red); top: 0; font-weight: 700; }
+ol.l { margin: 1mm 0 3mm 5mm; }
+ol.l li { margin: 1.1mm 0; padding-left: 1.5mm; }
+b, strong { font-weight: 650; }
+.c { color: var(--red); }
+
+.box { background: var(--paper-3); border: 1px solid var(--line); border-radius: 3mm; padding: 4.5mm 5mm; margin: 3mm 0 4mm; break-inside: avoid; }
+.box.dark { background: var(--ink); color: var(--paper); border: 0; }
+.box.dark .muted { color: #a8a39b; }
+.box.red { border-left: 4px solid var(--red); }
+.box h3:first-child, .box h2:first-child { margin-top: 0; }
+.box p:last-child, .box ul:last-child { margin-bottom: 0; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.5mm; }
+.kpi { border-top: 2.5px solid var(--ink); padding-top: 2.5mm; break-inside: avoid; }
+.kpi b { display: block; font-size: 20pt; letter-spacing: -0.03em; line-height: 1.05; font-weight: 750; }
+.kpi span { display: block; font-size: 8.5pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
+
+table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 8.8pt; line-height: 1.38; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { text-align: left; font-size: 7.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 650; border-bottom: 1.5px solid var(--ink); padding: 2mm 2mm 1.5mm; vertical-align: bottom; }
+td { border-bottom: 1px solid var(--line); padding: 2mm 2mm; vertical-align: top; }
+td.r, th.r { text-align: right; white-space: nowrap; }
+tr.tot td { border-top: 1.5px solid var(--ink); border-bottom: 0; font-weight: 700; }
+tr.sub td { background: var(--paper-3); font-weight: 650; }
+td b { font-weight: 650; }
+
+.pill { display: inline-block; font-size: 7.4pt; font-weight: 650; padding: 0.5mm 2.2mm; border-radius: 99px; white-space: nowrap; }
+.pill.ok { background: var(--ok-bg); color: var(--ok); }
+.pill.warn { background: var(--warn-bg); color: var(--warn); }
+.pill.bad { background: var(--bad-bg); color: var(--red); }
+.pill.info { background: var(--info-bg); color: var(--info); }
+.pill.ink { background: var(--ink); color: #fff; }
+
+figure { margin: 3mm 0 5mm; break-inside: avoid; }
+figure img { width: 100%; display: block; border-radius: 2.5mm; border: 1px solid var(--line); }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 8.3pt; color: var(--muted); margin-top: 1.8mm; }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.shots figure { margin: 0 0 3mm; }
+
+pre { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 7.6pt; line-height: 1.45; background: var(--ink); color: var(--paper); border-radius: 3mm; padding: 4mm 5mm; white-space: pre-wrap; break-inside: avoid; margin: 2mm 0 4mm; }
+pre .k { color: #ff8a98; }
+pre .s { color: #9fe3b8; }
+
+.toc { margin-top: 4mm; }
+.toc div { display: flex; gap: 4mm; padding: 2.2mm 0; border-bottom: 1px solid var(--line); font-size: 10.5pt; }
+.toc div span:first-child { color: var(--red); font-weight: 700; width: 8mm; }
+.sign { margin-top: 8mm; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+.sign div { border-top: 1px solid var(--ink); padding-top: 2mm; font-size: 8.5pt; color: var(--muted); height: 26mm; }
+.nb { break-inside: avoid; }
+.pb { break-before: page; }
+h1.sec, .secwrap > .eyebrow:first-child { break-after: avoid; }
+.secwrap > .eyebrow:first-child + h1.sec + * { break-before: avoid; }

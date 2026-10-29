@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>COMA Rebar Stock · Resumen</title>
+<link rel="stylesheet" href="doc.css" />
+<style>
+  .cover h1 { font-size: 40pt; }
+  .cover .kind { margin-top: 48mm; }
+  .cover .img { top: 150mm; height: 100mm; }
+</style>
+</head>
+<body>
+
+<!--@cover-->
+<section class="cover">
+  <div class="logo">COMA<svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+  <div class="kind eyebrow">Resumen · COMA Rebar Stock</div>
+  <h1>La grúa ya mueve cada paquete<span class="c">.</span> Ahora también dice dónde lo deja<span class="c">.</span></h1>
+  <div class="sub">Control de stock automático de paquetes de barras y rollos, sin depender del operario. Versión puente grúa, con carretilla como opción.</div>
+  <div class="img"><img src="img/hero.jpg" alt="" /></div>
+  <div class="meta"><span><b>COMA · Comunicación en Mallorca</b>Paseo Mallorca 16, 07012 Palma</span><span><b>Octubre 2026</b>Precios orientativos, sin IVA</span></div>
+</section>
+<!--@body-->
+
+<div class="secwrap first">
+  <div class="eyebrow">El problema</div>
+  <h1 class="sec">El escaneo manual no basta</h1>
+  <p class="lead">El cliente necesita saber en tiempo real qué rebar tiene, en qué calle o celda está, qué entra, qué sale y qué está abierto. Ya probó a escanear paquete + ubicación con el móvil y no funciona: <b>depende de que el operario lo haga, y no siempre lo hace o lo hace mal</b>. El registro tiene que ser automático aunque nadie colabore.</p>
+
+  <div class="grid2">
+    <div class="box"><div class="eyebrow">Principio</div><h3>Nada se mueve sin la grúa</h3><p>Una pila de acero bloquea la radio y tapa las cámaras: leerla es poco fiable. Pero cada paquete o rollo, para moverse, cuelga de la grúa. Ahí está separado de la pila y <b>se lee bien</b>.</p></div>
+    <div class="box"><div class="eyebrow">Solución</div><h3>Leer desde la grúa, ubicar con la grúa</h3><p>Etiqueta colgante RFID UHF pasiva (con QR de respaldo), 2 antenas junto al imán y la X/Y de la grúa al soltar. Una sola tecnología, sin cámaras ni GPS.</p></div>
+  </div>
+
+  <h2>Cómo funciona</h2>
+  <figure><!--@include diagrams/flow.svg--></figure>
+  <p>El gruista trabaja igual que hoy. El sistema detecta coger y dejar por las señales de la grúa (solo lectura), identifica la carga porque viaja con ella y asigna la celda por la posición de la grúa. Solo pregunta, con un toque en cabina, cuando duda. <b>Nunca inventa un dato.</b></p>
+</div>
+
+<div class="secwrap">
+  <div class="eyebrow">Qué se ve</div>
+  <h1 class="sec">Una interfaz para cada persona</h1>
+  <div class="shots">
+    <figure><img src="img/live.jpg" alt="" /><figcaption><b>En la grúa:</b> cada movimiento, verificado sin pulsar nada.</figcaption></figure>
+    <figure><img src="img/map.jpg" alt="" /><figcaption><b>En la web:</b> mapa en tiempo real, búsqueda y FIFO.</figcaption></figure>
+    <figure><img src="img/tabA.jpg" alt="" /><figcaption><b>En cabina:</b> un toque solo cuando hay duda.</figcaption></figure>
+    <figure><img src="img/ship.jpg" alt="" /><figcaption><b>En expedición:</b> alerta si la carga no cuadra con el albarán.</figcaption></figure>
+  </div>
+
+  <h2>Casuísticas cubiertas</h2>
+  <table>
+    <tbody>
+      <tr><td style="width:34%"><b>Útiles</b></td><td>Electroimán, balancín de imanes, cadenas, gancho, gancho en C, pinza.</td></tr>
+      <tr><td><b>Grúas y mando</b></td><td>Puente interior, pórtico exterior, 2 carros, varias grúas por nave, cabina, radiomando o botonera, PLC o telémetros láser.</td></tr>
+      <tr><td><b>Material</b></td><td>Paquetes de 6–14 m, rollos y bobinas, restos, ferralla elaborada.</td></tr>
+      <tr><td><b>Flujos</b></td><td>Recepción, almacenaje, desapilado, varias unidades por elevación, consumo en máquina, retorno de restos, carga a camión con albarán, carro de transferencia.</td></tr>
+      <tr><td><b>Excepciones</b></td><td>Borde de celda, sin etiqueta legible, origen inesperado, etiqueta dañada, elevación abortada, consumido en ERP pero en patio, antigüedad, caída de red.</td></tr>
+      <tr><td><b>Entornos</b></td><td>Nave cerrada o abierta, patio con lluvia y de noche, taller de ferralla, almacén de distribución, plantas pequeñas o multiplanta.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="secwrap">
+  <div class="eyebrow">El piloto</div>
+  <h1 class="sec">Funcional de verdad, con salida si no funciona</h1>
+  <div class="grid4" style="margin:2mm 0 5mm">
+    <div class="kpi"><b>1 grúa</b><span>con electroimán en una zona real: recepción, consumo y expedición</span></div>
+    <div class="kpi"><b>19 sem.</b><span>4–5 meses; decisión seguir / parar en la semana 7</span></div>
+    <div class="kpi"><b>55–95 k€</b><span>típico ~72.000 €, sin IVA; el hardware se reutiliza</span></div>
+    <div class="kpi"><b>+16–30 k€</b><span>opción carretilla con calle exterior</span></div>
+  </div>
+  <figure><!--@include diagrams/gantt.svg--></figure>
+
+  <h2>Criterios de aceptación (se escriben en el contrato)</h2>
+  <table>
+    <tbody>
+      <tr><td>Movimientos detectados automáticamente</td><td class="r"><b>≥ 99,5 %</b></td></tr>
+      <tr><td>Movimientos verificados sin intervención del operario</td><td class="r"><b>≥ 98–99 %</b></td></tr>
+      <tr><td>Asignaciones falsas dadas por verificadas</td><td class="r"><b>≤ 0,1 %</b></td></tr>
+      <tr><td>Exactitud del inventario en el recuento semanal</td><td class="r"><b>≥ 99 %</b></td></tr>
+      <tr><td>Preguntas al operario</td><td class="r"><b>≤ 2–3 %</b></td></tr>
+      <tr><td>Movimientos sin identificar registrados como excepción · datos inventados</td><td class="r"><b>100 % · 0</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2">
+    <div class="box"><h3>Se promete</h3><ul class="l ck"><li>Registro automático sin escanear ni confirmar.</li><li>Ubicación por celda o calle, mapa y búsqueda.</li><li>Altas y bajas verificadas contra albarán.</li><li>Estado abierto enlazado con el ERP/MES.</li><li>Excepciones visibles y con alerta.</li></ul></div>
+    <div class="box"><h3>No se promete</h3><ul class="l x"><li>Inventario perfecto sin excepciones.</li><li>Posición exacta dentro de la pila.</li><li>Kilos medidos por RFID (los calcula el ERP).</li><li>Material movido sin equipos equipados.</li></ul></div>
+  </div>
+</div>
+
+<div class="secwrap">
+  <div class="eyebrow">Por qué COMA</div>
+  <h1 class="sec">Producto estándar, datos abiertos</h1>
+  <ul class="l">
+    <li><b>Sin dependencia del hardware.</b> COMA es dueña del contrato de eventos: el integrador se puede cambiar y el cliente recibe los datos RF en bruto.</li>
+    <li><b>Encaja con su ERP/MES.</b> API abierta; el ERP sigue calculando los kilos y recibe ubicaciones verificadas, altas, bajas y aperturas.</li>
+    <li><b>Respaldado por casos reales</b> de etiquetas colgantes RFID en rebar y bobinas, con lectura desde grúas y carretillas.</li>
+    <li><b>Riesgo acotado.</b> Si la prueba RF no supera los criterios, se paga solo lo ejecutado. No hay compromiso de despliegue.</li>
+    <li><b>Respeto al personal.</b> Sin identificar al operario en el piloto; información previa al comité de empresa y uso de datos para el proceso, no para sancionar.</li>
+  </ul>
+
+  <h2>Retorno (ejemplo ilustrativo)</h2>
+  <p>Con hipótesis razonables para una planta media (3 h/día de búsquedas, 20 errores de expedición al año, 30 t de material perdido u oxidado, inventarios y stock de seguridad), el ahorro ronda los <b>85.000 €/año</b> frente a unos <b>31.000 €/año</b> de costes recurrentes: el piloto se recupera en unos <b>16 meses</b>. La Fase 0 sustituye estas hipótesis por las cifras reales del cliente.</p>
+
+  <h2>Próximos pasos</h2>
+  <ol class="l">
+    <li>Cuestionario al cliente (movimientos, grúas, material, red, ERP, pérdidas actuales).</li>
+    <li>Muestras de etiqueta (1 y 2 por paquete) y precio por volumen.</li>
+    <li>Mismo pliego de pruebas a los integradores candidatos, exigiendo funcionamiento sin confirmación del operario.</li>
+    <li>Reunión técnica: cliente + mantenimiento de grúas + integrador + COMA.</li>
+    <li>Firma de Fase 0 + Fase 1 como contrato cerrado con criterios de seguir o parar.</li>
+  </ol>
+  <div class="box dark" style="margin-top:6mm">
+    <div class="logo" style="font-size:20pt">COMA<svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+    <p style="margin-top:3mm">Propuesta técnico-comercial completa y vídeo demo disponibles.<br/><span class="muted">info@comunicacionenmallorca.com · comunicacionenmallorca.com</span></p>
+  </div>
+</div>
+</body>
+</html>

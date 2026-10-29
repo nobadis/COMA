@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>COMA Rebar Stock · Propuesta técnico-comercial</title>
+<link rel="stylesheet" href="doc.css" />
+</head>
+<body>
+
+<!--@cover-->
+<section class="cover">
+  <div class="logo">COMA<svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+  <div class="kind eyebrow">Propuesta técnico-comercial · Piloto totalmente funcional</div>
+  <h1>Control de stock automático de rebar, leído desde la grúa<span class="c">.</span></h1>
+  <div class="sub">COMA Rebar Stock · versión puente grúa, con módulo de carretilla opcional. Paquetes de barras y rollos: qué hay, dónde está, qué entra, qué sale y qué está abierto, en tiempo real.</div>
+  <div class="img"><img src="img/hero.jpg" alt="" /></div>
+  <div class="meta"><span><b>COMA · Comunicación en Mallorca</b>Paseo Mallorca 16, 07012 Palma</span><span><b>Versión 1.0</b>Octubre 2026</span><span><b>Confidencial</b>Precios orientativos, sin IVA</span></div>
+</section>
+<!--@body-->
+
+<div class="secwrap first">
+  <div class="eyebrow">Contenido</div>
+  <h1 class="sec">Índice</h1>
+  <div class="toc">
+    <div><span>01</span>Resumen ejecutivo</div>
+    <div><span>02</span>Contexto: el material, el cliente y las restricciones</div>
+    <div><span>03</span>La solución: principio y componentes (versión grúa)</div>
+    <div><span>04</span>Cómo funciona: flujo, lógica de eventos y estados</div>
+    <div><span>05</span>Casuísticas cubiertas: útiles, grúas, material, flujos, entornos y excepciones</div>
+    <div><span>06</span>Interfaz y usabilidad: cabina, web, móvil y terminal de mano</div>
+    <div><span>07</span>Integración: contrato de eventos y API abierta</div>
+    <div><span>08</span>Alternativas evaluadas y descartadas</div>
+    <div><span>09</span>Referencias de mercado</div>
+    <div><span>10</span>Alcance, fases y calendario del piloto</div>
+    <div><span>11</span>Criterios de aceptación y cómo se miden</div>
+    <div><span>12</span>Presupuesto, opción carretilla, despliegue y costes recurrentes</div>
+    <div><span>13</span>Retorno de la inversión</div>
+    <div><span>14</span>Riesgos, plan B y escalera de decisión</div>
+    <div><span>15</span>Roles y responsabilidades</div>
+    <div><span>16</span>Qué se promete y qué no</div>
+    <div><span>17</span>Preguntas antes de dimensionar · Próximos pasos · Condiciones</div>
+  </div>
+  <div class="box red" style="margin-top:8mm">
+    <p><b>Nota sobre cifras.</b> Todos los precios son orientativos, en euros y sin IVA, y se confirmarán con cotizaciones cerradas de proveedores tras la Fase 0. Los porcentajes de acierto son <b>objetivos del piloto</b> que se miden y se escriben en el contrato, no resultados garantizados de antemano.</p>
+  </div>
+</div>
+
+<!-- ============================================================ 01 -->
+<div class="secwrap">
+  <div class="eyebrow">01</div>
+  <h1 class="sec">Resumen ejecutivo</h1>
+  <p class="lead">El cliente quiere saber en tiempo real qué stock de rebar tiene, dónde está (por calle o celda), qué entra, qué sale y qué está abierto. Ya probó el escaneo manual (paquete + ubicación) y no le sirve: depende de que el operario lo haga, y no siempre lo hace, o lo hace mal. <b>Necesita que el registro sea automático aunque el operario no colabore.</b></p>
+
+  <div class="grid2">
+    <div class="box"><h3>El principio físico</h3><p>Una pila de acero no se puede leer de forma fiable con radio ni con cámaras. Pero <b>cada paquete o rollo, para moverse, tiene que colgar de la grúa</b>. En ese momento está separado de la pila y se lee bien. El operario puede olvidarse de escanear; no puede mover material sin la grúa.</p></div>
+    <div class="box"><h3>La decisión</h3><p>RFID UHF pasivo con etiqueta colgante tipo bandera, <b>leído desde la grúa que mueve el material</b>, no desde las pilas. La ubicación la da la posición de la grúa al dejar la carga. Una sola tecnología: sin cámaras ni GNSS.</p></div>
+  </div>
+
+  <h2>Qué entrega COMA Rebar Stock</h2>
+  <ul class="l ck">
+    <li>Registro automático de cada movimiento de la grúa equipada, <b>sin escanear ni confirmar</b> en los movimientos normales.</li>
+    <li>Ubicación por celda o calle, inventario en tiempo real, mapa web y móvil, búsqueda por colada, Ø, calidad, pedido o antigüedad, y FIFO.</li>
+    <li>Altas en recepción y bajas en expedición automáticas, verificadas contra el albarán antes de que salga el camión.</li>
+    <li>Estado «abierto / en consumo» enlazado con el ERP/MES del cliente, que sigue calculando los kilos.</li>
+    <li>Garantía de no inventar datos: cada movimiento es <span class="pill ok">VERIFICADO</span>, <span class="pill warn">INCIERTO</span> o <span class="pill bad">SIN IDENTIFICAR</span>. Solo se pide un toque en cabina cuando hay duda.</li>
+  </ul>
+
+  <h2>El piloto propuesto (versión grúa)</h2>
+  <div class="grid4" style="margin:3mm 0 4mm">
+    <div class="kpi"><b>1 grúa</b><span>con electroimán, el escenario más exigente, en una zona de nave real</span></div>
+    <div class="kpi"><b>4–5 meses</b><span>con punto de decisión seguir / parar en la semana 7</span></div>
+    <div class="kpi"><b>55–95 k€</b><span>escenario típico ~72.000 €, sin IVA; hardware reutilizable</span></div>
+    <div class="kpi"><b>≤ 0,1 %</b><span>asignaciones falsas dadas por verificadas (criterio clave)</span></div>
+  </div>
+  <p>La carretilla queda como <b>módulo opcional</b> (+16.000 a 30.000 €), con la misma lógica y la misma plataforma, para cuando se quiera cubrir calles exteriores o zonas sin grúa.</p>
+
+  <h2>Lo que no se promete</h2>
+  <p>Inventario perfecto sin ninguna excepción, posición exacta dentro de una pila, ni cantidad en kg medida por RFID (la calcula el ERP). Sí se promete, sujeto a superar los criterios del piloto: registro automático, ubicación por celda, excepciones visibles en minutos y un stock que cuadra.</p>
+</div>
+
+<!-- ============================================================ 02 -->
+<div class="secwrap flow">
+  <div class="eyebrow">02</div>
+  <h1 class="sec">Contexto</h1>
+  <h2>El material</h2>
+  <table>
+    <thead><tr><th style="width:26%">Unidad</th><th>Características</th><th style="width:30%">Cómo se manipula</th></tr></thead>
+    <tbody>
+      <tr><td><b>Paquetes de barras</b></td><td>Normalmente de 6 a 14 m y de 1 a 3 t, atados con alambre. Un paquete de 2 t vale unos 1.400 €.</td><td>Puente grúa con electroimán, balancín con cadenas o gancho.</td></tr>
+      <tr><td><b>Rollos / bobinas</b></td><td>Alambrón o corrugado para enderezadoras y estribadoras, de 1 a 5 t, con flejes. También bobinas tipo <i>spool</i>.</td><td>Electroimán, gancho en C o pinza.</td></tr>
+      <tr><td><b>Restos y paquetes abiertos</b></td><td>Material parcialmente consumido que vuelve al almacén.</td><td>Igual que el resto, con etiqueta nueva vinculada.</td></tr>
+      <tr><td><b>Ferralla elaborada</b></td><td>Barras cortadas y dobladas, atadas por pedido o elemento, listas para expedir.</td><td>Grúa hacia la zona de expedición o al camión.</td></tr>
+    </tbody>
+  </table>
+  <p>Se almacena en nave y/o patio exterior, en plantas pequeñas y grandes, siempre apilado. Ambiente: polvo, óxido, golpes, lluvia, sol y noche.</p>
+
+  <h2>Qué quiere saber el cliente</h2>
+  <ul class="l">
+    <li>Qué hay y dónde está, por calle o celda, en tiempo real y desde cualquier sitio (web o móvil).</li>
+    <li>Qué entra (recepción) y qué sale (expedición).</li>
+    <li>Qué paquete o rollo está abierto (en consumo). Al abrirlo empieza el consumo; los kilos los calcula el ERP/MES por orden de producción.</li>
+  </ul>
+
+  <h2>Restricciones de diseño</h2>
+  <ul class="l">
+    <li>Hoy ya se imprime una etiqueta por paquete o rollo. <b>Cambiar el tipo de etiqueta no puede añadir ningún paso.</b></li>
+    <li>Se mueven decenas de miles de unidades al año: el coste por etiqueta debe ser bajo.</li>
+    <li>No se puede alterar la manipulación del acero ni los circuitos de seguridad de las grúas.</li>
+    <li><b>El registro tiene que ser automático aunque el operario no colabore.</b></li>
+  </ul>
+
+  <div class="box dark" style="margin-top:6mm">
+    <div class="eyebrow">Por qué ahora</div>
+    <p style="font-size:12pt;margin-top:2mm">El cliente ya intentó resolverlo con escaneo manual y celdas pintadas. No falló la tecnología del escáner: falló depender de una persona ocupada. La propuesta elimina ese paso, en lugar de pedir más disciplina.</p>
+  </div>
+</div>
+
+<!-- ============================================================ 03 -->
+<div class="secwrap">
+  <div class="eyebrow">03</div>
+  <h1 class="sec">La solución, versión grúa</h1>
+  <h2>Principios de diseño (no negociables)</h2>
+  <table>
+    <tbody>
+      <tr><td style="width:9mm"><b class="c">P1</b></td><td>Leer el material <b>solo cuando está separado de la pila</b>: colgando del imán, de las cadenas o del gancho.</td></tr>
+      <tr><td><b class="c">P2</b></td><td>La ubicación la da la grúa en el momento de dejar la carga, no una lectura del paquete ya depositado.</td></tr>
+      <tr><td><b class="c">P3</b></td><td>Una sola tecnología de identificación: RFID UHF pasivo (banda europea 865–868 MHz, potencia máxima 2 W ERP según EN 302 208).</td></tr>
+      <tr><td><b class="c">P4</b></td><td>El operario trabaja exactamente igual que hoy. Solo interviene si el sistema duda, con un toque.</td></tr>
+      <tr><td><b class="c">P5</b></td><td>El sistema nunca inventa un dato: cada movimiento y cada unidad tienen un estado explícito.</td></tr>
+      <tr><td><b class="c">P6</b></td><td>Solo lectura respecto a la grúa: no interviene en sus controles ni en sus funciones de seguridad.</td></tr>
+      <tr><td><b class="c">P7</b></td><td>COMA es dueña del modelo de datos y del <b>contrato de eventos</b>. El hardware lo suministra e instala un integrador que se puede cambiar.</td></tr>
+      <tr><td><b class="c">P8</b></td><td>El RFID dice <b>qué</b> y <b>dónde</b>. El ERP/MES dice <b>cuánto</b> (kg) y en qué estado de consumo.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Kit de puente grúa (equipo de referencia: grúa con electroimán)</h2>
+  <figure><!--@include diagrams/kit.svg--></figure>
+  <table>
+    <thead><tr><th style="width:7mm">#</th><th style="width:30%">Componente</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td><b class="c">1</b></td><td><b>Etiqueta bandera UHF</b></td><td>Plástico industrial (aprox. 100 × 105 mm), impresión por transferencia térmica, inlay UHF estándar y barato. La mitad con el chip queda separada del acero como una bandera. Datos de hoy + QR/DataMatrix grande por las dos caras como respaldo.</td></tr>
+      <tr><td><b class="c">2</b></td><td><b>2 antenas direccionales</b></td><td>Polarización circular, a los lados del balancín o junto al imán, apuntando a la carga, con protección mecánica. Nunca bajo el imán. Posición final aprobada por el mantenedor de la grúa.</td></tr>
+      <tr><td><b>3</b></td><td><b>Lector UHF industrial de 4 puertos</b></td><td>En el carro, en carcasa IP65/66. 2 puertos de reserva para añadir antenas si la prueba lo pide.</td></tr>
+      <tr><td><b>4</b></td><td><b>PC industrial de borde</b></td><td>Guarda localmente todos los eventos si cae la red y los reenvía sin duplicados.</td></tr>
+      <tr><td><b>5</b></td><td><b>Comunicaciones</b></td><td>Puente WiFi industrial o router 4G, con indicador «sin conexión» en cabina.</td></tr>
+      <tr><td><b>6</b></td><td><b>Señales y posición (solo lectura)</b></td><td>Imán ON/OFF, subida/bajada o encoder de altura, traslación de puente y carro, carga si existe señal continua fiable (el limitador de sobrecarga no es una báscula). X/Y preferente desde PLC o encoders (Profinet, OPC-UA, Modbus) mediante contactos libres de tensión o pasarela.</td></tr>
+      <tr><td><b class="c">7</b></td><td><b>Alternativa de posición</b></td><td>Si no hay PLC accesible: 2 telémetros láser (puente y carro) con reflectores.</td></tr>
+      <tr><td><b>8</b></td><td><b>Interfaz en cabina</b></td><td>Tablet robusta: verde / amarillo / rojo y pregunta de un toque. Sin cabina: pantalla en la nave, baliza en el puente y aviso en el móvil del operario.</td></tr>
+      <tr><td><b>9</b></td><td><b>Útil de elevación</b></td><td>No se modifica. El sistema se adapta a imán, cadenas, gancho o gancho en C.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Etiqueta: cantidad y posición (configuración inicial)</h2>
+  <table>
+    <thead><tr><th>Unidad</th><th>Etiquetas</th><th>Dónde</th></tr></thead>
+    <tbody>
+      <tr><td>Rollos y bobinas</td><td><b>2</b>, opuestas a 180°</td><td>Atadas a los flejes.</td></tr>
+      <tr><td>Paquetes de más de 6 m</td><td><b>2</b></td><td>A ¼ y ¾ de la longitud, atadas al alambre de atado (nunca a una barra suelta).</td></tr>
+      <tr><td>Paquetes de 6 m o menos</td><td><b>1</b></td><td>En el centro.</td></tr>
+      <tr><td>Restos que vuelven</td><td><b>1–2 nuevas</b></td><td>Vinculadas a la unidad original (colada y certificado).</td></tr>
+    </tbody>
+  </table>
+  <p>La impresora RFID de transferencia térmica codifica y <b>verifica el chip antes de imprimir</b> y marca las defectuosas. Se imprime en el mismo paso que hoy: no hay ningún paso nuevo. Cada chip tiene su propio código (EPC) y la plataforma asocia los 1–2 EPC de cada unidad. La prueba RF decide si basta 1 etiqueta por paquete, que es la principal palanca del coste recurrente.</p>
+
+  <h2>Ubicaciones</h2>
+  <p>La unidad básica es la <b>celda o calle</b>, no la coordenada exacta. En nave con grúa, las celdas se definen como polígonos sobre la X/Y de la grúa: <b>no hacen falta placas en el suelo</b>. También se definen celdas especiales: máquina X (consumo), camión / muelle X (expedición), recepción, carro de transferencia (tránsito) y estantería de restos.</p>
+
+  <h2>Equipos complementarios</h2>
+  <div class="grid2">
+    <div class="box"><h3>Terminal RFID de mano</h3><p>Búsqueda de una unidad concreta (modo «geiger»), revisión de celdas inciertas, inventario inicial y auditorías del piloto.</p></div>
+    <div class="box"><h3>Máquinas de producción</h3><p>La apertura se toma del escaneo que <b>ya</b> se hace en la máquina para cargar el programa, y se refuerza cuando la grúa deja la carga en la celda de esa máquina. No hacen falta lectores en las máquinas.</p></div>
+  </div>
+</div>
+
+<!-- ============================================================ 04 -->
+<div class="secwrap flow">
+  <div class="eyebrow">04</div>
+  <h1 class="sec">Cómo funciona</h1>
+  <figure><!--@include diagrams/flow.svg--><figcaption>Cada movimiento de la grúa se procesa en cuatro pasos y termina con un estado explícito.</figcaption></figure>
+
+  <h2>Flujo operativo paso a paso</h2>
+  <table>
+    <tbody>
+      <tr><td style="width:30mm"><b>0 · Arranque</b></td><td>Se etiqueta y verifica todo el stock existente de la zona del piloto, con impresora y terminal de mano. El sistema arranca con un inventario inicial real.</td></tr>
+      <tr><td><b>1 · Producir o recibir</b></td><td>Se imprime la etiqueta como hoy (ahora con RFID) y se ata. Ningún paso nuevo.</td></tr>
+      <tr><td><b>2 · Coger</b></td><td>El gruista coge la carga como siempre. Las señales de la grúa marcan el inicio y las antenas leen la carga.</td></tr>
+      <tr><td><b>3 · Desplazar</b></td><td>El sistema confirma qué etiquetas se mueven con la grúa y descarta las de las pilas vecinas.</td></tr>
+      <tr><td><b>4 · Dejar</b></td><td>Fin del movimiento: la X/Y de la grúa asigna la celda.</td></tr>
+      <tr><td><b>5 · Resultado</b></td><td><span class="pill ok">VERDE</span> se registra solo. <span class="pill warn">AMARILLO</span> la cabina pregunta («¿Has dejado 004831 en B-07?») o pide elegir entre 2–3 opciones; sin respuesta en X minutos queda incierto en la lista del supervisor. <span class="pill bad">ROJO</span> hubo movimiento sin etiqueta fiable: se muestran candidatos de la zona de origen; sin respuesta, alerta al supervisor.</td></tr>
+      <tr><td><b>6 · Consumir</b></td><td>El escaneo de la máquina (que ya existe) y/o dejar la carga en la celda de la máquina marcan la unidad como ABIERTA. Los kilos los calcula el ERP.</td></tr>
+      <tr><td><b>7 · Material que vuelve</b></td><td>Etiqueta nueva vinculada a la unidad original.</td></tr>
+      <tr><td><b>8 · Expedir</b></td><td>Carga en la celda del camión, baja automática y verificación contra el albarán. Si no coincide, alerta en cabina antes de que salga.</td></tr>
+      <tr><td><b>9 · Mantener</b></td><td>El supervisor revisa cada día la lista de excepciones (minutos). Una vez por semana, barrido con el terminal solo en celdas inciertas.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Lógica de eventos</h2>
+  <h3>Detección de COGER (todas las condiciones dentro de una ventana de tiempo)</h3>
+  <ul class="l">
+    <li><b>Grúa con imán:</b> imán ON + subida del polipasto mayor que H cm (y carga mayor que un umbral, si hay señal).</li>
+    <li><b>Grúa con gancho, cadenas o gancho en C:</b> subida con carga, señal de carga o de tensión.</li>
+  </ul>
+  <h3>Identificación de la carga: un EPC pertenece a la carga si cumple todo</h3>
+  <ol class="l" type="a">
+    <li>Se lee después de coger, con intensidad (RSSI) igual o superior a un umbral alto y un número mínimo de lecturas.</li>
+    <li>Se sigue leyendo de forma estable mientras la grúa se desplaza más de D metros. Las etiquetas de las pilas vecinas se dejan de leer al alejarse.</li>
+    <li>No es una etiqueta «estática»: no se leía con la misma intensidad antes de coger, desde la misma posición.</li>
+  </ol>
+  <p><b>Comprobaciones de coherencia:</b> origen (la última ubicación conocida está cerca del punto donde se cogió; si no, se acepta la identidad y se marca «origen inesperado»), pareja de etiquetas (leer los 2 EPC, o uno con señal fuerte, refuerza la identificación) y peso opcional (la suma de pesos teóricos del ERP coincide con la carga medida con un margen de ±10–15 %).</p>
+  <h3>Detección de DEJAR y ubicación</h3>
+  <p>Imán OFF o bajada sin carga. Ubicación = celda que contiene la X/Y de la grúa. Si está a menos de 0,5 m del borde entre dos celdas, la ubicación queda incierta y se pregunta.</p>
+
+  <h2>Estados</h2>
+  <div class="grid2">
+    <div class="box"><h3>De cada movimiento</h3><p><span class="pill ok">VERIFICADO</span> <span class="pill warn">INCIERTO_UBICACIÓN</span> <span class="pill warn">INCIERTO_IDENTIDAD</span> <span class="pill bad">SIN_IDENTIFICAR</span></p></div>
+    <div class="box"><h3>De cada unidad</h3><p><span class="pill ok">EN_STOCK verificado</span> <span class="pill warn">EN_STOCK incierto</span> <span class="pill info">EN_MOVIMIENTO</span> <span class="pill ink">ABIERTO</span> <span class="pill info">CONSUMIDO</span> <span class="pill info">EXPEDIDO</span> <span class="pill bad">NO_LOCALIZADO</span></p></div>
+  </div>
+  <div class="box red"><p><b>Regla de oro:</b> un dato no verificado nunca sustituye a uno verificado sin dejar constancia y sin generar una alerta. Con un 99,5 % de acierto por movimiento, un paquete que se mueve 10 veces quedaría con un 95 % acumulado; por eso el criterio clave es que las asignaciones <b>falsas dadas por verificadas</b> sean como máximo del 0,1 % y que los errores se detecten rápido por discrepancias.</p></div>
+</div>
+
+<!-- ============================================================ 05 -->
+<div class="secwrap">
+  <div class="eyebrow">05</div>
+  <h1 class="sec">Casuísticas cubiertas</h1>
+  <p class="lead">El mundo del rebar no es un único caso. Esta sección recorre útiles, grúas, mandos, materiales, flujos, entornos y excepciones, y dice qué hace el sistema en cada uno y si entra en el piloto.</p>
+
+  <h2>5.1 Útiles de elevación</h2>
+  <table>
+    <thead><tr><th style="width:24%">Útil</th><th>Coger / dejar se detecta por</th><th>Antenas</th><th style="width:15%">Piloto</th></tr></thead>
+    <tbody>
+      <tr><td><b>Electroimán (paquetes)</b></td><td>Imán ON/OFF + polipasto</td><td>2 a los lados del balancín, protegidas</td><td><span class="pill ok">Referencia</span></td></tr>
+      <tr><td><b>Electroimán (rollos)</b></td><td>Imán ON/OFF + polipasto</td><td>Igual; 2 etiquetas a 180° aseguran lectura</td><td><span class="pill ok">Incluido</span></td></tr>
+      <tr><td><b>Balancín con imanes múltiples</b></td><td>Imanes ON/OFF + polipasto</td><td>En los extremos del balancín (paquetes de 12–14 m)</td><td><span class="pill ok">Incluido</span></td></tr>
+      <tr><td><b>Balancín con cadenas / eslingas</b></td><td>Subida con carga, señal de carga o tensión</td><td>En el balancín, apuntando abajo</td><td><span class="pill info">Configurable</span></td></tr>
+      <tr><td><b>Gancho simple con eslingas</b></td><td>Subida con carga + bajada sin carga</td><td>En el bloque del gancho o el carro</td><td><span class="pill info">Configurable</span></td></tr>
+      <tr><td><b>Gancho en C / pinza de rollos</b></td><td>Señal de carga o encoder + pinza</td><td>En el cuerpo del gancho en C</td><td><span class="pill info">Configurable</span></td></tr>
+      <tr><td><b>Pinza mecánica de paquetes</b></td><td>Apertura/cierre de pinza + polipasto</td><td>En la pinza, protegidas</td><td><span class="pill info">Configurable</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.2 Tipos de grúa y de mando</h2>
+  <table>
+    <thead><tr><th style="width:28%">Situación</th><th>Solución</th></tr></thead>
+    <tbody>
+      <tr><td><b>Puente grúa interior (mono o birraíl)</b></td><td>Kit estándar. Celdas como polígonos sobre la X/Y de la grúa.</td></tr>
+      <tr><td><b>Pórtico o semipórtico exterior</b></td><td>Mismo kit en carcasas IP66; el UHF pasivo no depende de la luz ni de la lluvia. Revisión de cobertura WiFi/4G.</td></tr>
+      <tr><td><b>Grúa con cabina</b></td><td>Tablet robusta en cabina.</td></tr>
+      <tr><td><b>Radiomando (sin cabina)</b></td><td>Pantalla grande en la nave + baliza de colores en el puente + aviso en el móvil o reloj del operario. La pregunta se responde con un toque en el móvil o en la pantalla de la nave.</td></tr>
+      <tr><td><b>Botonera colgante</b></td><td>Pantalla junto a la botonera o integrada en ella.</td></tr>
+      <tr><td><b>Grúa con 2 carros</b></td><td>Un lector con antenas por carro (4 puertos), cada carro emite sus propios eventos.</td></tr>
+      <tr><td><b>Varias grúas en el mismo camino de rodadura</b></td><td>Cada grúa con su kit; las celdas son comunes. Si una grúa deja y otra recoge, la cadena de movimientos se mantiene.</td></tr>
+      <tr><td><b>Grúas antiguas o PLC cerrado</b></td><td>Contactos libres de tensión independientes + 2 telémetros láser. Presupuestado como alternativa estándar.</td></tr>
+      <tr><td><b>Carro de transferencia entre naves</b></td><td>Celda «tránsito»: la grúa A deja en el carro, la grúa B recoge en la otra nave. La unidad queda EN_MOVIMIENTO entre ambos eventos.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.3 Material</h2>
+  <table>
+    <thead><tr><th style="width:28%">Material</th><th>Tratamiento</th></tr></thead>
+    <tbody>
+      <tr><td><b>Paquetes de 12–14 m</b></td><td>2 etiquetas a ¼ y ¾; antenas en los extremos del balancín si hace falta. Escenario obligatorio de la prueba RF.</td></tr>
+      <tr><td><b>Paquetes cortos (≤ 6 m)</b></td><td>1 etiqueta central.</td></tr>
+      <tr><td><b>Rollos de alambrón y corrugado, bobinas tipo spool</b></td><td>2 etiquetas a 180° en los flejes. Lectura con imán activado validada en la prueba.</td></tr>
+      <tr><td><b>Paquete abierto / resto</b></td><td>Etiqueta nueva vinculada a la original. Si la grúa coge barras sueltas de un paquete abierto, la unidad sigue ABIERTA y el ERP descuenta kilos.</td></tr>
+      <tr><td><b>Ferralla elaborada (producto terminado)</b></td><td>Etiqueta por paquete de pedido o elemento; se sigue hasta la expedición y se verifica contra el albarán.</td></tr>
+      <tr><td><b>Mallas electrosoldadas y armaduras</b></td><td>Misma etiqueta colgante atada al paquete; se valida en la prueba si entra en el alcance.</td></tr>
+      <tr><td><b>Material de proveedor sin etiqueta propia</b></td><td>Se etiqueta en recepción (como hoy), con los datos del certificado de colada.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.4 Flujos y movimientos</h2>
+  <table>
+    <thead><tr><th style="width:28%">Flujo</th><th>Qué hace el sistema</th><th style="width:16%">Resultado</th></tr></thead>
+    <tbody>
+      <tr><td><b>Recepción desde camión</b></td><td>Se etiqueta al recibir. El primer movimiento camión → stock da el alta con ubicación.</td><td><span class="pill ok">Alta verificada</span></td></tr>
+      <tr><td><b>Almacenaje y recolocación</b></td><td>Cada movimiento actualiza la celda.</td><td><span class="pill ok">Verificado</span></td></tr>
+      <tr><td><b>Desapilar para llegar a otra unidad</b></td><td>Cada movimiento intermedio se registra; la cadena se conserva.</td><td><span class="pill ok">Verificado</span></td></tr>
+      <tr><td><b>Varias unidades en una elevación</b></td><td>Se identifican todas; el peso (si hay señal) y la pareja de etiquetas lo refuerzan.</td><td><span class="pill ok">Todas</span></td></tr>
+      <tr><td><b>Recorrido corto sobre pilas altas</b></td><td>Filtro por evolución de la señal y regla de origen; si no basta, pregunta.</td><td><span class="pill warn">A veces 1 toque</span></td></tr>
+      <tr><td><b>Dejar sobre otra pila / junto a otras</b></td><td>La celda la da la grúa, no la lectura; no se confunde con la pila de al lado.</td><td><span class="pill ok">Verificado</span></td></tr>
+      <tr><td><b>Dejar en el borde entre celdas</b></td><td>Margen de 0,5 m → INCIERTO → pregunta en cabina.</td><td><span class="pill warn">1 toque</span></td></tr>
+      <tr><td><b>A máquina (mesa de cizalla, devanadora)</b></td><td>Celda de máquina + escaneo del programa → ABIERTO. Kilos del ERP.</td><td><span class="pill ink">Abierto</span></td></tr>
+      <tr><td><b>Retorno de restos</b></td><td>Etiqueta nueva vinculada; ubicación por la grúa.</td><td><span class="pill ok">Trazable</span></td></tr>
+      <tr><td><b>Carga a camión</b></td><td>Celda de camión → baja automática y comparación con el albarán.</td><td><span class="pill ok">Expedido</span></td></tr>
+      <tr><td><b>Carga que no coincide con el albarán</b></td><td>Alerta en cabina y en la web antes de que salga el camión.</td><td><span class="pill bad">Alerta</span></td></tr>
+      <tr><td><b>Elevación abortada o imán en vacío</b></td><td>Coger y soltar en el mismo sitio, o imán ON sin carga: se detecta y no genera movimiento.</td><td><span class="pill ok">Ignorado</span></td></tr>
+      <tr><td><b>Material movido sin la grúa</b></td><td>Residual. Se detecta por discrepancias y barridos con el terminal de mano.</td><td><span class="pill info">Excepción</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.5 Excepciones y discrepancias</h2>
+  <table>
+    <thead><tr><th style="width:32%">Caso</th><th>Respuesta</th></tr></thead>
+    <tbody>
+      <tr><td><b>Ninguna etiqueta fiable en la carga</b></td><td>SIN IDENTIFICAR: candidatos de la zona de origen en cabina; sin respuesta, alerta al supervisor.</td></tr>
+      <tr><td><b>La unidad no estaba donde se creía</b></td><td>Se acepta la identidad y se marca «origen inesperado» para revisión.</td></tr>
+      <tr><td><b>1 de 2 etiquetas dañada</b></td><td>Basta la otra; se avisa para reimprimir. Si fallan las dos: QR grande con el terminal o el móvil.</td></tr>
+      <tr><td><b>EPC desconocido o no asociado</b></td><td>Alerta: etiqueta sin unidad en el ERP o impresa fuera del flujo.</td></tr>
+      <tr><td><b>Unidad consumida en el ERP que sigue en el patio</b></td><td>Discrepancia en la lista diaria del supervisor.</td></tr>
+      <tr><td><b>Sin movimiento en más de X días</b></td><td>Alerta de antigüedad y prioridad FIFO.</td></tr>
+      <tr><td><b>Lectura de una unidad en dos sitios</b></td><td>Prevalece el último movimiento verificado; el conflicto queda registrado.</td></tr>
+      <tr><td><b>Caída de red</b></td><td>Almacenamiento local en la grúa, reenvío ordenado y sin duplicados, indicador en cabina.</td></tr>
+      <tr><td><b>Lector o antena averiados</b></td><td>Diagnóstico automático (sin lecturas en N movimientos) → aviso de mantenimiento; los movimientos quedan como SIN IDENTIFICAR, nunca inventados.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.6 Entornos y tipos de planta</h2>
+  <table>
+    <thead><tr><th style="width:32%">Entorno</th><th>Consideraciones</th></tr></thead>
+    <tbody>
+      <tr><td><b>Nave cerrada</b></td><td>Escenario base. Estudio de sitio RF para ajustar potencia y antenas.</td></tr>
+      <tr><td><b>Nave abierta o semicubierta</b></td><td>Carcasas IP66; cobertura WiFi revisada.</td></tr>
+      <tr><td><b>Patio exterior con pórtico</b></td><td>Lluvia, sol, heladas y noche: el UHF pasivo no depende de la luz. Etiqueta de plástico industrial y prueba de supervivencia.</td></tr>
+      <tr><td><b>Taller de ferralla</b></td><td>Consumo en cizallas, enderezadoras y estribadoras; producto terminado a expedición.</td></tr>
+      <tr><td><b>Almacén de distribución de acero</b></td><td>Recepción y expedición dominan; verificación contra albarán clave.</td></tr>
+      <tr><td><b>Planta pequeña (1 grúa) o grande (varias naves)</b></td><td>Mismo producto; se escala por equipos. Multiplanta en la misma plataforma.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ 06 -->
+<div class="secwrap flow">
+  <div class="eyebrow">06</div>
+  <h1 class="sec">Interfaz y usabilidad</h1>
+  <p class="lead">Cada persona ve solo lo que necesita: el gruista, un semáforo; el supervisor, una lista corta; dirección, el mapa y los números. Las imágenes son del vídeo demo que acompaña a esta propuesta.</p>
+  <div class="shots">
+    <figure><img src="img/live.jpg" alt="" /><figcaption><b>Movimiento en directo.</b> Coger, desplazar, dejar y resultado. Las vecinas se descartan solas.</figcaption></figure>
+    <figure><img src="img/map.jpg" alt="" /><figcaption><b>Mapa web en tiempo real.</b> Celdas con unidades, toneladas y estado; eventos en directo.</figcaption></figure>
+    <figure><img src="img/unit.jpg" alt="" /><figcaption><b>Búsqueda y ficha.</b> Por colada, Ø, calidad o pedido; FIFO; historial con evidencias.</figcaption></figure>
+    <figure><img src="img/tabA.jpg" alt="" /><figcaption><b>Cabina, amarillo.</b> Borde de celda: un toque para confirmar.</figcaption></figure>
+    <figure><img src="img/tabB.jpg" alt="" /><figcaption><b>Cabina, rojo.</b> Sin etiqueta legible: candidatos de la zona de origen.</figcaption></figure>
+    <figure><img src="img/ship.jpg" alt="" /><figcaption><b>Expedición.</b> Comprobación contra el albarán y alerta antes de que salga el camión.</figcaption></figure>
+    <figure><img src="img/cons.jpg" alt="" /><figcaption><b>Consumo.</b> Rollo en la enderezadora: ABIERTO; kilos desde el ERP.</figcaption></figure>
+    <figure><img src="img/dev.jpg" alt="" /><figcaption><b>Supervisor, terminal y red.</b> Excepciones en minutos, búsqueda «geiger», sin pérdida de eventos.</figcaption></figure>
+  </div>
+  <h2>Principios de usabilidad</h2>
+  <ul class="l">
+    <li><b>Cero clics en lo normal.</b> La tablet solo pide algo en 2–3 % de los movimientos (objetivo del piloto).</li>
+    <li><b>Una pregunta, un toque.</b> Botones grandes, usables con guantes; nunca formularios en cabina.</li>
+    <li><b>Colores con significado fijo</b> en cabina, web, móvil e informes: verde verificado, amarillo incierto, rojo sin identificar.</li>
+    <li><b>Sin respuesta no pasa nada malo:</b> el dato queda incierto y va a la lista del supervisor; no se bloquea la grúa.</li>
+    <li><b>Formación de 1–2 h por turno.</b> El gruista no cambia su forma de trabajar.</li>
+  </ul>
+</div>
+
+<!-- ============================================================ 07 -->
+<div class="secwrap flow">
+  <div class="eyebrow">07</div>
+  <h1 class="sec">Integración: contrato de eventos y API</h1>
+  <figure><!--@include diagrams/arch.svg--><figcaption>Arquitectura. El hardware habla con la plataforma COMA mediante un contrato de eventos abierto; la plataforma habla con el ERP/MES del cliente por API.</figcaption></figure>
+
+  <h2>Contrato de eventos (lo que envía la grúa por cada movimiento)</h2>
+<pre>{ <span class="k">"event_id"</span>: <span class="s">"G1-20261029-0412"</span>, <span class="k">"device_id"</span>: <span class="s">"grua-1"</span>, <span class="k">"device_type"</span>: <span class="s">"puente_grua"</span>, <span class="k">"firmware"</span>: <span class="s">"1.4.2"</span>,
+  <span class="k">"operador"</span>: null, <span class="k">"ts_coger"</span>: <span class="s">"2026-10-29T10:42:07.180Z"</span>, <span class="k">"ts_dejar"</span>: <span class="s">"2026-10-29T10:42:31.940Z"</span>,
+  <span class="k">"posicion_coger"</span>: { <span class="k">"x"</span>: 34.3, <span class="k">"y"</span>: 11.5 }, <span class="k">"posicion_dejar"</span>: { <span class="k">"x"</span>: 47.6, <span class="k">"y"</span>: 18.5 },
+  <span class="k">"epcs_carga"</span>: [ { <span class="k">"epc"</span>: <span class="s">"E280…4831A"</span>, <span class="k">"antena"</span>: 1, <span class="k">"rssi_max"</span>: -41, <span class="k">"rssi_medio"</span>: -44, <span class="k">"lecturas"</span>: 212,
+                   <span class="k">"primera"</span>: <span class="s">"…07.402Z"</span>, <span class="k">"ultima"</span>: <span class="s">"…31.610Z"</span>, <span class="k">"distancia_leida_m"</span>: 15.1 }, … ],
+  <span class="k">"epcs_descartados"</span>: [ { <span class="k">"epc"</span>: <span class="s">"E280…4830A"</span>, <span class="k">"rssi_max"</span>: -58, <span class="k">"distancia_leida_m"</span>: 1.2 }, … ],
+  <span class="k">"senales"</span>: { <span class="k">"iman"</span>: [<span class="s">"on@07.150"</span>, <span class="s">"off@31.900"</span>], <span class="k">"polipasto"</span>: …, <span class="k">"carga_kg"</span>: null },
+  <span class="k">"red"</span>: { <span class="k">"calidad"</span>: <span class="s">"buena"</span>, <span class="k">"en_cola"</span>: 0 }, <span class="k">"diagnostico"</span>: [] }</pre>
+  <h3>Requisitos para cualquier integrador de hardware</h3>
+  <ul class="l">
+    <li>Acceso a los datos RF en bruto (sin filtrar) para poder ajustar el sistema.</li>
+    <li>Almacenamiento local si cae la red y reenvío ordenado.</li>
+    <li>Marcas de tiempo sincronizadas (NTP).</li>
+    <li>Documentación abierta del formato. Este contrato hace que el cliente y COMA sean <b>independientes del proveedor de hardware</b>.</li>
+  </ul>
+  <h2>Integración con el ERP / MES del cliente</h2>
+  <table>
+    <thead><tr><th style="width:30%">Dato</th><th>Sentido</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td>Maestro de unidades (colada, Ø, calidad, longitud, peso teórico, pedido)</td><td>ERP → COMA</td><td>Asociar EPC ↔ unidad; búsqueda; validación por peso.</td></tr>
+      <tr><td>Albaranes de salida y pedidos de compra</td><td>ERP → COMA</td><td>Verificación de expedición; altas en recepción.</td></tr>
+      <tr><td>Escaneo de carga de programa en máquina</td><td>ERP/MES → COMA</td><td>Estado ABIERTO.</td></tr>
+      <tr><td>Movimientos, ubicación verificada, altas, bajas, apertura</td><td>COMA → ERP</td><td>Stock por ubicación en el ERP; kilos calculados por el ERP.</td></tr>
+      <tr><td>Excepciones</td><td>COMA → ERP / correo / móvil</td><td>Lista del supervisor y avisos.</td></tr>
+    </tbody>
+  </table>
+  <p>Vías de integración: API REST con webhooks (preferente), cola de mensajes o, para sistemas antiguos, intercambio de ficheros programado. Datos alojados en la UE, con copias de seguridad, roles de usuario y registro de auditoría.</p>
+</div>
+
+<!-- ============================================================ 08 -->
+<div class="secwrap flow">
+  <div class="eyebrow">08</div>
+  <h1 class="sec">Alternativas evaluadas y descartadas</h1>
+  <table>
+    <thead><tr><th style="width:30%">Alternativa</th><th>Por qué no</th><th style="width:17%">Veredicto</th></tr></thead>
+    <tbody>
+      <tr><td><b>Leer las pilas con RFID</b> (lectores de techo, portales, barridos)</td><td>El acero refleja y bloquea el UHF: el interior de la pila no se lee y aparecen lecturas cruzadas. Hay un fracaso documentado intentando leer bobinas dentro de la pila desde la grúa sin separarlas.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>Lectores fijos cubriendo todo el patio</b></td><td>Coste que crece con la superficie, lecturas cruzadas y la misma ceguera dentro de las pilas.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>Flujo manual</b> (móvil, celdas pintadas, GPS del móvil)</td><td>El cliente ya lo tiene y depende del operario.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>Visión artificial como sistema principal</b> (OCR, QR, marcadores)</td><td>La cámara necesita ver la etiqueta, y las colgantes giran o quedan tapadas. El estudio más parecido (barras apiladas, dron con cámara 4K y QR, 2025) logra 94 % en interior y 80 % en exterior: insuficiente. Añade mantenimiento y dependencia de luz y lluvia.</td><td><span class="pill warn">Solo como medición en la prueba</span></td></tr>
+      <tr><td><b>BLE, UWB o RFID activo por paquete</b></td><td>3–60 € por etiqueta, con batería, y el acero los bloquea igual. Las etiquetas BLE sin batería (2,4 GHz) se bloquean aún más.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>RFID sin chip, pinturas codificadas, marcas de agua digitales</b></td><td>Inmaduro o sigue necesitando línea de vista. No usamos al cliente como laboratorio.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>GNSS / RTK</b></td><td>Rebotes junto a naves y grúas; carga desplazada respecto a la antena. En grúa la X/Y del PLC es mejor y gratuita.</td><td><span class="pill bad">No necesario</span></td></tr>
+      <tr><td><b>Solo telemetría y peso</b></td><td>Detecta que hubo movimiento pero no qué unidad. Se usa como evidencia, no para identificar.</td><td><span class="pill info">Complemento</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ 09 -->
+<div class="secwrap flow">
+  <div class="eyebrow">09</div>
+  <h1 class="sec">Referencias de mercado</h1>
+  <p>Casos reales que respaldan el diseño. Se citan de forma anónima; los detalles se comparten bajo petición.</p>
+  <table>
+    <thead><tr><th style="width:30%">Caso</th><th>Qué demuestra</th></tr></thead>
+    <tbody>
+      <tr><td><b>Laminador de rebar y alambrón</b> de un grupo siderúrgico global (Brasil)</td><td>Etiquetas colgantes RFID, 2 por rollo a 180° y 1 por paquete; antenas en carretillas y grúas; tags en pilares que dan una «dirección» a cada pieza; expedición automática y verificada; FIFO automático. En extensión a 3 plantas más.</td></tr>
+      <tr><td><b>Centro de servicio de acero</b> (Bélgica)</td><td>Grúas con lector RFID y X/Y por láser; impresión RFID con verificación del chip. <i>Atención:</i> el operario confirma cada movimiento; demuestra que la lectura funciona, no que funcione sin operario.</td></tr>
+      <tr><td><b>Fabricante de aceros especiales</b> (Francia)</td><td>Carretillas con lector, más de 6.000 unidades y 11 edificios, sin escaneos manuales según el proveedor (cifras no auditadas).</td></tr>
+      <tr><td><b>Proyecto de lector en el gancho</b></td><td>Lector en el gancho y 2 telémetros láser que dan la X/Y al dejar la carga.</td></tr>
+      <tr><td><b>Estudio técnico (2021)</b> sobre bobinas con electroimán</td><td>La lectura con el imán activado es posible. Riesgo: lecturas de vecinas en recorridos cortos sobre pilas altas (cubierto en la sección 14).</td></tr>
+      <tr><td><b>Mercado</b></td><td>Ya existe al menos un módulo comercial de inventario RFID para rebar en EE. UU.: hay demanda y competencia. La diferencia de COMA: funcionamiento sin operario como criterio de aceptación, estados explícitos y contrato de eventos abierto.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ 10 -->
+<div class="secwrap">
+  <div class="eyebrow">10</div>
+  <h1 class="sec">Alcance, fases y calendario del piloto</h1>
+  <div class="box dark">
+    <h3 style="color:#efece4">Alcance (versión grúa)</h3>
+    <p>Una nave o zona representativa con <b>1 puente grúa con electroimán</b>, sus máquinas (para el consumo), su recepción y su punto de expedición. Equipos: 1 kit de grúa, 1 impresora RFID, 1 terminal de mano y la plataforma COMA completa (pruebas y producción de la zona). <b>Funcional de verdad:</b> se usa en el día a día con recepción, almacenaje, consumo y expedición reales; no es una demostración controlada.</p>
+    <p class="muted">Opción: añadir 1 carretilla lateral y una calle exterior (sección 12) para validar también ese escenario.</p>
+  </div>
+  <figure><!--@include diagrams/gantt.svg--><figcaption>Calendario orientativo: 19 semanas (4–5 meses). Punto de decisión al final de la semana 7.</figcaption></figure>
+
+  <h2>Fase 0 · Auditoría operativa y estudio de sitio (2–3 semanas)</h2>
+  <ul class="l">
+    <li>Mapear recorridos del material, la grúa y sus útiles, cuántas unidades se cogen a la vez, dónde se abren paquetes y rollos, entradas, salidas y excepciones.</li>
+    <li>Contar movimientos por día. Revisar las señales disponibles (PLC, encoders, imán, carga), la cobertura WiFi/4G y medir el RF de la zona.</li>
+    <li>Recoger los datos del ROI (sección 13).</li>
+    <li><b>Entregables:</b> matriz de movimientos, especificación técnica, pliego de pruebas para integradores y ROI base.</li>
+  </ul>
+  <h2>Fase 1 · Prueba RF de viabilidad (3–4 semanas) → seguir / parar</h2>
+  <ul class="l">
+    <li>Montaje provisional de lector y antenas en la grúa con electroimán. 300–500 etiquetas probando posiciones (1 frente a 2, extremo, centro, ¼–¾) y supervivencia.</li>
+    <li>Escenarios obligatorios: paquetes de 12–14 m, varias unidades en una elevación, recorridos cortos sobre pilas altas, dejar junto a otras pilas, rollos con imán y, si hay pórtico, exterior con lluvia y de noche.</li>
+    <li>Medición frente a la realidad: una cámara grabando cada movimiento (solo como instrumento de medición) y un observador. Objetivo: más de 1.000 movimientos medidos.</li>
+  </ul>
+  <h2>Fase 2 · Piloto operativo (10–12 semanas)</h2>
+  <ul class="l">
+    <li><b>Semanas 1–2:</b> instalación definitiva, integración con el ERP/MES, formación (1–2 h por turno), etiquetado e inventario inicial.</li>
+    <li><b>Semanas 3–4:</b> estabilización y ajuste de umbrales.</li>
+    <li><b>Semanas 5–12:</b> medición oficial con varios miles de movimientos en todos los turnos. Auditorías diarias por muestreo (20–30 posiciones) y recuento completo semanal.</li>
+    <li><b>Entregable:</b> informe frente a los criterios, coste total de propiedad, ROI real y plan de despliegue.</li>
+  </ul>
+  <p><b>Fase 3 · Despliegue</b> (fuera del alcance; se presupuesta con los datos del piloto): resto de grúas, zonas y, si se desea, carretillas.</p>
+</div>
+
+<!-- ============================================================ 11 -->
+<div class="secwrap flow">
+  <div class="eyebrow">11</div>
+  <h1 class="sec">Criterios de aceptación</h1>
+  <h2>Fase 1 · Prueba RF (para pasar a la Fase 2)</h2>
+  <table>
+    <thead><tr><th>Indicador</th><th class="r">Objetivo</th><th>Cómo se mide</th></tr></thead>
+    <tbody>
+      <tr><td>Detección de movimientos (coger / dejar)</td><td class="r"><b>≥ 99,5 %</b></td><td>Eventos frente a vídeo y observador</td></tr>
+      <tr><td>Identificación correcta de todas las unidades de la carga, sin intervención</td><td class="r"><b>≥ 98 %</b></td><td>Con plan de ajuste demostrable hacia la Fase 2</td></tr>
+      <tr><td>Asignaciones falsas que se darían por verificadas</td><td class="r"><b>≤ 0,3 %</b></td><td>Revisión de cada movimiento medido</td></tr>
+      <tr><td>Etiquetas destruidas en manipulación normal</td><td class="r"><b>0</b></td><td>Incidencias documentadas</td></tr>
+    </tbody>
+  </table>
+  <h2>Fase 2 · Piloto (para darlo por superado)</h2>
+  <table>
+    <thead><tr><th>Indicador</th><th class="r">Objetivo</th></tr></thead>
+    <tbody>
+      <tr><td>Detección automática de movimientos</td><td class="r"><b>≥ 99,5 %</b></td></tr>
+      <tr><td>Movimientos VERIFICADOS sin intervención del operario</td><td class="r"><b>≥ 98–99 %</b></td></tr>
+      <tr><td>Asignaciones incorrectas dadas por verificadas</td><td class="r"><b>≤ 0,1 %</b></td></tr>
+      <tr><td>Ubicación correcta por celda en movimientos verificados</td><td class="r"><b>≥ 99,5 %</b></td></tr>
+      <tr><td>Exactitud del inventario de la zona en el recuento semanal</td><td class="r"><b>≥ 99 %</b></td></tr>
+      <tr><td>Preguntas al operario</td><td class="r"><b>≤ 2–3 %</b></td></tr>
+      <tr><td>Movimientos sin identificar registrados como excepción (ninguno inventado)</td><td class="r"><b>100 %</b></td></tr>
+      <tr><td>Unidades con al menos 1 etiqueta legible tras 8 semanas</td><td class="r"><b>≥ 99 %</b></td></tr>
+      <tr><td>Disponibilidad del sistema en tiempo de trabajo, sin perder eventos</td><td class="r"><b>≥ 99 %</b></td></tr>
+      <tr><td>Integración con el ERP/MES: eventos perdidos o duplicados</td><td class="r"><b>0</b></td></tr>
+    </tbody>
+  </table>
+  <div class="box red"><p>La métrica clave no es solo el acierto, sino que los errores <b>nunca se den por buenos</b> y se detecten rápido. Por eso se mide aparte la tasa de asignaciones falsas verificadas.</p></div>
+</div>
+
+<!-- ============================================================ 12 -->
+<div class="secwrap">
+  <div class="eyebrow">12</div>
+  <h1 class="sec">Presupuesto</h1>
+  <h2>Piloto versión grúa (orientativo, €, sin IVA)</h2>
+  <table>
+    <thead><tr><th>Concepto</th><th class="r">Desde</th><th class="r">Hasta</th></tr></thead>
+    <tbody>
+      <tr class="sub"><td colspan="3">Hardware (se reutiliza en el despliegue)</td></tr>
+      <tr><td>Impresora de transferencia térmica RFID</td><td class="r">3.500</td><td class="r">5.500</td></tr>
+      <tr><td>Etiquetas del piloto (~3.000, incluido inventario inicial; 0,30–0,80 €/ud)</td><td class="r">1.000</td><td class="r">2.500</td></tr>
+      <tr><td>Kit de puente grúa con electroimán<br/><small class="muted">Lector 4 puertos 1.200–2.000 · 2–4 antenas 500–2.000 · PC industrial 700–1.500 · WiFi/4G 300–1.000 · E/S de señales 300–800 · carcasas y soportes 800–2.000 · tablet o pantalla 800–1.800 · posición: 0 € si se lee del PLC o 3.000–6.000 con 2 telémetros láser</small></td><td class="r">8.000</td><td class="r">16.000</td></tr>
+      <tr><td>Terminal RFID de mano</td><td class="r">2.500</td><td class="r">4.500</td></tr>
+      <tr><td>Refuerzo de WiFi en la zona (si hace falta)</td><td class="r">0</td><td class="r">4.000</td></tr>
+      <tr><td><b>Subtotal hardware</b></td><td class="r"><b>15.000</b></td><td class="r"><b>32.500</b></td></tr>
+      <tr class="sub"><td colspan="3">Servicios</td></tr>
+      <tr><td>Fase 0 · Auditoría y estudio de sitio</td><td class="r">4.000</td><td class="r">7.000</td></tr>
+      <tr><td>Fase 1 · Prueba RF (equipos de prueba, ingeniería y análisis; se descuenta si se sigue)</td><td class="r">6.000</td><td class="r">11.000</td></tr>
+      <tr><td>Integración de hardware, instalación y puesta en marcha</td><td class="r">8.000</td><td class="r">14.000</td></tr>
+      <tr><td>Plataforma COMA: motor de eventos, estados, mapa, discrepancias, integración ERP/MES y configuración</td><td class="r">18.000</td><td class="r">23.500</td></tr>
+      <tr><td>Medición, auditorías e informe final</td><td class="r">4.000</td><td class="r">7.000</td></tr>
+      <tr><td><b>Subtotal servicios</b></td><td class="r"><b>40.000</b></td><td class="r"><b>62.500</b></td></tr>
+      <tr class="tot"><td>TOTAL PILOTO VERSIÓN GRÚA · escenario típico ~72.000 €</td><td class="r">55.000</td><td class="r">95.000</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Opción · Módulo carretilla</h2>
+  <table>
+    <thead><tr><th>Concepto</th><th class="r">Desde</th><th class="r">Hasta</th></tr></thead>
+    <tbody>
+      <tr><td>Kit de carretilla (lateral, frontal o telescópica): 2 antenas a la carga, 1 hacia el suelo o laterales, sensor de presión y altura de mástil, tablet, memoria local y WiFi/4G</td><td class="r">8.000</td><td class="r">15.000</td></tr>
+      <tr><td>Placas y postes de referencia de ubicación (una cada 3–6 m de calle)</td><td class="r">1.500</td><td class="r">3.500</td></tr>
+      <tr><td>Instalación y prueba RF de la carretilla</td><td class="r">4.000</td><td class="r">8.000</td></tr>
+      <tr><td>Configuración de la plataforma (calles, placas y reglas)</td><td class="r">2.500</td><td class="r">3.500</td></tr>
+      <tr class="tot"><td>TOTAL OPCIÓN CARRETILLA</td><td class="r">16.000</td><td class="r">30.000</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">Con la opción, el piloto valida también la calle exterior con carretilla lateral y paquetes de 12–14 m (piloto completo: 71.000–125.000 €).</p>
+
+  <h2>Despliegue (por unidad adicional, orientativo)</h2>
+  <table>
+    <tbody>
+      <tr><td>Grúa adicional</td><td class="r">8.000–16.000 hardware + 3.000–6.000 instalación</td></tr>
+      <tr><td>Carretilla adicional</td><td class="r">8.000–15.000 + 2.000–4.000 instalación</td></tr>
+      <tr><td>Referencias de ubicación del resto del patio (solo zonas de carretilla)</td><td class="r">3.000–10.000 según superficie</td></tr>
+      <tr><td>Impresoras adicionales</td><td class="r">3.500–5.500 cada una</td></tr>
+      <tr><td>Ejemplo de planta media: 3 grúas, sin carretillas</td><td class="r">~25.000–45.000 adicionales al piloto</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Costes recurrentes</h2>
+  <table>
+    <tbody>
+      <tr><td><b>Etiquetas</b> · unidades/año × etiquetas por unidad × precio. Ejemplo: 30.000 × 1,8 × 0,50 € ≈ 27.000 €/año. Es el coste recurrente más importante: la prueba RF decide si basta 1 etiqueta por paquete y se negocia precio por volumen.</td></tr>
+      <tr><td><b>Mantenimiento de hardware</b> · 10–15 % del hardware al año.</td></tr>
+      <tr><td><b>Plataforma COMA</b> · incluida durante el piloto. Después, suscripción anual por planta (orientativo 6.000–12.000 €/año según número de equipos), con alojamiento en la UE, actualizaciones y soporte.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ 13 -->
+<div class="secwrap flow">
+  <div class="eyebrow">13</div>
+  <h1 class="sec">Retorno de la inversión</h1>
+  <p class="lead">Sin la cifra de ahorro, el proyecto no pasa por compras. Por eso la Fase 0 mide la situación actual con el cliente y el piloto mide el resultado real.</p>
+  <h2>Fórmula</h2>
+  <div class="box">
+    <p><b>Ahorro anual</b> = horas buscando material × coste/hora × días + errores de expedición × coste por error (portes, reenvío, penalizaciones, cliente) + horas de inventario × coste/hora + toneladas perdidas, oxidadas o achatarradas × €/t + reducción del stock de seguridad × coste de capital + tiempo de grúa ahorrado en búsquedas + reclamaciones de trazabilidad (colada equivocada).</p>
+    <p class="muted">Se compara con el coste total a 3–5 años: hardware, instalación, plataforma, etiquetas y mantenimiento.</p>
+  </div>
+  <h2>Ejemplo ilustrativo (hipótesis a validar en la Fase 0)</h2>
+  <table class="nb">
+    <thead><tr><th>Partida</th><th>Hipótesis</th><th class="r">€/año</th></tr></thead>
+    <tbody>
+      <tr><td>Búsqueda de material</td><td>3 h/día × 30 €/h × 230 días</td><td class="r">20.700</td></tr>
+      <tr><td>Errores de expedición</td><td>20 errores × 900 €</td><td class="r">18.000</td></tr>
+      <tr><td>Material perdido u oxidado</td><td>30 t × 500 €/t de pérdida</td><td class="r">15.000</td></tr>
+      <tr><td>Tiempo de grúa en búsquedas</td><td>1 h/día × 45 €/h × 230 días</td><td class="r">10.350</td></tr>
+      <tr><td>Stock de seguridad</td><td>2,4 M€ × 5 % menos × 7 % coste de capital</td><td class="r">8.400</td></tr>
+      <tr><td>Inventarios y recuentos</td><td>240 h × 30 €/h</td><td class="r">7.200</td></tr>
+      <tr><td>Reclamaciones de trazabilidad</td><td>2 × 2.500 €</td><td class="r">5.000</td></tr>
+      <tr class="tot"><td colspan="2">Ahorro anual estimado</td><td class="r">84.650</td></tr>
+      <tr><td colspan="2">Costes recurrentes (etiquetas 30.000 × 1,6 × 0,40 € = 19.200; plataforma 9.000; mantenimiento 3.000)</td><td class="r">−31.200</td></tr>
+      <tr class="tot"><td colspan="2">Beneficio neto anual</td><td class="r">53.450</td></tr>
+    </tbody>
+  </table>
+  <p>Con estas hipótesis, la inversión del piloto (~72.000 €) se recupera en unos <b>16 meses</b>. Las cifras son un ejemplo para mostrar el método; las reales salen de la Fase 0 y del informe final del piloto.</p>
+</div>
+
+<!-- ============================================================ 14 -->
+<div class="secwrap flow">
+  <div class="eyebrow">14</div>
+  <h1 class="sec">Riesgos y plan B</h1>
+  <table>
+    <thead><tr><th style="width:32%">Riesgo</th><th>Acciones, en orden</th></tr></thead>
+    <tbody>
+      <tr><td><b>R1 · Lecturas cruzadas con pilas vecinas</b></td><td>Bajar potencia → ajustar ángulo y directividad de antenas → filtrar por evolución de la señal → regla de origen → validación por peso si existe → pregunta en cabina solo en los dudosos.</td></tr>
+      <tr><td><b>R2 · Paquetes de 12–14 m que no se leen</b></td><td>2 etiquetas (¼ y ¾) → cambiar su posición → antenas en los extremos del balancín → 3 etiquetas en paquetes muy largos.</td></tr>
+      <tr><td><b>R3 · Electroimán</b> (golpes, calor, vibración)</td><td>El campo magnético continuo no afecta al UHF. Antenas en los laterales, protegidas y no bajo el imán; soporte amortiguado; aprobación del mantenedor.</td></tr>
+      <tr><td><b>R4 · Etiquetas arrancadas o rotas</b></td><td>Atarlas al alambre de atado; 2 etiquetas; material más resistente; QR de respaldo; prueba de supervivencia.</td></tr>
+      <tr><td><b>R5 · Señales de grúa no disponibles</b></td><td>Telémetros láser y contactos libres de tensión independientes, ya presupuestados.</td></tr>
+      <tr><td><b>R6 · Ubicación ambigua</b> (borde de celdas, sobre otra pila)</td><td>Margen de 0,5 m → INCIERTO → pregunta en cabina.</td></tr>
+      <tr><td><b>R7 · Material movido sin grúa</b></td><td>Residual; se detecta por discrepancias y barridos con el terminal.</td></tr>
+      <tr><td><b>R8 · Material que vuelve sin etiqueta</b></td><td>Procedimiento obligatorio de etiqueta nueva ligado al evento del ERP.</td></tr>
+      <tr><td><b>R9 · Expectativa de «100 % perfecto»</b></td><td>Criterios escritos en el contrato; exclusión expresa de «cero excepciones».</td></tr>
+      <tr><td><b>R10 · Rechazo del personal</b> (sensación de vigilancia)</td><td>Informar al comité de empresa antes del piloto, dentro del RGPD; datos para el proceso, no para sancionar; el piloto no exige identificar al operario.</td></tr>
+      <tr><td><b>R11 · Coste de etiquetas demasiado alto</b></td><td>Decidir 1 o 2 etiquetas con datos; precio por volumen; 2 solo en rollos y paquetes largos.</td></tr>
+      <tr><td><b>R12 · Pérdida de red</b></td><td>Almacenamiento local, reenvío al volver la conexión e indicador en cabina.</td></tr>
+    </tbody>
+  </table>
+  <h2>Escalera de decisión si la grúa no alcanza los criterios</h2>
+  <table>
+    <tbody>
+      <tr><td style="width:22mm"><b>Nivel 1</b></td><td>Ajuste de umbrales, potencia y antenas.</td></tr>
+      <tr><td><b>Nivel 2</b></td><td>Más antenas o cambio de posición de las etiquetas.</td></tr>
+      <tr><td><b>Nivel 3</b></td><td>Más etiquetas por unidad.</td></tr>
+      <tr><td><b>Nivel 4</b></td><td>La detección sigue siendo automática y la identificación se resuelve con un toque eligiendo entre candidatos. Sigue siendo automático en el sentido que pide el cliente: el movimiento no se puede «olvidar».</td></tr>
+      <tr><td><b>Nivel 5</b></td><td>Parar el despliegue en ese tipo de equipo.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ 15-16 -->
+<div class="secwrap flow">
+  <div class="eyebrow">15</div>
+  <h1 class="sec">Roles y responsabilidades</h1>
+  <table>
+    <thead><tr><th style="width:26%">Quién</th><th>Qué</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cliente</b></td><td>Patrocinador y responsable de almacén como interlocutor. Mantenimiento de grúas: aprobación de montajes y señales en solo lectura. IT: red y WiFi. Etiquetado del inventario inicial (con apoyo). Formación de operarios. Información al comité de empresa. Datos para el ROI.</td></tr>
+      <tr><td><b>COMA</b></td><td>Dirección del proyecto. Especificación técnica y pliego de pruebas. Contrato de eventos. Plataforma e integración con el ERP/MES. Selección y coordinación del integrador. Análisis de indicadores e informe final.</td></tr>
+      <tr><td><b>Integrador de hardware</b> (seleccionado por COMA, sustituible)</td><td>Suministro, instalación y puesta en marcha del kit de grúa. Firmware y emisión de eventos según el contrato. Seguridad y marcado CE de los montajes. Mantenimiento.</td></tr>
+      <tr><td><b>Fabricante de etiquetas</b></td><td>Muestras, material, tamaño y posición del inlay.</td></tr>
+      <tr><td><b>Fabricante o mantenedor de la grúa</b></td><td>Visto bueno técnico y de seguridad.</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">Regla: un solo integrador responsable de todo el hardware; no se mezclan dos plataformas.</p>
+
+  <div class="eyebrow" style="margin-top:9mm">16</div>
+  <h1 class="sec">Qué se promete y qué no</h1>
+  <div class="grid2">
+    <div class="box"><h3>Se promete (si se superan los criterios de la sección 11)</h3>
+      <ul class="l ck">
+        <li>Registro automático de los movimientos de la grúa equipada, sin escaneo ni confirmación en movimientos normales.</li>
+        <li>Ubicación por celda o calle.</li>
+        <li>Altas en recepción y bajas en expedición automáticas y verificadas contra el albarán.</li>
+        <li>Estado de apertura enlazado con el ERP/MES.</li>
+        <li>Excepciones visibles, con estado explícito y alerta.</li>
+        <li>Mapa y búsqueda en tiempo real.</li>
+      </ul></div>
+    <div class="box"><h3>No se promete</h3>
+      <ul class="l x">
+        <li>Inventario perfecto sin ninguna excepción.</li>
+        <li>Posición exacta dentro de una pila.</li>
+        <li>Cantidad en kg medida por RFID (la calcula el ERP).</li>
+        <li>Seguimiento de material movido sin equipos equipados.</li>
+        <li>Funcionamiento con equipos o útiles fuera del alcance.</li>
+      </ul></div>
+  </div>
+  <div class="box dark"><p>Si la Fase 1 no supera los criterios, el cliente paga solo las fases ejecutadas y el proyecto se para o se redefine. <b>No hay compromiso de despliegue.</b></p></div>
+</div>
+
+<!-- ============================================================ 17 -->
+<div class="secwrap flow">
+  <div class="eyebrow">17</div>
+  <h1 class="sec">Preguntas, próximos pasos y condiciones</h1>
+  <h2>Preguntas al cliente antes de dimensionar</h2>
+  <ol class="l">
+    <li>Movimientos reales al día por grúa (y por carretilla, si se valora la opción).</li>
+    <li>Número y tipo de grúas (imán, cadenas, gancho, gancho en C), marca, año, mando (cabina, radiomando, botonera), PLC y señales disponibles.</li>
+    <li>¿Se cogen varias unidades a la vez? ¿Cuántas como máximo?</li>
+    <li>Longitudes y pesos de los paquetes; tipos y pesos de los rollos.</li>
+    <li>Unidades al año (coste de etiquetas) y stock medio (unidades y valor).</li>
+    <li>Superficie de nave y patio; número de calles y cómo se organizan.</li>
+    <li>Cobertura WiFi y 4G en nave y patio.</li>
+    <li>Dónde y cómo se abren paquetes y rollos; qué se hace con la etiqueta; ¿vuelven restos?</li>
+    <li>Flujo actual de recepción y expedición (cómo se carga el camión, albarán).</li>
+    <li>Precisión necesaria: zona, calle o pila. Nivel de error y excepciones aceptables.</li>
+    <li>Pérdidas actuales en euros (búsquedas, errores, material perdido, inventarios).</li>
+    <li>¿Hay ya cámaras, básculas, encoders o láseres en las grúas?</li>
+    <li>ERP/MES actual y forma de integración disponible.</li>
+    <li>¿Hay comité de empresa? Política de datos de los operarios.</li>
+  </ol>
+  <h2>Próximos pasos (2 semanas)</h2>
+  <ol class="l">
+    <li>Enviar el cuestionario y proponer la Fase 0.</li>
+    <li>Pedir muestras de etiqueta (configuraciones de 1 y 2) y precio por volumen.</li>
+    <li>Enviar a los integradores candidatos el mismo pliego de pruebas, con preguntas obligatorias: ¿funciona sin confirmación del operario?, ¿qué tasa de asignaciones falsas tienen medida en metal?, ¿qué referencias con grúa de electroimán se pueden visitar?, ¿aceptan el contrato de eventos y dan acceso a los datos RF en bruto?</li>
+    <li>Diseño en COMA del modelo de datos, estados y contrato de eventos (sin desarrollar hardware).</li>
+    <li>Reunión técnica conjunta: cliente + mantenimiento de grúas + integrador + COMA.</li>
+    <li>Firmar Fase 0 + Fase 1 como contrato cerrado con criterios de seguir o parar.</li>
+  </ol>
+  <h2>Condiciones</h2>
+  <ul class="l">
+    <li>Precios orientativos en euros, sin IVA. Validez de la propuesta: 60 días.</li>
+    <li>Facturación por fases: Fase 0 al entregar; Fase 1 al cierre del punto de decisión; Fase 2 en 3 hitos (instalación, arranque, informe final).</li>
+    <li>El hardware es propiedad del cliente desde su entrega y se reutiliza en el despliegue.</li>
+    <li>Los datos son del cliente, alojados en la UE y exportables en cualquier momento.</li>
+  </ul>
+  <div class="box dark" style="margin-top:6mm">
+    <div class="logo" style="font-size:20pt">COMA<svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+    <p style="margin-top:3mm">COMA · Comunicación en Mallorca · Publicom Marketing 2000 SL<br/><span class="muted">Paseo Mallorca 16, 07012 Palma · info@comunicacionenmallorca.com · comunicacionenmallorca.com</span></p>
+  </div>
+  <div class="sign"><div>Por el cliente · nombre, firma y fecha</div><div>Por COMA · nombre, firma y fecha</div></div>
+</div>
+</body>
+</html>
