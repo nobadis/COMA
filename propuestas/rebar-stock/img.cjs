@@ -4,7 +4,7 @@ const fs = require("fs");
 const { execFileSync } = require("child_process");
 const { chromium } = require("playwright");
 
-const SHOTS = { hero: [45.2, true], live: [50.2], map: [68.5], unit: [79], tabA: [88.9], tabB: [94.6], ship: [143.9], cons: [121.6], dev: [155.5], wall: [105] };
+const SHOTS = { hero: [33.5, true], live: [40], map: [54.6], unit: [64.8], tabA: [106.4], tabB: [58.4], ship: [96.4], cons: [78.8], dev: [116] };
 (async () => {
   const exe = "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell";
   const browser = await chromium.launch(fs.existsSync(exe) ? { executablePath: exe } : {});

@@ -1,5 +1,5 @@
-<svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" font-family="Archivo V, sans-serif" font-size="14">
-  <rect x="0" y="0" width="1000" height="470" rx="14" fill="#f7f5f0"/>
+<svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" font-family="Archivo V, sans-serif" font-stretch="105%" font-size="14">
+  
   <!-- carriles y puente -->
   <rect x="30" y="58" width="940" height="14" fill="#5d5851"/>
   <rect x="60" y="72" width="880" height="34" fill="#0c0c0c"/><rect x="60" y="84" width="880" height="8" fill="#e1112d"/>

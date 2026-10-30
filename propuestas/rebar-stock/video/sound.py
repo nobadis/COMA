@@ -2,7 +2,7 @@
 Efectos de sonido del vídeo demo de COMA Rebar Stock (sin música).
 Lee cues.json (lo escribe render.cjs a partir de window.CUES de demo.html) y sintetiza cada efecto
 en su instante: grúa (motor, imán, suelta), lecturas RFID, interfaz (toques, avisos) y transiciones.
-Debajo, solo un ambiente de nave muy bajo mientras se ve el patio.
+Debajo, solo un ambiente de nave muy bajo mientras se ve el patio (cue "amb").
 Uso: python sound.py cues.json salida.wav [duracion]
 """
 import json
@@ -12,7 +12,7 @@ import numpy as np
 
 SR = 44100
 cues = json.load(open(sys.argv[1]))
-DUR = float(sys.argv[3]) if len(sys.argv) > 3 else 180.0
+DUR = float(sys.argv[3]) if len(sys.argv) > 3 else 126.0
 N = int(SR * DUR)
 rng = np.random.default_rng(7)
 L, R = np.zeros(N), np.zeros(N)
@@ -296,6 +296,12 @@ def sync(v=1):
     return out
 
 
+def amb(d):
+    """Ambiente de nave, muy bajo, mientras se ve el patio."""
+    t = tt(d)
+    return (band(noise(d), 40, 900) * 0.05 + np.sin(2 * np.pi * 50 * t) * 0.006) * env(len(t), 0.8, 0.8)
+
+
 def count(d=1.8):
     out = np.zeros(int((d + 0.1) * SR))
     x = 0.0
@@ -314,9 +320,9 @@ FX = {
     "hoist": (hoist, 0.55), "travel": (travel, 0.6), "verified": (verified, 0.55), "chime": (chime, 0.5),
     "drop": (drop, 0.4), "send": (send, 0.45), "notif": (notif, 0.45), "ask": (ask, 0.5), "alert": (alert, 0.6),
     "print": (printer, 0.6), "ffwd": (ffwd, 0.45), "geiger": (geiger, 0.6), "down": (down, 0.5),
-    "sync": (sync, 0.5), "count": (count, 0.45),
+    "sync": (sync, 0.5), "count": (count, 0.45), "amb": (amb, 1.0),
 }
-DURATIONAL = {"blips", "radio", "hoist", "travel", "count"}
+DURATIONAL = {"blips", "radio", "hoist", "travel", "count", "amb"}
 
 for c in cues:
     fn, g = FX[c["k"]]
@@ -325,13 +331,6 @@ for c in cues:
     gain = g * (v if c["k"] not in DURATIONAL else 1)
     pan = {"alert": 0.15, "ask": 0.2, "tap": 0.2, "notif": 0.25}.get(c["k"], 0.0)
     add(c["t"], sig, gain, pan)
-
-# ambiente de nave (muy bajo) mientras se ve el patio
-for a, b in ((0, 12.6), (24.3, 62.4), (106.2, 148.6)):
-    d = b - a
-    t = tt(d)
-    amb = band(noise(d), 40, 900) * 0.05 + np.sin(2 * np.pi * 50 * t) * 0.006
-    add(a, amb * env(len(t), 0.8, 0.8))
 
 mix = np.stack([L, R], axis=1)
 mix = np.tanh(mix / (np.max(np.abs(mix)) * 0.75)) * 0.89

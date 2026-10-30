@@ -1,4 +1,8 @@
-/* Estilo de los PDF de COMA Rebar Stock: A4, tipografía Archivo, negro, papel y rojo COMA. */
+/*
+  PDF de COMA Rebar Stock con el sistema de diseño de comunicacionenmallorca.com (src/styles/global.css):
+  papel #efece4, tinta #0c0c0c, rojo #e1112d solo como acento, Archivo ancho (wdth 125) en titulares,
+  esquinas rectas, filas separadas por líneas finas, eyebrow con guion rojo y punto rojo al final del titular.
+*/
 @font-face {
   font-family: "Archivo V";
   src: url("../../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2") format("woff2");
@@ -8,111 +12,116 @@
 :root {
   --paper: #efece4;
   --paper-2: #e4dfd3;
-  --paper-3: #f7f5f0;
   --ink: #0c0c0c;
   --muted: #5d5851;
-  --line: rgba(12, 12, 12, 0.14);
+  --line: rgba(12, 12, 12, 0.16);
   --red: #e1112d;
   --ok: #2f8f5b;
-  --ok-bg: #e3f1e8;
   --warn: #a86a00;
-  --warn-bg: #fbefd6;
-  --bad-bg: #fde4e7;
-  --info: #2d5b94;
-  --info-bg: #e6eef8;
+  --night-muted: #a8a39b;
+  --night-line: rgba(239, 236, 228, 0.18);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); font-size: 10pt; line-height: 1.5; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-@page { size: A4; margin: 20mm 17mm 19mm; }
+html { background: var(--paper); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); font-size: 9.8pt; line-height: 1.52; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+@page { size: A4; margin: 20mm 18mm 19mm; }
 
-/* ------------------------------------------------------------- portada */
-.cover { width: 210mm; height: 297mm; background: var(--ink); color: var(--paper); position: relative; overflow: hidden; padding: 22mm 20mm; }
-.cover .logo { font-size: 30pt; }
-.cover .kind { margin-top: 62mm; }
-.cover h1 { font-size: 44pt; line-height: 0.98; letter-spacing: -0.035em; font-weight: 750; font-stretch: 104%; margin-top: 6mm; max-width: 160mm; }
-.cover h1 .c { color: var(--red); }
-.cover .sub { font-size: 14pt; color: #a8a39b; margin-top: 8mm; max-width: 140mm; line-height: 1.4; }
-.cover .meta { position: absolute; left: 20mm; right: 20mm; bottom: 22mm; display: flex; justify-content: space-between; font-size: 9pt; color: #a8a39b; border-top: 1px solid rgba(239, 236, 228, 0.2); padding-top: 5mm; }
-.cover .meta b { color: var(--paper); display: block; font-size: 10pt; }
-.cover .art { position: absolute; right: -10mm; top: 18mm; width: 120mm; opacity: 0.95; }
-.cover .img { position: absolute; left: 20mm; right: 20mm; top: 158mm; height: 92mm; border-radius: 4mm; overflow: hidden; border: 1px solid rgba(239, 236, 228, 0.15); }
-.cover .img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
-
+/* ------------------------------------------------------------- marca */
 .logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
 .logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); }
-.eyebrow { font-weight: 700; font-stretch: 120%; text-transform: uppercase; letter-spacing: 0.16em; font-size: 8pt; color: var(--red); }
+.eyebrow { display: inline-flex; align-items: center; gap: 3mm; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: 7.4pt; color: var(--muted); }
+.eyebrow::before { content: ""; width: 7mm; height: 2px; background: var(--red); flex: none; }
+.c { color: var(--red); }
+.muted { color: var(--muted); }
+b, strong { font-weight: 650; }
 
-/* ------------------------------------------------------------- cuerpo */
-h1.sec { font-size: 24pt; letter-spacing: -0.03em; line-height: 1.05; font-weight: 750; font-stretch: 104%; margin: 2mm 0 5mm; }
-h1.sec .n { color: var(--red); margin-right: 3mm; }
+/* ------------------------------------------------------------- portada */
+.cover { width: 210mm; height: 297mm; background: var(--ink); color: var(--paper); position: relative; overflow: hidden; padding: 20mm 18mm; }
+.cover .logo { font-size: 26pt; }
+.cover .kind { display: flex; margin-top: 24mm; color: var(--night-muted); }
+.cover h1 { font-size: 46pt; line-height: 0.95; letter-spacing: -0.045em; font-weight: 700; font-stretch: 125%; margin-top: 7mm; max-width: 172mm; }
+.cover .sub { font-size: 13pt; color: var(--night-muted); margin-top: 8mm; max-width: 150mm; line-height: 1.42; }
+.cover .img { position: absolute; left: 18mm; right: 18mm; top: 170mm; height: 82mm; overflow: hidden; }
+.cover .img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; display: block; }
+.cover .meta { position: absolute; left: 18mm; right: 18mm; bottom: 18mm; display: grid; grid-template-columns: 1.4fr 1fr 1fr; border-top: 1px solid var(--night-line); font-size: 8.5pt; color: var(--night-muted); }
+.cover .meta span { padding: 4mm 4mm 0 0; }
+.cover .meta span + span { padding-left: 4mm; border-left: 1px solid var(--night-line); }
+.cover .meta b { color: var(--paper); display: block; font-size: 9.5pt; font-weight: 600; }
+
+/* ------------------------------------------------------------- secciones */
 .secwrap { break-before: page; }
 .secwrap.first { break-before: auto; }
-.secwrap.flow { break-before: auto; margin-top: 11mm; }
-h2 { font-size: 13.5pt; letter-spacing: -0.015em; font-weight: 700; margin: 7mm 0 2.5mm; break-after: avoid; }
-h3 { font-size: 10.5pt; font-weight: 700; margin: 4.5mm 0 1.5mm; break-after: avoid; }
+.secwrap.flow { break-before: auto; margin-top: 13mm; }
+.secwrap > .eyebrow:first-child, .eyebrow.num { display: block; font-size: 34pt; font-weight: 800; font-stretch: 125%; letter-spacing: -0.06em; line-height: 0.85; color: var(--red); text-transform: none; }
+.secwrap > .eyebrow:first-child::before, .eyebrow.num::before { display: none; }
+h1.sec { font-size: 25pt; letter-spacing: -0.04em; line-height: 0.98; font-weight: 700; font-stretch: 125%; margin: 3mm 0 6mm; text-wrap: balance; }
+h1.sec::after { content: "."; color: var(--red); }
+h1.sec, .secwrap > .eyebrow:first-child { break-after: avoid; }
+h2 { font-size: 12.5pt; letter-spacing: -0.02em; font-weight: 700; font-stretch: 115%; margin: 7mm 0 2.5mm; padding-top: 2.5mm; border-top: 1.5px solid var(--ink); break-after: avoid; }
+h3 { font-size: 10pt; font-weight: 700; margin: 4mm 0 1.2mm; break-after: avoid; }
 p { margin: 0 0 2.6mm; }
-p.lead { font-size: 12.5pt; line-height: 1.42; color: var(--ink); margin-bottom: 5mm; }
-.muted { color: var(--muted); }
-small, .small { font-size: 8.5pt; }
-ul.l { margin: 1mm 0 3mm 0; padding-left: 0; list-style: none; }
-ul.l li { position: relative; padding-left: 5mm; margin: 1.1mm 0; }
-ul.l li::before { content: ""; position: absolute; left: 0.5mm; top: 2.1mm; width: 2.2mm; height: 2.2mm; background: var(--red); }
-ul.l.ck li::before { content: "✓"; background: none; color: var(--ok); top: 0; font-weight: 700; }
-ul.l.x li::before { content: "✕"; background: none; color: var(--red); top: 0; font-weight: 700; }
+p.lead { font-size: 12.5pt; line-height: 1.42; margin-bottom: 5mm; max-width: 160mm; }
+small, .small { font-size: 8.3pt; }
+
+ul.l { margin: 1mm 0 3mm; list-style: none; }
+ul.l li { position: relative; padding-left: 6mm; margin: 1.2mm 0; }
+ul.l li::before { content: ""; position: absolute; left: 0; top: 2.5mm; width: 3.4mm; height: 1.5px; background: var(--red); }
+ul.l.ck li::before { content: "✓"; background: none; width: auto; height: auto; top: 0; color: var(--ink); font-weight: 700; }
+ul.l.x li::before { content: "✕"; background: none; width: auto; height: auto; top: 0; color: var(--red); font-weight: 700; }
 ol.l { margin: 1mm 0 3mm 5mm; }
-ol.l li { margin: 1.1mm 0; padding-left: 1.5mm; }
-b, strong { font-weight: 650; }
-.c { color: var(--red); }
+ol.l li { margin: 1.2mm 0; padding-left: 1.5mm; }
+ol.l li::marker { color: var(--red); font-weight: 700; }
 
-.box { background: var(--paper-3); border: 1px solid var(--line); border-radius: 3mm; padding: 4.5mm 5mm; margin: 3mm 0 4mm; break-inside: avoid; }
-.box.dark { background: var(--ink); color: var(--paper); border: 0; }
-.box.dark .muted { color: #a8a39b; }
-.box.red { border-left: 4px solid var(--red); }
-.box h3:first-child, .box h2:first-child { margin-top: 0; }
+/* bloques: sin cajas redondeadas; regla superior o bloque negro */
+.box { border-top: 1.5px solid var(--ink); padding: 3mm 0 0; margin: 3mm 0 4mm; break-inside: avoid; }
+.box h3:first-child { margin-top: 0; }
 .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+.box.red { border-top: 0; border-left: 2px solid var(--red); padding: 0.5mm 0 0.5mm 5mm; }
+.box.dark { background: var(--ink); color: var(--paper); border: 0; padding: 6mm 7mm; }
+.box.dark .muted, .box.dark .eyebrow { color: var(--night-muted); }
+.box.dark h3 { color: var(--paper); }
 
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
-.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
-.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.5mm; }
-.kpi { border-top: 2.5px solid var(--ink); padding-top: 2.5mm; break-inside: avoid; }
-.kpi b { display: block; font-size: 20pt; letter-spacing: -0.03em; line-height: 1.05; font-weight: 750; }
-.kpi span { display: block; font-size: 8.5pt; color: var(--muted); margin-top: 1mm; line-height: 1.35; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8mm; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 6mm; }
+.kpi { border-top: 2px solid var(--ink); padding-top: 2.5mm; break-inside: avoid; }
+.kpi b { display: block; font-size: 19pt; letter-spacing: -0.045em; line-height: 1; font-weight: 700; font-stretch: 125%; }
+.kpi span { display: block; font-size: 8.3pt; color: var(--muted); margin-top: 1.5mm; line-height: 1.35; }
 
-table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 8.8pt; line-height: 1.38; }
+table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 8.7pt; line-height: 1.4; }
 thead { display: table-header-group; }
 tr { break-inside: avoid; }
-th { text-align: left; font-size: 7.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 650; border-bottom: 1.5px solid var(--ink); padding: 2mm 2mm 1.5mm; vertical-align: bottom; }
-td { border-bottom: 1px solid var(--line); padding: 2mm 2mm; vertical-align: top; }
-td.r, th.r { text-align: right; white-space: nowrap; }
-tr.tot td { border-top: 1.5px solid var(--ink); border-bottom: 0; font-weight: 700; }
-tr.sub td { background: var(--paper-3); font-weight: 650; }
+th { text-align: left; font-size: 7pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; border-bottom: 1.5px solid var(--ink); padding: 0 2.5mm 1.8mm 0; vertical-align: bottom; }
+td { border-bottom: 1px solid var(--line); padding: 2.2mm 2.5mm 2.2mm 0; vertical-align: top; }
+td.r, th.r { text-align: right; white-space: nowrap; padding-right: 0; padding-left: 3mm; }
+tr.tot td { border-top: 2px solid var(--ink); border-bottom: 0; font-weight: 700; font-size: 9.5pt; }
+tr.sub td { padding-top: 5mm; font-size: 7pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); font-weight: 700; border-bottom: 1.5px solid var(--ink); }
 td b { font-weight: 650; }
 
-.pill { display: inline-block; font-size: 7.4pt; font-weight: 650; padding: 0.5mm 2.2mm; border-radius: 99px; white-space: nowrap; }
-.pill.ok { background: var(--ok-bg); color: var(--ok); }
-.pill.warn { background: var(--warn-bg); color: var(--warn); }
-.pill.bad { background: var(--bad-bg); color: var(--red); }
-.pill.info { background: var(--info-bg); color: var(--info); }
-.pill.ink { background: var(--ink); color: #fff; }
+/* estados como texto, no como «pastillas» */
+.pill { display: inline-flex; align-items: center; gap: 1.4mm; font-size: 6.8pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; margin-right: 2.5mm; }
+.pill::before { content: ""; width: 1.7mm; height: 1.7mm; border-radius: 50%; background: currentColor; flex: none; }
+.pill.ok { color: var(--ok); }
+.pill.warn { color: var(--warn); }
+.pill.bad { color: var(--red); }
+.pill.info { color: var(--muted); }
+.pill.ink { color: var(--ink); }
 
 figure { margin: 3mm 0 5mm; break-inside: avoid; }
-figure img { width: 100%; display: block; border-radius: 2.5mm; border: 1px solid var(--line); }
+figure img { width: 100%; display: block; }
 figure svg { width: 100%; height: auto; display: block; }
-figcaption { font-size: 8.3pt; color: var(--muted); margin-top: 1.8mm; }
-.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+figcaption { font-size: 8.2pt; color: var(--muted); margin-top: 2mm; padding-left: 3mm; border-left: 2px solid var(--red); }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 6mm; }
 .shots figure { margin: 0 0 3mm; }
 
-pre { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 7.6pt; line-height: 1.45; background: var(--ink); color: var(--paper); border-radius: 3mm; padding: 4mm 5mm; white-space: pre-wrap; break-inside: avoid; margin: 2mm 0 4mm; }
+pre { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 7.4pt; line-height: 1.5; background: var(--ink); color: var(--paper); padding: 5mm 6mm; white-space: pre-wrap; break-inside: avoid; margin: 2mm 0 4mm; }
 pre .k { color: #ff8a98; }
 pre .s { color: #9fe3b8; }
 
-.toc { margin-top: 4mm; }
-.toc div { display: flex; gap: 4mm; padding: 2.2mm 0; border-bottom: 1px solid var(--line); font-size: 10.5pt; }
-.toc div span:first-child { color: var(--red); font-weight: 700; width: 8mm; }
-.sign { margin-top: 8mm; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
-.sign div { border-top: 1px solid var(--ink); padding-top: 2mm; font-size: 8.5pt; color: var(--muted); height: 26mm; }
+.toc { margin-top: 2mm; }
+.toc div { display: grid; grid-template-columns: 14mm 1fr; align-items: baseline; padding: 2.3mm 0; border-top: 1px solid var(--line); font-size: 11pt; }
+.toc div:last-child { border-bottom: 1px solid var(--line); }
+.toc div span:first-child { color: var(--red); font-weight: 800; font-stretch: 125%; letter-spacing: -0.04em; font-size: 12pt; }
+.sign { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+.sign div { border-top: 1.5px solid var(--ink); padding-top: 2mm; font-size: 8pt; color: var(--muted); height: 26mm; }
 .nb { break-inside: avoid; }
-.pb { break-before: page; }
-h1.sec, .secwrap > .eyebrow:first-child { break-after: avoid; }
 .secwrap > .eyebrow:first-child + h1.sec + * { break-before: avoid; }

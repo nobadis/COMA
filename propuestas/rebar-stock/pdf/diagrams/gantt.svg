@@ -1,16 +1,16 @@
-<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg" font-family="Archivo V, sans-serif" font-size="13">
+<svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg" font-family="Archivo V, sans-serif" font-stretch="105%" font-size="13">
   <g fill="#5d5851" font-size="11">
     <text x="230" y="22">S1</text><text x="268" y="22">S2</text><text x="306" y="22">S3</text><text x="344" y="22">S4</text><text x="382" y="22">S5</text><text x="420" y="22">S6</text><text x="458" y="22">S7</text><text x="496" y="22">S8</text><text x="534" y="22">S9</text><text x="572" y="22">S10</text><text x="610" y="22">S11</text><text x="648" y="22">S12</text><text x="686" y="22">S13</text><text x="724" y="22">S14</text><text x="762" y="22">S15</text><text x="800" y="22">S16</text><text x="838" y="22">S17</text><text x="876" y="22">S18</text><text x="914" y="22">S19</text>
   </g>
   <g stroke="#0c0c0c" stroke-opacity=".08">
     <line x1="226" y1="30" x2="226" y2="232"/><line x1="264" y1="30" x2="264" y2="232"/><line x1="302" y1="30" x2="302" y2="232"/><line x1="340" y1="30" x2="340" y2="232"/><line x1="378" y1="30" x2="378" y2="232"/><line x1="416" y1="30" x2="416" y2="232"/><line x1="454" y1="30" x2="454" y2="232"/><line x1="492" y1="30" x2="492" y2="232"/><line x1="530" y1="30" x2="530" y2="232"/><line x1="568" y1="30" x2="568" y2="232"/><line x1="606" y1="30" x2="606" y2="232"/><line x1="644" y1="30" x2="644" y2="232"/><line x1="682" y1="30" x2="682" y2="232"/><line x1="720" y1="30" x2="720" y2="232"/><line x1="758" y1="30" x2="758" y2="232"/><line x1="796" y1="30" x2="796" y2="232"/><line x1="834" y1="30" x2="834" y2="232"/><line x1="872" y1="30" x2="872" y2="232"/><line x1="910" y1="30" x2="910" y2="232"/><line x1="948" y1="30" x2="948" y2="232"/>
   </g>
-  <text x="0" y="56" font-weight="700">Fase 0 · Auditoría y estudio</text><rect x="226" y="40" width="114" height="24" rx="5" fill="#0c0c0c"/>
-  <text x="0" y="98" font-weight="700">Fase 1 · Prueba RF en la grúa</text><rect x="340" y="82" width="152" height="24" rx="5" fill="#e1112d"/>
-  <text x="0" y="140" font-weight="700">Fase 2 · Instalación y arranque</text><rect x="492" y="124" width="76" height="24" rx="5" fill="#5d5851"/>
-  <text x="0" y="170" font-weight="700">Fase 2 · Estabilización</text><rect x="568" y="154" width="76" height="24" rx="5" fill="#8d877c"/>
-  <text x="0" y="200" font-weight="700">Fase 2 · Medición oficial</text><rect x="644" y="184" width="304" height="24" rx="5" fill="#2f8f5b"/>
+  <text x="0" y="56" font-weight="700">Fase 0 · Auditoría y estudio</text><rect x="226" y="40" width="114" height="24" fill="#0c0c0c"/>
+  <text x="0" y="98" font-weight="700">Fase 1 · Prueba RF en la grúa</text><rect x="340" y="82" width="152" height="24" fill="#e1112d"/>
+  <text x="0" y="140" font-weight="700">Fase 2 · Instalación y arranque</text><rect x="492" y="124" width="76" height="24" fill="#5d5851"/>
+  <text x="0" y="170" font-weight="700">Fase 2 · Estabilización</text><rect x="568" y="154" width="76" height="24" fill="#8d877c"/>
+  <text x="0" y="200" font-weight="700">Fase 2 · Medición oficial</text><rect x="644" y="184" width="304" height="24" fill="#2f8f5b"/>
   <line x1="492" y1="30" x2="492" y2="232" stroke="#e1112d" stroke-width="2.5" stroke-dasharray="6 4"/>
-  <rect x="420" y="214" width="144" height="26" rx="13" fill="#e1112d"/><text x="492" y="232" fill="#fff" text-anchor="middle" font-weight="700" font-size="12">SEGUIR / PARAR</text>
+  <rect x="420" y="214" width="144" height="26" fill="#e1112d"/><text x="492" y="232" fill="#fff" text-anchor="middle" font-weight="700" font-size="12">SEGUIR / PARAR</text>
   <text x="948" y="232" text-anchor="end" fill="#5d5851" font-size="12">Informe final →</text>
 </svg>

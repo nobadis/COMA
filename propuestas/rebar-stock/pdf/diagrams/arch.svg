@@ -1,36 +1,36 @@
-<svg viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" font-family="Archivo V, sans-serif" font-size="14">
+<svg viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" font-family="Archivo V, sans-serif" font-stretch="105%" font-size="14">
   <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0c0c0c"/></marker></defs>
   <!-- planta -->
-  <rect x="10" y="10" width="300" height="410" rx="14" fill="#f7f5f0" stroke="#0c0c0c" stroke-opacity=".15"/>
+  <rect x="10" y="10" width="300" height="410" fill="none" stroke="#0c0c0c" stroke-opacity=".4"/>
   <text x="30" y="40" font-weight="700" font-size="12" letter-spacing="2" fill="#e1112d">EN PLANTA</text>
-  <rect x="30" y="56" width="260" height="70" rx="10" fill="#fff" stroke="#0c0c0c" stroke-opacity=".2"/>
+  <rect x="30" y="56" width="260" height="70" fill="none" stroke="#0c0c0c" stroke-opacity=".4"/>
   <text x="46" y="82" font-weight="700">Etiqueta bandera UHF</text><text x="46" y="102" fill="#5d5851">+ QR grande de respaldo</text><text x="46" y="118" fill="#5d5851" font-size="12">impresa y verificada en el paso de hoy</text>
-  <rect x="30" y="138" width="260" height="168" rx="10" fill="#0c0c0c"/>
+  <rect x="30" y="138" width="260" height="168" fill="#0c0c0c"/>
   <text x="46" y="164" font-weight="700" fill="#efece4">Kit de puente grúa</text>
   <text x="46" y="188" fill="#efece4">· Lector UHF 4 puertos</text><text x="46" y="208" fill="#efece4">· 2 antenas junto al imán</text><text x="46" y="228" fill="#efece4">· PC industrial con memoria</text><text x="46" y="248" fill="#efece4">· Señales en solo lectura</text><text x="46" y="268" fill="#efece4">· Posición X/Y (PLC o láser)</text><text x="46" y="288" fill="#efece4">· Tablet de cabina / pantalla</text>
-  <rect x="30" y="318" width="124" height="88" rx="10" fill="#fff" stroke="#0c0c0c" stroke-opacity=".2"/>
+  <rect x="30" y="318" width="124" height="88" fill="none" stroke="#0c0c0c" stroke-opacity=".4"/>
   <text x="42" y="342" font-weight="700" font-size="13">Terminal</text><text x="42" y="360" font-weight="700" font-size="13">RFID de mano</text><text x="42" y="382" fill="#5d5851" font-size="12">búsqueda,</text><text x="42" y="397" fill="#5d5851" font-size="12">inventario, auditoría</text>
-  <rect x="166" y="318" width="124" height="88" rx="10" fill="#fff" stroke="#0c0c0c" stroke-opacity=".2" stroke-dasharray="6 5"/>
+  <rect x="166" y="318" width="124" height="88" fill="none" stroke="#0c0c0c" stroke-opacity=".4" stroke-dasharray="6 5"/>
   <text x="178" y="342" font-weight="700" font-size="13">Carretilla</text><text x="178" y="360" font-weight="700" font-size="13">(opcional)</text><text x="178" y="382" fill="#5d5851" font-size="12">antenas + placas</text><text x="178" y="397" fill="#5d5851" font-size="12">de referencia</text>
   <!-- red -->
   <path d="M292 222h70" stroke="#0c0c0c" stroke-width="2" marker-end="url(#a2)"/>
   <text x="300" y="206" font-size="12" fill="#5d5851">WiFi / 4G</text><text x="300" y="246" font-size="12" fill="#5d5851">eventos JSON</text>
   <!-- COMA -->
-  <rect x="368" y="10" width="360" height="410" rx="14" fill="#0c0c0c"/>
+  <rect x="368" y="10" width="360" height="410" fill="#0c0c0c"/>
   <text x="390" y="40" font-weight="700" font-size="12" letter-spacing="2" fill="#e1112d">PLATAFORMA COMA (NUBE UE)</text>
   <g fill="#efece4">
-    <rect x="390" y="56" width="316" height="52" rx="9" fill="#1d1d1d"/><text x="406" y="80" font-weight="700">Receptor del contrato de eventos</text><text x="406" y="98" font-size="12" fill="#a8a39b">cualquier integrador · sin duplicados · reintentos</text>
-    <rect x="390" y="116" width="316" height="52" rx="9" fill="#1d1d1d"/><text x="406" y="140" font-weight="700">Motor de reglas</text><text x="406" y="158" font-size="12" fill="#a8a39b">carga · ubicación · estado · confianza</text>
-    <rect x="390" y="176" width="316" height="52" rx="9" fill="#1d1d1d"/><text x="406" y="200" font-weight="700">Inventario por celda en tiempo real</text><text x="406" y="218" font-size="12" fill="#a8a39b">historial completo con evidencias</text>
-    <rect x="390" y="236" width="316" height="52" rx="9" fill="#1d1d1d"/><text x="406" y="260" font-weight="700">Discrepancias y alertas</text><text x="406" y="278" font-size="12" fill="#a8a39b">sin identificar · origen · consumo · antigüedad · albarán</text>
-    <rect x="390" y="296" width="152" height="52" rx="9" fill="#1d1d1d"/><text x="406" y="320" font-weight="700">Web y móvil</text><text x="406" y="338" font-size="12" fill="#a8a39b">mapa · búsqueda · FIFO</text>
-    <rect x="554" y="296" width="152" height="52" rx="9" fill="#1d1d1d"/><text x="570" y="320" font-weight="700">Panel del piloto</text><text x="570" y="338" font-size="12" fill="#a8a39b">indicadores · informes</text>
-    <rect x="390" y="356" width="316" height="48" rx="9" fill="#e1112d"/><text x="406" y="386" font-weight="700" fill="#fff">API abierta (REST + webhooks)</text>
+    <rect x="390" y="56" width="316" height="52" fill="#1d1d1d"/><text x="406" y="80" font-weight="700">Receptor del contrato de eventos</text><text x="406" y="98" font-size="12" fill="#a8a39b">cualquier integrador · sin duplicados · reintentos</text>
+    <rect x="390" y="116" width="316" height="52" fill="#1d1d1d"/><text x="406" y="140" font-weight="700">Motor de reglas</text><text x="406" y="158" font-size="12" fill="#a8a39b">carga · ubicación · estado · confianza</text>
+    <rect x="390" y="176" width="316" height="52" fill="#1d1d1d"/><text x="406" y="200" font-weight="700">Inventario por celda en tiempo real</text><text x="406" y="218" font-size="12" fill="#a8a39b">historial completo con evidencias</text>
+    <rect x="390" y="236" width="316" height="52" fill="#1d1d1d"/><text x="406" y="260" font-weight="700">Discrepancias y alertas</text><text x="406" y="278" font-size="12" fill="#a8a39b">sin identificar · origen · consumo · antigüedad · albarán</text>
+    <rect x="390" y="296" width="152" height="52" fill="#1d1d1d"/><text x="406" y="320" font-weight="700">Web y móvil</text><text x="406" y="338" font-size="12" fill="#a8a39b">mapa · búsqueda · FIFO</text>
+    <rect x="554" y="296" width="152" height="52" fill="#1d1d1d"/><text x="570" y="320" font-weight="700">Panel del piloto</text><text x="570" y="338" font-size="12" fill="#a8a39b">indicadores · informes</text>
+    <rect x="390" y="356" width="316" height="48" fill="#e1112d"/><text x="406" y="386" font-weight="700" fill="#fff">API abierta (REST + webhooks)</text>
   </g>
   <!-- ERP -->
   <path d="M730 380h56" stroke="#0c0c0c" stroke-width="2" marker-end="url(#a2)"/>
   <path d="M786 120h-56" stroke="#0c0c0c" stroke-width="2" marker-end="url(#a2)"/>
-  <rect x="790" y="10" width="200" height="410" rx="14" fill="#f7f5f0" stroke="#0c0c0c" stroke-opacity=".15"/>
+  <rect x="790" y="10" width="200" height="410" fill="none" stroke="#0c0c0c" stroke-opacity=".4"/>
   <text x="810" y="40" font-weight="700" font-size="12" letter-spacing="2" fill="#e1112d">SU ERP / MES</text>
   <text x="810" y="76" font-weight="700">Aporta</text>
   <text x="810" y="98" fill="#5d5851">colada, Ø, calidad,</text><text x="810" y="116" fill="#5d5851">longitud, peso teórico,</text><text x="810" y="134" fill="#5d5851">pedidos, albaranes,</text><text x="810" y="152" fill="#5d5851">órdenes de producción</text>
