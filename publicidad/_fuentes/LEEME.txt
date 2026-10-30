@@ -9,7 +9,8 @@ texto, se edita el HTML y se vuelve a generar. Desde la raíz del repo, con
   Imágenes fijas:                  node publicidad/_fuentes/render-estaticos.cjs
   Panel 00-EMPIEZA-AQUI.html:      python3 publicidad/_fuentes/panel.py
   Textos y CSV de Google:          python3 publicidad/_fuentes/google_ads.py
-  Simulación:                      python3 publicidad/6-simulacion/simulacion.py
+  Simulación:                      python3 publicidad/5-simulacion/simulacion.py
+                                   (después, volver a generar el panel)
 
 Archivos
   kit.css / kit.js ......... colores, tipografía y motor de animación comunes
@@ -21,8 +22,10 @@ Archivos
                              (se pueden juntar: QUERY="sinmarcas=1&pack=1")
   video-E-facilidad.html ... vídeo «¿Sin tiempo para tu web? Te la hacemos.» (15 s)
   estaticos.html ........... todas las imágenes fijas (cada una dice dónde se guarda)
+  panel.html / panel.py .... el panel 00-EMPIEZA-AQUI.html con los datos de la simulación
   musica.py ................ música sintetizada (sin derechos de autor)
-  google_ads.py ............ campañas de Google: comprueba los límites de caracteres
+  google_ads.py ............ la campaña de Google (G2 y los anuncios del experimento
+                             Pack): comprueba los límites de caracteres
   render.cjs / render-estaticos.cjs / montar.sh ... generan los archivos
   capturas/ ................ capturas reales de la web usadas en las piezas
 

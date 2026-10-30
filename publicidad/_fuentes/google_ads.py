@@ -68,22 +68,30 @@ D_SEO = [
     "Tus clientes ya preguntan a ChatGPT y Gemini. Haz que tu negocio salga en la respuesta.",
 ]
 
+H_PACK = [
+    ("Pack Temporada: 346 € + IVA", 1), ("Web Lista para el Turista", 1),
+    ("Web, Inglés, Alemán y Reservas", 0), ("Precios de Siempre, Ya Sumados", 0), ("Agencia de Palma desde 1997", 0),
+    ("Reservas Online Directas", 0), ("Que el Turista te Encuentre", 0), ("Sin Plantillas. Precio Cerrado", 0),
+    ("Diseño Web en Mallorca", 0), ("Reunión en Palma o por Vídeo", 0), ("Más de 100 Pymes Confían", 0), ("Pago Único. Sin Sorpresas", 0),
+]
+D_PACK = [
+    "Web a medida en español, inglés y alemán, con reservas online. 346 € + IVA todo junto.",
+    "Que el turista te encuentre, te entienda y reserve antes de llegar. Somos de Palma.",
+    "Los precios de siempre, ya sumados: web 99 €, cada idioma 49 € y reservas 149 €.",
+    "Propuesta con plazos y precio cerrado antes de empezar. Reunión en Palma o por vídeo.",
+]
+MLL_LOCAL = ["diseño web mallorca", "diseño web palma", "pagina web mallorca", "paginas web palma de mallorca", "agencia diseño web mallorca", "agencia marketing mallorca", "empresa paginas web mallorca", "diseñador web mallorca", "diseño web baleares", "agencia de comunicacion mallorca"]
+
+# Una sola campaña: Google Mallorca (la de más retorno por euro según la simulación).
+# El grupo PACK solo se usa en el experimento de enero (03-MENSAJE-Y-TESTS-AB.txt).
 CAMPAIGNS = [
-    dict(id="G1", name="COMA | Search | Web99 | España", camp="web99-espana", budget="10 €/día", geo="España, EXCLUYENDO Illes Balears", groups=[
-        dict(name="Precio", kws=GEN_PRECIO, path="/lp/web-99/", content="rsa-precio", h=H_WEB, d=D_WEB, p=("Web", "99-euros")),
-        dict(name="Autónomos y pymes", kws=GEN_NEGOCIO, path="/lp/web-99/", content="rsa-negocio", h=H_WEB, d=D_WEB, p=("Web", "Pymes")),
-        dict(name="Profesional", kws=GEN_PRO, path="/lp/web-99/", content="rsa-pro", h=H_WEB, d=D_WEB, p=("Diseno-Web", "A-Medida")),
-    ]),
-    dict(id="G2", name="COMA | Search | Web | Mallorca", camp="web-mallorca", budget="12 €/día", geo="Illes Balears (solo Presencia)", groups=[
-        dict(name="Mallorca local", kws=["diseño web mallorca", "diseño web palma", "pagina web mallorca", "paginas web palma de mallorca", "agencia diseño web mallorca", "agencia marketing mallorca", "empresa paginas web mallorca", "diseñador web mallorca", "diseño web baleares", "agencia de comunicacion mallorca"], path="/lp/mallorca/", content="rsa-local", h=H_MLL, d=D_MLL, p=("Mallorca", "Web")),
+    dict(id="G2", name="COMA | Search | Web | Mallorca", camp="web-mallorca", budget="10 €/día (9 €/día del 7 al 20 dic; pausada del 21 dic al 6 ene)", geo="Illes Balears (solo Presencia)", groups=[
+        dict(name="Mallorca local", kws=MLL_LOCAL, path="/lp/mallorca/", content="rsa-local", h=H_MLL, d=D_MLL, p=("Mallorca", "Web")),
         dict(name="Genérico en Mallorca", kws=GEN_PRECIO + GEN_NEGOCIO + GEN_PRO, path="/lp/mallorca/", content="rsa-generico", h=H_MLL, d=D_MLL, p=("Mallorca", "Web-99")),
     ]),
-    dict(id="G3", name="COMA | Search | Marca", camp="marca", budget="1 €/día", geo="España", groups=[
-        dict(name="Marca", kws=["comunicacion en mallorca", "coma mallorca", "comunicacionenmallorca", "coma agencia mallorca", "publicom marketing"], path="/", content="rsa-marca", h=H_MARCA, d=D_MARCA, p=("", ""), exact_only=True),
-    ]),
-    dict(id="G4", name="COMA | Search | SEO local (desde 7 ene)", camp="seo-local", budget="6 €/día", geo="España", groups=[
-        dict(name="SEO local", kws=["seo local", "posicionamiento local google", "aparecer en google maps", "posicionar mi negocio en google", "seo para pymes", "seo mallorca", "posicionamiento web mallorca", "google mi negocio posicionamiento"], path="/lp/seo-local/", content="rsa-seo", h=H_SEO, d=D_SEO, p=("SEO", "Local")),
-        dict(name="IA (GEO)", kws=["aparecer en chatgpt", "posicionamiento en chatgpt", "seo para ia", "posicionamiento en ia", "geo seo"], path="/lp/seo-local/", content="rsa-geo", h=H_SEO, d=D_SEO, p=("SEO", "IA")),
+    dict(id="G2-PACK", name="COMA | Search | Web | Mallorca — anuncios del EXPERIMENTO (desde 7 ene)", camp="web-mallorca", budget="el de G2 (el experimento reparte 50/50)", geo="la de G2", groups=[
+        dict(name="Mallorca local (experimento)", kws=[], path="/lp/temporada/", content="rsa-pack-local", h=H_PACK, d=D_PACK, p=("Mallorca", "Temporada")),
+        dict(name="Genérico en Mallorca (experimento)", kws=[], path="/lp/temporada/", content="rsa-pack-generico", h=H_PACK, d=D_PACK, p=("Mallorca", "Pack")),
     ]),
 ]
 
@@ -131,8 +139,9 @@ with open(os.path.join(OUT, "google-ads-editor.csv"), "w", newline="", encoding=
                 types = ["Exact"] if g.get("exact_only") else ["Phrase", "Exact"]
                 for t in types:
                     w.writerow([c["name"], g["name"], k, t, url(g["path"], c["camp"], g["content"])])
-        for n in NEG:
-            w.writerow([c["name"], "", n, "Campaign Negative Phrase", ""])
+        if c["id"] == "G2":
+            for n in NEG:
+                w.writerow([c["name"], "", n, "Campaign Negative Phrase", ""])
 
 # ------------------------------------------------------------------ texto para copiar y pegar
 L = []
@@ -147,10 +156,13 @@ for c in CAMPAIGNS:
         L.append(f"  URL final: {url(g['path'], c['camp'], g['content'])}")
         if g["p"][0]:
             L.append(f"  Ruta visible: comunicacionenmallorca.com/{g['p'][0]}/{g['p'][1]}")
-        tipo = "[exacta]" if g.get("exact_only") else '"frase" y [exacta]'
-        L.append(f"  Palabras clave ({tipo}):")
-        for k in g["kws"]:
-            L.append(f"    - {k}")
+        if g["kws"]:
+            tipo = "[exacta]" if g.get("exact_only") else '"frase" y [exacta]'
+            L.append(f"  Palabras clave ({tipo}):")
+            for k in g["kws"]:
+                L.append(f"    - {k}")
+        else:
+            L.append("  Palabras clave: las mismas del grupo de G2 (aquí solo cambian los anuncios)")
         L.append("  Títulos (máx. 30 caracteres; FIJADO 1 = fijar en la posición 1):")
         for h, pin in g["h"]:
             L.append(f"    {h:<31}{'FIJADO 1' if pin else ''}")
@@ -170,10 +182,11 @@ L.append("Precios (tipo Servicios, calificador «Desde», € sin IVA):")
 for h, pr, d, p in PRICES:
     L.append(f"  {h} · {pr} € · {d} · {BASE}{p}")
 L.append("Imágenes: carpeta imagenes/ (G-imagen_1200x628, G-imagen_1200x1200). Logotipo: G-logo_1200x1200.")
+L.append("Ubicación: vincular la ficha de Google Business Profile de COMA.")
 L.append("Nombre de la empresa: COMA")
 L.append("")
 L.append("Palabras clave negativas (lista compartida «COMA negativas», concordancia de frase,")
-L.append("aplicada a todas las campañas):")
+L.append("aplicada a la campaña):")
 L.append("  " + ", ".join(NEG))
 with open(os.path.join(OUT, "textos-google.txt"), "w", encoding="utf-8") as fh:
     fh.write("\n".join(L) + "\n")

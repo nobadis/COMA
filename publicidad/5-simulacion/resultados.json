@@ -1,0 +1,481 @@
+{
+ "iteraciones": 20000,
+ "plan": {
+  "G2": [
+   10,
+   9,
+   0,
+   10
+  ],
+  "M3": [
+   0,
+   0,
+   0,
+   2
+  ]
+ },
+ "nombres": {
+  "G2": "Google · Web Mallorca",
+  "M3": "Meta · Remarketing",
+  "G4": "Google · SEO local",
+  "M2": "Meta · Mallorca (frío)",
+  "G1": "Google · España"
+ },
+ "fases": [
+  {
+   "id": "T1",
+   "nombre": "Validar",
+   "inicio": "2026-11-09",
+   "fin": "2026-12-06",
+   "dias": 28
+  },
+  {
+   "id": "T2",
+   "nombre": "Confirmar",
+   "inicio": "2026-12-07",
+   "fin": "2026-12-20",
+   "dias": 14
+  },
+  {
+   "id": "NAV",
+   "nombre": "Navidad: pausa",
+   "inicio": "2026-12-21",
+   "fin": "2027-01-06",
+   "dias": 17
+  },
+  {
+   "id": "T3",
+   "nombre": "Rentabilizar",
+   "inicio": "2027-01-07",
+   "fin": "2027-02-07",
+   "dias": 32
+  }
+ ],
+ "tope": 800,
+ "asignado": 790,
+ "base": {
+  "total": {
+   "spend": {
+    "p10": 688.7805472781843,
+    "p50": 790.0,
+    "p90": 790.0,
+    "media": 743.8568737751169
+   },
+   "leads": {
+    "p10": 22.0,
+    "p50": 47.0,
+    "p90": 75.0,
+    "media": 47.9805
+   },
+   "q": {
+    "p10": 14.0,
+    "p50": 31.0,
+    "p90": 51.0,
+    "media": 32.0665
+   },
+   "cl": {
+    "p10": 2.0,
+    "p50": 8.0,
+    "p90": 16.0,
+    "media": 8.7674
+   },
+   "rev1": {
+    "p10": 561.0279304018153,
+    "p50": 2083.4095332892057,
+    "p90": 4081.000171597764,
+    "media": 2257.4515925876353
+   },
+   "rev12": {
+    "p10": 1276.5988345344622,
+    "p50": 4781.475882468928,
+    "p90": 9600.435782878421,
+    "media": 5252.951758425914
+   },
+   "benef12": {
+    "p10": 25.265448409827158,
+    "p50": 2277.388840637539,
+    "p90": 5416.6232579617645,
+    "media": 2631.49404689741
+   }
+  },
+  "roi_primer_encargo": {
+   "p10": 0.7101619372174878,
+   "p50": 2.653116929276603,
+   "p90": 5.251669002246631,
+   "media": 2.885773877011311
+  },
+  "roi_12m": {
+   "p10": 1.6159478918157748,
+   "p50": 6.082211531305895,
+   "p90": 12.335279521459864,
+   "media": 6.714838444746383
+  },
+  "cpl_cualificado": {
+   "p10": 15.192307692307692,
+   "p50": 25.483870967741936,
+   "p90": 49.375,
+   "media": 31.65448709683661
+  },
+  "prob": {
+   "pasa_corte_1": 0.9261,
+   "pasa_corte_2": 0.9167,
+   "primer_encargo_cubre_anuncios": 0.87575,
+   "beneficio_12m_positivo": 0.9015,
+   "al_menos_1_cliente": 0.9167,
+   "al_menos_10_clientes": 0.3962
+  },
+  "peor_caso_bolsillo_p95": 280.0,
+  "por_campana": {
+   "G2": {
+    "gasto": 726.0,
+    "leads_cualificados": 27.0,
+    "clientes": 7.6177,
+    "cpl_cualificado": 26.88888888888889
+   },
+   "M3": {
+    "gasto": 64.0,
+    "leads_cualificados": 4.0,
+    "clientes": 1.1497,
+    "cpl_cualificado": 16.0
+   }
+  }
+ },
+ "histograma_benef12": {
+  "conteos": [
+   2354,
+   2445,
+   3577,
+   3503,
+   2609,
+   1952,
+   1290,
+   824,
+   525,
+   368,
+   207,
+   133,
+   82,
+   55,
+   27,
+   14,
+   9,
+   6,
+   7,
+   7,
+   2,
+   2,
+   1,
+   1
+  ],
+  "bordes": [
+   -537,
+   282,
+   1100,
+   1918,
+   2736,
+   3555,
+   4373,
+   5191,
+   6010,
+   6828,
+   7646,
+   8464,
+   9283,
+   10101,
+   10919,
+   11738,
+   12556,
+   13374,
+   14192,
+   15011,
+   15829,
+   16647,
+   17465,
+   18284,
+   19102
+  ]
+ },
+ "pesimista": {
+  "total": {
+   "spend": {
+    "p10": 280.0,
+    "p50": 790.0,
+    "p90": 790.0,
+    "media": 587.3333787506634
+   },
+   "leads": {
+    "p10": 4.0,
+    "p50": 18.0,
+    "p90": 37.0,
+    "media": 19.05265
+   },
+   "q": {
+    "p10": 2.0,
+    "p50": 12.0,
+    "p90": 26.0,
+    "media": 12.763
+   },
+   "cl": {
+    "p10": 0.0,
+    "p50": 2.0,
+    "p90": 6.0,
+    "media": 2.4574
+   },
+   "rev1": {
+    "p10": 0.0,
+    "p50": 505.51060358621066,
+    "p90": 1583.402338862857,
+    "media": 633.2931969232635
+   },
+   "rev12": {
+    "p10": 0.0,
+    "p50": 1157.645096481762,
+    "p90": 3704.53373516215,
+    "media": 1474.095263017572
+   },
+   "benef12": {
+    "p10": -280.0,
+    "p50": -47.085220456368404,
+    "p90": 1605.6556773799168,
+    "media": 359.9147692816998
+   }
+  },
+  "roi_primer_encargo": {
+   "p10": 0.0,
+   "p50": 0.6419349113573407,
+   "p90": 2.0353285225709534,
+   "media": 0.8102508120013062
+  },
+  "roi_12m": {
+   "p10": 0.0,
+   "p50": 1.471641326875109,
+   "p90": 4.7621636389846635,
+   "media": 1.8859212212456231
+  },
+  "cpl_cualificado": {
+   "p10": 30.384615384615383,
+   "p50": 56.0,
+   "p90": 140.0,
+   "media": 82.85346622902343
+  },
+  "prob": {
+   "pasa_corte_1": 0.62395,
+   "pasa_corte_2": 0.6065,
+   "primer_encargo_cubre_anuncios": 0.37325,
+   "beneficio_12m_positivo": 0.48595,
+   "al_menos_1_cliente": 0.6065,
+   "al_menos_10_clientes": 0.0137
+  },
+  "peor_caso_bolsillo_p95": 458.50364781924617,
+  "por_campana": {
+   "G2": {
+    "gasto": 726.0,
+    "leads_cualificados": 10.0,
+    "clientes": 2.18355,
+    "cpl_cualificado": 56.0
+   },
+   "M3": {
+    "gasto": 64.0,
+    "leads_cualificados": 1.0,
+    "clientes": 0.27385,
+    "cpl_cualificado": 32.0
+   }
+  }
+ },
+ "alternativas": [
+  {
+   "nombre": "El plan (Google Mallorca + remarketing en enero)",
+   "base": {
+    "gasto": 790.0,
+    "clientes": 8.0,
+    "benef12": 2277.388840637539,
+    "prob_beneficio": 0.9015,
+    "prob_10_clientes": 0.3962,
+    "roi12": 6.082211531305895
+   },
+   "pesimista": {
+    "gasto": 790.0,
+    "clientes": 2.0,
+    "benef12": -47.085220456368404,
+    "prob_beneficio": 0.48595,
+    "prob_10_clientes": 0.0137,
+    "roi12": 1.471641326875109
+   }
+  },
+  {
+   "nombre": "Mismo dinero, mitad en Meta Mallorca",
+   "base": {
+    "gasto": 790.0,
+    "clientes": 7.0,
+    "benef12": 1937.0354291862868,
+    "prob_beneficio": 0.86835,
+    "prob_10_clientes": 0.30965,
+    "roi12": 5.3920202197774465
+   },
+   "pesimista": {
+    "gasto": 790.0,
+    "clientes": 2.0,
+    "benef12": -266.44644071855043,
+    "prob_beneficio": 0.429,
+    "prob_10_clientes": 0.00665,
+    "roi12": 1.0431972374229308
+   }
+  },
+  {
+   "nombre": "Mismo dinero, parte en Google España",
+   "base": {
+    "gasto": 790.0,
+    "clientes": 7.0,
+    "benef12": 1707.891657631145,
+    "prob_beneficio": 0.85135,
+    "prob_10_clientes": 0.2718,
+    "roi12": 4.93460761269286
+   },
+   "pesimista": {
+    "gasto": 790.0,
+    "clientes": 1.0,
+    "benef12": -280.0,
+    "prob_beneficio": 0.39855,
+    "prob_10_clientes": 0.0053,
+    "roi12": 0.7850238840843295
+   }
+  },
+  {
+   "nombre": "+160 €: Google Mallorca a tope (12 €/día)",
+   "base": {
+    "gasto": 952.0,
+    "clientes": 10.0,
+    "benef12": 2685.31127159536,
+    "prob_beneficio": 0.92515,
+    "prob_10_clientes": 0.516,
+    "roi12": 6.1162407154886225
+   },
+   "pesimista": {
+    "gasto": 925.9457517196472,
+    "clientes": 3.0,
+    "benef12": 46.54205887145406,
+    "prob_beneficio": 0.5129,
+    "prob_10_clientes": 0.02275,
+    "roi12": 1.6424246426902822
+   }
+  },
+  {
+   "nombre": "+190 €: añadir SEO local en enero",
+   "base": {
+    "gasto": 982.0,
+    "clientes": 9.0,
+    "benef12": 2492.0886257497564,
+    "prob_beneficio": 0.89915,
+    "prob_10_clientes": 0.45025,
+    "roi12": 5.476870910368649
+   },
+   "pesimista": {
+    "gasto": 982.0,
+    "clientes": 2.0,
+    "benef12": -161.44329167189676,
+    "prob_beneficio": 0.45435,
+    "prob_10_clientes": 0.01755,
+    "roi12": 1.3002588526832195
+   }
+  },
+  {
+   "nombre": "+440 €: añadir Meta Mallorca",
+   "base": {
+    "gasto": 1234.0,
+    "clientes": 11.0,
+    "benef12": 2823.8994138763474,
+    "prob_beneficio": 0.9335,
+    "prob_10_clientes": 0.60195,
+    "roi12": 5.149484734567195
+   },
+   "pesimista": {
+    "gasto": 1234.0,
+    "clientes": 3.0,
+    "benef12": -71.42404294042035,
+    "prob_beneficio": 0.4773,
+    "prob_10_clientes": 0.0356,
+    "roi12": 1.473285609859991
+   }
+  }
+ ],
+ "semanas": [
+  {
+   "semana": 1,
+   "lunes": "2026-11-09",
+   "google": 70.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 2,
+   "lunes": "2026-11-16",
+   "google": 70.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 3,
+   "lunes": "2026-11-23",
+   "google": 70.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 4,
+   "lunes": "2026-11-30",
+   "google": 70.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 5,
+   "lunes": "2026-12-07",
+   "google": 63.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 6,
+   "lunes": "2026-12-14",
+   "google": 63.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 7,
+   "lunes": "2026-12-21",
+   "google": 0.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 8,
+   "lunes": "2026-12-28",
+   "google": 0.0,
+   "meta": 0.0
+  },
+  {
+   "semana": 9,
+   "lunes": "2027-01-04",
+   "google": 40.0,
+   "meta": 8.0
+  },
+  {
+   "semana": 10,
+   "lunes": "2027-01-11",
+   "google": 70.0,
+   "meta": 14.0
+  },
+  {
+   "semana": 11,
+   "lunes": "2027-01-18",
+   "google": 70.0,
+   "meta": 14.0
+  },
+  {
+   "semana": 12,
+   "lunes": "2027-01-25",
+   "google": 70.0,
+   "meta": 14.0
+  },
+  {
+   "semana": 13,
+   "lunes": "2027-02-01",
+   "google": 70.0,
+   "meta": 14.0
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 ==============================================================================
-  COMA · EL MENSAJE Y LOS TESTS A/B
-  Qué valor transmite cada anuncio, qué se prueba, cómo, cuándo y quién gana.
-  Los tests van DENTRO del presupuesto cerrado: no cuestan un euro más.
+  COMA · EL MENSAJE Y LOS TESTS
+  Qué valor transmite cada pieza, qué se prueba, cómo, cuándo y quién gana.
+  Los tests no cuestan un euro más: uno es gratis y el otro va dentro de G2.
 ==============================================================================
 
 1. LA PROMESA (lo que tiene que quedar en la cabeza)
@@ -11,22 +11,20 @@
    Mallorca con 29 años. Desde 99 €, con precio cerrado.»
 
   El precio abre la puerta, pero no es el mensaje. Un anuncio que solo dice
-  «barato» atrae a quien solo quiere barato, y además suena a mala calidad.
-  Por eso cada pieza vende las cuatro cosas que hacen que alguien pague:
+  «barato» atrae a quien solo quiere barato y suena a mala calidad. Cada
+  pieza vende las cuatro cosas por las que alguien paga:
 
   1. RESULTADO ...... Para qué sirve: que te llamen, te reserven y te
-                      escriban. Botón de llamada, formulario, reservas, móvil,
-                      Google. (En Mallorca: que el turista te encuentre en su
-                      idioma.)
-  2. CONFIANZA ...... Que es verdad y que saldrá bien: 29 años, +100 pymes,
-                      Palma, referencias, diseño propio.
-  3. SIN RIESGO ..... Precio cerrado, pago único, extras con precio visible y
+                      escriban. En Mallorca: que el turista te encuentre en
+                      su idioma.
+  2. CONFIANZA ...... 29 años, +100 pymes, Palma, referencias, diseño propio.
+  3. SIN RIESGO ..... Precio cerrado, pago único, extras con precio visible,
                       propuesta antes de empezar.
-  4. FACILIDAD ...... Tú nos cuentas en 2 minutos; nosotros la diseñamos, la
+  4. FACILIDAD ...... Nos cuentas en 2 minutos; nosotros la diseñamos, la
                       publicamos y te la dejamos funcionando.
-  ...y el PRECIO como prueba de que no es una trampa: 99 € + IVA.
+  ...y el PRECIO como prueba de que no hay trampa: 99 € + IVA.
 
-  Lo que NUNCA dice un anuncio de COMA:
+  Lo que NUNCA dice una pieza de COMA:
   · «barato», «el más barato», «low cost»          (mata el valor)
   · plazos que no estén en la propuesta («en 48 h»)  (no se puede garantizar)
   · cifras de resultados («+30 % de clientes»)       (no se puede probar)
@@ -36,138 +34,109 @@
 
 2. QUÉ VALOR CUENTA CADA PIEZA (el ángulo)
 ------------------------------------------
+  Ángulo          Pieza (3-redes-sin-pagar/)                    Abre con
+  -------------   -------------------------------------------   ----------
+  TEMPORADA       M2-A vídeo «La temporada se gana en invierno»  Resultado
+                  M2-B imagen «Buenos días. Good morning…»
+  FACILIDAD       M1-E vídeo «¿Sin tiempo para tu web?»          Facilidad
+                  M1-F imagen
+  PRECIO          M1-A vídeo «Tu web. 99 €»                      Precio
+  TRANSPARENCIA   M1-B vídeo «¿Te han pedido 1.500 €?»           Sin riesgo
+  AUTORIDAD       M1-D imagen (solo con permiso)                 Confianza
+  PACK            M2-A pack vídeo · M2-D imagen                  Resultado
 
-  Cada ángulo empieza por un pilar distinto. Es lo que se prueba: qué puerta
-  de entrada hace que más gente buena escriba.
-
-  Ángulo          Pieza                              Abre con     Termina con
-  -------------   --------------------------------   ----------   -----------
-  PRECIO          M1-A vídeo «Tu web. 99 €»          Precio       Confianza
-                  M1-C carrusel «Qué incluye»
-  TRANSPARENCIA   M1-B vídeo «¿Te han pedido         Sin riesgo   Precio
-                  1.500 €?»  · M3-B «Calcula»
-  FACILIDAD       M1-E vídeo «¿Sin tiempo para tu    Facilidad    Resultado
-                  web? Te la hacemos.» · M1-F imagen
-  AUTORIDAD       M1-D imagen «Mallorca Live, Meliá…» Confianza   Precio
-  TEMPORADA       M2-A vídeo «La temporada se gana   Resultado    Confianza
-  (Mallorca)      en invierno» · M2-B «Buenos días…»
-  PACK (oferta)   M2-A pack · M2-D «Pack Temporada»  Resultado    Precio total
-
-  Todas pasan el filtro de la promesa: dicen para qué sirve, por qué
-  fiarse, que el precio es cerrado y cuánto cuesta.
+  En Google (anuncios de texto) los títulos fijados abren con RESULTADO +
+  LUGAR («Diseño Web en Mallorca», «Webs para Negocios de Mallorca») y el
+  resto de títulos cubre los cuatro pilares y el precio. Google combina y
+  aprende solo cuál funciona.
 
 
-3. LOS 3 TESTS
---------------
-
-  Con este presupuesto, cada campaña da unos 2-4 leads por semana. No se
-  pueden probar 20 cosas: se prueban 3 cosas GRANDES, una detrás de otra.
-  Los tests pequeños (un color, una palabra) necesitan miles de leads para
-  significar algo.
-
-  Las primeras lecturas se hacen con señales rápidas (gancho, CTR), que se
-  leen con poco dinero. La decisión final es por coste por lead cualificado
-  o por facturación, que es lo que importa.
-
-  ---------------------------------------------------------------------------
-  TEST 1 · ¿QUÉ ÁNGULO VENDE MÁS?            Meta · 9 nov → 6 dic (28 días)
-  ---------------------------------------------------------------------------
-  Hipótesis   «Facilidad» y «Temporada» traen leads mejores que «Precio»,
-              porque venden el resultado y no el coste.
-  Dónde       M1 España: A Precio · B Transparencia · E Facilidad ·
-                         D Autoridad (sin permiso: C carrusel)
-              M2 Mallorca: A Temporada · B Idiomas · E Facilidad ·
-                           D Autoridad (sin permiso: A sin marcas)
-  Cómo        Los 4 anuncios en el MISMO conjunto de anuncios. Meta reparte
-              el dinero hacia lo que funciona (con 7-8 €/día, un test de
-              Meta con públicos separados gastaría el doble en aprender).
-              Mismo destino para todos los de un conjunto (M1 → /lp/web-99/,
-              M2 → /lp/mallorca/): así solo cambia el mensaje.
-  Día 7       Con 1.500 impresiones o más: se apaga el anuncio en PARAR por
-              gancho (< 20 %) o CTR (< 0,6 %). (02-METRICAS, tabla C)
-  Día 28      GANADOR = menor € por lead cualificado. Si ninguno llega a 5
-              leads, menor € por lead; si tampoco, mayor CTR de enlace.
-              · Se quedan los 2 mejores.
-              · Entra 1 RETADOR: la otra pieza del ángulo ganador (tabla de
-                arriba). Ejemplo: gana Facilidad → entra M1-F imagen.
-              · El ángulo ganador de España entra también en Mallorca, y al
-                revés, si no estaba.
-  Gasto       El de M1 y M2. Ningún euro extra.
-
-  ---------------------------------------------------------------------------
-  TEST 2 · ¿QUÉ LANDING CONVIERTE MÁS?        Google · 23 nov → 31 ene
-  ---------------------------------------------------------------------------
-  Hipótesis   Para la gente de Mallorca, /lp/mallorca/ (local, «somos de
-              aquí») convierte más que /lp/web-99/ (precio).
-  Dónde       G2 Google Mallorca (el motor: es donde más vale acertar).
-  Cómo        Google Ads → Campañas → Experimentos → «+» → Experimento
-              personalizado. Base: G2. En el experimento, cambiar la URL
-              final de los anuncios a /lp/web-99/ (mismos UTM, con
-              utm_content=exp-web99). Reparto 50 %, por cookies. Fecha de
-              fin 31 ene. Mismas pujas y presupuesto.
-              Arranca el 23 nov, después de 2 semanas de base.
-  Decisión    1 feb. Gana la que tenga más conversiones por clic SI Google
-              marca la diferencia como significativa (≥ 95 %), o si es 1,5
-              veces mejor con al menos 15 leads en la ganadora. Si no,
-              EMPATE: se queda /lp/mallorca/ (es la de la promesa local).
-              Ganadora → «Aplicar experimento».
-  Gasto       El de G2. Ningún euro extra.
-
-  ---------------------------------------------------------------------------
-  TEST 3 · ¿WEB DE 99 € O PACK TEMPORADA DE 346 €?   Meta Mallorca ·
-                                                    7 ene → 7 feb (32 días)
-  ---------------------------------------------------------------------------
-  Hipótesis   En Mallorca, vender el paquete completo (web + inglés +
-              alemán + reservas = 346 € + IVA, los precios de siempre) trae
-              menos leads, pero cada uno vale el triple y se cierra igual o
-              mejor. Facturación por euro: mayor.
-  Dónde       M2 Meta Mallorca, en su fase fuerte (12 €/día).
-  Cómo        Meta → Administrador de anuncios → Prueba A/B → duplicar el
-              conjunto de M2 y cambiar solo los anuncios:
-                A «Web»   (6 €/día): el ganador del test 1 en Mallorca →
-                          /lp/mallorca/
-                B «Pack»  (6 €/día): M2-A vídeo pack + M2-D imagen pack →
-                          /lp/temporada/
-              Variable de la prueba: «Creatividad». Duración: 32 días.
-              Aquí sí se separan públicos: lo que se mide (facturación) solo
-              se puede comparar con dos grupos limpios.
-  Decisión    1 feb (con lo que haya) y cierre definitivo el 7 feb.
-              Métrica: FACTURACIÓN ÷ GASTO. Mientras no haya 3 clientes por
-              lado, se usa el importe de las PROPUESTAS enviadas (columna
-              «importe propuesta» de leads.csv), que es lo primero que se
-              sabe.
-              · Pack gana si su facturación (o propuestas) por euro es 1,2
-                veces la de Web o más.
-              · Empate (entre 0,8 y 1,2): gana Pack si su € por lead
-                cualificado no es más de 1,3 veces el de Web (venta más
-                completa con el mismo esfuerzo).
-              · Si no, gana Web.
-              El ganador es la oferta de febrero-marzo en Mallorca.
-  Gasto       El de M2. Ningún euro extra.
-
-  ---------------------------------------------------------------------------
-  TEST CONTINUO · TÍTULOS DE GOOGLE                         siempre
-  ---------------------------------------------------------------------------
-  Google ya prueba solo las combinaciones de títulos de cada anuncio. Cada
-  4 semanas: Anuncios → Ver detalles de los recursos. Un título con
-  rendimiento «Bajo» y más de 2.000 impresiones se cambia por otro del
-  mismo pilar (sección 1). Nunca se quitan los fijados en la posición 1.
+3. TEST 1 · ¿QUÉ ÁNGULO ENGANCHA MÁS? (gratis, 9 nov → 6 dic)
+-------------------------------------------------------------
+  Cómo .......... Un vídeo por semana en las redes de COMA (plan, sección 7),
+                  mismo día y hora, mismo tipo de texto. Sin pagar nada.
+  Qué se mide ... En Instagram → Estadísticas de cada reel: «retención» (el %
+                  que sigue a los 3 s) y «compartidos + guardados» por cada
+                  1.000 cuentas alcanzadas. Y si alguien escribe por él.
+  Quién gana .... El de más retención a 3 s, y, en caso de empate, más
+                  compartidos y guardados. Es una pista, no una certeza (el
+                  público de tus redes ya te conoce), pero no cuesta nada.
+  Para qué ...... · El ganador se vuelve a publicar la semana del 7 dic.
+                  · Sus palabras pasan a los títulos de Google (cambiar un
+                    título de rendimiento «Bajo» por la frase del ganador).
+                  · Su pieza es la primera del remarketing de enero.
 
 
-4. LA VOZ DEL CLIENTE (el test más barato)
+4. TEST 2 · ¿WEB DE 99 € O PACK TEMPORADA DE 346 €? (7 ene → 7 feb)
+-------------------------------------------------------------------
+  Hipótesis ..... A un negocio de Mallorca le sale más a cuenta comprar el
+                  paquete completo (web + inglés + alemán + reservas, los
+                  precios de siempre ya sumados). Llegarán menos leads, pero
+                  cada uno vale el triple. Facturación por euro: mayor.
+  Dónde ......... G2 Google Mallorca. Solo se hace si se pasa el corte 2.
+  Cómo .......... Google Ads → Campañas → Experimentos → «+» → Experimento
+                  personalizado. Base: G2. En el experimento, cambiar los
+                  anuncios por los del grupo «EXPERIMENTO» de
+                  1-google-ads/textos-google.txt (destino /lp/temporada/).
+                  Reparto 50 %, por cookies. Del 7 ene al 7 feb. Mismo
+                  presupuesto y misma puja: no cuesta nada extra.
+  Qué se mide ... FACTURACIÓN ÷ GASTO de cada mitad. Hasta que haya 3
+                  clientes en cada lado, se usa el importe de las PROPUESTAS
+                  enviadas (columna «importe propuesta» de leads.csv), que se
+                  sabe antes. Los leads de cada lado se distinguen por el
+                  [origen] del correo: rsa-pack-… = Pack.
+  Quién gana .... · PACK si su facturación (o propuestas) por euro es 1,2
+                    veces la de la web o más.
+                  · Empate (entre 0,8 y 1,2): gana PACK si su € por lead
+                    cualificado no es más de 1,3 veces el de la web.
+                  · Si no, gana WEB.
+                  El ganador es el mensaje de la temporada (febrero-marzo).
+  Honestidad .... Con ~6-12 leads por lado, es una señal fuerte, no una
+                  prueba estadística. Se decide igual: es mejor que adivinar.
+
+  ¿Y por qué no se prueban más cosas? Con 2-4 leads por semana, un test de
+  landing o de títulos necesitaría meses para decir algo. Los títulos los
+  prueba Google solo (sección 2); lo demás, cuando haya más volumen.
+
+
+5. LA VOZ DEL CLIENTE (el test más barato)
 ------------------------------------------
-  En cada llamada, una pregunta: «¿Qué te hizo escribirnos?». La respuesta
-  va a la columna «qué le convenció» de leads.csv. Con 15 respuestas sabrás
-  qué pilar pesa de verdad, y el siguiente anuncio se escribe con sus
-  palabras, no con las nuestras.
+  En cada llamada: «¿Qué te hizo escribirnos?». Va a la columna «qué le
+  convenció» de leads.csv. Con 10 respuestas sabrás qué pilar pesa de
+  verdad, y el siguiente anuncio se escribe con sus palabras.
 
 
-5. REGLAS PARA QUE UN TEST NO ENGAÑE
-------------------------------------
-  · Una variable cada vez. Si cambias anuncio y landing a la vez, no sabrás
-    qué funcionó.
-  · No se mira el test cada día: se decide en la fecha fijada.
-  · Ganar en clics no es ganar. Gana quien trae leads buenos, y en el
-    test 3, quien trae dinero.
-  · Un empate también es una respuesta: te quedas con lo más simple.
-  · Lo que se aprende se apunta en cuadro-semanal.csv (columna «notas»).
+6. TEXTOS PARA LAS PUBLICACIONES SIN PAGAR
+------------------------------------------
+  M2-A temporada
+    En Mallorca, la temporada se gana en invierno. Tu web en español,
+    inglés, alemán y catalán, con reservas online, para que el turista te
+    encuentre y reserve antes de llegar. Desde 99 € + IVA, precio cerrado.
+    👉 comunicacionenmallorca.com/lp/mallorca/
+  M1-E facilidad
+    ¿Sin tiempo para tu web? Te la hacemos. Nos cuentas tu negocio en 2
+    minutos, te enviamos una propuesta con precio cerrado y te la dejamos
+    funcionando. Desde 99 € + IVA.
+  M1-A precio
+    Tu web a medida por 99 € + IVA. Diseño propio, nunca una plantilla,
+    hecha para que te llamen y te escriban. Precio cerrado desde el primer
+    día.
+  M1-B transparencia
+    ¿Te han pedido 1.500 € por una web? La nuestra es a medida y cuesta
+    99 € + IVA. Y cada extra lleva su precio a la vista: idioma 49 €,
+    reservas 149 €, tienda 349 €.
+  M2-B idiomas
+    Buenos días, good morning, guten Morgen, bon dia. Tu cliente de abril ya
+    está buscando. Que te encuentre en su idioma: web a medida 99 € + 49 €
+    por idioma (+ IVA).
+  M2-A pack / M2-D pack
+    Pack Temporada: tu web a medida en español, inglés y alemán, con
+    reservas online. 346 € + IVA, todo junto: los precios de siempre, ya
+    sumados. 👉 comunicacionenmallorca.com/lp/temporada/
+  M1-D autoridad (solo con permiso)
+    29 años haciendo comunicación en Mallorca: Mallorca Live Festival,
+    Meliá, RCD Mallorca, Ajuntament de Calvià… y más de 100 pymes. ¿La tuya
+    es la siguiente?
+  En el enlace de la bio o del mensaje, añade siempre
+  ?utm_source=instagram&utm_medium=organic&utm_campaign=redes (o
+  facebook / linkedin / whatsapp) para saber de dónde llega cada lead.

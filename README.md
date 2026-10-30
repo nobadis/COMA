@@ -40,7 +40,7 @@ Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). El posicionamiento va en `<head>`, archi
 
 Ver [docs/ADS.md](docs/ADS.md): medición por variables `PUBLIC_*`, eventos (`generate_lead`, `view_offer`, `cta_click`), landings `/lp/*` y la estrategia de arranque (web a 99 € en Google Search y Meta).
 
-Plan de campaña nov 2026 - feb 2027 con todas las piezas (vídeos, imágenes, textos de Google, simulación): carpeta [`publicidad/`](publicidad/). Se empieza por `publicidad/00-EMPIEZA-AQUI.html` y `publicidad/01-PLAN-DE-CAMPANA.txt`.
+Plan de campaña nov 2026 - feb 2027 (tope 800 €) con todas las piezas (vídeos, imágenes, textos de Google, simulación): carpeta [`publicidad/`](publicidad/). Se empieza por `publicidad/00-EMPIEZA-AQUI.html` y `publicidad/04-AGENDA-DIA-A-DIA.txt`.
 
 ## Webs de ejemplo para clientes
 

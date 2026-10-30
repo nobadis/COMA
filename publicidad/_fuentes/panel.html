@@ -34,7 +34,8 @@
   .files a { display: inline-flex; gap: 8px; align-items: center; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 700; padding: 12px 18px; font-size: 15px; }
   .files a.alt { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
   /* cifras */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px; background: var(--ink); border: 2px solid var(--ink); margin-top: 26px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0; border: 1px solid var(--ink); margin-top: 26px; }
+  .stats .stat { box-shadow: 0 0 0 1px var(--ink); }
   .stat { background: var(--paper); padding: 22px; }
   .stat b { display: block; font-size: 44px; font-weight: 700; font-stretch: 110%; letter-spacing: -.03em; line-height: 1.05; }
   .stat span { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; }
@@ -129,62 +130,32 @@
 <header>
   <div class="wrap">
     <div class="logo"><span>COMA</span><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
-    <div class="eyebrow" style="margin-top:40px">Plan de publicidad · 9 nov 2026 → 7 feb 2027</div>
-    <h1>Muchos clientes en Mallorca. Poco dinero en probar fuera<span class="c">.</span></h1>
-    <p class="lead">13 semanas, Google y Meta, 7 campañas, 33 piezas listas para subir, 3 tests A/B y un presupuesto cerrado que no se puede pasar. Cada lunes, unas reglas fijas deciden qué sigue, qué se cambia, qué se apaga y qué se escala.</p>
+    <div class="eyebrow" style="margin-top:40px">Plan de publicidad · tope 800 € · 9 nov 2026 → 7 feb 2027</div>
+    <h1>800 € donde más rinden. Y solo si funcionan<span class="c">.</span></h1>
+    <p class="lead">Todo el dinero de pago va a Google, a gente de Mallorca que ya busca una web. Se paga en tres tramos con dos cortes: si no hay señal, se para. Lo más que te juegas de tu bolsillo es el primer tramo, 280 €. Los vídeos se publican gratis.</p>
     <div class="files">
-      <a href="01-PLAN-DE-CAMPANA.txt">Abrir el plan exacto (TXT) →</a>
-      <a class="alt" href="1-google-ads/textos-google.txt">Textos de Google</a>
-      <a class="alt" href="6-simulacion/resultados.csv">Simulación (CSV)</a>
+      <a href="04-AGENDA-DIA-A-DIA.txt">Qué hacer cada día (TXT) →</a>
+      <a class="alt" href="01-PLAN-DE-CAMPANA.txt">Plan exacto</a>
       <a class="alt" href="02-METRICAS-Y-DECISIONES.txt">Métricas y decisiones</a>
-      <a class="alt" href="03-MENSAJE-Y-TESTS-AB.txt">Mensaje y tests A/B</a>
-      <a class="alt" href="04-AGENDA-DIA-A-DIA.txt">Agenda día a día</a>
-      <a class="alt" href="#semaforo">Semáforo del lunes</a>
-      <a class="alt" href="7-seguimiento/leads.csv">Hoja de leads</a>
+      <a class="alt" href="03-MENSAJE-Y-TESTS-AB.txt">Mensaje y tests</a>
+      <a class="alt" href="#semaforo">Calculadora de cortes</a>
+      <a class="alt" href="6-seguimiento/leads.csv">Hoja de leads</a>
     </div>
     <div class="stats" id="stats"></div>
-    <p class="small muted" style="margin-top:10px">Caso típico de 20.000 simulaciones; entre paréntesis, del peor 10 % al mejor 10 %. Supuestos en la sección «Qué esperar».</p>
+    <p class="small muted" style="margin-top:10px">Caso típico de 20.000 simulaciones; entre paréntesis, del peor 10 % al mejor 10 %. Son estimaciones de mercado: la prueba sirve justo para cambiarlas por tus números reales.</p>
   </div>
 </header>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">La fórmula</div>
-    <h2>Cinco piezas que encajan<span class="c">.</span></h2>
+    <div class="eyebrow">La estrategia</div>
+    <h2>Un canal, tres tramos, dos cortes<span class="c">.</span></h2>
     <div class="formula">
-      <div><b>Un gancho de 1 segundo</b><p>«Tu web. 99 €.» Se entiende sin leer, en el primer segundo del vídeo.</p></div>
-      <div><b>La prueba en 5 segundos</b><p>El mismo diseño cambia de marca ante tus ojos: dentista, restaurante, abogado. «Sin plantillas» se ve, no se promete.</p></div>
-      <div><b>Jugar en casa</b><p>Mallorca: desde 1997, Paseo Mallorca 16, webs en inglés y alemán antes de la temporada. Aquí el lead cuesta menos de la mitad.</p></div>
-      <div><b>Vender el paso siguiente</b><p>Los extras salen con precio en los anuncios. El cliente medio deja unos 220 € de entrada y unos 300 € más en un año.</p></div>
-      <div><b>Cortar cada lunes</b><p>Reglas fijas, sin opiniones. El 7 de diciembre, España sigue o se apaga según sus números.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="eyebrow">El mensaje</div>
-    <h2>Se vende el valor. El precio es la prueba<span class="c">.</span></h2>
-    <p class="lead">«Una web a tu medida, hecha para que te contacten, por una agencia de Mallorca con 29 años. Desde 99 €, con precio cerrado.» Cada anuncio cuenta los cuatro pilares; lo que cambia es por cuál empieza.</p>
-    <div class="formula">
-      <div><b>Resultado</b><p>Que te llamen, te reserven y te escriban. En Mallorca, que el turista te encuentre en su idioma.</p></div>
-      <div><b>Confianza</b><p>29 años, +100 pymes, Palma, referencias y diseño propio.</p></div>
-      <div><b>Sin riesgo</b><p>Precio cerrado, pago único, extras con precio visible y propuesta antes de empezar.</p></div>
-      <div><b>Facilidad</b><p>Nos cuentas en 2 minutos. Nosotros la diseñamos, la publicamos y la dejamos funcionando.</p></div>
-      <div><b>Nunca</b><p>«Barato», plazos sin propuesta, cifras de resultados, «primer puesto» ni descuentos.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="eyebrow">Tests A/B</div>
-    <h2>Tres preguntas grandes, una detrás de otra<span class="c">.</span></h2>
-    <p class="lead">Con 2 a 4 leads por semana y campaña no se pueden probar colores ni palabras sueltas, así que se prueba lo que cambia el negocio. Todo dentro del mismo presupuesto. Detalle en <a href="03-MENSAJE-Y-TESTS-AB.txt">03-MENSAJE-Y-TESTS-AB.txt</a>.</p>
-    <div class="camps">
-      <div class="camp"><div><span class="tag m">Meta</span> <span class="role">9 nov → 6 dic</span></div><h3>1 · ¿Qué ángulo vende más?</h3><p>Precio, transparencia, facilidad o autoridad (en Mallorca: temporada). Los 4 anuncios en el mismo conjunto y con el mismo destino.</p><p class="small"><b style="color:var(--ink)">Gana</b> el menor € por lead cualificado. Se quedan los 2 mejores y entra la otra pieza del ángulo ganador.</p></div>
-      <div class="camp"><div><span class="tag g">Google</span> <span class="role">23 nov → 31 ene</span></div><h3>2 · ¿Qué landing convierte más?</h3><p>En Google Mallorca: /lp/mallorca/ (somos de aquí) frente a /lp/web-99/ (precio). Experimento de Google al 50 %.</p><p class="small"><b style="color:var(--ink)">Gana</b> la que tenga más conversiones por clic con significación del 95 %, o 1,5 veces más con 15 leads. Si no, se queda /lp/mallorca/.</p></div>
-      <div class="camp star"><div><span class="tag m">Meta</span> <span class="role">7 ene → 7 feb</span></div><h3>3 · ¿Web de 99 € o Pack Temporada de 346 €?</h3><p>En Meta Mallorca, dos conjuntos de 6 €/día. El Pack (web + inglés + alemán + reservas) lleva a su landing, /lp/temporada/.</p><p class="small"><b style="color:var(--ink)">Gana</b> el que facture más por euro (o, al principio, el que tenga más € en propuestas). Es la oferta de la temporada.</p></div>
+      <div><b>Intención, no alcance</b><p>En Google, quien busca «diseño web Mallorca» ya quiere una web. No hay que convencerle de que la necesita, solo de que la haga COMA.</p></div>
+      <div><b>Jugar en casa</b><p>29 años en Palma, referencias que la gente conoce, reunión en persona y webs en inglés y alemán para la temporada.</p></div>
+      <div><b>El mejor euro</b><p>En la simulación, el lead cualificado sale a unos 25 €. En Meta en frío, a unos 48 €; en Google España, a unos 65 €.</p></div>
+      <div><b>Pagar por tramos</b><p>280 € para saber si funciona. Solo se sigue con señal, y lo siguiente se paga con lo que ya se ha facturado.</p></div>
+      <div><b>Lo gratis suma</b><p>Vídeos en redes, reseñas en Google, recomendaciones y 30 mensajes a negocios de la isla.</p></div>
     </div>
   </div>
 </section>
@@ -192,79 +163,61 @@
 <section>
   <div class="wrap">
     <div class="eyebrow">Dinero y calendario</div>
-    <h2>Despacio en Navidad, fuerte en enero<span class="c">.</span></h2>
-    <p class="lead">Presupuesto máximo por semana si no se apaga nada (3.963 € en total). Con las reglas, lo típico es gastar unos 3.140 €.</p>
-    <div class="chart" id="weeks"><div class="legend"><span><i style="background:var(--google)"></i>Google</span><span><i style="background:var(--meta)"></i>Meta</span></div><div class="tip"></div></div>
-    <div class="scroll"><table class="tbl" id="phases"></table></div>
-    <h3 style="margin-top:40px">Presupuesto cerrado: 3.963 €, blindado en cada plataforma</h3>
-    <div class="scroll"><table class="tbl">
-      <tr><th>Bloque</th><th>Campañas</th><th class="n">Máximo</th></tr>
-      <tr><td><b>Núcleo</b>: se gasta mientras siga en SEGUIR o WOW</td><td>G2 1.071 · M2 788 · M3 267 · G4 192 · G3 91</td><td class="n">2.409 €</td></tr>
-      <tr><td><b>Prueba de España</b> (9 nov → 6 dic)</td><td>G1 280 · M1 196</td><td class="n">476 €</td></tr>
-      <tr><td><b>Continuación de España</b>, solo si pasa el corte del 7 dic</td><td>G1 609 · M1 469</td><td class="n">1.078 €</td></tr>
-      <tr><td><b>Total</b>: ni un euro más</td><td>Google 2.243 · Meta 1.720</td><td class="n"><b>3.963 €</b></td></tr>
-    </table></div>
-    <p class="small muted" style="margin-top:12px">Si España no pasa el corte, su dinero va a una <b>bolsa</b>: el 30 % refuerza Meta Mallorca y el resto solo se usa para escalar campañas en WOW; si no, se ahorra. Tope en Meta: límite de gasto de la cuenta (1.720 €) y de cada campaña. En Google: reglas automatizadas que pausan cada campaña al llegar a su límite. Detalle en el plan, sección 2.</p>
+    <h2>790 € en 13 semanas. Tope: 800 €<span class="c">.</span></h2>
+    <div class="camps" id="tramos"></div>
+    <div class="chart" id="weeks"><div class="legend"><span><i style="background:var(--google)"></i>Google Mallorca</span><span><i style="background:var(--meta)"></i>Meta remarketing</span></div><div class="tip"></div></div>
+    <p class="small muted" style="margin-top:12px">Tope blindado: en Google, una regla automatizada pausa la campaña al llegar al límite de cada tramo (280 €, 406 € y 726 €); en Meta, el límite de gasto de la cuenta es de 64 €. Lo que sobre de un tramo no pasa al siguiente.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">Las campañas</div>
-    <h2>7 campañas, cada una con un papel<span class="c">.</span></h2>
-    <div class="camps" id="camps"></div>
+    <div class="eyebrow">¿Y si pongo más?</div>
+    <h2>Más dinero no compra más seguridad<span class="c">.</span></h2>
+    <p class="lead">Las mismas simulaciones, gastando de otra forma o gastando más. La probabilidad de ganar dinero se queda en el 85-93 % en todas: lo extra trae un par de clientes más, no más seguridad. Por eso el tope es 800 €.</p>
+    <div class="scroll"><table class="tbl" id="alts"></table></div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <div class="eyebrow">Qué esperar</div>
-    <h2>Simulado 20.000 veces<span class="c">.</span></h2>
-    <p class="lead">Cada coste y cada conversión se sortea entre un mínimo, un valor probable y un máximo de mercado. No es una promesa: es el abanico razonable, incluido el caso malo.</p>
+    <h2>El caso típico y el caso malo<span class="c">.</span></h2>
     <div class="two">
       <div>
         <h3 style="margin-top:28px">Beneficio a 12 meses, ya pagados los anuncios</h3>
-        <p class="small muted">Cuántas simulaciones acaban en cada tramo. A la izquierda de la línea discontinua, el año no compensa.</p>
+        <p class="small muted">Mundo base. Cuántas simulaciones acaban en cada tramo. A la izquierda de la línea discontinua, no compensa.</p>
         <div class="chart" id="hist"><div class="tip"></div></div>
       </div>
       <div>
-        <h3 style="margin-top:28px">€ por lead cualificado, por campaña</h3>
-        <p class="small muted">Caso típico. Verde ≤ 30 €, ámbar hasta 45 €, rojo por encima: la regla del lunes.</p>
-        <div class="chart" id="cpl"><div class="tip"></div></div>
+        <h3 style="margin-top:28px">Base frente a pesimista</h3>
+        <p class="small muted">Pesimista: la mitad de conversión y un 30 % menos de cierre que mis estimaciones.</p>
+        <div class="scroll"><table class="tbl" id="totals" style="margin-top:8px"></table></div>
       </div>
     </div>
-    <div class="scroll"><table class="tbl" id="totals"></table></div>
-    <p class="small muted" style="margin-top:14px">Valor de un cliente (precios de la web): España, unos 218 € el primer encargo y 300 € más en un año; Mallorca, 253 € + 332 € (más idiomas y reservas). Margen supuesto: 50 % de lo puntual y 75 % de lo mensual. Cámbialo en <code>6-simulacion/simulacion.py</code> y vuelve a ejecutarlo.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="eyebrow">Las piezas</div>
-    <h2>Todo listo para subir<span class="c">.</span></h2>
-    <p class="lead">Vídeos con música propia (sin derechos de autor), en 9:16 para Reels y Stories y en 4:5 para el feed. Imágenes al tamaño exacto de cada plataforma.</p>
-    <div id="pieces"></div>
+    <p class="small muted" style="margin-top:14px">Valor de un cliente de Mallorca (precios de la web): unos 253 € el primer encargo y 332 € más en un año. Margen supuesto: 50 % de lo puntual y 75 % de lo mensual. Cámbialo en <code>5-simulacion/simulacion.py</code> y vuelve a ejecutarlo.</p>
   </div>
 </section>
 
 <section id="semaforo">
   <div class="wrap">
-    <div class="eyebrow">Reglas del lunes</div>
+    <div class="eyebrow">Calculadora de cortes</div>
     <h2>Seguir, pivotar, parar o «wow»<span class="c">.</span></h2>
-    <p class="lead">Cada lunes, 15 minutos con los últimos 14 días. Una sola métrica decide: lo que cuesta cada lead cualificado. Las demás dicen qué cambiar. Detalle en <a href="02-METRICAS-Y-DECISIONES.txt">02-METRICAS-Y-DECISIONES.txt</a>.</p>
+    <p class="lead">Con 10 €/día llegan 2-4 leads por semana: las decisiones grandes se toman en los cortes, con todo lo acumulado. Elige el momento, mete los números y te dice qué hacer. Detalle en <a href="02-METRICAS-Y-DECISIONES.txt">02-METRICAS-Y-DECISIONES.txt</a>.</p>
     <div class="states">
-      <div class="st wow"><b>WOW</b><p>Tenemos algo. Dos semanas seguidas y cierre ≥ 18 %: +20 % de presupuesto cada 4 días.</p></div>
-      <div class="st go"><b>SEGUIR</b><p>Va según el plan. No se toca: cada cambio reinicia el aprendizaje.</p></div>
-      <div class="st piv"><b>PIVOTAR</b><p>Cambiar UNA cosa (la que diga el diagnóstico). 7 días u 80 €. Dos pivotes sin mejora = parar.</p></div>
-      <div class="st stop"><b>PARAR</b><p>Se apaga. Solo con datos suficientes: 150 € y 8 leads, o 21 días.</p></div>
+      <div class="st wow"><b>WOW</b><p>Tenemos algo. Se prepara la temporada con dinero ya facturado.</p></div>
+      <div class="st go"><b>SEGUIR</b><p>Va según el plan: se pasa al tramo siguiente sin tocar nada.</p></div>
+      <div class="st piv"><b>PIVOTAR</b><p>Hay señal pero algo falla: se cambia UNA cosa y se decide en 14 días.</p></div>
+      <div class="st stop"><b>PARAR</b><p>Se apaga. No se gasta un euro más.</p></div>
     </div>
-    <div class="scroll"><table class="tbl" id="cplTable"></table></div>
-
-    <h3 style="margin-top:44px">Semáforo: mete los números de la semana</h3>
-    <p class="small muted">Los datos se quedan en este navegador. Los campos vacíos no se evalúan.</p>
     <div class="sem">
       <div class="sem__in">
-        <label>Campaña<select id="sCamp"></select></label>
+        <label>Momento<select id="sMom">
+          <option value="c1">Corte 1 · lun 7 dic</option>
+          <option value="c2">Corte 2 · jue 7 ene</option>
+          <option value="fin">Cierre · 1-7 feb</option>
+          <option value="lun">Un lunes cualquiera (solo vigilar)</option>
+        </select></label>
         <div class="sem__grid" id="sInputs"></div>
       </div>
       <div class="sem__out" id="sOut"></div>
@@ -274,29 +227,38 @@
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">Antes de encender (31 oct → 8 nov)</div>
-    <h2>Sin esto no se lanza<span class="c">.</span></h2>
-    <p class="lead">Marca cada paso al hacerlo (se guarda en este navegador).</p>
-    <ul class="check" id="checklist"></ul>
+    <div class="eyebrow">El mensaje</div>
+    <h2>Se vende el valor. El precio es la prueba<span class="c">.</span></h2>
+    <p class="lead">«Una web a tu medida, hecha para que te contacten, por una agencia de Mallorca con 29 años. Desde 99 €, con precio cerrado.»</p>
+    <div class="formula">
+      <div><b>Resultado</b><p>Que te llamen, te reserven y te escriban. Que el turista te encuentre en su idioma.</p></div>
+      <div><b>Confianza</b><p>29 años, +100 pymes, Palma, referencias y diseño propio.</p></div>
+      <div><b>Sin riesgo</b><p>Precio cerrado, pago único, extras con precio visible y propuesta antes de empezar.</p></div>
+      <div><b>Facilidad</b><p>Nos cuentas en 2 minutos. Nosotros la diseñamos, la publicamos y la dejamos funcionando.</p></div>
+      <div><b>Nunca</b><p>«Barato», plazos sin propuesta, cifras de resultados, «primer puesto» ni descuentos.</p></div>
+    </div>
+    <div class="camps" style="margin-top:34px">
+      <div class="camp"><div><span class="tag o">Gratis</span> <span class="role">9 nov → 6 dic</span></div><h3>Test 1 · ¿Qué ángulo engancha más?</h3><p>Un vídeo por semana en las redes de COMA: temporada, facilidad, precio y transparencia. Gana el que más gente ve pasados los 3 segundos.</p><p class="small">El ganador se vuelve a publicar, inspira los títulos de Google y es la primera pieza del remarketing.</p></div>
+      <div class="camp star"><div><span class="tag g">Google</span> <span class="role">7 ene → 7 feb</span></div><h3>Test 2 · ¿Web de 99 € o Pack Temporada de 346 €?</h3><p>Experimento de Google al 50 % dentro de la misma campaña y con el mismo dinero. El Pack lleva a su propia landing, /lp/temporada/.</p><p class="small"><b style="color:var(--ink)">Gana</b> el que más facture por euro (al principio, el que tenga más euros en propuestas). Será el mensaje de la temporada.</p></div>
+    </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">Agenda</div>
-    <h2>Las fechas que mandan<span class="c">.</span></h2>
-    <p class="lead">Todos los días: contestar cada lead en menos de 1 hora. Todos los lunes: el semáforo. Lo demás, aquí. Día a día en <a href="04-AGENDA-DIA-A-DIA.txt">04-AGENDA-DIA-A-DIA.txt</a>.</p>
-    <div class="scroll"><table class="tbl">
-      <tr><td class="n">2-8 nov</td><td><b>Preparar</b>: medición, cuentas, campañas en pausa, límites de gasto, prueba real y permisos.</td></tr>
-      <tr><td class="n">Lun 9 nov</td><td><b>Encender</b> G1, G2, G3, M1 y M2. Empieza el test 1.</td></tr>
-      <tr><td class="n">Lun 16 nov</td><td>Primera lectura: se apagan las piezas en PARAR.</td></tr>
-      <tr><td class="n">Lun 23 nov</td><td>Primera lectura del € por lead cualificado. Empieza el test 2.</td></tr>
-      <tr><td class="n">Lun 7 dic</td><td><b>El corte</b>: España sigue o se apaga. Veredicto del test 1. Se enciende el remarketing.</td></tr>
-      <tr><td class="n">Lun 21 dic</td><td>Freno de Navidad.</td></tr>
-      <tr><td class="n">Jue 7 ene</td><td><b>Escalar</b>: fase fuerte, se enciende SEO local y empieza el test 3 (Pack).</td></tr>
-      <tr><td class="n">Lun 1 feb</td><td><b>Veredictos</b>: tests 2 y 3 y ¿tenemos algo? Plan de temporada.</td></tr>
-      <tr><td class="n">Dom 7 feb</td><td>Fin.</td></tr>
-    </table></div>
+    <div class="eyebrow">Las piezas</div>
+    <h2>Todo listo<span class="c">.</span></h2>
+    <p class="lead">Los anuncios de Google son de texto (en el TXT). Los vídeos e imágenes se publican gratis en redes, y tres piezas van al remarketing de enero.</p>
+    <div id="pieces"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Antes de encender (2 → 8 nov)</div>
+    <h2>Sin esto no se lanza<span class="c">.</span></h2>
+    <p class="lead">Marca cada paso al hacerlo (se guarda en este navegador).</p>
+    <ul class="check" id="checklist"></ul>
   </div>
 </section>
 
@@ -306,10 +268,10 @@
     <h2>Donde se gana el dinero de verdad<span class="c">.</span></h2>
     <div class="formula">
       <div><b>Respuesta en menos de 1 hora</b><p>Mejor WhatsApp o llamada. Un lead que espera al día siguiente ya ha pedido otros tres presupuestos.</p></div>
-      <div><b>Tres preguntas</b><p>¿Qué negocio es? ¿Qué debe conseguir la web? ¿Para cuándo la necesita?</p></div>
-      <div><b>Propuesta en 24 h</b><p>Los 99 € y 2-3 extras que de verdad le sirven, cada uno con su precio. En Mallorca: idiomas, reservas y alojamiento.</p></div>
-      <div><b>Seguimiento</b><p>Día 2, día 5 y día 10. Luego, remarketing.</p></div>
-      <div><b>Al entregar</b><p>Alojamiento (9 €/mes), SEO local (99 €/mes) y pedir la reseña en Google.</p></div>
+      <div><b>Tres preguntas y una más</b><p>¿Qué negocio es? ¿Qué debe conseguir la web? ¿Para cuándo la necesita? Y: ¿qué te hizo escribirnos?</p></div>
+      <div><b>Propuesta en 24 h</b><p>Los 99 € y los 2-3 extras que de verdad le sirven. Si trabaja con turistas, el Pack Temporada.</p></div>
+      <div><b>Seguimiento</b><p>Día 2, día 5 y día 10.</p></div>
+      <div><b>Al entregar</b><p>Alojamiento, SEO local, la reseña en Google y un contacto que necesite web.</p></div>
     </div>
   </div>
 </section>
@@ -318,16 +280,17 @@
   <div class="wrap">
     <div class="eyebrow">Qué hay en cada carpeta</div>
     <div class="folders">
-      <div><code>01-PLAN-DE-CAMPANA.txt</code><br>Configuración exacta, paso a paso.</div>
-      <div><code>02-METRICAS-Y-DECISIONES.txt</code><br>Qué mirar y cuándo seguir, pivotar, parar o escalar.</div>
+      <div><code>04-AGENDA-DIA-A-DIA.txt</code><br>Qué hacer cada día, con casillas. Empieza aquí.</div>
+      <div><code>01-PLAN-DE-CAMPANA.txt</code><br>Configuración exacta, tramos, cortes y por qué.</div>
+      <div><code>02-METRICAS-Y-DECISIONES.txt</code><br>Qué mirar y cuándo seguir, pivotar, parar o «wow».</div>
+      <div><code>03-MENSAJE-Y-TESTS-AB.txt</code><br>El valor de cada pieza, los 2 tests y los textos para redes.</div>
       <div><code>1-google-ads/</code><br>Textos, palabras clave (CSV para Google Ads Editor) e imágenes.</div>
-      <div><code>2-meta-espana/</code><br>Vídeos A y B, carrusel e imagen de autoridad.</div>
-      <div><code>3-meta-mallorca/</code><br>Vídeo de temporada (con y sin marcas) e imagen de idiomas.</div>
-      <div><code>4-remarketing/</code><br>«Sigue en pie» y «Calcula tu web».</div>
-      <div><code>5-linkedin-despachos-opcional/</code><br>Piezas para despachos (presupuesto aparte).</div>
-      <div><code>6-simulacion/</code><br>El script de la simulación y sus resultados.</div>
-      <div><code>7-seguimiento/</code><br>Cada lead (leads.csv) y el estado de cada campaña cada lunes (cuadro-semanal.csv).</div>
-      <div><code>_fuentes/</code><br>El código de todas las piezas para cambiar un texto o un precio (LEEME.txt).</div>
+      <div><code>2-meta-remarketing/</code><br>«Sigue en pie», «Calcula tu web» y el carrusel (enero).</div>
+      <div><code>3-redes-sin-pagar/</code><br>Vídeos (9:16 y 4:5) e imágenes para publicar gratis.</div>
+      <div><code>4-opcional-despachos/</code><br>Piezas para despachos, fuera de este plan.</div>
+      <div><code>5-simulacion/</code><br>La simulación y sus resultados.</div>
+      <div><code>6-seguimiento/</code><br>leads.csv (cada lead) y cuadro-semanal.csv (cada lunes).</div>
+      <div><code>_fuentes/</code><br>El código de todas las piezas (LEEME.txt).</div>
     </div>
     <p style="margin-top:30px">COMA · Comunicación en Mallorca · Publicom Marketing 2000 SL · Paseo Mallorca, 16 · Palma</p>
   </div>
@@ -335,311 +298,215 @@
 
 <script>
 const DATA = __DATA__;
-// separador de miles siempre (toLocaleString no agrupa 4 cifras en español)
 const num = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const eur = (n) => num(n) + " €";
-const T = DATA.total, R = DATA.ratios;
+const eur = (n) => (n < 0 ? "-" : "") + num(Math.abs(n)) + " €";
+const pc = (x) => Math.round(x * 100) + " %";
+const B = DATA.base, PE = DATA.pesimista, T = B.total;
 
-// ------------------------------------------------------------------ cifras
 document.getElementById("stats").innerHTML = [
-  ["Inversión típica", eur(T.spend.p50), "máximo 3.963 € · 13 semanas"],
-  ["Clientes nuevos", num(T.clients.p50), `(${num(T.clients.p10)} – ${num(T.clients.p90)})`],
+  ["Tope de gasto", "800 €", "790 € asignados · 13 semanas"],
+  ["Lo más que arriesgas al empezar", "280 €", "el tramo 1; luego, solo con señal"],
+  ["Clientes nuevos", num(T.cl.p50), `(${num(T.cl.p10)} – ${num(T.cl.p90)})`],
   ["Facturación a 12 meses", eur(T.rev12.p50), `(${eur(T.rev12.p10)} – ${eur(T.rev12.p90)})`],
-  ["Se paga con el primer encargo", Math.round(DATA.probabilidades.recupera_inversion_con_primer_encargo * 100) + " %", "de las simulaciones", true],
+  ["El primer encargo paga los anuncios", pc(B.prob.primer_encargo_cubre_anuncios), "de las simulaciones", true],
 ].map(([l, v, s, red]) => `<div class="stat${red ? " red" : ""}"><span>${l}</span><b>${v}</b><span>${s}</span></div>`).join("");
 
-// ------------------------------------------------------------------ tooltips
 function tipper(box) {
   const tip = box.querySelector(".tip");
   return {
-    show(html, ev) {
-      tip.innerHTML = html; tip.style.opacity = 1;
-      const r = box.getBoundingClientRect();
-      let x = ev.clientX - r.left + 12, y = ev.clientY - r.top - 10;
-      if (x + tip.offsetWidth > r.width) x -= tip.offsetWidth + 24;
-      tip.style.left = x + "px"; tip.style.top = y + "px";
-    },
+    show(html, ev) { tip.innerHTML = html; tip.style.opacity = 1; const r = box.getBoundingClientRect(); let x = ev.clientX - r.left + 12; if (x + tip.offsetWidth > r.width) x -= tip.offsetWidth + 24; tip.style.left = x + "px"; tip.style.top = ev.clientY - r.top - 10 + "px"; },
     hide() { tip.style.opacity = 0; },
   };
 }
 const NS = "http://www.w3.org/2000/svg";
-function el(tag, attrs, parent) {
-  const e = document.createElementNS(NS, tag);
-  for (const k in attrs) e.setAttribute(k, attrs[k]);
-  if (parent) parent.appendChild(e);
-  return e;
-}
-// barra con esquinas superiores redondeadas (4 px), apoyada en la base
-function barPath(x, y, w, h, r = 4) {
-  r = Math.min(r, h, w / 2);
-  return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
-}
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function barPath(x, y, w, h, r = 4) { r = Math.min(r, h, w / 2); return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`; }
+
+// ------------------------------------------------------------------ tramos
+document.getElementById("tramos").innerHTML = [
+  ["g", "9 nov → 6 dic", "Tramo 1 · Validar", "Google Mallorca a 10 €/día. ¿Funciona?", "280 €"],
+  ["o", "lun 7 dic", "Corte 1", "Sigue con 1 cliente, o con 5 leads cualificados a 35 € o menos. Si no hay señal, se para: gasto final, 280 €.", "decisión"],
+  ["g", "7 → 20 dic", "Tramo 2 · Confirmar", "Google Mallorca a 9 €/día. ¿Se repite?", "126 €"],
+  ["o", "21 dic → 6 ene", "Navidad", "Todo en pausa: nadie contrata una web el día 28.", "0 €"],
+  ["o", "jue 7 ene", "Corte 2", "Sigue si ya hay al menos 1 cliente que paga. Si no, se para: gasto final, 406 €.", "decisión"],
+  ["g", "7 ene → 7 feb", "Tramo 3 · Rentabilizar", "Google a 10 €/día + remarketing a 2 €/día + test Web vs Pack.", "384 €"],
+].map(([t, d, h, p, m]) => `<div class="camp${t === "o" ? "" : " star"}"><div><span class="tag ${t === "g" ? "g" : "o"}">${m}</span> <span class="role">${d}</span></div><h3>${h}</h3><p>${p}</p></div>`).join("");
 
 // ------------------------------------------------------------------ semanas
 (function () {
   const box = document.getElementById("weeks"), tt = tipper(box);
-  const W = 1000, H = 330, L = 50, B = 46, top = 30;
-  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Presupuesto máximo por semana, Google y Meta" }, box);
-  const wk = DATA.semanas, max = 450;
-  const y = (v) => top + (H - B - top) * (1 - v / max);
+  const W = 1000, H = 260, L = 50, Bm = 46, top = 30, wk = DATA.semanas, max = 90;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Gasto máximo por semana" }, box);
+  const y = (v) => top + (H - Bm - top) * (1 - v / max);
   const g = el("g", { class: "grid axis" }, svg);
-  for (let v = 0; v <= max; v += 150) {
-    el("line", { x1: L, x2: W, y1: y(v), y2: y(v) }, g);
-    el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end" }, g).textContent = v + " €";
-  }
+  for (let v = 0; v <= max; v += 30) { el("line", { x1: L, x2: W, y1: y(v), y2: y(v) }, g); el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end" }, g).textContent = v + " €"; }
   const bw = (W - L) / wk.length;
-  // fases
-  const fases = [["Aprender", 0, 4], ["Optimizar", 4, 6], ["Navidad", 6, 8.4], ["Escalar", 8.4, 13]];
-  fases.forEach(([n, a, z], i) => {
-    if (i) el("line", { x1: L + a * bw, x2: L + a * bw, y1: 8, y2: H - B, stroke: "rgba(12,12,12,.25)", "stroke-dasharray": "3 4" }, svg);
-    const t = el("text", { x: L + a * bw + 6, y: 18, "font-size": 12, "font-weight": 700, fill: "#5d5851" }, svg); t.textContent = n.toUpperCase();
+  [["TRAMO 1", 0], ["TRAMO 2", 4], ["NAVIDAD", 6], ["TRAMO 3", 8.4]].forEach(([n, a], i) => {
+    if (i) el("line", { x1: L + a * bw, x2: L + a * bw, y1: 8, y2: H - Bm, stroke: "rgba(12,12,12,.25)", "stroke-dasharray": "3 4" }, svg);
+    el("text", { x: L + a * bw + 6, y: 18, "font-size": 12, "font-weight": 700, fill: "#5d5851" }, svg).textContent = n;
   });
   wk.forEach((w, i) => {
-    const x = L + i * bw + 6, ww = bw - 12;
-    const yg = y(w.google), ym = y(w.google + w.meta);
-    el("rect", { x, y: yg, width: ww, height: y(0) - yg, fill: "var(--google)" }, svg);
-    el("path", { d: barPath(x, ym, ww, yg - ym - 2), fill: "var(--meta)" }, svg);
+    const x = L + i * bw + 6, ww = bw - 12, yg = y(w.google), ym = y(w.google + w.meta);
+    if (w.meta > 0) { el("rect", { x, y: yg, width: ww, height: y(0) - yg, fill: "var(--google)" }, svg); el("path", { d: barPath(x, ym, ww, yg - ym - 2), fill: "var(--meta)" }, svg); }
+    else if (w.google > 0) el("path", { d: barPath(x, yg, ww, y(0) - yg), fill: "var(--google)" }, svg);
     const d = new Date(w.lunes);
-    const t = el("text", { x: x + ww / 2, y: H - B + 18, "text-anchor": "middle", class: "axis" }, svg);
-    t.textContent = d.getDate() + "/" + (d.getMonth() + 1);
-    t.setAttribute("font-size", 12); t.setAttribute("fill", "#5d5851");
-    const hit = el("rect", { x: L + i * bw, y: top, width: bw, height: H - B - top, fill: "transparent" }, svg);
-    hit.addEventListener("mousemove", (ev) => tt.show(`<b>Semana del ${d.getDate()}/${d.getMonth() + 1}</b><br>Google ${eur(w.google)}<br>Meta ${eur(w.meta)}<br>Total ${eur(w.google + w.meta)}`, ev));
+    const t = el("text", { x: x + ww / 2, y: H - Bm + 18, "text-anchor": "middle", "font-size": 12, fill: "#5d5851" }, svg); t.textContent = d.getDate() + "/" + (d.getMonth() + 1);
+    const hit = el("rect", { x: L + i * bw, y: top, width: bw, height: H - Bm - top, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", (ev) => tt.show(`<b>Semana del ${d.getDate()}/${d.getMonth() + 1}</b><br>Google ${eur(w.google)}<br>Meta ${eur(w.meta)}`, ev));
     hit.addEventListener("mouseleave", tt.hide);
   });
-  el("text", { x: L, y: H - 6, "font-size": 12, fill: "#5d5851" }, svg).textContent = "Semana que empieza el lunes…";
-
-  const P = DATA.presupuesto_dia, F = DATA.fases;
-  const names = DATA.nombres;
-  let html = `<tr><th>Campaña</th>${F.map((f) => `<th class="n">${f.nombre}<br><span style="font-weight:400;text-transform:none;letter-spacing:0">${f.inicio.slice(8)}/${f.inicio.slice(5, 7)} – ${f.fin.slice(8)}/${f.fin.slice(5, 7)}</span></th>`).join("")}</tr>`;
-  for (const k in P) html += `<tr><td><span class="tag ${k[0] === "G" ? "g" : "m"}">${k}</span> ${names[k]}</td>${P[k].map((v) => `<td class="n">${v ? v + " €/día" : "–"}</td>`).join("")}</tr>`;
-  const tot = F.map((f, i) => Object.values(P).reduce((s, b) => s + b[i], 0));
-  html += `<tr><td><b>Total al día</b></td>${tot.map((t) => `<td class="n"><b>${t} €</b></td>`).join("")}</tr>`;
-  html += `<tr><td><b>Total de la fase</b></td>${tot.map((t, i) => `<td class="n"><b>${eur(t * F[i].dias)}</b></td>`).join("")}</tr>`;
-  document.getElementById("phases").innerHTML = html;
+  el("text", { x: L, y: H - 6, "font-size": 12, fill: "#5d5851" }, svg).textContent = "Máximo por semana · semana que empieza el lunes…";
 })();
 
-// ------------------------------------------------------------------ campañas
-(function () {
-  const C = DATA.por_campana, P = DATA.presupuesto_dia;
-  const info = {
-    G1: ["Prueba con fecha de corte", "Búsquedas de precio y de «web para mi negocio» en toda España, sin Baleares.", "/lp/web-99/", "Textos de búsqueda (1-google-ads/)"],
-    G2: ["El motor", "Las mismas búsquedas y las de «diseño web Mallorca», solo para gente de la isla. Aquí COMA juega en casa.", "/lp/mallorca/", "Textos de búsqueda (1-google-ads/)", true],
-    G3: ["El seguro", "Quien ya os busca por el nombre. Cuesta céntimos y evita que otro se ponga delante.", "/", "Textos de marca"],
-    G4: ["El segundo producto", "SEO local y posicionamiento en IA desde enero. Lead caro, pero cada cliente paga cada mes.", "/lp/seo-local/", "Textos SEO (1-google-ads/)"],
-    M1: ["Prueba con fecha de corte", "Vídeo en Reels y feed para toda España (sin Baleares). Si en 4 semanas no baja de 40 €, se apaga.", "/lp/web-99/", "Vídeos A, B y E, autoridad (test 1)"],
-    M2: ["El segundo motor", "«La temporada se gana en invierno»: webs en 4 idiomas para negocios de Mallorca. En enero, test de la web de 99 € contra el Pack Temporada.", "/lp/mallorca/ y /lp/temporada/", "Vídeos temporada y E, idiomas, autoridad, Pack", true],
-    M3: ["El más rentable", "Para quien ya vio la oferta y no escribió. Desde el 7 de diciembre.", "/lp/web-99/ y /precios/", "«Sigue en pie», «Calcula tu web»"],
-  };
-  document.getElementById("camps").innerHTML = Object.keys(P).map((k) => {
-    const [role, txt, url, pcs, star] = info[k], c = C[k];
-    return `<div class="camp${star ? " star" : ""}">
-      <div><span class="tag ${k[0] === "G" ? "g" : "m"}">${k[0] === "G" ? "Google" : "Meta"}</span> <span class="role">${role}</span></div>
-      <h3>${c.nombre}</h3><p>${txt}</p>
-      <div class="bud">${P[k].map((v, i) => `<div><b>${v || "–"}</b>${["F1", "F2", "Nav.", "F3"][i]}</div>`).join("")}</div>
-      <p class="small">€/día por fase · Destino <code>${url}</code><br>Piezas: ${pcs}</p>
-      <p class="small">Típico: <b style="color:var(--ink)">${num(c.leads_cualificados)} leads cualificados</b> a ${eur(c.cpl_cualificado)} cada uno</p>
-    </div>`;
-  }).join("");
-})();
+// ------------------------------------------------------------------ alternativas
+document.getElementById("alts").innerHTML = `<tr><th>Opción</th><th class="n">Gasto</th><th class="n">Clientes</th><th class="n">Beneficio 12 meses</th><th class="n">Prob. de ganar dinero</th><th class="n">Pesimista: prob. de ganar</th></tr>` +
+  DATA.alternativas.map((a, i) => `<tr${i === 0 ? ' style="background:#fff;font-weight:700"' : ""}><td>${i === 0 ? "★ " : ""}${a.nombre}</td><td class="n">${eur(a.base.gasto)}</td><td class="n">${num(a.base.clientes)}</td><td class="n">${eur(a.base.benef12)}</td><td class="n">${pc(a.base.prob_beneficio)}</td><td class="n">${pc(a.pesimista.prob_beneficio)}</td></tr>`).join("");
 
 // ------------------------------------------------------------------ histograma
 (function () {
   const box = document.getElementById("hist"), tt = tipper(box);
-  const h = DATA.histograma_contrib12, W = 520, H = 300, L = 10, B = 62, top = 10;
+  const h = DATA.histograma_benef12, W = 520, H = 310, L = 10, Bm = 70, top = 10;
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Distribución del beneficio a 12 meses" }, box);
-  const max = Math.max(...h.conteos), n = h.conteos.length;
-  const x0 = h.bordes[0], x1 = h.bordes[n];
-  const X = (v) => L + (W - 2 * L) * (v - x0) / (x1 - x0);
-  const Y = (c) => top + (H - B - top) * (1 - c / max);
+  const max = Math.max(...h.conteos), n = h.conteos.length, x0 = h.bordes[0], x1 = h.bordes[n];
+  const X = (v) => L + (W - 2 * L) * (v - x0) / (x1 - x0), Y = (c) => top + (H - Bm - top) * (1 - c / max);
   h.conteos.forEach((c, i) => {
     const a = X(h.bordes[i]) + 1, b = X(h.bordes[i + 1]) - 1;
     if (c > 0) el("path", { d: barPath(a, Y(c), b - a, Y(0) - Y(c), 3), fill: h.bordes[i + 1] <= 0 ? "#8a8278" : "var(--red)" }, svg);
-    const hit = el("rect", { x: a - 1, y: top, width: b - a + 2, height: H - B - top, fill: "transparent" }, svg);
+    const hit = el("rect", { x: a - 1, y: top, width: b - a + 2, height: H - Bm - top, fill: "transparent" }, svg);
     hit.addEventListener("mousemove", (ev) => tt.show(`${eur(h.bordes[i])} a ${eur(h.bordes[i + 1])}<br><b>${(c / DATA.iteraciones * 100).toFixed(1)} %</b> de las simulaciones`, ev));
     hit.addEventListener("mouseleave", tt.hide);
   });
   el("line", { x1: L, x2: W - L, y1: Y(0), y2: Y(0), stroke: "#0c0c0c" }, svg);
-  if (x0 < 0) {
-    el("line", { x1: X(0), x2: X(0), y1: top, y2: Y(0), stroke: "#0c0c0c", "stroke-dasharray": "4 4" }, svg);
-    el("text", { x: X(0) + 6, y: top + 12, "font-size": 12, fill: "#5d5851" }, svg).textContent = "0 €";
-  }
-  const p = T.contrib12;
+  if (x0 < 0) { el("line", { x1: X(0), x2: X(0), y1: top, y2: Y(0), stroke: "#0c0c0c", "stroke-dasharray": "4 4" }, svg); el("text", { x: X(0) + 6, y: top + 12, "font-size": 12, fill: "#5d5851" }, svg).textContent = "0 €"; }
+  const p = T.benef12;
   [["Peor 10 %", p.p10], ["Típico", p.p50], ["Mejor 10 %", p.p90]].forEach(([l, v], i) => {
     el("line", { x1: X(v), x2: X(v), y1: Y(0), y2: Y(0) + 8, stroke: "#0c0c0c", "stroke-width": 2 }, svg);
-    // típico en la primera fila; peor y mejor debajo, alineados hacia fuera para no chocar
-    const t = el("text", { x: X(v), y: Y(0) + (i === 1 ? 24 : 44), "text-anchor": ["end", "middle", "start"][i], "font-size": 12, fill: "#0c0c0c", "font-weight": i === 1 ? 700 : 400 }, svg);
-    t.textContent = `${l}: ${eur(v)}`;
+    el("text", { x: X(v), y: Y(0) + [40, 24, 56][i], "text-anchor": ["start", "middle", "end"][i], "font-size": 12, fill: "#0c0c0c", "font-weight": i === 1 ? 700 : 400 }, svg).textContent = `${l}: ${eur(v)}`;
   });
 })();
 
-// ------------------------------------------------------------------ € por lead cualificado
+// ------------------------------------------------------------------ totales
 (function () {
-  const box = document.getElementById("cpl"), tt = tipper(box);
-  const C = DATA.por_campana, ks = Object.keys(C).filter((k) => k !== "G3").sort((a, b) => C[a].cpl_cualificado - C[b].cpl_cualificado);
-  const W = 520, rowH = 34, L = 190, top = 6, H = top + ks.length * rowH + 30, max = 80;
-  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Coste por lead cualificado por campaña" }, box);
-  const X = (v) => L + (W - L - 50) * v / max;
-  [30, 45].forEach((v) => {
-    el("line", { x1: X(v), x2: X(v), y1: top, y2: H - 26, stroke: "rgba(12,12,12,.3)", "stroke-dasharray": "3 4" }, svg);
-    el("text", { x: X(v), y: H - 10, "text-anchor": "middle", "font-size": 12, fill: "#5d5851" }, svg).textContent = v + " €";
-  });
-  ks.forEach((k, i) => {
-    const v = C[k].cpl_cualificado, y = top + i * rowH;
-    const col = v <= 30 ? "var(--ok)" : v <= 45 ? "var(--warn)" : "var(--red)";
-    el("text", { x: L - 10, y: y + 21, "text-anchor": "end", "font-size": 13, fill: "#0c0c0c" }, svg).textContent = C[k].nombre.replace(" (frío)", "");
-    // barra horizontal: extremo redondeado a la derecha, apoyada en el eje
-    const w = X(v) - L, r = 4, hh = 20, yy = y + 7;
-    el("path", { d: `M${L},${yy}H${L + w - r}Q${L + w},${yy} ${L + w},${yy + r}V${yy + hh - r}Q${L + w},${yy + hh} ${L + w - r},${yy + hh}H${L}Z`, fill: col }, svg);
-    el("text", { x: X(v) + 6, y: y + 22, "font-size": 13, "font-weight": 700, fill: "#0c0c0c" }, svg).textContent = eur(v);
-    const hit = el("rect", { x: 0, y, width: W, height: rowH, fill: "transparent" }, svg);
-    hit.addEventListener("mousemove", (ev) => tt.show(`<b>${C[k].nombre}</b><br>${eur(v)} por lead cualificado<br>${num(C[k].leads_cualificados)} leads cualificados · gasto ${eur(C[k].gasto)}`, ev));
-    hit.addEventListener("mouseleave", tt.hide);
-  });
-  el("line", { x1: L, x2: L, y1: top, y2: H - 26, stroke: "#0c0c0c" }, svg);
+  const rows = [["Gasto en anuncios", "spend", eur], ["Leads cualificados", "q", num], ["Clientes", "cl", num], ["Facturación primer encargo", "rev1", eur], ["Facturación a 12 meses", "rev12", eur], ["Beneficio a 12 meses", "benef12", eur]];
+  const P = PE.total;
+  document.getElementById("totals").innerHTML = `<tr><th></th><th class="n">Base</th><th class="n">Pesimista</th></tr>` +
+    rows.map(([l, k, f]) => `<tr><td>${l}</td><td class="n"><b>${f(T[k].p50)}</b></td><td class="n">${f(P[k].p50)}</td></tr>`).join("") +
+    `<tr><td>El primer encargo paga los anuncios</td><td class="n"><b>${pc(B.prob.primer_encargo_cubre_anuncios)}</b></td><td class="n">${pc(PE.prob.primer_encargo_cubre_anuncios)}</td></tr>` +
+    `<tr><td>El año deja beneficio</td><td class="n"><b>${pc(B.prob.beneficio_12m_positivo)}</b></td><td class="n">${pc(PE.prob.beneficio_12m_positivo)}</td></tr>` +
+    `<tr><td>Se pasan los dos cortes</td><td class="n"><b>${pc(B.prob.pasa_corte_2)}</b></td><td class="n">${pc(PE.prob.pasa_corte_2)}</td></tr>`;
 })();
 
-// ------------------------------------------------------------------ tabla de totales
+// ------------------------------------------------------------------ calculadora de cortes
 (function () {
-  const rows = [["Gasto en anuncios", "spend", eur], ["Leads (formularios)", "leads", num], ["Leads cualificados", "qleads", num], ["Clientes cerrados", "clients", num], ["Facturación del primer encargo", "rev1", eur], ["Facturación a 12 meses", "rev12", eur], ["Beneficio a 12 meses tras anuncios", "contrib12", eur]];
-  document.getElementById("totals").innerHTML = `<tr><th>13 semanas</th><th class="n">Peor 10 %</th><th class="n">Típico</th><th class="n">Mejor 10 %</th></tr>` +
-    rows.map(([l, k, f]) => `<tr><td>${l}</td><td class="n">${f(T[k].p10)}</td><td class="n"><b>${f(T[k].p50)}</b></td><td class="n">${f(T[k].p90)}</td></tr>`).join("") +
-    `<tr><td>€ por lead cualificado</td><td class="n">${eur(R.cpl_cualificado.p10)}</td><td class="n"><b>${eur(R.cpl_cualificado.p50)}</b></td><td class="n">${eur(R.cpl_cualificado.p90)}</td></tr>` +
-    `<tr><td>€ por cliente</td><td class="n">${eur(R.cac.p10)}</td><td class="n"><b>${eur(R.cac.p50)}</b></td><td class="n">${eur(R.cac.p90)}</td></tr>`;
+  const LAB = { wow: "WOW", go: "SEGUIR", piv: "PIVOTAR", stop: "PARAR", na: "SIN DATOS" };
+  const FIELDS = [["spend", "Gasto acumulado €"], ["clicks", "Clics"], ["imps", "Impresiones"], ["leads", "Leads"], ["qleads", "Leads cualificados"], ["clients", "Clientes firmados"], ["rev", "Facturación 1.er encargo €"], ["resp", "Respuesta media al lead (min)"]];
+  const mom = document.getElementById("sMom"), box = document.getElementById("sInputs"), out = document.getElementById("sOut");
+  box.innerHTML = FIELDS.map(([id, l]) => `<label>${l}<input id="f_${id}" type="number" min="0" step="any" inputmode="decimal"></label>`).join("");
+  let store = {};
+  try { store = JSON.parse(localStorage.getItem("coma-cortes") || "{}"); } catch {}
+  const load = () => FIELDS.forEach(([id]) => { document.getElementById("f_" + id).value = (store[mom.value] || {})[id] ?? ""; });
+  const val = (id) => { const x = document.getElementById("f_" + id).value; return x === "" ? null : Number(x); };
+  const div = (a, b) => a == null || b == null || b === 0 ? null : a / b;
+  const st = (v, t, low) => v == null || !isFinite(v) ? "na" : low ? (v <= t[0] ? "wow" : v <= t[1] ? "go" : v <= t[2] ? "piv" : "stop") : (v > t[0] ? "wow" : v >= t[1] ? "go" : v >= t[2] ? "piv" : "stop");
+  const pct = (v) => v == null || !isFinite(v) ? "–" : (v * 100).toFixed(1).replace(".", ",") + " %";
+  const money = (v) => v == null || !isFinite(v) ? "–" : eur(v);
+  function run() {
+    const m = mom.value;
+    store[m] = Object.fromEntries(FIELDS.map(([id]) => [id, val(id)]));
+    try { localStorage.setItem("coma-cortes", JSON.stringify(store)); } catch {}
+    const v = store[m];
+    const cplq = v.spend != null && v.qleads != null ? (v.qleads > 0 ? v.spend / v.qleads : Infinity) : null;
+    const rows = [
+      ["CTR del anuncio", div(v.clicks, v.imps), [0.08, 0.05, 0.03], false, pct],
+      ["Clic → formulario", div(v.leads, v.clicks), [0.08, 0.04, 0.02], false, pct],
+      ["Leads cualificados ÷ leads", div(v.qleads, v.leads), [0.65, 0.4, 0.25], false, pct],
+      ["€ por lead cualificado", cplq, [20, 35, 50], true, money],
+      ["Respuesta al lead", v.resp, [15, 60, 240], true, (x) => x == null ? "–" : Math.round(x) + " min"],
+      ["Cierre (cualificado → cliente)", (v.qleads ?? 0) >= 5 ? div(v.clients, v.qleads) : null, [0.3, 0.18, 0.1], false, pct],
+      ["€ por cliente", div(v.spend, v.clients), [80, 140, 250], true, money],
+      ["Facturación ÷ gasto", div(v.rev, v.spend), [2.5, 1.2, 0.8], false, (x) => x == null ? "–" : x.toFixed(2).replace(".", ",")],
+    ].map(([l, x, t, low, f]) => ({ l, x, s: st(x, t, low), f }));
+    let cls = "na", title = "Faltan datos", msg = "Mete al menos el gasto, los leads cualificados y los clientes.";
+    const q = v.qleads, c = v.clients ?? 0;
+    if (v.spend != null && q != null) {
+      if (m === "c1") {
+        if (c >= 1 || (q >= 5 && cplq <= 35)) { cls = "go"; title = "SEGUIR"; msg = "Pasa el corte 1. Mañana: G2 a 9 €/día y la regla de coste a 406 €."; }
+        else if ((q >= 2 && q <= 4) || (q >= 5 && cplq <= 50)) { cls = "piv"; title = "PIVOTAR"; msg = "Hay señal: el tramo 2 sigue con UN cambio (el primero que falle abajo). El 21 dic, sin cliente y con menos de 5 cualificados, se para."; }
+        else { cls = "stop"; title = "PARAR"; msg = "Sin señal suficiente. Pausar G2. Gasto final: lo que llevas (≤ 280 €), menos lo facturado."; }
+      } else if (m === "c2") {
+        if (c >= 3 && cplq <= 20) { cls = "wow"; title = "WOW · TENEMOS ALGO"; msg = "Tramo 3 tal cual y, en paralelo, se prepara la temporada con la regla de autofinanciación: hasta el 30 % de lo facturado."; }
+        else if (c >= 1) { cls = "go"; title = "SEGUIR"; msg = "Al tramo 3: G2 a 10 €/día, regla de coste a 726 €, remarketing a 2 €/día y test Web vs Pack."; }
+        else { cls = "stop"; title = "PARAR"; msg = "Ningún cliente tras 406 €. G2 se queda en pausa. Revisa la venta (tabla de abajo) antes de volver a intentarlo."; }
+      } else if (m === "fin") {
+        const r = div(v.rev, v.spend);
+        cls = st(r, [2.5, 1.2, 0.8], false); title = LAB[cls];
+        msg = { wow: "Hay canal y muy rentable. Temporada con autofinanciación: lo primero, Google Mallorca a 12 €/día.", go: "Hay canal. Febrero-marzo con autofinanciación, mismo plan.", piv: "Casi. Antes de seguir, arreglar lo que salga en ámbar abajo.", stop: "Este canal no compensa. Quedan lo gratis y las recomendaciones.", na: "Mete la facturación." }[cls];
+      } else {
+        cls = st(cplq, [20, 35, 50], true); title = LAB[cls] + " (orientativo)";
+        msg = "Un lunes no se decide: se vigila. Términos de búsqueda a negativas y alarmas. La decisión es en el corte.";
+      }
+    }
+    out.innerHTML = `<div class="verdict ${cls}"><span class="small" style="opacity:.85">${mom.options[mom.selectedIndex].text}</span><b>${title}</b><p>${msg}</p></div>
+      <div class="scroll"><table class="tbl" id="sTable" style="margin-top:0"><tr><th>Métrica</th><th class="n">Valor</th><th>Estado</th></tr>
+      ${rows.map((r) => `<tr><td>${r.l}</td><td class="n">${r.f(r.x)}</td><td><span class="badge ${r.s}">${LAB[r.s]}</span></td></tr>`).join("")}</table></div>`;
+  }
+  mom.addEventListener("change", () => { load(); run(); });
+  box.addEventListener("input", run);
+  load(); run();
 })();
 
 // ------------------------------------------------------------------ piezas
 (function () {
+  const R = "3-redes-sin-pagar/", M = "2-meta-remarketing/", G = "1-google-ads/imagenes/";
   const v = (src, t, d) => `<figure class="piece"><video src="${src}.mp4" poster="${src}_portada.jpg" controls playsinline preload="none"></video><figcaption><b>${t}</b>${d}<br><a href="${src}.mp4">9:16</a> · <a href="${src.replace("9x16", "4x5")}.mp4">4:5</a></figcaption></figure>`;
   const im = (src, t, d, wide) => `<figure class="piece${wide ? " wide" : ""}"><img src="${src}" alt="${t}"><figcaption><b>${t}</b>${d}</figcaption></figure>`;
   const groups = [
-    ["Meta · España (M1)", "2-meta-espana/", [
-      v("2-meta-espana/M1-A_video-99_9x16", "A · Precio: «Tu web. 99 €»", "15 s. Gancho de precio + el diseño cambia de marca."),
-      v("2-meta-espana/M1-B_video-1500_9x16", "B · Transparencia: «¿Te han pedido 1.500 €?»", "12 s. La objeción de precio y la «trampa»: extras con precio."),
-      v("2-meta-espana/M1-E_video-facilidad_9x16", "E · Facilidad: «¿Sin tiempo para tu web?»", "15 s. Para qué sirve y 3 pasos. También en Mallorca."),
-      im("2-meta-espana/M1-F_facilidad_4x5.png", "F · Facilidad (imagen)", "4:5. Retador si gana el ángulo facilidad."),
-      `<figure class="piece wide"><div class="carousel">${[1, 2, 3, 4, 5].map((i) => `<img src="2-meta-espana/M1-C_carrusel-${i}.png" alt="Tarjeta ${i}">`).join("")}</div><figcaption><b>C · Carrusel «Qué incluye»</b>5 tarjetas 1:1, en este orden.</figcaption></figure>`,
-      im("2-meta-espana/M1-D_autoridad_4x5.png", "D · Autoridad", "4:5. Solo con permiso de los clientes citados."),
+    ["Redes sin pagar · test 1 de ángulos", R, [
+      v(R + "M2-A_video-temporada_9x16", "Temporada", "15 s. La misma web en ES, EN, DE y CA. Hay versión sin marcas."),
+      v(R + "M1-E_video-facilidad_9x16", "Facilidad", "15 s. «¿Sin tiempo para tu web? Te la hacemos.»"),
+      v(R + "M1-A_video-99_9x16", "Precio", "15 s. «Tu web. 99 €» y el diseño que cambia de marca."),
+      v(R + "M1-B_video-1500_9x16", "Transparencia", "12 s. «¿Te han pedido 1.500 €?»"),
+      im(R + "M2-B_idiomas_4x5.png", "Idiomas", "4:5 y 9:16."),
+      im(R + "M1-F_facilidad_4x5.png", "Facilidad (imagen)", "4:5."),
+      im(R + "M1-D_autoridad_4x5.png", "Autoridad", "4:5. Solo con permiso de las marcas."),
     ]],
-    ["Meta · Mallorca (M2)", "3-meta-mallorca/", [
-      v("3-meta-mallorca/M2-A_video-temporada_9x16", "A · «La temporada se gana en invierno»", "15 s. La misma web en ES, EN, DE y CA."),
-      v("3-meta-mallorca/M2-A_video-temporada-sin-marcas_9x16", "A · Versión sin marcas", "Igual, sin nombres de clientes en el cierre."),
-      im("3-meta-mallorca/M2-B_idiomas_4x5.png", "B · «Buenos días. Good morning…»", "4:5 (también en 9:16)."),
-      v("3-meta-mallorca/M2-A_video-temporada-pack_9x16", "Test 3 · Vídeo Pack Temporada", "El mismo vídeo con la oferta de 346 €."),
-      im("3-meta-mallorca/M2-D_pack-temporada_4x5.png", "Test 3 · Imagen Pack Temporada", "4:5 (también en 9:16). Lleva a /lp/temporada/."),
+    ["Pack Temporada · test 2 (enero)", R, [
+      v(R + "M2-A_video-temporada-pack_9x16", "Vídeo Pack Temporada", "Para redes en enero."),
+      im(R + "M2-D_pack-temporada_4x5.png", "Imagen Pack Temporada", "4:5 y 9:16."),
     ]],
-    ["Meta · Remarketing (M3)", "4-remarketing/", [
-      im("4-remarketing/M3-A_sigue-en-pie_4x5.png", "A · «Sigue en pie»", "4:5 y 9:16."),
-      im("4-remarketing/M3-B_calcula_4x5.png", "B · «Calcula tu web»", "4:5 y 9:16. Lleva a /precios/."),
+    ["Meta remarketing (enero)", M, [
+      im(M + "M3-A_sigue-en-pie_4x5.png", "«Sigue en pie»", "4:5 y 9:16."),
+      im(M + "M3-B_calcula_4x5.png", "«Calcula tu web»", "4:5 y 9:16. Lleva a /precios/."),
+      `<figure class="piece wide"><div class="carousel">${[1, 2, 3, 4, 5].map((i) => `<img src="${M}M1-C_carrusel-${i}.png" alt="Tarjeta ${i}">`).join("")}</div><figcaption><b>Carrusel «Qué incluye»</b>5 tarjetas 1:1, en este orden.</figcaption></figure>`,
     ]],
     ["Google Ads", "1-google-ads/", [
-      im("1-google-ads/imagenes/G-imagen_1200x628.png", "Imagen 1,91:1", "Sin texto encima (norma de Google).", true),
-      im("1-google-ads/imagenes/G-imagen_1200x1200.png", "Imagen 1:1", ""),
-      im("1-google-ads/imagenes/G-logo_1200x1200.png", "Logotipo 1:1", ""),
-    ]],
-    ["LinkedIn · Despachos (opcional)", "5-linkedin-despachos-opcional/", [
-      im("5-linkedin-despachos-opcional/L1-despachos_1200x627.png", "Despachos 1200×627", "Presupuesto aparte, desde el 7 de enero.", true),
-      im("5-linkedin-despachos-opcional/L1-despachos_1080x1080.png", "Despachos 1:1", ""),
+      im(G + "G-imagen_1200x628.png", "Imagen 1,91:1", "Sin texto encima (norma de Google).", true),
+      im(G + "G-imagen_1200x1200.png", "Imagen 1:1", ""),
+      im(G + "G-logo_1200x1200.png", "Logotipo", ""),
     ]],
   ];
   document.getElementById("pieces").innerHTML = groups.map(([t, dir, items]) => `<div class="group"><h3>${t} <a class="small muted" href="${dir}" style="font-weight:400">${dir}</a></h3><div class="gallery">${items.join("")}</div></div>`).join("");
 })();
 
-// ------------------------------------------------------------------ semáforo
-(function () {
-  // [wow, fin de seguir, fin de pivotar]; low = cuanto más bajo, mejor
-  const CPLQ = { G2: [20, 35, 50], M2: [20, 35, 50], G1: [25, 38, 45], M1: [22, 33, 40], M3: [12, 25, 35], G4: [35, 65, 85] };
-  const NAME = { G2: "G2 Google Mallorca", M2: "M2 Meta Mallorca", G1: "G1 Google España", M1: "M1 Meta España", M3: "M3 Remarketing", G4: "G4 Google SEO local" };
-  const LAB = { wow: "WOW", go: "SEGUIR", piv: "PIVOTAR", stop: "PARAR", na: "SIN DATOS" };
-  const state = (v, t, low) => v == null || !isFinite(v) ? "na" : low ? (v <= t[0] ? "wow" : v <= t[1] ? "go" : v <= t[2] ? "piv" : "stop") : (v > t[0] ? "wow" : v >= t[1] ? "go" : v >= t[2] ? "piv" : "stop");
-  const FIELDS = [
-    ["spend", "Gasto €"], ["imps", "Impresiones"], ["clicks", "Clics (en Meta, en el enlace)"], ["lpv", "Visitas a la landing (Meta)"],
-    ["v3", "Reproducciones de 3 s (vídeo)"], ["thru", "ThruPlay (vídeo)"], ["freq", "Frecuencia 7 días (Meta)"],
-    ["leads", "Leads"], ["qleads", "Leads cualificados"], ["clients", "Clientes"], ["rev", "Facturación 1.er encargo €"], ["resp", "Respuesta media al lead (min)"],
-  ];
-  const sel = document.getElementById("sCamp"), box = document.getElementById("sInputs"), out = document.getElementById("sOut");
-  sel.innerHTML = Object.keys(NAME).map((k) => `<option value="${k}">${NAME[k]}</option>`).join("");
-  box.innerHTML = FIELDS.map(([id, l]) => `<label>${l}<input id="f_${id}" type="number" min="0" step="any" inputmode="decimal"></label>`).join("");
-  let store = {};
-  try { store = JSON.parse(localStorage.getItem("coma-semaforo") || "{}"); } catch {}
-  const load = () => FIELDS.forEach(([id]) => { document.getElementById("f_" + id).value = (store[sel.value] || {})[id] ?? ""; });
-  const val = (id) => { const x = document.getElementById("f_" + id).value; return x === "" ? null : Number(x); };
-  const pct = (v) => v == null || !isFinite(v) ? "–" : (v * 100).toFixed(1).replace(".", ",") + " %";
-  const money = (v) => v == null || !isFinite(v) ? "–" : eur(v);
-  const div = (a, b) => a == null || b == null || b === 0 ? null : a / b;
-
-  function run() {
-    const k = sel.value, g = k[0] === "G", rtg = k === "M3";
-    store[k] = Object.fromEntries(FIELDS.map(([id]) => [id, val(id)]));
-    try { localStorage.setItem("coma-semaforo", JSON.stringify(store)); } catch {}
-    const v = store[k];
-    const cplq = div(v.spend, v.qleads ?? null) ?? (v.spend > 0 && v.qleads === 0 ? Infinity : null);
-    // funnel en orden: el primero que falla es lo que se cambia
-    const rows = [
-      !g && ["Gancho (3 s ÷ impresiones)", div(v.v3, v.imps), [0.35, 0.25, 0.2], false, pct, "Cambiar solo el primer segundo del vídeo: precio ↔ pregunta ↔ sector."],
-      !g && ["Retención (ThruPlay ÷ 3 s)", div(v.thru, v.v3), [0.35, 0.2, 0.12], false, pct, "El vídeo engancha pero se cae: acortar la parte central."],
-      ["CTR" + (g ? " del anuncio" : " de enlace"), div(v.clicks, v.imps), g ? [0.08, 0.05, 0.03] : [0.015, 0.009, 0.006], false, pct, g ? "Reescribir títulos o ajustar palabras clave (nivel de calidad)." : "Se paran pero no entran: cambiar texto y botón, o probar otra pieza."],
-      !g && ["Visitas ÷ clics", div(v.lpv, v.clicks), [0.85, 0.7, 0.6], false, pct, "No es el anuncio: la web carga lenta o la medición falla. Probar en 4G."],
-      !g && ["Frecuencia 7 días", v.freq, [0, 3, 4], true, (x) => x == null ? "–" : String(x).replace(".", ","), "Público cansado: subir una pieza nueva o ampliar edad o zona."],
-      ["Conversión de la landing", div(v.leads, g ? v.clicks : (v.lpv ?? v.clicks)), g ? [0.08, 0.04, 0.02] : rtg ? [0.09, 0.05, 0.03] : [0.04, 0.02, 0.01], false, pct, "Probar el otro destino (/lp/web-99/ ↔ /lp/mallorca/ ↔ /precios/)."],
-      ["Leads cualificados ÷ leads", div(v.qleads, v.leads), [0.65, 0.4, 0.25], false, pct, "Entra gente curiosa: «para negocios y autónomos» en el texto, negativas en Google, edad mínima 30 en Meta."],
-      ["€ por lead cualificado", cplq, CPLQ[k], true, money, null],
-      ["Respuesta al lead", v.resp, [15, 60, 240], true, (x) => x == null ? "–" : Math.round(x) + " min", "Responder en menos de 1 hora. Por encima de 4 h, congelar subidas."],
-      ["Cierre (cualificado → cliente)", (v.qleads ?? 0) >= 10 ? div(v.clients, v.qleads) : null, [0.3, 0.18, 0.1], false, pct, "No es el anuncio: revisar llamada, propuesta y seguimiento."],
-      ["Primer encargo medio", (v.clients ?? 0) >= 3 ? div(v.rev, v.clients) : null, [280, 180, 130], false, money, "Se venden webs solas: proponer el Pack Temporada (web + 2 idiomas + reservas, 346 €)."],
-      ["€ por cliente", div(v.spend, v.clients), [100, 180, 250], true, money, null],
-      ["Facturación ÷ gasto", div(v.rev, v.spend), [2.5, 1.2, 0.8], false, (x) => x == null ? "–" : x.toFixed(2).replace(".", ","), null],
-    ].filter(Boolean).map(([l, x, t, low, f, fix]) => ({ l, x, s: state(x, t, low), f, fix }));
-
-    const enough = (v.spend ?? 0) >= 150 && (v.leads ?? 0) >= 8;
-    const main = rows.find((r) => r.l === "€ por lead cualificado");
-    let cls = main.s, title = LAB[cls], msg = "";
-    const firstBad = rows.find((r) => (r.s === "stop" || r.s === "piv") && r.fix);
-    if (cls === "na") msg = "Mete gasto y leads cualificados para ver el estado.";
-    else if (!enough && cls === "stop") { cls = "piv"; title = "PIVOTAR (aún pocos datos)"; msg = "Por debajo de 150 € y 8 leads no se apaga: se pivota. " + (firstBad ? firstBad.fix : ""); }
-    else if (cls === "stop") msg = k === "G1" || k === "M1" ? "Apagar. El 30 % de su presupuesto pasa a M2 Meta Mallorca; el resto no se gasta." : "Apagar y pasar el dinero a la campaña que esté en WOW o SEGUIR.";
-    else if (cls === "piv") msg = "Cambiar una sola cosa: " + (firstBad ? firstBad.fix : "revisar textos y piezas.");
-    else if (cls === "go") msg = "No tocar nada." + (firstBad ? " Para la próxima pieza, ojo con: " + firstBad.l.toLowerCase() + "." : "");
-    else if (cls === "wow") {
-      const close = rows.find((r) => r.l.startsWith("Cierre"));
-      msg = close.s === "wow" || close.s === "go" ? "Si la semana pasada también salió WOW: TENEMOS ALGO. +20 % de presupuesto cada 4 días hasta salir de WOW o llegar a 4 webs nuevas por semana." : "Muy buen lead. Falta ver el cierre (10 leads cualificados): si llega al 18 % y repite, a escalar.";
-    }
-    out.innerHTML = `<div class="verdict ${cls}"><span class="small" style="opacity:.85">${NAME[k]}</span><b>${title}</b><p>${msg}</p></div>
-      <div class="scroll"><table class="tbl" id="sTable" style="margin-top:0"><tr><th>Métrica</th><th class="n">Valor</th><th>Estado</th></tr>
-      ${rows.map((r) => `<tr><td>${r.l}</td><td class="n">${r.f(r.x)}</td><td><span class="badge ${r.s}">${LAB[r.s]}</span></td></tr>`).join("")}</table></div>`;
-  }
-  sel.addEventListener("change", () => { load(); run(); });
-  box.addEventListener("input", run);
-  load(); run();
-
-  // tabla de umbrales de € por lead cualificado
-  document.getElementById("cplTable").innerHTML = `<tr><th>€ por lead cualificado</th><th class="n"><span class="badge wow">WOW</span></th><th class="n"><span class="badge go">SEGUIR</span></th><th class="n"><span class="badge piv">PIVOTAR</span></th><th class="n"><span class="badge stop">PARAR</span></th></tr>` +
-    ["G2", "M2", "G1", "M1", "M3", "G4"].map((k) => { const t = CPLQ[k]; return `<tr><td>${NAME[k]}</td><td class="n">≤ ${t[0]} €</td><td class="n">${t[0]}-${t[1]} €</td><td class="n">${t[1]}-${t[2]} €</td><td class="n">&gt; ${t[2]} €</td></tr>`; }).join("");
-})();
-
 // ------------------------------------------------------------------ checklist
 (function () {
   const items = [
-    ["Formulario fiable", "PUBLIC_FORM_ENDPOINT (Formspree o Web3Forms) en Railway y volver a desplegar."],
-    ["Medición", "Google Tag Manager con GA4, conversión de Google Ads y píxel de Meta (docs/ADS.md)."],
-    ["Google Ads", "Cuenta en modo experto, facturación, GA4 vinculado, conversión «Lead formulario» principal."],
-    ["Meta", "Business Manager, píxel, dominio verificado y los 4 públicos personalizados del plan."],
-    ["Google Business Profile", "Ficha de COMA en Paseo Mallorca 16 verificada y vinculada a Google Ads."],
-    ["Prueba real", "Cada URL del plan en el móvil, cookies aceptadas, formulario enviado: llega el correo y cuenta la conversión."],
-    ["Permiso para citar clientes", "Un sí por escrito de las marcas citadas. Si no lo hay, usar las versiones sin marcas."],
-    ["Revisión legal", "Cookies y privacidad revisadas por el asesor."],
-    ["Agenda", "Alguien responde los leads en menos de 1 hora, de lunes a sábado."],
+    ["Google Business Profile", "Ficha de COMA verificada. Reseñas pedidas a 20 clientes."],
+    ["Recomendaciones", "20 clientes: «¿conoces a alguien que necesite web?»"],
+    ["30 mensajes", "A negocios de Mallorca con su landing personalizada (/lp/tu-empresa/)."],
+    ["Formulario fiable", "PUBLIC_FORM_ENDPOINT en Railway y volver a desplegar."],
+    ["Medición", "Google Tag Manager con GA4, conversión de Google Ads y píxel de Meta."],
+    ["Google Ads", "Cuenta en modo experto, G2 en pausa, fecha de fin y regla de coste a 280 €."],
+    ["Meta", "Business Manager, píxel, dominio verificado y límite de gasto de 64 €."],
+    ["Prueba real", "Formulario enviado desde el móvil: llega el correo y cuenta la conversión."],
+    ["Permisos", "Sí por escrito de las marcas citadas, o usar las versiones sin marcas."],
+    ["Agenda", "Alguien responde los leads en menos de 1 hora."],
   ];
   let saved = {};
-  try { saved = JSON.parse(localStorage.getItem("coma-ads-check") || "{}"); } catch {}
+  try { saved = JSON.parse(localStorage.getItem("coma-ads-check-800") || "{}"); } catch {}
   const ul = document.getElementById("checklist");
   ul.innerHTML = items.map(([t, d], i) => `<li class="${saved[i] ? "done" : ""}"><input type="checkbox" id="c${i}" ${saved[i] ? "checked" : ""}><label for="c${i}"><b>${t}</b><span>${d}</span></label></li>`).join("");
-  ul.addEventListener("change", (e) => {
-    const i = e.target.id.slice(1);
-    saved[i] = e.target.checked;
-    e.target.parentElement.classList.toggle("done", e.target.checked);
-    try { localStorage.setItem("coma-ads-check", JSON.stringify(saved)); } catch {}
-  });
+  ul.addEventListener("change", (e) => { const i = e.target.id.slice(1); saved[i] = e.target.checked; e.target.parentElement.classList.toggle("done", e.target.checked); try { localStorage.setItem("coma-ads-check-800", JSON.stringify(saved)); } catch {} });
 })();
 </script>
 </body>
