@@ -28,6 +28,7 @@
   .lead { font-size: clamp(18px, 2vw, 22px); color: var(--muted); max-width: 760px; }
   section { padding: 64px 0; border-bottom: 1px solid var(--line); }
   .muted { color: var(--muted); }
+  .lead a { color: var(--ink); }
   .small { font-size: 14px; }
   .files { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
   .files a { display: inline-flex; gap: 8px; align-items: center; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 700; padding: 12px 18px; font-size: 15px; }
@@ -91,6 +92,25 @@
   .rule.ok .dot { color: var(--ok); } .rule.warn .dot { color: var(--warn); } .rule.bad .dot { color: var(--red); }
   .rule b { display: block; font-size: 26px; margin: 8px 0 6px; letter-spacing: -.02em; }
   .rule p { font-size: 15px; color: var(--muted); }
+  /* estados y semáforo */
+  .states { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 24px; }
+  .st { padding: 18px; color: #fff; }
+  .st b { display: block; font-size: 28px; font-weight: 800; font-stretch: 115%; letter-spacing: -.01em; }
+  .st p { font-size: 15px; margin-top: 6px; opacity: .92; }
+  .st.wow { background: #5b3fd6; } .st.go { background: var(--ok); } .st.piv { background: var(--warn); } .st.stop { background: var(--red); }
+  .badge { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .06em; padding: 4px 8px; color: #fff; white-space: nowrap; }
+  .badge.wow { background: #5b3fd6; } .badge.go { background: var(--ok); } .badge.piv { background: var(--warn); } .badge.stop { background: var(--red); } .badge.na { background: #8a8278; }
+  .sem { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 18px; }
+  @media (min-width: 900px) { .sem { grid-template-columns: 360px 1fr; } }
+  .sem__in, .sem__out { background: #fbfaf7; border: 1px solid var(--line); padding: 20px; min-width: 0; }
+  .sem label { display: block; font-size: 13px; font-weight: 700; color: var(--muted); }
+  .sem select, .sem input { display: block; width: 100%; margin-top: 4px; font: inherit; font-size: 16px; padding: 10px 12px; border: 2px solid var(--ink); background: #fff; color: var(--ink); border-radius: 0; }
+  .sem__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .verdict { padding: 18px; color: #fff; margin-bottom: 16px; }
+  .verdict b { display: block; font-size: 30px; font-weight: 800; font-stretch: 115%; line-height: 1.1; }
+  .verdict p { margin-top: 6px; font-size: 15px; }
+  .verdict.na { background: #8a8278; } .verdict.wow { background: #5b3fd6; } .verdict.go { background: var(--ok); } .verdict.piv { background: var(--warn); } .verdict.stop { background: var(--red); }
+  #sTable td:nth-child(3) { white-space: nowrap; }
   /* checklist */
   .check { list-style: none; margin-top: 20px; }
   .check li { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); align-items: flex-start; }
@@ -116,6 +136,8 @@
       <a href="01-PLAN-DE-CAMPANA.txt">Abrir el plan exacto (TXT) →</a>
       <a class="alt" href="1-google-ads/textos-google.txt">Textos de Google</a>
       <a class="alt" href="6-simulacion/resultados.csv">Simulación (CSV)</a>
+      <a class="alt" href="02-METRICAS-Y-DECISIONES.txt">Métricas y decisiones</a>
+      <a class="alt" href="#semaforo">Semáforo del lunes</a>
       <a class="alt" href="7-seguimiento/leads.csv">Hoja de leads</a>
     </div>
     <div class="stats" id="stats"></div>
@@ -186,17 +208,27 @@
   </div>
 </section>
 
-<section>
+<section id="semaforo">
   <div class="wrap">
     <div class="eyebrow">Reglas del lunes</div>
-    <h2>15 minutos, siempre con los últimos 14 días<span class="c">.</span></h2>
-    <div class="rules">
-      <div class="rule ok"><span class="dot">Verde</span><b>≤ 30 € por lead cualificado</b><p>Subir el presupuesto un 20 % cada 4 días. Nunca más de golpe: el algoritmo vuelve a aprender.</p></div>
-      <div class="rule warn"><span class="dot">Ámbar</span><b>30 - 45 €</b><p>Mantener el dinero. Cambiar textos o piezas, añadir negativas en Google.</p></div>
-      <div class="rule bad"><span class="dot">Rojo</span><b>&gt; 45 € (Google España) · &gt; 40 € (Meta España)</b><p>El 7 de diciembre se apaga. El 30 % de su dinero va a Meta Mallorca; el resto se ahorra.</p></div>
-      <div class="rule"><span class="dot" style="color:var(--ink)">Anuncios</span><b>Apagar si…</b><p>CTR de enlace por debajo del 0,6 % tras 1.500 impresiones, menos del 25 % de reproducciones de 3 s en vídeo, o 40 € sin ningún lead.</p></div>
-      <div class="rule"><span class="dot" style="color:var(--ink)">Google</span><b>Cada lunes</b><p>Términos de búsqueda: lo que no es un cliente va a negativas. Palabra con 25 clics y 0 leads: pausa.</p></div>
-      <div class="rule"><span class="dot" style="color:var(--ink)">Negocio</span><b>Calidad primero</b><p>Más de 4 webs firmadas en una semana: no subir presupuestos hasta entregar. Con 30 ventas, importar lo facturado a Google.</p></div>
+    <h2>Seguir, pivotar, parar o «wow»<span class="c">.</span></h2>
+    <p class="lead">Cada lunes, 15 minutos con los últimos 14 días. Una sola métrica decide: lo que cuesta cada lead cualificado. Las demás dicen qué cambiar. Detalle en <a href="02-METRICAS-Y-DECISIONES.txt">02-METRICAS-Y-DECISIONES.txt</a>.</p>
+    <div class="states">
+      <div class="st wow"><b>WOW</b><p>Tenemos algo. Dos semanas seguidas y cierre ≥ 18 %: +20 % de presupuesto cada 4 días.</p></div>
+      <div class="st go"><b>SEGUIR</b><p>Va según el plan. No se toca: cada cambio reinicia el aprendizaje.</p></div>
+      <div class="st piv"><b>PIVOTAR</b><p>Cambiar UNA cosa (la que diga el diagnóstico). 7 días u 80 €. Dos pivotes sin mejora = parar.</p></div>
+      <div class="st stop"><b>PARAR</b><p>Se apaga. Solo con datos suficientes: 150 € y 8 leads, o 21 días.</p></div>
+    </div>
+    <div class="scroll"><table class="tbl" id="cplTable"></table></div>
+
+    <h3 style="margin-top:44px">Semáforo: mete los números de la semana</h3>
+    <p class="small muted">Los datos se quedan en este navegador. Los campos vacíos no se evalúan.</p>
+    <div class="sem">
+      <div class="sem__in">
+        <label>Campaña<select id="sCamp"></select></label>
+        <div class="sem__grid" id="sInputs"></div>
+      </div>
+      <div class="sem__out" id="sOut"></div>
     </div>
   </div>
 </section>
@@ -229,13 +261,14 @@
     <div class="eyebrow">Qué hay en cada carpeta</div>
     <div class="folders">
       <div><code>01-PLAN-DE-CAMPANA.txt</code><br>Configuración exacta, paso a paso.</div>
+      <div><code>02-METRICAS-Y-DECISIONES.txt</code><br>Qué mirar y cuándo seguir, pivotar, parar o escalar.</div>
       <div><code>1-google-ads/</code><br>Textos, palabras clave (CSV para Google Ads Editor) e imágenes.</div>
       <div><code>2-meta-espana/</code><br>Vídeos A y B, carrusel e imagen de autoridad.</div>
       <div><code>3-meta-mallorca/</code><br>Vídeo de temporada (con y sin marcas) e imagen de idiomas.</div>
       <div><code>4-remarketing/</code><br>«Sigue en pie» y «Calcula tu web».</div>
       <div><code>5-linkedin-despachos-opcional/</code><br>Piezas para despachos (presupuesto aparte).</div>
       <div><code>6-simulacion/</code><br>El script de la simulación y sus resultados.</div>
-      <div><code>7-seguimiento/</code><br>Plantilla para apuntar cada lead.</div>
+      <div><code>7-seguimiento/</code><br>Cada lead (leads.csv) y el estado de cada campaña cada lunes (cuadro-semanal.csv).</div>
       <div><code>_fuentes/</code><br>El código de todas las piezas para cambiar un texto o un precio (LEEME.txt).</div>
     </div>
     <p style="margin-top:30px">COMA · Comunicación en Mallorca · Publicom Marketing 2000 SL · Paseo Mallorca, 16 · Palma</p>
@@ -448,6 +481,78 @@ function barPath(x, y, w, h, r = 4) {
     ]],
   ];
   document.getElementById("pieces").innerHTML = groups.map(([t, dir, items]) => `<div class="group"><h3>${t} <a class="small muted" href="${dir}" style="font-weight:400">${dir}</a></h3><div class="gallery">${items.join("")}</div></div>`).join("");
+})();
+
+// ------------------------------------------------------------------ semáforo
+(function () {
+  // [wow, fin de seguir, fin de pivotar]; low = cuanto más bajo, mejor
+  const CPLQ = { G2: [20, 35, 50], M2: [20, 35, 50], G1: [25, 38, 45], M1: [22, 33, 40], M3: [12, 25, 35], G4: [35, 65, 85] };
+  const NAME = { G2: "G2 Google Mallorca", M2: "M2 Meta Mallorca", G1: "G1 Google España", M1: "M1 Meta España", M3: "M3 Remarketing", G4: "G4 Google SEO local" };
+  const LAB = { wow: "WOW", go: "SEGUIR", piv: "PIVOTAR", stop: "PARAR", na: "SIN DATOS" };
+  const state = (v, t, low) => v == null || !isFinite(v) ? "na" : low ? (v <= t[0] ? "wow" : v <= t[1] ? "go" : v <= t[2] ? "piv" : "stop") : (v > t[0] ? "wow" : v >= t[1] ? "go" : v >= t[2] ? "piv" : "stop");
+  const FIELDS = [
+    ["spend", "Gasto €"], ["imps", "Impresiones"], ["clicks", "Clics (en Meta, en el enlace)"], ["lpv", "Visitas a la landing (Meta)"],
+    ["v3", "Reproducciones de 3 s (vídeo)"], ["thru", "ThruPlay (vídeo)"], ["freq", "Frecuencia 7 días (Meta)"],
+    ["leads", "Leads"], ["qleads", "Leads cualificados"], ["clients", "Clientes"], ["rev", "Facturación 1.er encargo €"], ["resp", "Respuesta media al lead (min)"],
+  ];
+  const sel = document.getElementById("sCamp"), box = document.getElementById("sInputs"), out = document.getElementById("sOut");
+  sel.innerHTML = Object.keys(NAME).map((k) => `<option value="${k}">${NAME[k]}</option>`).join("");
+  box.innerHTML = FIELDS.map(([id, l]) => `<label>${l}<input id="f_${id}" type="number" min="0" step="any" inputmode="decimal"></label>`).join("");
+  let store = {};
+  try { store = JSON.parse(localStorage.getItem("coma-semaforo") || "{}"); } catch {}
+  const load = () => FIELDS.forEach(([id]) => { document.getElementById("f_" + id).value = (store[sel.value] || {})[id] ?? ""; });
+  const val = (id) => { const x = document.getElementById("f_" + id).value; return x === "" ? null : Number(x); };
+  const pct = (v) => v == null || !isFinite(v) ? "–" : (v * 100).toFixed(1).replace(".", ",") + " %";
+  const money = (v) => v == null || !isFinite(v) ? "–" : eur(v);
+  const div = (a, b) => a == null || b == null || b === 0 ? null : a / b;
+
+  function run() {
+    const k = sel.value, g = k[0] === "G", rtg = k === "M3";
+    store[k] = Object.fromEntries(FIELDS.map(([id]) => [id, val(id)]));
+    try { localStorage.setItem("coma-semaforo", JSON.stringify(store)); } catch {}
+    const v = store[k];
+    const cplq = div(v.spend, v.qleads ?? null) ?? (v.spend > 0 && v.qleads === 0 ? Infinity : null);
+    // funnel en orden: el primero que falla es lo que se cambia
+    const rows = [
+      !g && ["Gancho (3 s ÷ impresiones)", div(v.v3, v.imps), [0.35, 0.25, 0.2], false, pct, "Cambiar solo el primer segundo del vídeo: precio ↔ pregunta ↔ sector."],
+      !g && ["Retención (ThruPlay ÷ 3 s)", div(v.thru, v.v3), [0.35, 0.2, 0.12], false, pct, "El vídeo engancha pero se cae: acortar la parte central."],
+      ["CTR" + (g ? " del anuncio" : " de enlace"), div(v.clicks, v.imps), g ? [0.08, 0.05, 0.03] : [0.015, 0.009, 0.006], false, pct, g ? "Reescribir títulos o ajustar palabras clave (nivel de calidad)." : "Se paran pero no entran: cambiar texto y botón, o probar otra pieza."],
+      !g && ["Visitas ÷ clics", div(v.lpv, v.clicks), [0.85, 0.7, 0.6], false, pct, "No es el anuncio: la web carga lenta o la medición falla. Probar en 4G."],
+      !g && ["Frecuencia 7 días", v.freq, [0, 3, 4], true, (x) => x == null ? "–" : String(x).replace(".", ","), "Público cansado: subir una pieza nueva o ampliar edad o zona."],
+      ["Conversión de la landing", div(v.leads, g ? v.clicks : (v.lpv ?? v.clicks)), g ? [0.08, 0.04, 0.02] : rtg ? [0.09, 0.05, 0.03] : [0.04, 0.02, 0.01], false, pct, "Probar el otro destino (/lp/web-99/ ↔ /lp/mallorca/ ↔ /precios/)."],
+      ["Leads cualificados ÷ leads", div(v.qleads, v.leads), [0.65, 0.4, 0.25], false, pct, "Entra gente curiosa: «para negocios y autónomos» en el texto, negativas en Google, edad mínima 30 en Meta."],
+      ["€ por lead cualificado", cplq, CPLQ[k], true, money, null],
+      ["Respuesta al lead", v.resp, [15, 60, 240], true, (x) => x == null ? "–" : Math.round(x) + " min", "Responder en menos de 1 hora. Por encima de 4 h, congelar subidas."],
+      ["Cierre (cualificado → cliente)", (v.qleads ?? 0) >= 10 ? div(v.clients, v.qleads) : null, [0.3, 0.18, 0.1], false, pct, "No es el anuncio: revisar llamada, propuesta y seguimiento."],
+      ["Primer encargo medio", (v.clients ?? 0) >= 3 ? div(v.rev, v.clients) : null, [280, 180, 130], false, money, "Se venden webs solas: proponer el Pack Temporada (web + 2 idiomas + reservas, 346 €)."],
+      ["€ por cliente", div(v.spend, v.clients), [100, 180, 250], true, money, null],
+      ["Facturación ÷ gasto", div(v.rev, v.spend), [2.5, 1.2, 0.8], false, (x) => x == null ? "–" : x.toFixed(2).replace(".", ","), null],
+    ].filter(Boolean).map(([l, x, t, low, f, fix]) => ({ l, x, s: state(x, t, low), f, fix }));
+
+    const enough = (v.spend ?? 0) >= 150 && (v.leads ?? 0) >= 8;
+    const main = rows.find((r) => r.l === "€ por lead cualificado");
+    let cls = main.s, title = LAB[cls], msg = "";
+    const firstBad = rows.find((r) => (r.s === "stop" || r.s === "piv") && r.fix);
+    if (cls === "na") msg = "Mete gasto y leads cualificados para ver el estado.";
+    else if (!enough && cls === "stop") { cls = "piv"; title = "PIVOTAR (aún pocos datos)"; msg = "Por debajo de 150 € y 8 leads no se apaga: se pivota. " + (firstBad ? firstBad.fix : ""); }
+    else if (cls === "stop") msg = k === "G1" || k === "M1" ? "Apagar. El 30 % de su presupuesto pasa a M2 Meta Mallorca; el resto no se gasta." : "Apagar y pasar el dinero a la campaña que esté en WOW o SEGUIR.";
+    else if (cls === "piv") msg = "Cambiar una sola cosa: " + (firstBad ? firstBad.fix : "revisar textos y piezas.");
+    else if (cls === "go") msg = "No tocar nada." + (firstBad ? " Para la próxima pieza, ojo con: " + firstBad.l.toLowerCase() + "." : "");
+    else if (cls === "wow") {
+      const close = rows.find((r) => r.l.startsWith("Cierre"));
+      msg = close.s === "wow" || close.s === "go" ? "Si la semana pasada también salió WOW: TENEMOS ALGO. +20 % de presupuesto cada 4 días hasta salir de WOW o llegar a 4 webs nuevas por semana." : "Muy buen lead. Falta ver el cierre (10 leads cualificados): si llega al 18 % y repite, a escalar.";
+    }
+    out.innerHTML = `<div class="verdict ${cls}"><span class="small" style="opacity:.85">${NAME[k]}</span><b>${title}</b><p>${msg}</p></div>
+      <div class="scroll"><table class="tbl" id="sTable" style="margin-top:0"><tr><th>Métrica</th><th class="n">Valor</th><th>Estado</th></tr>
+      ${rows.map((r) => `<tr><td>${r.l}</td><td class="n">${r.f(r.x)}</td><td><span class="badge ${r.s}">${LAB[r.s]}</span></td></tr>`).join("")}</table></div>`;
+  }
+  sel.addEventListener("change", () => { load(); run(); });
+  box.addEventListener("input", run);
+  load(); run();
+
+  // tabla de umbrales de € por lead cualificado
+  document.getElementById("cplTable").innerHTML = `<tr><th>€ por lead cualificado</th><th class="n"><span class="badge wow">WOW</span></th><th class="n"><span class="badge go">SEGUIR</span></th><th class="n"><span class="badge piv">PIVOTAR</span></th><th class="n"><span class="badge stop">PARAR</span></th></tr>` +
+    ["G2", "M2", "G1", "M1", "M3", "G4"].map((k) => { const t = CPLQ[k]; return `<tr><td>${NAME[k]}</td><td class="n">≤ ${t[0]} €</td><td class="n">${t[0]}-${t[1]} €</td><td class="n">${t[1]}-${t[2]} €</td><td class="n">&gt; ${t[2]} €</td></tr>`; }).join("");
 })();
 
 // ------------------------------------------------------------------ checklist

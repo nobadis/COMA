@@ -11,7 +11,7 @@
   4. Antes de encender nada (31 oct → 8 nov)
   5. Google Ads: configuración exacta
   6. Meta (Facebook e Instagram): configuración exacta
-  7. Reglas del lunes (qué subir, qué apagar)
+  7. Reglas del lunes: seguir, pivotar, parar o WOW
   8. Qué hacer con cada lead (aquí se gana o se pierde el dinero)
   9. Opcionales: LinkedIn para despachos y TikTok
  10. Qué hay en cada carpeta
@@ -387,46 +387,51 @@ En enero (F3), añadir a M1 y M2 este texto extra (mismas piezas):
 
 
 ------------------------------------------------------------------------------
-7. REGLAS DEL LUNES (15 minutos, siempre con datos de los últimos 14 días)
+7. REGLAS DEL LUNES: SEGUIR, PIVOTAR, PARAR O WOW
 ------------------------------------------------------------------------------
+
+El detalle completo está en 02-METRICAS-Y-DECISIONES.txt, y el semáforo de
+00-EMPIEZA-AQUI.html hace las cuentas: metes los números de la semana y te
+dice el estado. Lo esencial:
 
 Lead cualificado = nombra un negocio real y no marca «solo estoy explorando».
 Apuntadlo en 7-seguimiento/leads.csv: sin eso no hay reglas que valgan.
+Siempre con los últimos 14 días y con datos mínimos (150 € y 8 leads por
+campaña; 1.500 impresiones o 40 € por anuncio).
 
-A. ANUNCIOS (Meta), desde 1.500 impresiones:
-   · CTR de enlace < 0,6 % ............................ apagar
-   · Vídeos: reproducciones de 3 s / impresiones < 25 % .. apagar (el gancho
-     no engancha)
-   · 40 € gastados sin ningún lead ...................... apagar
-   Siempre que queden al menos 2 anuncios vivos por conjunto.
+€ por lead cualificado:      WOW      SEGUIR     PIVOTAR    PARAR
+  Google y Meta Mallorca     ≤ 20 €   20-35 €    35-50 €    > 50 €
+  Google España              ≤ 25 €   25-38 €    38-45 €    > 45 €
+  Meta España                ≤ 22 €   22-33 €    33-40 €    > 40 €
+  Remarketing                ≤ 12 €   12-25 €    25-35 €    > 35 €
+  SEO local                  ≤ 35 €   35-65 €    65-85 €    > 85 €
 
-B. PALABRAS CLAVE (Google):
-   · 25 clics y 0 leads ................................. pausar
-   · Nivel de calidad < 5 ............................... revisar texto y landing
-   · Términos de búsqueda basura ........................ a negativas
+  WOW 2 semanas seguidas (con cierre ≥ 18 %) = TENEMOS ALGO: +20 % de
+          presupuesto cada 4 días, nunca más de golpe.
+  SEGUIR  no se toca.
+  PIVOTAR se cambia UNA cosa (la que diga el diagnóstico), 7 días u 80 €.
+          Dos pivotes sin mejora = PARAR.
+  PARAR   se apaga.
 
-C. CAMPAÑAS (coste por lead cualificado):
-   · VERDE   ≤ 30 € ..... subir un 20 % cada 4 días (nunca más del 20 % de
-                          golpe: reinicia el aprendizaje)
-   · ÁMBAR  30-45 € ..... mantener y cambiar textos o piezas
-   · ROJO    > 45 € ..... ver regla D
+EL CORTE DEL 7 DE DICIEMBRE (España): G1 en PARAR (> 45 €) y M1 en PARAR
+(> 40 €) se apagan. El 30 % de su presupuesto pasa a M2 Meta Mallorca; el
+resto NO se gasta (Mallorca se satura si le echas todo: la simulación lo
+comprobó).
 
-D. EL CORTE DEL 7 DE DICIEMBRE (España):
-   · G1 Google España con lead cualificado > 45 €  → apagar
-   · M1 Meta España con lead cualificado > 40 €    → apagar
-   El 30 % de su presupuesto pasa a M2 Meta Mallorca. El resto NO se gasta.
-   (Mallorca se satura si le echas todo: la simulación lo comprobó.)
+Anuncios de Meta: apagar con gancho < 20 %, CTR de enlace < 0,6 % o 40 €
+sin ningún lead. Google, cada lunes: términos de búsqueda basura a
+negativas; palabra con 25 clics y 0 leads, pausa.
 
-E. NEGOCIO (cada mes):
-   · Coste por cliente > 220 € durante 4 semanas y casi nadie compra extras:
-     parar y revisar la oferta, no el anuncio.
-   · Más de 4 webs firmadas en una semana: no subir presupuestos hasta
-     entregar. La calidad es la mejor publicidad.
+La brújula de toda la campaña, cada mes: facturación del primer encargo ÷
+gasto. WOW > 2,5 · SEGUIR 1,2-2,5 · PIVOTAR 0,8-1,2 · PARAR < 0,8.
 
-F. CUANDO HAYA 30 VENTAS: importar en Google Ads lo facturado de verdad
-   (conversiones sin conexión con gclid; la web ya lo guarda en el lead) y
-   pasar a puja por valor. Ahí el algoritmo busca clientes que compran
-   extras, no solo formularios.
+Negocio: más de 4 webs firmadas en una semana = no subir presupuestos hasta
+entregar. Lead sin responder más de 4 h = congelar subidas.
+
+CUANDO HAYA 30 VENTAS: importar en Google Ads lo facturado de verdad
+(conversiones sin conexión con gclid; la web ya lo guarda en el lead) y
+pasar a puja por valor. Ahí el algoritmo busca clientes que compran extras,
+no solo formularios.
 
 
 ------------------------------------------------------------------------------
@@ -479,12 +484,15 @@ TikTok (solo si M1 Meta España pasa el corte del 7 dic)
 
   00-EMPIEZA-AQUI.html ......... el plan en visual, con todas las piezas
   01-PLAN-DE-CAMPANA.txt ....... este archivo
+  02-METRICAS-Y-DECISIONES.txt . qué mirar y cuándo seguir, pivotar, parar o
+                                 celebrar (WOW)
   1-google-ads/ ................ textos, palabras clave (CSV) e imágenes
   2-meta-espana/ ............... vídeos A y B, carrusel, imagen autoridad
   3-meta-mallorca/ ............. vídeo temporada (con y sin marcas), idiomas
   4-remarketing/ ............... «Sigue en pie» y «Calcula tu web»
   5-linkedin-despachos-opcional/ piezas para despachos
   6-simulacion/ ................ simulación (script + resultados)
-  7-seguimiento/ ............... plantilla para apuntar cada lead
+  7-seguimiento/ ............... leads.csv (cada lead) y cuadro-semanal.csv
+                                 (el estado de cada campaña, cada lunes)
   _fuentes/ .................... el código de todas las piezas, por si hay que
                                  cambiar un texto o un precio (ver LEEME.txt)

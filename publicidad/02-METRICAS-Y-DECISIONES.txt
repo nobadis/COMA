@@ -1,0 +1,214 @@
+==============================================================================
+  COMA · MÉTRICAS Y DECISIONES
+  Qué mirar, cuándo, y qué hacer con cada número: SEGUIR, PIVOTAR, PARAR o WOW.
+  El semáforo interactivo de 00-EMPIEZA-AQUI.html hace estas cuentas por ti.
+==============================================================================
+
+LOS 4 ESTADOS
+-------------
+  WOW ...... Tenemos algo. Mejor de lo previsto. Se le echa gasolina (sección 6).
+  SEGUIR ... Va según el plan. No se toca: cada cambio reinicia el aprendizaje.
+  PIVOTAR .. Hay señal, pero algo falla. Se cambia UNA sola cosa (sección 5), se
+             le dan 7 días u 80 €, y se vuelve a mirar.
+  PARAR .... No funciona y no va a funcionar con retoques. Se apaga y el dinero
+             va a lo que sí funciona.
+
+Dos reglas que evitan casi todos los errores:
+  1. No se juzga sin datos suficientes (sección 2). Antes de eso, un PARAR
+     cuenta como PIVOTAR. La excepción son las alarmas (sección 7).
+  2. Dos PIVOTAR seguidos sobre lo mismo, sin mejora = PARAR.
+
+
+1. LAS MÉTRICAS QUE MANDAN (por orden de importancia)
+-----------------------------------------------------
+  Brújula: FACTURACIÓN DEL PRIMER ENCARGO ÷ GASTO EN ANUNCIOS
+     Si es más de 1, cada euro de anuncio vuelve en el primer encargo, sin
+     contar lo mensual. Es la que decide si la campaña entera sigue.
+
+  Decisión semanal: € POR LEAD CUALIFICADO de cada campaña.
+     Lead cualificado = nombra un negocio real y no marca «solo estoy
+     explorando». Se apunta en 7-seguimiento/leads.csv. Las plataformas no
+     lo saben: lo sabes tú.
+
+  Diagnóstico: el resto (gancho, CTR, conversión, cierre, ticket). No deciden
+     solas si se apaga algo: dicen QUÉ cambiar cuando hay que pivotar.
+
+
+2. DATOS MÍNIMOS ANTES DE JUZGAR
+--------------------------------
+  Un anuncio de Meta ........ 1.500 impresiones o 40 € gastados
+  Una palabra clave Google .. 25 clics
+  Una campaña ............... 150 € gastados Y al menos 8 leads, o 21 días
+  Cierre y ticket ........... 10 leads cualificados con respuesta
+  La campaña entera ......... 4 semanas (primer veredicto el 7 de diciembre)
+
+  Ventana: siempre los últimos 14 días, nunca un día suelto.
+
+
+3. LA TABLA DE DECISIÓN
+-----------------------
+  (Cada cifra: WOW si es mejor que la primera columna; PARAR si es peor que la
+  última. Entre medias, SEGUIR o PIVOTAR.)
+
+  A. € POR LEAD CUALIFICADO (la decisión de cada lunes)
+
+                                 WOW      SEGUIR     PIVOTAR    PARAR
+  G2 Google Mallorca             ≤ 20 €   20-35 €    35-50 €    > 50 €
+  M2 Meta Mallorca               ≤ 20 €   20-35 €    35-50 €    > 50 €
+  G1 Google España               ≤ 25 €   25-38 €    38-45 €    > 45 €
+  M1 Meta España                 ≤ 22 €   22-33 €    33-40 €    > 40 €
+  M3 Remarketing                 ≤ 12 €   12-25 €    25-35 €    > 35 €
+  G4 SEO local (cliente que paga
+     cada mes: aguanta más)      ≤ 35 €   35-65 €    65-85 €    > 85 €
+  G3 Marca                       sin regla: solo que no gaste más de 2 €/día
+
+  Por qué estas cifras: un cliente de la web deja ~218 € de primer encargo en
+  España y ~253 € en Mallorca. Cerrando 1 de cada 4-5 leads cualificados, el
+  lead no puede pasar de ~45-50 € sin perder dinero en el primer encargo.
+  Los umbrales de España son más duros porque allí no jugamos en casa.
+
+  B. LA CAMPAÑA ENTERA (cada mes)
+
+                                 WOW      SEGUIR     PIVOTAR    PARAR
+  Facturación 1.er encargo ÷
+  gasto                          > 2,5    1,2-2,5    0,8-1,2    < 0,8
+  € por cliente nuevo            < 100 €  100-180 €  180-250 €  > 250 €
+  Facturación 12 meses ÷ gasto   > 6      3-6        2-3        < 2
+
+  C. EL ANUNCIO (Meta), para pivotar o apagar piezas
+
+                                 WOW      SEGUIR     PIVOTAR    PARAR
+  Gancho: reproducciones de 3 s
+  ÷ impresiones (vídeos)         > 35 %   25-35 %    20-25 %    < 20 %
+  Retención: ThruPlay ÷
+  reproducciones de 3 s          > 35 %   20-35 %    12-20 %    < 12 %
+  CTR de enlace                  > 1,5 %  0,9-1,5 %  0,6-0,9 %  < 0,6 %
+  Visitas a la landing ÷ clics   > 85 %   70-85 %    60-70 %    < 60 % (*)
+  Frecuencia 7 días (frío)       -        ≤ 3        3-4        > 4 (renovar)
+  (*) Esto no es el anuncio: es la web lenta o la medición. Revisar antes de
+  tocar nada más.
+
+  D. LA BÚSQUEDA (Google)
+
+                                 WOW      SEGUIR     PIVOTAR    PARAR
+  CTR del anuncio                > 8 %    5-8 %      3-5 %      < 3 %
+  Nivel de calidad               8-10     6-7        4-5        ≤ 3
+  CPC medio (G1/G2)              < 1,2 €  1,2-2,2 €  2,2-3 €    > 3 €
+  Cuota de impresiones perdida
+  por presupuesto (G2)           > 30 % con lead en WOW = subir presupuesto
+
+  E. LA LANDING (clic → formulario)
+
+                                 WOW      SEGUIR     PIVOTAR    PARAR
+  Desde Google                   > 8 %    4-8 %      2-4 %      < 2 %
+  Desde Meta frío                > 4 %    2-4 %      1-2 %      < 1 %
+  Desde remarketing              > 9 %    5-9 %      3-5 %      < 3 %
+  Leads cualificados ÷ leads     > 65 %   40-65 %    25-40 %    < 25 %
+
+  F. LA VENTA (aquí está la mitad del resultado)
+
+                                 WOW      SEGUIR     PIVOTAR    PARAR (**)
+  Tiempo de respuesta al lead    < 15 min < 1 h      1-4 h      > 4 h
+  Lead cualificado → llamada     > 70 %   50-70 %    35-50 %    < 35 %
+  Lead cualificado → cliente     > 30 %   18-30 %    10-18 %    < 10 %
+  Primer encargo medio           > 280 €  180-280 €  130-180 €  < 130 €
+  Clientes con alojamiento       > 75 %   55-75 %    35-55 %    < 35 %
+  (**) PARAR en la venta no apaga anuncios: congela las subidas de
+  presupuesto hasta arreglar el proceso. Pagar más leads que luego no se
+  atienden bien es tirar el dinero.
+
+
+4. EL CALENDARIO DE LECTURAS
+----------------------------
+  Día 1-3 (9-11 nov) .. ¿Se registran las conversiones? ¿Gasta cada campaña?
+                         Solo alarmas (sección 7). No se toca nada más.
+  Día 7 (16 nov) ...... Tablas C y D: gancho, CTR, CPC, términos de búsqueda.
+                         Se apagan las piezas en PARAR.
+  Día 14 (23 nov) ..... Primera lectura de la tabla A. Pivotes.
+  Día 28 (7 dic) ...... EL CORTE: G1 y M1 en PARAR se apagan (el 30 % de su
+                         dinero pasa a M2; el resto se ahorra). Entra M3.
+  Día 42 (21 dic) ..... Freno de Navidad (presupuestos de la fase NAVIDAD).
+  Día 59 (7 ene) ...... Tabla F con datos: cierre y ticket. Entra G4. Fase
+                         fuerte: lo que esté en WOW o SEGUIR sube al plan F3.
+  Día 84 (1 feb) ...... Tabla B: veredicto de la campaña y plan de temporada.
+  Cada lunes .......... 15 minutos: tabla A de cada campaña + semáforo.
+
+
+5. QUÉ CAMBIAR CUANDO TOCA PIVOTAR (un cambio cada vez, de arriba abajo)
+-----------------------------------------------------------------------
+  Falla el GANCHO (vídeo) ........ El público no se para. Cambiar solo el
+                                   primer segundo: precio («99 €») ↔ pregunta
+                                   («¿Te han pedido 1.500 €?») ↔ sector
+                                   («Tu restaurante, en alemán»).
+  Gancho bien, falla el CTR ...... Se paran pero no entran: el cierre no
+                                   empuja. Cambiar el texto principal y el
+                                   botón; probar la pieza B o el carrusel.
+  CTR bien, visitas < 70 % ....... La web carga lenta o la medición falla.
+                                   Probar la URL en un móvil con 4G.
+  Visitas bien, falla la landing . Llegan pero no escriben: probar el destino
+                                   alternativo (/lp/web-99/ ↔ /lp/mallorca/ ↔
+                                   /precios/). Revisar que el formulario se vea
+                                   sin bajar.
+  Leads bien, pocos cualificados . Entra gente curiosa. Decir «para negocios y
+                                   autónomos» en el texto, añadir negativas en
+                                   Google, subir la edad mínima en Meta a 30.
+  Cualificados bien, poco cierre . No es el anuncio: es la venta. Revisar el
+                                   tiempo de respuesta, la llamada y la
+                                   propuesta (sección 8 del plan).
+  Cierre bien, ticket bajo ....... Se venden webs de 99 € solas. Proponer un
+                                   PACK con precio cerrado: en Mallorca, «Pack
+                                   Temporada» = web + 2 idiomas + reservas
+                                   (99 + 98 + 149 = 346 € + IVA). Es el mismo
+                                   precio de siempre, solo que ya sumado.
+                                   Nunca bajar de 99 € ni hacer descuentos.
+  Frecuencia > 3 en frío ......... Público cansado: subir una pieza nueva o
+                                   ampliar edad o zona.
+
+
+6. CUANDO SALE «WOW» (tenemos algo)
+-----------------------------------
+  Una métrica suelta en WOW es una buena noticia. TENEMOS ALGO es esto:
+
+     La campaña lleva 2 semanas seguidas con el lead cualificado en WOW
+     Y su cierre está en SEGUIR o mejor (al menos 18 %).
+
+  Entonces:
+  1. Subir su presupuesto un 20 % cada 4 días (nunca más de golpe), hasta que
+     el lead salga de la zona WOW o la capacidad de entrega llegue al límite
+     (4 webs nuevas por semana).
+  2. Si es Google Mallorca y pierde más del 30 % de impresiones por
+     presupuesto: es dinero que se queda en la mesa. Subirlo primero.
+  3. Si el WOW es de una pieza (gancho > 35 % y CTR > 1,5 %): hacer 2 versiones
+     de esa pieza (mismo primer segundo, distinto final) y llevarla a las otras
+     campañas de Meta. Si es en España, lanzar TikTok con ella (plan,
+     sección 9).
+  4. Si la CAMPAÑA ENTERA da WOW en la tabla B durante 4 semanas: hay modelo.
+     En febrero, preparar la temporada: Ibiza y Menorca con la misma campaña
+     M2, el Pack Temporada como oferta principal y una campaña de alojamiento
+     y SEO para los clientes ya ganados.
+
+
+7. ALARMAS: PARAR YA, SIN ESPERAR AL LUNES
+-----------------------------------------
+  · Más de 100 clics y 0 conversiones registradas en 72 h → la medición está
+    rota. Pausar, probar el formulario y volver a encender.
+  · CPC medio más del doble del máximo del plan → revisar pujas.
+  · Una campaña gasta más del doble de su presupuesto diario 2 días seguidos.
+  · Anuncio rechazado o cuenta en revisión → no crear duplicados: corregir y
+    apelar.
+  · Un lead se queja de que el precio no era real → revisar los textos al
+    momento. La confianza vale más que cualquier campaña.
+  · Leads sin responder más de 4 h → congelar subidas hasta ponerse al día.
+
+
+8. EL CUADRO DEL LUNES
+----------------------
+  7-seguimiento/cuadro-semanal.csv: una fila por campaña y semana, con el
+  estado que sale. En 3 meses es la historia completa de qué funcionó.
+  Las cifras salen de:
+    Google Ads → Campañas (columnas: coste, clics, CTR, CPC, conversiones,
+                 cuota de impr. perdida por presupuesto)
+    Meta → Administrador de anuncios (columnas: importe gastado, impresiones,
+           reproducciones de 3 s, ThruPlay, clics en el enlace, visitas a la
+           página de destino, clientes potenciales, frecuencia)
+    7-seguimiento/leads.csv → cualificados, clientes y facturación
