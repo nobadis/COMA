@@ -131,12 +131,14 @@
     <div class="logo"><span>COMA</span><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
     <div class="eyebrow" style="margin-top:40px">Plan de publicidad · 9 nov 2026 → 7 feb 2027</div>
     <h1>Muchos clientes en Mallorca. Poco dinero en probar fuera<span class="c">.</span></h1>
-    <p class="lead">13 semanas, Google y Meta, 7 campañas, 26 piezas listas para subir. Cada lunes, unas reglas fijas deciden qué sube y qué se apaga. Aquí está todo. La configuración exacta, paso a paso, está en el TXT.</p>
+    <p class="lead">13 semanas, Google y Meta, 7 campañas, 33 piezas listas para subir, 3 tests A/B y un presupuesto cerrado que no se puede pasar. Cada lunes, unas reglas fijas deciden qué sigue, qué se cambia, qué se apaga y qué se escala.</p>
     <div class="files">
       <a href="01-PLAN-DE-CAMPANA.txt">Abrir el plan exacto (TXT) →</a>
       <a class="alt" href="1-google-ads/textos-google.txt">Textos de Google</a>
       <a class="alt" href="6-simulacion/resultados.csv">Simulación (CSV)</a>
       <a class="alt" href="02-METRICAS-Y-DECISIONES.txt">Métricas y decisiones</a>
+      <a class="alt" href="03-MENSAJE-Y-TESTS-AB.txt">Mensaje y tests A/B</a>
+      <a class="alt" href="04-AGENDA-DIA-A-DIA.txt">Agenda día a día</a>
       <a class="alt" href="#semaforo">Semáforo del lunes</a>
       <a class="alt" href="7-seguimiento/leads.csv">Hoja de leads</a>
     </div>
@@ -161,11 +163,48 @@
 
 <section>
   <div class="wrap">
+    <div class="eyebrow">El mensaje</div>
+    <h2>Se vende el valor. El precio es la prueba<span class="c">.</span></h2>
+    <p class="lead">«Una web a tu medida, hecha para que te contacten, por una agencia de Mallorca con 29 años. Desde 99 €, con precio cerrado.» Cada anuncio cuenta los cuatro pilares; lo que cambia es por cuál empieza.</p>
+    <div class="formula">
+      <div><b>Resultado</b><p>Que te llamen, te reserven y te escriban. En Mallorca, que el turista te encuentre en su idioma.</p></div>
+      <div><b>Confianza</b><p>29 años, +100 pymes, Palma, referencias y diseño propio.</p></div>
+      <div><b>Sin riesgo</b><p>Precio cerrado, pago único, extras con precio visible y propuesta antes de empezar.</p></div>
+      <div><b>Facilidad</b><p>Nos cuentas en 2 minutos. Nosotros la diseñamos, la publicamos y la dejamos funcionando.</p></div>
+      <div><b>Nunca</b><p>«Barato», plazos sin propuesta, cifras de resultados, «primer puesto» ni descuentos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Tests A/B</div>
+    <h2>Tres preguntas grandes, una detrás de otra<span class="c">.</span></h2>
+    <p class="lead">Con 2 a 4 leads por semana y campaña no se pueden probar colores ni palabras sueltas, así que se prueba lo que cambia el negocio. Todo dentro del mismo presupuesto. Detalle en <a href="03-MENSAJE-Y-TESTS-AB.txt">03-MENSAJE-Y-TESTS-AB.txt</a>.</p>
+    <div class="camps">
+      <div class="camp"><div><span class="tag m">Meta</span> <span class="role">9 nov → 6 dic</span></div><h3>1 · ¿Qué ángulo vende más?</h3><p>Precio, transparencia, facilidad o autoridad (en Mallorca: temporada). Los 4 anuncios en el mismo conjunto y con el mismo destino.</p><p class="small"><b style="color:var(--ink)">Gana</b> el menor € por lead cualificado. Se quedan los 2 mejores y entra la otra pieza del ángulo ganador.</p></div>
+      <div class="camp"><div><span class="tag g">Google</span> <span class="role">23 nov → 31 ene</span></div><h3>2 · ¿Qué landing convierte más?</h3><p>En Google Mallorca: /lp/mallorca/ (somos de aquí) frente a /lp/web-99/ (precio). Experimento de Google al 50 %.</p><p class="small"><b style="color:var(--ink)">Gana</b> la que tenga más conversiones por clic con significación del 95 %, o 1,5 veces más con 15 leads. Si no, se queda /lp/mallorca/.</p></div>
+      <div class="camp star"><div><span class="tag m">Meta</span> <span class="role">7 ene → 7 feb</span></div><h3>3 · ¿Web de 99 € o Pack Temporada de 346 €?</h3><p>En Meta Mallorca, dos conjuntos de 6 €/día. El Pack (web + inglés + alemán + reservas) lleva a su landing, /lp/temporada/.</p><p class="small"><b style="color:var(--ink)">Gana</b> el que facture más por euro (o, al principio, el que tenga más € en propuestas). Es la oferta de la temporada.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <div class="eyebrow">Dinero y calendario</div>
     <h2>Despacio en Navidad, fuerte en enero<span class="c">.</span></h2>
     <p class="lead">Presupuesto máximo por semana si no se apaga nada (3.963 € en total). Con las reglas, lo típico es gastar unos 3.140 €.</p>
     <div class="chart" id="weeks"><div class="legend"><span><i style="background:var(--google)"></i>Google</span><span><i style="background:var(--meta)"></i>Meta</span></div><div class="tip"></div></div>
     <div class="scroll"><table class="tbl" id="phases"></table></div>
+    <h3 style="margin-top:40px">Presupuesto cerrado: 3.963 €, blindado en cada plataforma</h3>
+    <div class="scroll"><table class="tbl">
+      <tr><th>Bloque</th><th>Campañas</th><th class="n">Máximo</th></tr>
+      <tr><td><b>Núcleo</b>: se gasta mientras siga en SEGUIR o WOW</td><td>G2 1.071 · M2 788 · M3 267 · G4 192 · G3 91</td><td class="n">2.409 €</td></tr>
+      <tr><td><b>Prueba de España</b> (9 nov → 6 dic)</td><td>G1 280 · M1 196</td><td class="n">476 €</td></tr>
+      <tr><td><b>Continuación de España</b>, solo si pasa el corte del 7 dic</td><td>G1 609 · M1 469</td><td class="n">1.078 €</td></tr>
+      <tr><td><b>Total</b>: ni un euro más</td><td>Google 2.243 · Meta 1.720</td><td class="n"><b>3.963 €</b></td></tr>
+    </table></div>
+    <p class="small muted" style="margin-top:12px">Si España no pasa el corte, su dinero va a una <b>bolsa</b>: el 30 % refuerza Meta Mallorca y el resto solo se usa para escalar campañas en WOW; si no, se ahorra. Tope en Meta: límite de gasto de la cuenta (1.720 €) y de cada campaña. En Google: reglas automatizadas que pausan cada campaña al llegar a su límite. Detalle en el plan, sección 2.</p>
   </div>
 </section>
 
@@ -239,6 +278,25 @@
     <h2>Sin esto no se lanza<span class="c">.</span></h2>
     <p class="lead">Marca cada paso al hacerlo (se guarda en este navegador).</p>
     <ul class="check" id="checklist"></ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Agenda</div>
+    <h2>Las fechas que mandan<span class="c">.</span></h2>
+    <p class="lead">Todos los días: contestar cada lead en menos de 1 hora. Todos los lunes: el semáforo. Lo demás, aquí. Día a día en <a href="04-AGENDA-DIA-A-DIA.txt">04-AGENDA-DIA-A-DIA.txt</a>.</p>
+    <div class="scroll"><table class="tbl">
+      <tr><td class="n">2-8 nov</td><td><b>Preparar</b>: medición, cuentas, campañas en pausa, límites de gasto, prueba real y permisos.</td></tr>
+      <tr><td class="n">Lun 9 nov</td><td><b>Encender</b> G1, G2, G3, M1 y M2. Empieza el test 1.</td></tr>
+      <tr><td class="n">Lun 16 nov</td><td>Primera lectura: se apagan las piezas en PARAR.</td></tr>
+      <tr><td class="n">Lun 23 nov</td><td>Primera lectura del € por lead cualificado. Empieza el test 2.</td></tr>
+      <tr><td class="n">Lun 7 dic</td><td><b>El corte</b>: España sigue o se apaga. Veredicto del test 1. Se enciende el remarketing.</td></tr>
+      <tr><td class="n">Lun 21 dic</td><td>Freno de Navidad.</td></tr>
+      <tr><td class="n">Jue 7 ene</td><td><b>Escalar</b>: fase fuerte, se enciende SEO local y empieza el test 3 (Pack).</td></tr>
+      <tr><td class="n">Lun 1 feb</td><td><b>Veredictos</b>: tests 2 y 3 y ¿tenemos algo? Plan de temporada.</td></tr>
+      <tr><td class="n">Dom 7 feb</td><td>Fin.</td></tr>
+    </table></div>
   </div>
 </section>
 
@@ -369,8 +427,8 @@ function barPath(x, y, w, h, r = 4) {
     G2: ["El motor", "Las mismas búsquedas y las de «diseño web Mallorca», solo para gente de la isla. Aquí COMA juega en casa.", "/lp/mallorca/", "Textos de búsqueda (1-google-ads/)", true],
     G3: ["El seguro", "Quien ya os busca por el nombre. Cuesta céntimos y evita que otro se ponga delante.", "/", "Textos de marca"],
     G4: ["El segundo producto", "SEO local y posicionamiento en IA desde enero. Lead caro, pero cada cliente paga cada mes.", "/lp/seo-local/", "Textos SEO (1-google-ads/)"],
-    M1: ["Prueba con fecha de corte", "Vídeo en Reels y feed para toda España (sin Baleares). Si en 4 semanas no baja de 40 €, se apaga.", "/lp/web-99/", "Vídeos A y B, carrusel, autoridad"],
-    M2: ["El segundo motor", "«La temporada se gana en invierno»: webs en 4 idiomas para negocios de Mallorca.", "/lp/mallorca/", "Vídeo temporada, idiomas, autoridad", true],
+    M1: ["Prueba con fecha de corte", "Vídeo en Reels y feed para toda España (sin Baleares). Si en 4 semanas no baja de 40 €, se apaga.", "/lp/web-99/", "Vídeos A, B y E, autoridad (test 1)"],
+    M2: ["El segundo motor", "«La temporada se gana en invierno»: webs en 4 idiomas para negocios de Mallorca. En enero, test de la web de 99 € contra el Pack Temporada.", "/lp/mallorca/ y /lp/temporada/", "Vídeos temporada y E, idiomas, autoridad, Pack", true],
     M3: ["El más rentable", "Para quien ya vio la oferta y no escribió. Desde el 7 de diciembre.", "/lp/web-99/ y /precios/", "«Sigue en pie», «Calcula tu web»"],
   };
   document.getElementById("camps").innerHTML = Object.keys(P).map((k) => {
@@ -456,8 +514,10 @@ function barPath(x, y, w, h, r = 4) {
   const im = (src, t, d, wide) => `<figure class="piece${wide ? " wide" : ""}"><img src="${src}" alt="${t}"><figcaption><b>${t}</b>${d}</figcaption></figure>`;
   const groups = [
     ["Meta · España (M1)", "2-meta-espana/", [
-      v("2-meta-espana/M1-A_video-99_9x16", "A · «Tu web. 99 €»", "15 s. Gancho de precio + el diseño cambia de marca."),
-      v("2-meta-espana/M1-B_video-1500_9x16", "B · «¿Te han pedido 1.500 €?»", "12 s. La objeción de precio y la «trampa»: extras con precio."),
+      v("2-meta-espana/M1-A_video-99_9x16", "A · Precio: «Tu web. 99 €»", "15 s. Gancho de precio + el diseño cambia de marca."),
+      v("2-meta-espana/M1-B_video-1500_9x16", "B · Transparencia: «¿Te han pedido 1.500 €?»", "12 s. La objeción de precio y la «trampa»: extras con precio."),
+      v("2-meta-espana/M1-E_video-facilidad_9x16", "E · Facilidad: «¿Sin tiempo para tu web?»", "15 s. Para qué sirve y 3 pasos. También en Mallorca."),
+      im("2-meta-espana/M1-F_facilidad_4x5.png", "F · Facilidad (imagen)", "4:5. Retador si gana el ángulo facilidad."),
       `<figure class="piece wide"><div class="carousel">${[1, 2, 3, 4, 5].map((i) => `<img src="2-meta-espana/M1-C_carrusel-${i}.png" alt="Tarjeta ${i}">`).join("")}</div><figcaption><b>C · Carrusel «Qué incluye»</b>5 tarjetas 1:1, en este orden.</figcaption></figure>`,
       im("2-meta-espana/M1-D_autoridad_4x5.png", "D · Autoridad", "4:5. Solo con permiso de los clientes citados."),
     ]],
@@ -465,6 +525,8 @@ function barPath(x, y, w, h, r = 4) {
       v("3-meta-mallorca/M2-A_video-temporada_9x16", "A · «La temporada se gana en invierno»", "15 s. La misma web en ES, EN, DE y CA."),
       v("3-meta-mallorca/M2-A_video-temporada-sin-marcas_9x16", "A · Versión sin marcas", "Igual, sin nombres de clientes en el cierre."),
       im("3-meta-mallorca/M2-B_idiomas_4x5.png", "B · «Buenos días. Good morning…»", "4:5 (también en 9:16)."),
+      v("3-meta-mallorca/M2-A_video-temporada-pack_9x16", "Test 3 · Vídeo Pack Temporada", "El mismo vídeo con la oferta de 346 €."),
+      im("3-meta-mallorca/M2-D_pack-temporada_4x5.png", "Test 3 · Imagen Pack Temporada", "4:5 (también en 9:16). Lleva a /lp/temporada/."),
     ]],
     ["Meta · Remarketing (M3)", "4-remarketing/", [
       im("4-remarketing/M3-A_sigue-en-pie_4x5.png", "A · «Sigue en pie»", "4:5 y 9:16."),

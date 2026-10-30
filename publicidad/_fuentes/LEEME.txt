@@ -7,6 +7,7 @@ texto, se edita el HTML y se vuelve a generar. Desde la raíz del repo, con
 
   Vídeos (9:16, 4:5 y portadas):   bash publicidad/_fuentes/montar.sh
   Imágenes fijas:                  node publicidad/_fuentes/render-estaticos.cjs
+  Panel 00-EMPIEZA-AQUI.html:      python3 publicidad/_fuentes/panel.py
   Textos y CSV de Google:          python3 publicidad/_fuentes/google_ads.py
   Simulación:                      python3 publicidad/6-simulacion/simulacion.py
 
@@ -15,7 +16,10 @@ Archivos
   video-A-99.html .......... vídeo «Tu web. 99 €» (15 s)
   video-B-1500.html ........ vídeo «¿Te han pedido 1.500 €?» (12 s)
   video-C-temporada.html ... vídeo «La temporada se gana en invierno» (15 s);
-                             con ?sinmarcas=1, sin nombres de clientes
+                             ?sinmarcas=1 quita los nombres de clientes y
+                             ?pack=1 lo convierte en el del Pack Temporada
+                             (se pueden juntar: QUERY="sinmarcas=1&pack=1")
+  video-E-facilidad.html ... vídeo «¿Sin tiempo para tu web? Te la hacemos.» (15 s)
   estaticos.html ........... todas las imágenes fijas (cada una dice dónde se guarda)
   musica.py ................ música sintetizada (sin derechos de autor)
   google_ads.py ............ campañas de Google: comprueba los límites de caracteres

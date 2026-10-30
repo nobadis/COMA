@@ -1,0 +1,99 @@
+==============================================================================
+  COMA · AGENDA DÍA A DÍA (2 nov 2026 → 7 feb 2027)
+  Solo hay que ejecutar esto, en este orden. Cada paso remite al archivo que
+  lo explica: PLAN = 01-PLAN-DE-CAMPANA.txt · MÉTRICAS = 02 · TESTS = 03.
+==============================================================================
+
+TODOS LOS DÍAS (desde el 9 nov)
+  [ ] Contestar cada lead en menos de 1 hora (PLAN, sección 8).
+  [ ] Apuntarlo en 7-seguimiento/leads.csv, con «qué le convenció».
+
+TODOS LOS LUNES (desde el 16 nov), 15 minutos
+  [ ] Semáforo de 00-EMPIEZA-AQUI.html con cada campaña (últimos 14 días).
+  [ ] Una fila por campaña en 7-seguimiento/cuadro-semanal.csv.
+  [ ] Google: términos de búsqueda → negativas.
+  [ ] Comprobar el gasto acumulado frente a los límites (PLAN, sección 2).
+
+
+SEMANA 0 · PREPARAR (no se enciende nada)
+------------------------------------------------------------------------------
+Lun 2 nov  [ ] Formulario con endpoint (PUBLIC_FORM_ENDPOINT) y Google Tag
+               Manager (PUBLIC_GTM_ID) en Railway. Volver a desplegar.
+           [ ] Escribir a Mallorca Live Festival, Meliá, RCD Mallorca y
+               Ajuntament de Calvià: permiso para citarlos en anuncios.
+Mar 3 nov  [ ] Google Ads: cuenta en modo experto, facturación, GA4,
+               conversión «Lead formulario» (principal).
+Mié 4 nov  [ ] Meta: Business Manager, píxel, dominio verificado, los 4
+               públicos personalizados (PLAN, sección 4).
+Jue 5 nov  [ ] Google Business Profile de COMA verificado.
+           [ ] Google Ads Editor: importar 1-google-ads/google-ads-editor.csv
+               y crear G1, G2 y G3 en PAUSA, con textos-google.txt.
+               (G4 también, en pausa hasta el 7 ene.)
+           [ ] Límites de gasto en Google: reglas automatizadas (PLAN, 2).
+Vie 6 nov  [ ] Meta: crear M1 y M2 en PAUSA con sus 4 anuncios (TESTS, test
+               1). M3 en pausa hasta el 7 dic.
+           [ ] Límite de gasto de la cuenta de Meta: 1.720 €. Límite de cada
+               campaña (PLAN, sección 2).
+Sáb 7 nov  [ ] Prueba real: abrir cada URL de anuncio en el móvil, aceptar
+               cookies, enviar el formulario. Llega el correo con [origen].
+Dom 8 nov  [ ] Comprobar que las conversiones de la prueba aparecen en Google
+               Ads y en Meta. Si no aparecen: NO se enciende el lunes.
+               ¿Hay permiso de las marcas? Si no: quitar M1-D y usar las
+               versiones «sin marcas».
+
+
+FASE 1 · APRENDER (9 nov → 6 dic) · 38 €/día
+------------------------------------------------------------------------------
+Lun 9 nov  [ ] 9:00 · Encender G1, G2, G3, M1 y M2.
+               Arranca el TEST 1 (ángulos en Meta).
+Mié 11 nov [ ] Alarmas: ¿gastan las 5 campañas? ¿Se registran
+               conversiones? (MÉTRICAS, sección 7). No tocar nada más.
+Lun 16 nov [ ] 1.ª lectura: gancho, CTR, CPC y términos de búsqueda
+               (MÉTRICAS, tablas C y D). Apagar los anuncios en PARAR.
+           [ ] Si la cuenta de Google llega a 15 conversiones: G1 y G2 pasan
+               a «Maximizar conversiones» (PLAN, sección 5).
+Lun 23 nov [ ] 2.ª lectura: primera vez con la tabla A (€ por lead
+               cualificado). Pivotes, si toca (MÉTRICAS, sección 5).
+           [ ] Lanzar el TEST 2 en G2 (landing, experimento de Google).
+Vie 27 nov     Black Friday: no tocar presupuestos aunque Meta suba de precio.
+Lun 30 nov [ ] 3.ª lectura.
+
+
+EL CORTE · LUNES 7 DE DICIEMBRE
+------------------------------------------------------------------------------
+Lun 7 dic  [ ] Veredicto de España con la tabla A (últimos 28 días):
+               · G1 > 45 € por lead cualificado → apagar.
+               · M1 > 40 € por lead cualificado → apagar.
+               Lo que se libera va a la BOLSA (PLAN, sección 2): el 30 % a
+               M2 (subir su límite) y el resto queda guardado.
+           [ ] Veredicto del TEST 1: quedan los 2 mejores anuncios de cada
+               conjunto y entra 1 retador (TESTS, test 1).
+           [ ] Encender M3 Remarketing (4 €/día).
+
+
+FASE 2 · OPTIMIZAR (7 → 20 dic) · hasta 42 €/día
+------------------------------------------------------------------------------
+Lun 14 dic [ ] Lectura semanal. Si alguna campaña sale WOW por 2.ª semana
+               seguida: subir +20 % con dinero de la bolsa (MÉTRICAS, 6).
+
+
+NAVIDAD · FRENAR (21 dic → 6 ene) · hasta 23 €/día
+------------------------------------------------------------------------------
+Lun 21 dic [ ] Bajar presupuestos a los de la fase Navidad (PLAN, sección 2).
+Lun 28 dic [ ] Solo alarmas. Los leads se siguen contestando.
+
+
+FASE 3 · ESCALAR (7 ene → 7 feb) · hasta 60 €/día
+------------------------------------------------------------------------------
+Jue 7 ene  [ ] Subir presupuestos a la fase F3 (las campañas que sigan vivas).
+           [ ] Encender G4 SEO local (6 €/día).
+           [ ] Lanzar el TEST 3 en M2 (Web vs Pack Temporada, TESTS).
+           [ ] Añadir el texto de año nuevo a M1 y M2 (PLAN, sección 6).
+Lun 11 ene [ ] Lectura. Primera tabla F (cierre y primer encargo) con datos.
+Lun 18 ene [ ] Lectura. Campañas en WOW 2 semanas → +20 % con la bolsa.
+Lun 25 ene [ ] Lectura.
+Lun 1 feb  [ ] Veredictos: TEST 2 (landing) y TEST 3 (oferta, provisional).
+           [ ] Tabla B de la campaña entera: ¿TENEMOS ALGO? (MÉTRICAS, 6).
+           [ ] Plan de febrero y marzo (temporada) con lo que ha ganado.
+Dom 7 feb  [ ] Fin. Apagar todo lo que no siga en febrero. Cierre del
+               TEST 3. Última fila del cuadro semanal.

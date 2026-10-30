@@ -1,2 +1,2 @@
-fecha;nombre;negocio;sector;zona;canal (origen del email);campaña;anuncio;¿cualificado? (sí/no);respondido en (min);llamada hecha;propuesta enviada;importe propuesta €;extras propuestos;estado (abierto/ganado/perdido);importe ganado €;mensual ganado €/mes;motivo si perdido;notas
-2026-11-10;Ejemplo: Ana;Clínica Mar;dental;Palma;google;web-mallorca;rsa-local;sí;25;sí;sí;197;idiomas x2, alojamiento;ganado;197;9;;borrar esta fila
+fecha;nombre;negocio;sector;zona;canal (origen del email);campaña;anuncio;¿cualificado? (sí/no);respondido en (min);llamada hecha;propuesta enviada;importe propuesta €;extras propuestos;estado (abierto/ganado/perdido);importe ganado €;mensual ganado €/mes;motivo si perdido;qué le convenció;notas
+2026-11-10;Ejemplo: Ana;Clínica Mar;dental;Palma;google;web-mallorca;rsa-local;sí;25;sí;sí;197;idiomas x2, alojamiento;ganado;197;9;;el precio cerrado;borrar esta fila

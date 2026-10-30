@@ -25,7 +25,7 @@ H_WEB = [
     ("Sin Plantillas. Precio Cerrado", 0), ("Diseño Propio, Nunca Plantilla", 0), ("Hasta 4 Páginas Incluidas", 0),
     ("Perfecta en Móvil y con SSL", 0), ("Extras con Precio a la Vista", 0), ("29 Años en Comunicación", 0),
     ("Más de 100 Pymes Confían", 0), ("Calcula tu Web en 2 Minutos", 0), ("Agencia de Palma desde 1997", 0),
-    ("Pago Único. Sin Sorpresas", 0), ("SEO Básico Incluido", 0), ("Web para Autónomos y Pymes", 0), ("Pide tu Web Hoy", 0),
+    ("Pago Único. Sin Sorpresas", 0), ("SEO Básico Incluido", 0), ("Web para Autónomos y Pymes", 0), ("Hecha para que te Contacten", 0),
 ]
 D_WEB = [
     "Diseñamos tu web desde cero, con tu marca. Hasta 4 páginas, formulario, SEO básico y SSL.",
@@ -38,7 +38,7 @@ H_MLL = [
     ("Agencia de Palma desde 1997", 0), ("Tu Web por 99 € + IVA", 0), ("Webs en 4 Idiomas", 0),
     ("Lista Antes de la Temporada", 0), ("Reunión en Palma o por Vídeo", 0), ("Sin Plantillas. Precio Cerrado", 0),
     ("Reservas Online Directas", 0), ("Paseo Mallorca 16, Palma", 0), ("Más de 100 Pymes Confían", 0),
-    ("29 Años en Mallorca", 0), ("Diseño Propio, Nunca Plantilla", 0), ("Pide tu Propuesta Hoy", 0), ("Español, Inglés y Alemán", 0),
+    ("29 Años en Mallorca", 0), ("Diseño Propio, Nunca Plantilla", 0), ("Que el Turista te Encuentre", 0), ("Español, Inglés y Alemán", 0),
 ]
 D_MLL = [
     "Somos de Palma desde 1997. Webs a medida desde 99 € + IVA, en los idiomas de tus clientes.",

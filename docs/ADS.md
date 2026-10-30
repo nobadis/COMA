@@ -41,7 +41,7 @@ Se guardan `utm_*`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid` y
 
 ## Landings (`src/data/landings.ts`)
 
-`/lp/web-99/`, `/lp/seo-local/`, `/lp/agentes-ia/`, `/lp/mallorca/`, `/lp/tu-empresa/`. Son `noindex`, fuera del sitemap, sin menú ni pie de navegación, con formulario corto y las demos interactivas (SEO/IA en el buscador, chat del agente, selector de marca) como "publi inmersiva". Los rastreadores de Google Ads y Meta pueden leerlas. Para añadir una: nuevo objeto en `landings.ts`.
+`/lp/web-99/`, `/lp/seo-local/`, `/lp/agentes-ia/`, `/lp/mallorca/`, `/lp/temporada/` (Pack Temporada: web + inglés + alemán + reservas, suma de los precios de `pricing.ts`), `/lp/tu-empresa/`. Son `noindex`, fuera del sitemap, sin menú ni pie de navegación, con formulario corto y las demos interactivas (SEO/IA en el buscador, chat del agente, selector de marca) como "publi inmersiva". Los rastreadores de Google Ads y Meta pueden leerlas. Para añadir una: nuevo objeto en `landings.ts`.
 
 ## Outbound
 
@@ -49,7 +49,7 @@ Se guardan `utm_*`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid` y
 
 ## Estrategia de anuncios
 
-**Plan vigente (9 nov 2026 - 7 feb 2027): [`publicidad/01-PLAN-DE-CAMPANA.txt`](../publicidad/01-PLAN-DE-CAMPANA.txt).** Parte de esta estrategia y la ajusta con una simulación: más peso a Mallorca (Google y Meta), España como prueba con corte el 7 de diciembre, remarketing desde diciembre y SEO local desde enero. Lo que sigue es el razonamiento de base.
+**Plan vigente (9 nov 2026 - 7 feb 2027): [`publicidad/01-PLAN-DE-CAMPANA.txt`](../publicidad/01-PLAN-DE-CAMPANA.txt).** Parte de esta estrategia y la ajusta con una simulación: más peso a Mallorca (Google y Meta), España como prueba con corte el 7 de diciembre, remarketing desde diciembre, SEO local desde enero, presupuesto cerrado de 3.963 € y tres tests A/B (ángulo, landing y oferta). Lo que sigue es el razonamiento de base.
 
 Ningún plan de medios es seguro al céntimo. Este es el que mejor encaja con la oferta: el gancho es la web a 99 € (se entiende en un segundo) y el margen está en lo que se suma después (tienda, SEO a 99 €/mes, GEO, alojamiento). Un anuncio que solo cierra webs de 99 € pierde dinero en cuanto el lead cuesta más de lo que queda tras hacerla. Por eso el anuncio habla de 99 € y la landing (`/lp/web-99/`) lleva al presupuesto, donde se ven los extras, antes del formulario.
 

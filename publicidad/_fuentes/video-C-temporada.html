@@ -97,6 +97,19 @@
     { c: "DE", e: "Palma · Mallorquinische Küche", h: "Frisch von der Insel, jeden Tag", p: "Mittagsmenü und Saisonkarte, zwei Straßen vom Meer.", b: "Tisch reservieren" },
     { c: "CA", e: "Palma · cuina mallorquina", h: "Producte de l'illa, cada dia", p: "Menú de migdia i carta de temporada a dos carrers de la mar.", b: "Reservar taula" },
   ];
+  // ?pack=1: oferta Pack Temporada (test A/B de oferta): 3 idiomas y precio total
+  const PACK = new URLSearchParams(location.search).has("pack");
+  if (PACK) {
+    $("cap").innerHTML = 'Español, inglés y alemán<span class="c">.</span>';
+    $("l3").style.display = "none";
+    $("pe").textContent = "Pack Temporada";
+    $("pt").innerHTML = 'Todo listo para abril<span class="c">.</span>';
+    $("c0").innerHTML = "Web a medida <em>99 €</em>";
+    $("c1").innerHTML = "Inglés + alemán <em>98 €</em>";
+    $("c2").innerHTML = "Reservas online <em>149 €</em>";
+    $("pn").innerHTML = '<span class="h w" style="font-size:96px">346 €</span> + IVA, todo junto';
+    $("endB").innerHTML = "Quiero el Pack Temporada <i>→</i>";
+  }
   // ?sinmarcas=1: versión sin nombres de clientes (si no hay permiso para citarlos en anuncios)
   if (new URLSearchParams(location.search).has("sinmarcas"))
     $("endR").innerHTML = '<span class="small" style="font-size:26px;letter-spacing:.14em;text-transform:uppercase;font-weight:700">29 años en la isla</span><br>Más de 100 pymes, marcas<br>y ayuntamientos de Mallorca';
@@ -107,11 +120,12 @@
   S("s2", 2.6, 8.0, (t) => {
     rise($("cap"), t, 0.05, 0.4, 30);
     rise($("langs"), t, 0.2, 0.4, 20);
-    const i = Math.min(3, Math.floor(Math.max(0, t - 0.6) / 1.15));
+    const nL = PACK ? 3 : 4, step = PACK ? 1.5 : 1.15;
+    const i = Math.min(nL - 1, Math.floor(Math.max(0, t - 0.6) / step));
     const l = L[i];
     for (let j = 0; j < 4; j++) $("l" + j).classList.toggle("on", j === i);
     $("mwL").textContent = l.c; $("mwE").textContent = l.e; $("mwH").textContent = l.h; $("mwP").textContent = l.p; $("mwB").textContent = l.b;
-    const f = (Math.max(0, t - 0.6) % 1.15);
+    const f = (Math.max(0, t - 0.6) % step);
     document.querySelector("#s2 .tx").style.opacity = t > 0.6 && f < 0.12 ? f / 0.12 : 1;
     const ph = document.querySelector("#s2 .phone");
     const k = ease(p(t, 0, 0.6));

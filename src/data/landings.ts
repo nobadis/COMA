@@ -28,6 +28,10 @@ export interface Landing {
 }
 
 const seo = extras.find((e) => e.id === "seo")?.price ?? 99;
+const idioma = extras.find((e) => e.id === "idiomas")?.price ?? 49;
+const reservas = extras.find((e) => e.id === "reservas")?.price ?? 149;
+/** Pack Temporada (campaña de Mallorca): web + inglés + alemán + reservas, a los precios de siempre. */
+const pack = basePlan.price + 2 * idioma + reservas;
 
 const steps: Item[] = [
   {
@@ -195,6 +199,47 @@ export const landings: Landing[] = [
       },
     ],
     interest: "Web desde 99 €",
+  },
+  {
+    slug: "temporada",
+    title: "Pack Temporada: tu web lista para el turista",
+    description: `Web a medida en español, inglés y alemán, con reservas online, por ${pack} € + IVA. Para negocios de Mallorca que preparan la temporada.`,
+    eyebrow: "Pack Temporada · Mallorca",
+    h1: "Tu web lista para el turista antes de que llegue",
+    lead: "Web a medida en español, inglés y alemán, con reservas online directas. Precio cerrado y propuesta con plazos antes de empezar. Somos de Palma desde 1997.",
+    bullets: [
+      `Web a medida, perfecta en el móvil: ${basePlan.price} €`,
+      `Inglés y alemán: ${idioma} € cada idioma`,
+      `Reservas o citas online, con aviso por email: ${reservas} €`,
+      `Todo junto: ${pack} € + IVA, pago único`,
+    ],
+    cta: "Quiero el Pack Temporada",
+    demo: "brand",
+    offer: {
+      label: "Pack Temporada",
+      price: `${pack} € + IVA`,
+      note: "Los precios de siempre, ya sumados. Pago único.",
+    },
+    steps,
+    faq: [
+      {
+        title: "¿Es un descuento?",
+        text: "No: son los mismos precios de siempre, ya sumados, para que sepas desde el principio lo que cuesta la web completa.",
+      },
+      {
+        title: "¿Llego a tiempo para la temporada?",
+        text: "Te damos fechas concretas en la propuesta, antes de empezar. Cuanto antes nos escribas, más margen.",
+      },
+      {
+        title: "¿Y si necesito catalán u otro idioma?",
+        text: `Se añade por ${idioma} € cada uno, con el mismo precio cerrado.`,
+      },
+      {
+        title: "¿Dónde estáis?",
+        text: "En el Paseo Mallorca, 16, Palma. Puedes venir a vernos o hacerlo todo por videollamada.",
+      },
+    ],
+    interest: "Pack Temporada",
   },
   {
     slug: "tu-empresa",

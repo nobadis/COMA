@@ -54,6 +54,12 @@ Por qué así:
   · NO hacemos Black Friday: en esa semana el anuncio en Meta sube de precio
     y no somos una tienda. Seguimos igual y que pague más otro.
 
+  · Se prueba lo GRANDE, una cosa cada vez y dentro del mismo dinero: qué
+    ángulo vende más (nov), qué landing convierte más (nov-ene) y si en
+    Mallorca vende más la web de 99 € o el Pack Temporada de 346 € (ene).
+    Detalle en 03-MENSAJE-Y-TESTS-AB.txt. Qué hacer cada día:
+    04-AGENDA-DIA-A-DIA.txt.
+
   · Una sola promesa por campaña. Una landing por campaña (ya están hechas
     en la web: /lp/web-99/, /lp/mallorca/, /lp/seo-local/).
 
@@ -62,12 +68,55 @@ Por qué así:
 2. DINERO Y CALENDARIO
 ------------------------------------------------------------------------------
 
-Presupuesto máximo de anuncios: 3.963 € (si no se apagara nada).
-Lo típico, aplicando las reglas del lunes: ~3.140 €.
-Son importes que cobran Google y Meta. Facturan desde Irlanda: con CIF
-español la factura va sin IVA (inversión del sujeto pasivo, la declara
-vuestro asesor; no es un coste). Revisad en la factura de Google si añade
-algún recargo por el impuesto de servicios digitales.
+PRESUPUESTO CERRADO: 3.963 € EN ANUNCIOS. NI UN EURO MÁS.
+(Google 2.243 € + Meta 1.720 €.) Lo típico, aplicando las reglas: ~3.140 €.
+
+Por qué esta cifra y no menos: cada campaña tiene que dar al menos 2 leads
+cualificados a la semana. Si no, cada lectura tarda un mes y en 13 semanas no
+da tiempo a decidir nada. Por debajo de ~2.400 € (solo las campañas de
+Mallorca, remarketing y marca) no se puede probar nada más.
+Por qué no más: hasta el 7 de diciembre no sabemos qué funciona. Más dinero
+antes de saberlo es más dinero para aprender lo mismo.
+
+Cómo se reparte:
+  NÚCLEO (se gasta si sigue en SEGUIR o WOW) ......... 2.409 €
+     G2 Mallorca 1.071 · M2 Mallorca 788 · M3 Remarketing 267 ·
+     G4 SEO local 192 · G3 Marca 91
+  PRUEBA DE ESPAÑA (9 nov → 6 dic) ................... 476 €
+     G1 280 · M1 196
+  CONTINUACIÓN DE ESPAÑA (solo si pasa el corte) ..... 1.078 €
+     G1 609 · M1 469
+  ------------------------------------------------------------
+  TOTAL MÁXIMO ....................................... 3.963 €
+
+LA BOLSA: si España no pasa el corte, sus 1.078 € pasan a la bolsa. El 30 %
+(323 €) refuerza M2 Mallorca de inmediato; el resto solo sale para campañas
+que lleven 2 semanas en WOW (+20 % cada 4 días), por este orden: G2, M3, M2,
+G4. Lo que no se use, se ahorra. Subir una campaña siempre sale de la bolsa
+o de bajar otra: el total no se mueve.
+
+Cómo se blinda el tope (hacerlo el 5-6 nov, antes de encender):
+  META
+   · Configuración de pagos → Límite de gasto de la cuenta: 1.720 €.
+   · En cada campaña, «Límite de gasto de la campaña»: M1 665 € · M2 788 € ·
+     M3 267 €. Si la bolsa mueve dinero: subir el de M2 y bajar el de M1 por
+     el mismo importe. El de la cuenta solo sube si el dinero viene de Google.
+  GOOGLE
+   · Cada campaña con fecha de fin 7 feb 2027 y su presupuesto diario.
+   · Herramientas → Reglas automatizadas → «Pausar campañas», una por
+     campaña: si «Coste» desde el 9 nov ≥ su límite, se pausa. Comprobación
+     cada hora. Límites: G1 889 € · G2 1.071 € · G3 91 € · G4 192 €.
+     (Si tu cuenta ofrece «Presupuesto total de la campaña», úsalo con las
+     mismas cifras.)
+   · Google puede gastar hasta el doble del diario un día suelto, pero no
+     cobra más de 30,4 veces el diario en un mes. La regla corta igualmente
+     al llegar al límite.
+  Cada lunes: gasto acumulado de cada campaña frente a su límite.
+
+Facturan desde Irlanda: con CIF español la factura va sin IVA (inversión
+del sujeto pasivo, la declara vuestro asesor; no es un coste). Revisad en la
+factura de Google si añade algún recargo por el impuesto de servicios
+digitales.
 
 Por mes (máximo):  noviembre 836 € · diciembre 1.069 € · enero 1.638 € ·
                    febrero (1-7) 420 €
@@ -93,8 +142,8 @@ Las 4 fases (€ al día por campaña):
   Total de la fase             1.064 €      588 €     391 €     1.920 €
 
   * Solo si pasan el corte del 7 de diciembre (sección 7). Si no pasan, se
-    apagan, el 30 % de su dinero se suma a M2 Temporada Mallorca y el resto
-    no se gasta.
+    apagan y su dinero va a la bolsa (arriba).
+  En F3, M2 se parte en dos de 6 €/día para el TEST 3 (Web vs Pack).
 
 Por qué empieza en lunes 9 de noviembre: da una semana para dejar la
 medición perfecta (sección 4). Sin medición, el algoritmo aprende a ciegas.
@@ -249,6 +298,8 @@ Campañas
       2 grupos: Mallorca local (palabras con Mallorca/Palma) · Genérico en
       Mallorca (las mismas palabras de G1, pero solo para gente de la isla)
       Destino: /lp/mallorca/   utm_campaign=web-mallorca
+      TEST 2 desde el 23 nov: experimento 50/50 contra /lp/web-99/
+      (03-MENSAJE-Y-TESTS-AB.txt).
 
   G3  COMA | Search | Marca
       1 €/día · España · 9 nov · solo exacta: quien ya os busca por el nombre.
@@ -288,83 +339,112 @@ Ajustes iguales para las 3 campañas
   Excluir siempre ............... Público «Leads 180 días».
   Frecuencia a vigilar .......... Frío ≤ 3 por semana; remarketing ≤ 6.
 
+  Cada anuncio cuenta la promesa entera: RESULTADO, CONFIANZA, SIN RIESGO,
+  FACILIDAD y el precio como prueba (03-MENSAJE-Y-TESTS-AB.txt). Lo que
+  cambia es por dónde empieza: eso es el TEST 1.
+
   M1  COMA | Meta | Web99 | España | Frío
       7 €/día · 9 nov · España EXCLUYENDO Illes Balears · 28-60 años ·
       Público Advantage+ activado (sin intereses: el vídeo ya filtra).
-      4 anuncios (carpeta 2-meta-espana/):
+      Límite de gasto de la campaña: 665 €.
+      1 conjunto, 4 anuncios = 4 ángulos (TEST 1). Todos al mismo destino:
+      https://comunicacionenmallorca.com/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=<anuncio>
+      (cambia <anuncio> por el código de cada uno: a-precio, b-transparencia,
+      e-facilidad, d-autoridad)
 
-      M1-A  Vídeo «Tu web. 99 €» (15 s)  M1-A_video-99_9x16.mp4 + _4x5.mp4
-        Texto 1: Tu web a medida por 99 € + IVA. Diseño propio, nunca una
-                 plantilla. Precio cerrado desde el primer día.
-        Texto 2: Hasta 4 páginas, perfecta en el móvil, con formulario, SEO
-                 básico y SSL. 99 € + IVA, pago único.
-        Texto 3: ¿Tu negocio aún no tiene web, o tiene una que da apuro
-                 enseñar? Lo arreglamos por 99 € + IVA.
+      M1-A  PRECIO · vídeo «Tu web. 99 €» (15 s)  M1-A_video-99_9x16 + _4x5
+        Texto 1: Tu web a medida por 99 € + IVA. Diseñada para tu marca,
+                 nunca una plantilla, y hecha para que te llamen y te
+                 escriban. Precio cerrado desde el primer día.
+        Texto 2: Hasta 4 páginas, perfecta en el móvil, con formulario,
+                 botón de llamada, SEO básico y SSL. 99 € + IVA, pago único.
+                 29 años en Mallorca y más de 100 pymes.
         Título:  Tu web por 99 € + IVA
         Descripción: Precio cerrado. Sin plantillas.
-        URL: https://comunicacionenmallorca.com/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=a-video-99
 
-      M1-B  Vídeo «¿Te han pedido 1.500 €?» (12 s)  M1-B_video-1500_*.mp4
-        Texto 1: ¿Te han pedido 1.500 € por una web? Nosotros la hacemos por
-                 99 € + IVA. Y los extras, con precio a la vista.
-        Texto 2: Sin trampa: idioma extra 49 €, reservas 149 €, tienda 349 €.
-                 Calcula la tuya en 2 minutos, antes de hablar con nadie.
-        Título:  Calcula tu web en 2 minutos
-        Descripción: Web a medida desde 99 € + IVA
-        URL: https://comunicacionenmallorca.com/precios/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=b-video-1500
+      M1-B  TRANSPARENCIA · vídeo «¿Te han pedido 1.500 €?» (12 s)
+            M1-B_video-1500_9x16 + _4x5
+        Texto 1: ¿Te han pedido 1.500 € por una web? La nuestra es a medida
+                 y cuesta 99 € + IVA. Y si necesitas más, cada extra lleva su
+                 precio a la vista: idioma 49 €, reservas 149 €, tienda 349 €.
+        Texto 2: Sin letra pequeña: sabes lo que pagas antes de hablar con
+                 nadie. Propuesta con plazos y precio cerrado.
+        Título:  Sin trampa: 99 € + IVA
+        Descripción: Extras con precio a la vista
 
-      M1-C  Carrusel (5 tarjetas 1:1)  M1-C_carrusel-1.png … -5.png
-        Texto:   Esto es lo que incluye tu web de 99 € + IVA. Desliza →
-        Títulos de tarjeta: 1 Tu web por 99 € · 2 Diseño propio ·
-                 3 Hasta 4 páginas · 4 Lista para Google · 5 Extras a la vista
-        Activar «mostrar primero las tarjetas con mejor rendimiento»: NO
-        (el orden cuenta una historia).
-        URL (todas): …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=c-carrusel
+      M1-E  FACILIDAD · vídeo «¿Sin tiempo para tu web? Te la hacemos.»
+            (15 s)  M1-E_video-facilidad_9x16 + _4x5
+        Texto 1: Tú te ocupas de tu negocio. Nosotros, de tu web: nos cuentas
+                 lo que haces en 2 minutos, te enviamos una propuesta con
+                 precio cerrado y te la dejamos funcionando. Desde 99 € + IVA.
+        Texto 2: Una web hecha para que te llamen, te reserven y te escriban.
+                 Sin pelearte con plantillas ni con programas.
+        Título:  Te hacemos la web
+        Descripción: Desde 99 € + IVA, precio cerrado
 
-      M1-D  Imagen «Autoridad» 4:5  M1-D_autoridad_4x5.png  (solo con permiso)
+      M1-D  AUTORIDAD · imagen 4:5  M1-D_autoridad_4x5.png  (solo con permiso;
+            si no lo hay, en su lugar M1-C carrusel, código c-carrusel)
         Texto:   Hemos trabajado para Mallorca Live Festival, Meliá, RCD
-                 Mallorca o el Ajuntament de Calvià. Tu negocio merece lo
-                 mismo, desde 99 € + IVA.
+                 Mallorca o el Ajuntament de Calvià. Tu negocio merece el
+                 mismo cuidado: web a medida desde 99 € + IVA, precio cerrado.
         Título:  29 años haciendo comunicación
-        URL: …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=d-autoridad
 
-  M2  COMA | Meta | Temporada | Mallorca | Frío          ← el segundo motor
+      Retadores para el 7 dic (TESTS, test 1): M1-C carrusel (precio) ·
+      M1-F imagen (facilidad) · M3-B «Calcula» (transparencia).
+
+  M2  COMA | Meta | Temporada | Mallorca | Frío
       8 €/día · 9 nov · Ubicación: Illes Balears · 25-65 años ·
-      Público Advantage+ activado. Destino: /lp/mallorca/
-      3 anuncios (carpeta 3-meta-mallorca/):
+      Público Advantage+ activado. Límite de gasto de la campaña: 788 €.
+      1 conjunto, 4 anuncios (TEST 1), todos a:
+      https://comunicacionenmallorca.com/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=<anuncio>
 
-      M2-A  Vídeo «La temporada se gana en invierno» (15 s)
-            M2-A_video-temporada_9x16.mp4 + _4x5.mp4
-            (sin permiso de los clientes: M2-A_video-temporada-sin-marcas_*)
+      M2-A  TEMPORADA · vídeo «La temporada se gana en invierno» (15 s)
+            M2-A_video-temporada_9x16 + _4x5 (sin permiso: -sin-marcas)
+            código a-temporada
         Texto 1: En Mallorca, la temporada se gana en invierno. Tu web en
-                 español, inglés, alemán y catalán, con reservas online.
+                 español, inglés, alemán y catalán, con reservas online,
+                 para que el turista te encuentre y reserve antes de llegar.
                  Desde 99 € + IVA.
-        Texto 2: Tu cliente de abril ya está buscando dónde comer, dormir o
-                 reservar. Que te encuentre en su idioma.
-        Texto 3: Agencia de Palma desde 1997. Reunión en Paseo Mallorca 16 o
-                 por videollamada. Precio cerrado.
+        Texto 2: Agencia de Palma desde 1997. Reunión en Paseo Mallorca 16 o
+                 por videollamada. Precio cerrado antes de empezar.
         Título:  Prepara la temporada
         Descripción: Agencia de Palma desde 1997
-        URL: https://comunicacionenmallorca.com/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=a-video-temporada
-
-      M2-B  Imagen «Buenos días. Good morning…»  M2-B_idiomas_4x5.png + _9x16
-        Texto:   Buenos días, good morning, guten Morgen, bon dia. Tu web en 4
-                 idiomas antes de que llegue la temporada. Web a medida 99 € +
-                 49 € por idioma (+ IVA).
+      M2-B  TEMPORADA · imagen «Buenos días. Good morning…»
+            M2-B_idiomas_4x5 + _9x16 · código b-idiomas
+        Texto:   Buenos días, good morning, guten Morgen, bon dia. Tu cliente
+                 de abril ya está buscando dónde comer, dormir o reservar. Que
+                 te encuentre en su idioma. Web a medida 99 € + 49 € por
+                 idioma (+ IVA).
         Título:  Tu web en 4 idiomas
-        URL: …/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=b-idiomas
-
-      M2-C  Imagen «Autoridad» (la misma M1-D; solo con permiso)
+      M2-E  FACILIDAD · el vídeo M1-E · código e-facilidad
+        Texto:   Tú, a tu negocio; nosotros, a tu web. Nos cuentas en 2
+                 minutos y te la dejamos funcionando, en los idiomas de tus
+                 clientes. Desde 99 € + IVA. Somos de Palma.
+      M2-C  AUTORIDAD · la imagen M1-D (solo con permiso) · código c-autoridad
         Texto:   29 años haciendo comunicación en Mallorca: Mallorca Live
                  Festival, Meliá, RCD Mallorca, Ajuntament de Calvià… y más de
                  100 pymes de la isla. ¿La tuya es la siguiente?
-        URL: …/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=c-autoridad
+
+      Desde el 7 ENE (TEST 3): Prueba A/B con dos conjuntos de 6 €/día:
+        A «Web»:  el ganador del test 1 → /lp/mallorca/ (como arriba)
+        B «Pack»: M2-A_video-temporada-pack_9x16 + _4x5 y
+                  M2-D_pack-temporada_4x5 + _9x16 →
+                  https://comunicacionenmallorca.com/lp/temporada/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=<anuncio>
+                  (códigos a-pack-video, d-pack-imagen)
+          Texto 1: Pack Temporada: tu web a medida en español, inglés y
+                   alemán, con reservas online. 346 € + IVA todo junto: los
+                   precios de siempre, ya sumados.
+          Texto 2: Que el turista te encuentre, te entienda y reserve antes
+                   de llegar. Agencia de Palma desde 1997, precio cerrado.
+          Título:  Pack Temporada: 346 € + IVA
+          Descripción: Web + inglés + alemán + reservas
 
       Ojo: «antes de Semana Santa» (21-28 mar 2027) es una promesa de plazo.
       Mantenedla solo si podéis entregar a tiempo todo lo que entre.
 
   M3  COMA | Meta | Remarketing
       4 €/día · DESDE EL 7 DE DICIEMBRE · España (incluida Baleares)
+      Límite de gasto de la campaña: 267 €.
       Público Advantage+ DESACTIVADO. Incluir: Visitantes web 30 días +
       Vieron 50 % de los vídeos 30 días + Interactuaron 30 días.
       Excluir: Leads 180 días.
@@ -372,14 +452,15 @@ Ajustes iguales para las 3 campañas
 
       M3-A  «Sigue en pie»  M3-A_sigue-en-pie_4x5.png + _9x16
         Texto:   Tu web a medida por 99 € + IVA sigue en pie. Cuéntanos tu
-                 negocio en 2 minutos y te respondemos personalmente.
-        URL: …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=a-sigue-en-pie
+                 negocio en 2 minutos: te respondemos personalmente con una
+                 propuesta y un precio cerrado.
+        URL: https://comunicacionenmallorca.com/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=a-sigue-en-pie
       M3-B  «Calcula tu web»  M3-B_calcula_4x5.png + _9x16
         Texto:   Marca lo que necesitas y ves el precio al momento, antes de
-                 hablar con nadie.
-        URL: …/precios/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=b-calcula
-      M3-C  El carrusel M1-C (para quien vio el vídeo pero no entró)
-        URL: …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=c-carrusel
+                 hablar con nadie. Sin sorpresas.
+        URL: https://comunicacionenmallorca.com/precios/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=b-calcula
+      M3-C  El carrusel M1-C (para quien vio un vídeo pero no entró)
+        URL: https://comunicacionenmallorca.com/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=c-carrusel
 
 En enero (F3), añadir a M1 y M2 este texto extra (mismas piezas):
   «Empieza 2027 con la web que tu negocio merece. A medida, desde 99 € + IVA,
@@ -486,9 +567,13 @@ TikTok (solo si M1 Meta España pasa el corte del 7 dic)
   01-PLAN-DE-CAMPANA.txt ....... este archivo
   02-METRICAS-Y-DECISIONES.txt . qué mirar y cuándo seguir, pivotar, parar o
                                  celebrar (WOW)
+  03-MENSAJE-Y-TESTS-AB.txt .... el valor que cuenta cada pieza y los 3 tests
+  04-AGENDA-DIA-A-DIA.txt ...... qué hacer cada día, del 2 nov al 7 feb
   1-google-ads/ ................ textos, palabras clave (CSV) e imágenes
-  2-meta-espana/ ............... vídeos A y B, carrusel, imagen autoridad
-  3-meta-mallorca/ ............. vídeo temporada (con y sin marcas), idiomas
+  2-meta-espana/ ............... vídeos A, B y E, carrusel, autoridad,
+                                 facilidad
+  3-meta-mallorca/ ............. vídeo temporada (normal, sin marcas y Pack),
+                                 idiomas, Pack Temporada
   4-remarketing/ ............... «Sigue en pie» y «Calcula tu web»
   5-linkedin-despachos-opcional/ piezas para despachos
   6-simulacion/ ................ simulación (script + resultados)

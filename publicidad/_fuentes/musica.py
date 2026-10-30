@@ -15,6 +15,8 @@ rng = np.random.default_rng(7)
 PIEZAS = {
     "A": dict(dur=15.0, cuts=[2.2, 7.4, 10.6], hits=[0.3, 10.9], click=13.2, key=0),
     "B": dict(dur=12.0, cuts=[2.6, 5.2, 8.6], hits=[1.0, 2.85], click=10.9, key=-3),
+    "CP": dict(dur=15.0, cuts=[2.6, 8.0, 10.8], hits=[0.3, 3.2, 4.7, 6.2], click=13.7, key=2),  # C con ?pack=1
+    "E": dict(dur=15.0, cuts=[2.4, 7.6, 11.0], hits=[0.7, 3.4, 4.6, 5.8], click=13.4, key=5),
     "C": dict(dur=15.0, cuts=[2.6, 8.0, 10.8], hits=[0.3, 3.2, 4.35, 5.5, 6.65], click=13.7, key=2),
 }
 

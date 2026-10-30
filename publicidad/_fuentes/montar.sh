@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Renderiza los 3 vídeos en 9:16 y 4:5, les pone música y los deja en las carpetas de campaña.
+# Renderiza los 4 vídeos (y 2 variantes del de Mallorca) en 9:16 y 4:5, les pone música y los deja en las carpetas de campaña.
 # Uso (desde la raíz del repo, con npm install hecho): bash publicidad/_fuentes/montar.sh
 set -euo pipefail
 cd "$(dirname "$0")"
 TMP="$(mktemp -d)"
-declare -A SRC=([A]=video-A-99.html [B]=video-B-1500.html [C]=video-C-temporada.html)
-declare -A DST=([A]="../2-meta-espana/M1-A_video-99" [B]="../2-meta-espana/M1-B_video-1500" [C]="../3-meta-mallorca/M2-A_video-temporada")
-for id in A B C; do
+declare -A SRC=([A]=video-A-99.html [B]=video-B-1500.html [C]=video-C-temporada.html [E]=video-E-facilidad.html)
+declare -A DST=([A]="../2-meta-espana/M1-A_video-99" [B]="../2-meta-espana/M1-B_video-1500" [C]="../3-meta-mallorca/M2-A_video-temporada" [E]="../2-meta-espana/M1-E_video-facilidad")
+for id in A B C E; do
   python3 musica.py "$id" "$TMP/$id.wav"
   for f in 916 45; do
     rm -rf "$TMP/fr"
@@ -20,15 +20,19 @@ for id in A B C; do
     cp "$TMP/fr/$last" "${name}_portada.jpg"
   done
 done
-# variante del vídeo de Mallorca sin nombres de clientes
+# variantes del vídeo de Mallorca: sin nombres de clientes y con el Pack Temporada (test de oferta)
+for v in sin-marcas:sinmarcas=1:C pack:pack=1:CP; do
+  IFS=: read -r suf q snd <<< "$v"
+  python3 musica.py "$snd" "$TMP/$snd.wav"
 for f in 916 45; do
   rm -rf "$TMP/fr"
-  QUERY=sinmarcas=1 NODE_PATH=../../node_modules node render.cjs video-C-temporada.html "$f" "$TMP/fr" 30
-  ffmpeg -y -loglevel error -framerate 30 -i "$TMP/fr/f%04d.jpg" -i "$TMP/C.wav" \
+  QUERY="$q" NODE_PATH=../../node_modules node render.cjs video-C-temporada.html "$f" "$TMP/fr" 30
+  ffmpeg -y -loglevel error -framerate 30 -i "$TMP/fr/f%04d.jpg" -i "$TMP/$snd.wav" \
     -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -profile:v high \
-    -c:a aac -b:a 160k -shortest -movflags +faststart "../3-meta-mallorca/M2-A_video-temporada-sin-marcas_$([ "$f" = 916 ] && echo 9x16 || echo 4x5).mp4"
+    -c:a aac -b:a 160k -shortest -movflags +faststart "../3-meta-mallorca/M2-A_video-temporada-${suf}_$([ "$f" = 916 ] && echo 9x16 || echo 4x5).mp4"
   last=$(ls "$TMP/fr" | tail -n 20 | head -n 1)
-  cp "$TMP/fr/$last" "../3-meta-mallorca/M2-A_video-temporada-sin-marcas_$([ "$f" = 916 ] && echo 9x16 || echo 4x5)_portada.jpg"
+  cp "$TMP/fr/$last" "../3-meta-mallorca/M2-A_video-temporada-${suf}_$([ "$f" = 916 ] && echo 9x16 || echo 4x5)_portada.jpg"
+done
 done
 rm -rf "$TMP"
 echo "Vídeos listos."
