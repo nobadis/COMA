@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Vídeo A · Tu web. 99 €</title>
+<!--
+  Anuncio en frío de Meta (España). 15 s. Gancho en el primer segundo: precio.
+  0-2,2 gancho «Tu web. 99 €» · 2,2-7,4 prueba: el mismo esqueleto cambia de marca (sin plantillas)
+  · 7,4-10,6 qué incluye · 10,6-15 cierre con botón. Abre en el navegador para verlo en bucle.
+-->
+<link rel="stylesheet" href="kit.css" />
+<style>
+  #h1 { font-size: 190px; color: var(--paper); white-space: nowrap; }
+  #h2 { font-size: 330px; color: var(--red); transform-origin: 0 60%; margin-top: 10px; white-space: nowrap; }
+  #h3 { font-size: 46px; margin-top: 40px; }
+  #cap { font-size: 104px; }
+  #sub { margin-top: 26px; display: flex; gap: 16px; align-items: center; }
+  #sector { font-size: 38px; font-weight: 700; font-stretch: 115%; background: var(--ink); color: var(--paper); padding: 12px 22px; }
+  #ex { position: absolute; left: 0; top: 250px; font-size: 22px; color: var(--muted); }
+  .comma { position: absolute; right: 70px; color: var(--red); width: 150px; }
+  .f916 .comma { bottom: 150px; } .f45 .comma { display: none; }
+  .phone { left: 50%; transform-origin: 50% 0; }
+  .f916 #s2 .phone { top: 290px; transform: translateX(-50%) scale(1.12); }
+  .f45 #s2 .phone { top: 270px; transform: translateX(-50%) scale(0.95); }
+  /* mini web que cambia de marca */
+  .mw { position: absolute; inset: 0; padding: 70px 34px 0; display: flex; flex-direction: column; }
+  .mw nav { display: flex; justify-content: space-between; align-items: center; font-size: 26px; font-weight: 800; }
+  .mw nav span { width: 34px; height: 4px; background: currentColor; box-shadow: 0 10px 0 currentColor; }
+  .mw small { display: block; margin-top: 90px; font-size: 17px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+  .mw h4 { font-size: 66px; line-height: .95; letter-spacing: -0.03em; margin-top: 18px; }
+  .mw p { font-size: 21px; margin-top: 22px; opacity: .8; line-height: 1.35; }
+  .mw .b { align-self: flex-start; margin-top: 30px; padding: 18px 28px; font-size: 21px; font-weight: 800; }
+  .mw .blob { position: absolute; right: -110px; top: -40px; width: 300px; height: 300px; }
+  .mw > *:not(.blob) { position: relative; }
+  .mw .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: auto; margin-bottom: 40px; }
+  .mw .cards i { height: 150px; display: block; }
+  #s3 .safe { display: flex; flex-direction: column; justify-content: center; }
+  #lst { margin-top: 50px; }
+  #endH { font-size: 170px; margin-top: 50px; }
+  #endS { font-size: 46px; margin-top: 30px; font-weight: 600; }
+  #endB { margin-top: 60px; }
+  #endP { margin-top: 44px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <section class="sc dark" id="s1"><div class="safe center">
+    <div id="h1" class="h w">Tu web.</div>
+    <div id="h2" class="h w">99 €</div>
+    <div id="h3" class="small">+ IVA · precio cerrado</div>
+  </div></section>
+
+  <section class="sc" id="s2"><div class="safe">
+    <div id="cap" class="h">Diseño propio<span class="c">.</span></div>
+    <div id="sub"><span class="small">Para</span><span id="sector">Clínica dental</span></div>
+    <div class="phone"><div class="scr" id="scr"><div class="mw" id="mw">
+      <svg class="blob" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" id="blob"/></svg>
+      <nav><b id="mwN">Clínica Mar</b><span></span></nav>
+      <small id="mwE">Palma · desde 2004</small>
+      <h4 id="mwH">Tu sonrisa, sin esperas</h4>
+      <p id="mwP">Primera visita y presupuesto claro. Pide cita online.</p>
+      <div class="b" id="mwB">Pedir cita</div>
+      <div class="cards"><i id="c1"></i><i id="c2"></i></div>
+    </div></div></div>
+    <div id="ex">Diseños de ejemplo</div>
+  </div></section>
+
+  <section class="sc" id="s3"><svg class="comma" id="cm3" viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg><div class="safe">
+    <div class="eyebrow" id="e3">Web Esencial · 99 € + IVA</div>
+    <div class="h" id="t3" style="font-size:120px;margin-top:34px">Precio cerrado<span class="c">.</span></div>
+    <div id="lst">
+      <div class="check" id="k1"><b>✓</b>Hasta 4 páginas</div>
+      <div class="check" id="k2"><b>✓</b>Perfecta en el móvil</div>
+      <div class="check" id="k3"><b>✓</b>Formulario de contacto</div>
+      <div class="check" id="k4"><b>✓</b>SEO básico y SSL</div>
+    </div>
+  </div></section>
+
+  <section class="sc" id="s4"><svg class="comma" id="cm4" viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg><div class="safe center">
+    <div class="logo" id="endL" style="font-size:96px"><span>COMA</span><svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+    <div class="h w" id="endH">Tu web.<br><span class="c">99 €</span><span style="font-size:.4em;letter-spacing:0"> + IVA</span></div>
+    <div id="endS">Sin plantillas. Precio cerrado.</div>
+    <div class="btn" id="endB">Pide la tuya <i>→</i></div>
+    <div class="small" id="endP">29 años en Mallorca · +100 pymes<br><b style="color:var(--ink)">comunicacionenmallorca.com</b></div>
+  </div></section>
+</div>
+<script src="kit.js"></script>
+<script>
+  const { $, rise, slam, p, ease, S } = K;
+  const BRANDS = [
+    { s: "Clínica dental", n: "Clínica Mar", e: "Palma · desde 2004", h: "Tu sonrisa, sin esperas", p: "Primera visita y presupuesto claro. Pide cita online.", b: "Pedir cita", bg: "#0f3d3e", fg: "#ffffff", ac: "#5ee0c8", bt: "#0f3d3e", font: "'Archivo V'", st: "110%", c1: "#165456", c2: "#1d6b6c" },
+    { s: "Restaurante", n: "Sa Cuina", e: "Cocina de mercado", h: "Producto de la isla, cada día", p: "Menú de mediodía y carta de temporada. Reserva tu mesa.", b: "Reservar mesa", bg: "#f4e6cf", fg: "#3a2416", ac: "#c4512b", bt: "#fff", font: "Georgia, serif", st: "100%", c1: "#e8d3b0", c2: "#c4512b" },
+    { s: "Electricista", n: "VOLT·", e: "Instalaciones y averías", h: "Luz donde la necesitas", p: "Boletines, reformas y urgencias. Te llamamos hoy.", b: "Llamar ahora", bg: "#111318", fg: "#ffffff", ac: "#ffd23f", bt: "#111318", font: "'Archivo V'", st: "125%", c1: "#1d2029", c2: "#ffd23f" },
+    { s: "Despacho de abogados", n: "Ribas Advocats", e: "Derecho civil y mercantil", h: "Respuestas claras a problemas serios", p: "Primera consulta para entender tu caso.", b: "Pedir consulta", bg: "#ffffff", fg: "#1d2a44", ac: "#b08d57", bt: "#fff", font: "Georgia, serif", st: "100%", c1: "#eef0f4", c2: "#1d2a44" },
+    { s: "Inmobiliaria", n: "casa nord", e: "Norte de Mallorca", h: "Tu casa, cerca del mar", p: "Venta y alquiler en Pollença, Alcúdia y Muro.", b: "Ver casas", bg: "#dfe9ea", fg: "#14323a", ac: "#e86a4a", bt: "#fff", font: "'Archivo V'", st: "90%", c1: "#c4d7d9", c2: "#14323a" },
+    { s: "Tu negocio", n: "TU MARCA", e: "Hecha a tu medida", h: "Así de distinta será la tuya", p: "Tu color, tu tono y tus clientes. Desde cero.", b: "Quiero la mía", bg: "#efece4", fg: "#0c0c0c", ac: "#e1112d", bt: "#fff", font: "'Archivo V'", st: "120%", c1: "#e4dfd3", c2: "#e1112d" },
+  ];
+  function brand(i) {
+    const b = BRANDS[i];
+    $("sector").textContent = b.s;
+    $("mwN").textContent = b.n; $("mwE").textContent = b.e; $("mwH").textContent = b.h; $("mwP").textContent = b.p; $("mwB").textContent = b.b;
+    const mw = $("mw");
+    mw.style.background = b.bg; mw.style.color = b.fg;
+    $("mwH").style.fontFamily = b.font; $("mwH").style.fontStretch = b.st; $("mwH").style.fontWeight = b.font.includes("Georgia") ? 400 : 800;
+    $("mwN").style.fontFamily = b.font;
+    $("mwE").style.color = b.ac; $("blob").setAttribute("fill", b.ac); $("blob").style.opacity = 0.9;
+    $("mwB").style.background = b.ac; $("mwB").style.color = b.bt;
+    $("c1").style.background = b.c1; $("c2").style.background = b.c2;
+  }
+
+  S("s1", 0, 2.2, (t) => {
+    $("h1").style.transform = `scale(${1 + 0.02 * t})`;
+    slam($("h2"), t, 0.3, 0.32, 1.8);
+    rise($("h3"), t, 0.9, 0.4, 20);
+  });
+  S("s2", 2.2, 7.4, (t) => {
+    rise($("cap"), t, 0.05, 0.4, 30);
+    const i = Math.min(BRANDS.length - 1, Math.floor(t / 0.85));
+    brand(i);
+    // cambio de marca: barrido rápido
+    const f = (t % 0.85) / 0.85;
+    $("scr").style.transform = `scale(${f < 0.08 && t > 0.5 ? 0.97 : 1})`;
+    const ph = document.querySelector("#s2 .phone");
+    const k = ease(p(t, 0, 0.6));
+    ph.style.marginTop = (1 - k) * 200 + "px";
+    ph.style.opacity = k;
+  });
+  S("s3", 7.4, 10.6, (t) => {
+    rise($("e3"), t, 0, 0.4, 16);
+    rise($("cm3"), t, 0.2, 0.6, 120);
+    rise($("t3"), t, 0.1, 0.4, 30);
+    ["k1", "k2", "k3", "k4"].forEach((id, j) => rise($(id), t, 0.55 + j * 0.42, 0.35, 30));
+  });
+  S("s4", 10.6, 99, (t) => {
+    rise($("endL"), t, 0.05, 0.4, 20);
+    rise($("cm4"), t, 0.2, 0.6, 120);
+    rise($("endH"), t, 0.3, 0.5, 30);
+    rise($("endS"), t, 0.8, 0.4, 16);
+    rise($("endB"), t, 1.2, 0.4, 20);
+    rise($("endP"), t, 1.5, 0.4, 12);
+    const press = t >= 2.6 && t < 2.78;
+    $("endB").style.transform = `scale(${press ? 0.94 : 1})`;
+    $("endB").style.background = t >= 2.6 ? "var(--ink)" : "var(--red)";
+  });
+  start(15);
+</script>
+</body>
+</html>

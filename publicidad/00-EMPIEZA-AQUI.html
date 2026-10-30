@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plan de publicidad COMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" />
+<style>
+  :root {
+    --paper: #efece4; --paper-2: #e4dfd3; --ink: #0c0c0c; --muted: #5d5851; --line: rgba(12,12,12,.16);
+    --red: #e1112d; --google: #1a1a1a; --meta: #e1112d; --ok: #2f8f5b; --warn: #b7791f;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: Archivo, "Segoe UI", system-ui, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 40px; } }
+  header { padding: 40px 0 56px; border-bottom: 2px solid var(--ink); }
+  .logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -.02em; font-size: 30px; line-height: 1; }
+  .logo svg { width: .32em; margin-left: .04em; margin-top: -.18em; color: var(--red); }
+  .eyebrow { display: flex; align-items: center; gap: 14px; font-weight: 700; font-stretch: 120%; text-transform: uppercase; letter-spacing: .16em; font-size: 12px; color: var(--muted); }
+  .eyebrow::before { content: ""; width: 32px; height: 2px; background: var(--red); }
+  h1 { font-size: clamp(38px, 7vw, 92px); font-weight: 700; font-stretch: 108%; letter-spacing: -.04em; line-height: .95; margin: 28px 0 22px; }
+  h2 { font-size: clamp(30px, 4.4vw, 54px); font-weight: 700; font-stretch: 108%; letter-spacing: -.035em; line-height: 1; margin: 14px 0 18px; }
+  h3 { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+  .c { color: var(--red); }
+  .lead { font-size: clamp(18px, 2vw, 22px); color: var(--muted); max-width: 760px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+  .files { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .files a { display: inline-flex; gap: 8px; align-items: center; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 700; padding: 12px 18px; font-size: 15px; }
+  .files a.alt { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  /* cifras */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px; background: var(--ink); border: 2px solid var(--ink); margin-top: 26px; }
+  .stat { background: var(--paper); padding: 22px; }
+  .stat b { display: block; font-size: 44px; font-weight: 700; font-stretch: 110%; letter-spacing: -.03em; line-height: 1.05; }
+  .stat span { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .stat.red { background: var(--red); color: #fff; } .stat.red span { color: rgba(255,255,255,.85); }
+  /* fórmula */
+  .formula { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-top: 28px; counter-reset: f; }
+  .formula div { border-top: 3px solid var(--ink); padding-top: 14px; }
+  .formula div::before { counter-increment: f; content: "0" counter(f); display: block; font-weight: 800; color: var(--red); font-size: 13px; letter-spacing: .1em; margin-bottom: 8px; }
+  .formula b { display: block; font-size: 20px; line-height: 1.2; margin-bottom: 6px; }
+  .formula p { font-size: 15px; color: var(--muted); }
+  /* gráficos */
+  .chart { background: #fbfaf7; border: 1px solid var(--line); padding: 18px; margin-top: 18px; position: relative; }
+  .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; margin-bottom: 8px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); font-size: 13px; padding: 8px 10px; line-height: 1.4; opacity: 0; transition: opacity .1s; white-space: nowrap; z-index: 3; }
+  .axis text { font-size: 12px; fill: var(--muted); font-family: inherit; }
+  .grid line { stroke: rgba(12,12,12,.08); }
+  .two { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .two { grid-template-columns: 1fr 1fr; } }
+  /* tablas */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 18px; }
+  .tbl th, .tbl td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+  .tbl td.n, .tbl th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; }
+  .tag.g { background: var(--google); color: #fff; } .tag.m { background: var(--meta); color: #fff; } .tag.o { border: 1px solid var(--ink); }
+  /* campañas */
+  .camps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-top: 26px; }
+  .camp { background: #fbfaf7; border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .camp.star { border: 2px solid var(--red); }
+  .camp .role { font-size: 13px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: .08em; }
+  .camp p { font-size: 15px; color: var(--muted); }
+  .camp .bud { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; text-align: center; font-size: 12px; color: var(--muted); }
+  .camp .bud b { display: block; font-size: 18px; color: var(--ink); }
+  .camp code { font-size: 13px; background: var(--paper-2); padding: 2px 6px; word-break: break-all; }
+  /* piezas */
+  .group { margin-top: 40px; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; align-items: start; }
+  .piece { background: #fbfaf7; border: 1px solid var(--line); padding: 10px; }
+  .piece video, .piece img { width: 100%; display: block; background: var(--paper-2); }
+  .piece figcaption { font-size: 13px; margin-top: 8px; line-height: 1.35; }
+  .piece figcaption b { display: block; font-size: 14px; }
+  .piece figcaption a { color: var(--muted); }
+  .piece.wide { grid-column: span 2; }
+  @media (max-width: 480px) { .piece.wide { grid-column: span 1; } }
+  .carousel { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .carousel img { width: 150px; flex: none; }
+  /* reglas */
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 24px; }
+  .rule { padding: 20px; border: 1px solid var(--line); background: #fbfaf7; }
+  .rule .dot { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .rule .dot::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
+  .rule.ok .dot { color: var(--ok); } .rule.warn .dot { color: var(--warn); } .rule.bad .dot { color: var(--red); }
+  .rule b { display: block; font-size: 26px; margin: 8px 0 6px; letter-spacing: -.02em; }
+  .rule p { font-size: 15px; color: var(--muted); }
+  /* checklist */
+  .check { list-style: none; margin-top: 20px; }
+  .check li { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); align-items: flex-start; }
+  .check input { width: 22px; height: 22px; accent-color: var(--red); flex: none; margin-top: 2px; }
+  .check label { cursor: pointer; }
+  .check label b { display: block; }
+  .check label span { font-size: 15px; color: var(--muted); }
+  .check li.done label { opacity: .5; }
+  footer { padding: 40px 0 60px; font-size: 14px; color: var(--muted); }
+  .folders { columns: 2 260px; margin-top: 18px; font-size: 15px; }
+  .folders div { break-inside: avoid; padding: 8px 0; border-top: 1px solid var(--line); }
+  .folders code { font-weight: 700; color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo"><span>COMA</span><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+    <div class="eyebrow" style="margin-top:40px">Plan de publicidad · 9 nov 2026 → 7 feb 2027</div>
+    <h1>Muchos clientes en Mallorca. Poco dinero en probar fuera<span class="c">.</span></h1>
+    <p class="lead">13 semanas, Google y Meta, 7 campañas, 26 piezas listas para subir. Cada lunes, unas reglas fijas deciden qué sube y qué se apaga. Aquí está todo. La configuración exacta, paso a paso, está en el TXT.</p>
+    <div class="files">
+      <a href="01-PLAN-DE-CAMPANA.txt">Abrir el plan exacto (TXT) →</a>
+      <a class="alt" href="1-google-ads/textos-google.txt">Textos de Google</a>
+      <a class="alt" href="6-simulacion/resultados.csv">Simulación (CSV)</a>
+      <a class="alt" href="7-seguimiento/leads.csv">Hoja de leads</a>
+    </div>
+    <div class="stats" id="stats"></div>
+    <p class="small muted" style="margin-top:10px">Caso típico de 20.000 simulaciones; entre paréntesis, del peor 10 % al mejor 10 %. Supuestos en la sección «Qué esperar».</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">La fórmula</div>
+    <h2>Cinco piezas que encajan<span class="c">.</span></h2>
+    <div class="formula">
+      <div><b>Un gancho de 1 segundo</b><p>«Tu web. 99 €.» Se entiende sin leer, en el primer segundo del vídeo.</p></div>
+      <div><b>La prueba en 5 segundos</b><p>El mismo diseño cambia de marca ante tus ojos: dentista, restaurante, abogado. «Sin plantillas» se ve, no se promete.</p></div>
+      <div><b>Jugar en casa</b><p>Mallorca: desde 1997, Paseo Mallorca 16, webs en inglés y alemán antes de la temporada. Aquí el lead cuesta menos de la mitad.</p></div>
+      <div><b>Vender el paso siguiente</b><p>Los extras salen con precio en los anuncios. El cliente medio deja unos 220 € de entrada y unos 300 € más en un año.</p></div>
+      <div><b>Cortar cada lunes</b><p>Reglas fijas, sin opiniones. El 7 de diciembre, España sigue o se apaga según sus números.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Dinero y calendario</div>
+    <h2>Despacio en Navidad, fuerte en enero<span class="c">.</span></h2>
+    <p class="lead">Presupuesto máximo por semana si no se apaga nada (3.963 € en total). Con las reglas, lo típico es gastar unos 3.140 €.</p>
+    <div class="chart" id="weeks"><div class="legend"><span><i style="background:var(--google)"></i>Google</span><span><i style="background:var(--meta)"></i>Meta</span></div><div class="tip"></div></div>
+    <div class="scroll"><table class="tbl" id="phases"></table></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Las campañas</div>
+    <h2>7 campañas, cada una con un papel<span class="c">.</span></h2>
+    <div class="camps" id="camps"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Qué esperar</div>
+    <h2>Simulado 20.000 veces<span class="c">.</span></h2>
+    <p class="lead">Cada coste y cada conversión se sortea entre un mínimo, un valor probable y un máximo de mercado. No es una promesa: es el abanico razonable, incluido el caso malo.</p>
+    <div class="two">
+      <div>
+        <h3 style="margin-top:28px">Beneficio a 12 meses, ya pagados los anuncios</h3>
+        <p class="small muted">Cuántas simulaciones acaban en cada tramo. A la izquierda de la línea discontinua, el año no compensa.</p>
+        <div class="chart" id="hist"><div class="tip"></div></div>
+      </div>
+      <div>
+        <h3 style="margin-top:28px">€ por lead cualificado, por campaña</h3>
+        <p class="small muted">Caso típico. Verde ≤ 30 €, ámbar hasta 45 €, rojo por encima: la regla del lunes.</p>
+        <div class="chart" id="cpl"><div class="tip"></div></div>
+      </div>
+    </div>
+    <div class="scroll"><table class="tbl" id="totals"></table></div>
+    <p class="small muted" style="margin-top:14px">Valor de un cliente (precios de la web): España, unos 218 € el primer encargo y 300 € más en un año; Mallorca, 253 € + 332 € (más idiomas y reservas). Margen supuesto: 50 % de lo puntual y 75 % de lo mensual. Cámbialo en <code>6-simulacion/simulacion.py</code> y vuelve a ejecutarlo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Las piezas</div>
+    <h2>Todo listo para subir<span class="c">.</span></h2>
+    <p class="lead">Vídeos con música propia (sin derechos de autor), en 9:16 para Reels y Stories y en 4:5 para el feed. Imágenes al tamaño exacto de cada plataforma.</p>
+    <div id="pieces"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Reglas del lunes</div>
+    <h2>15 minutos, siempre con los últimos 14 días<span class="c">.</span></h2>
+    <div class="rules">
+      <div class="rule ok"><span class="dot">Verde</span><b>≤ 30 € por lead cualificado</b><p>Subir el presupuesto un 20 % cada 4 días. Nunca más de golpe: el algoritmo vuelve a aprender.</p></div>
+      <div class="rule warn"><span class="dot">Ámbar</span><b>30 - 45 €</b><p>Mantener el dinero. Cambiar textos o piezas, añadir negativas en Google.</p></div>
+      <div class="rule bad"><span class="dot">Rojo</span><b>&gt; 45 € (Google España) · &gt; 40 € (Meta España)</b><p>El 7 de diciembre se apaga. El 30 % de su dinero va a Meta Mallorca; el resto se ahorra.</p></div>
+      <div class="rule"><span class="dot" style="color:var(--ink)">Anuncios</span><b>Apagar si…</b><p>CTR de enlace por debajo del 0,6 % tras 1.500 impresiones, menos del 25 % de reproducciones de 3 s en vídeo, o 40 € sin ningún lead.</p></div>
+      <div class="rule"><span class="dot" style="color:var(--ink)">Google</span><b>Cada lunes</b><p>Términos de búsqueda: lo que no es un cliente va a negativas. Palabra con 25 clics y 0 leads: pausa.</p></div>
+      <div class="rule"><span class="dot" style="color:var(--ink)">Negocio</span><b>Calidad primero</b><p>Más de 4 webs firmadas en una semana: no subir presupuestos hasta entregar. Con 30 ventas, importar lo facturado a Google.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Antes de encender (31 oct → 8 nov)</div>
+    <h2>Sin esto no se lanza<span class="c">.</span></h2>
+    <p class="lead">Marca cada paso al hacerlo (se guarda en este navegador).</p>
+    <ul class="check" id="checklist"></ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">El lead</div>
+    <h2>Donde se gana el dinero de verdad<span class="c">.</span></h2>
+    <div class="formula">
+      <div><b>Respuesta en menos de 1 hora</b><p>Mejor WhatsApp o llamada. Un lead que espera al día siguiente ya ha pedido otros tres presupuestos.</p></div>
+      <div><b>Tres preguntas</b><p>¿Qué negocio es? ¿Qué debe conseguir la web? ¿Para cuándo la necesita?</p></div>
+      <div><b>Propuesta en 24 h</b><p>Los 99 € y 2-3 extras que de verdad le sirven, cada uno con su precio. En Mallorca: idiomas, reservas y alojamiento.</p></div>
+      <div><b>Seguimiento</b><p>Día 2, día 5 y día 10. Luego, remarketing.</p></div>
+      <div><b>Al entregar</b><p>Alojamiento (9 €/mes), SEO local (99 €/mes) y pedir la reseña en Google.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="eyebrow">Qué hay en cada carpeta</div>
+    <div class="folders">
+      <div><code>01-PLAN-DE-CAMPANA.txt</code><br>Configuración exacta, paso a paso.</div>
+      <div><code>1-google-ads/</code><br>Textos, palabras clave (CSV para Google Ads Editor) e imágenes.</div>
+      <div><code>2-meta-espana/</code><br>Vídeos A y B, carrusel e imagen de autoridad.</div>
+      <div><code>3-meta-mallorca/</code><br>Vídeo de temporada (con y sin marcas) e imagen de idiomas.</div>
+      <div><code>4-remarketing/</code><br>«Sigue en pie» y «Calcula tu web».</div>
+      <div><code>5-linkedin-despachos-opcional/</code><br>Piezas para despachos (presupuesto aparte).</div>
+      <div><code>6-simulacion/</code><br>El script de la simulación y sus resultados.</div>
+      <div><code>7-seguimiento/</code><br>Plantilla para apuntar cada lead.</div>
+      <div><code>_fuentes/</code><br>El código de todas las piezas para cambiar un texto o un precio (LEEME.txt).</div>
+    </div>
+    <p style="margin-top:30px">COMA · Comunicación en Mallorca · Publicom Marketing 2000 SL · Paseo Mallorca, 16 · Palma</p>
+  </div>
+</footer>
+
+<script>
+const DATA = {"iteraciones": 20000, "fases": [{"id": "F1", "nombre": "Aprender", "inicio": "2026-11-09", "fin": "2026-12-06", "dias": 28}, {"id": "F2", "nombre": "Optimizar", "inicio": "2026-12-07", "fin": "2026-12-20", "dias": 14}, {"id": "NAV", "nombre": "Navidad: frenar", "inicio": "2026-12-21", "fin": "2027-01-06", "dias": 17}, {"id": "F3", "nombre": "Escalar: año nuevo", "inicio": "2027-01-07", "fin": "2027-02-07", "dias": 32}], "presupuesto_dia": {"G1": [10, 10, 5, 12], "G2": [12, 12, 7, 14], "G3": [1, 1, 1, 1], "G4": [0, 0, 0, 6], "M1": [7, 7, 3, 10], "M2": [8, 8, 4, 12], "M3": [0, 4, 3, 5]}, "nombres": {"G1": "Google · Web 99 España", "G2": "Google · Web Mallorca", "G3": "Google · Marca COMA", "G4": "Google · SEO local", "M1": "Meta · Web 99 España (frío)", "M2": "Meta · Temporada Mallorca (frío)", "M3": "Meta · Remarketing"}, "ticket": {"espana": {"primer_encargo": 218, "recurrente_12m": 300}, "mallorca": {"primer_encargo": 253, "recurrente_12m": 332}, "seo": {"primer_encargo": 124, "recurrente_12m": 782}}, "total": {"spend": {"p10": 3008.8916197642757, "p50": 3138.0558812559993, "p90": 3564.2166264377324, "mean": 3259.9745790043035}, "clicks": {"p10": 3194.512731968614, "p50": 3925.300303803398, "p90": 5076.595007677515, "mean": 4042.2315318029614}, "leads": {"p10": 103.0, "p50": 158.0, "p90": 244.0, "mean": 167.2929}, "qleads": {"p10": 62.0, "p50": 96.0, "p90": 147.0, "mean": 101.0518}, "clients": {"p10": 14.0, "p50": 24.0, "p90": 39.0, "mean": 25.4992}, "rev1": {"p10": 3137.652589114652, "p50": 5696.511443781275, "p90": 9732.800562754132, "mean": 6157.599569102135}, "rev12": {"p10": 7310.66783266187, "p50": 13637.89109667654, "p90": 24008.436214429203, "mean": 14890.23720940067}, "contrib12": {"p10": 1508.5247406692772, "p50": 5555.2138425106605, "p90": 12237.111691582677, "mean": 6368.303435770665}, "rev1_minus_spend": {"p10": -42.280305060222126, "p50": 2463.7353322523722, "p90": 6385.714760289746, "mean": 2897.6249900978323}}, "ratios": {"cpl": {"p10": 13.956143108872057, "p50": 20.43282358833124, "p90": 30.497612380187014, "mean": 21.556921536570396}, "cpl_cualificado": {"p10": 23.02271858464529, "p50": 33.761755420727965, "p90": 50.77202763270017, "mean": 35.76824461046333}, "cac": {"p10": 84.77834309039974, "p50": 136.06971396872774, "p90": 235.09655972594857, "mean": 151.4069198508266}, "roas_primer_encargo": {"p10": 0.9867173411659566, "p50": 1.7589011415367415, "p90": 2.9258477147248185, "mean": 1.8805725105204822}, "roas_12m": {"p10": 2.2970878186176598, "p50": 4.208009951735165, "p90": 7.2141090250658255, "mean": 4.547660096794872}}, "probabilidades": {"recupera_inversion_con_primer_encargo": 0.89495, "contribucion_12m_positiva": 0.9771, "al_menos_15_clientes": 0.8745}, "por_campana": {"G1": {"nombre": "Google · Web 99 España", "gasto": 280, "clics": 166, "leads": 8.0, "leads_cualificados": 4.0, "clientes": 1.8027, "cpl_cualificado": 70.0, "facturacion_12m": 954}, "G2": {"nombre": "Google · Web Mallorca", "gasto": 1071, "clics": 686, "leads": 54.0, "leads_cualificados": 37.0, "clientes": 10.5255, "cpl_cualificado": 28.2, "facturacion_12m": 6315}, "G3": {"nombre": "Google · Marca COMA", "gasto": 18, "clics": 46, "leads": 6.0, "leads_cualificados": 5.0, "clientes": 1.7887, "cpl_cualificado": 3.9, "facturacion_12m": 950}, "G4": {"nombre": "Google · SEO local", "gasto": 192, "clics": 88, "leads": 5.0, "leads_cualificados": 3.0, "clientes": 0.666, "cpl_cualificado": 64.0, "facturacion_12m": 617}, "M1": {"nombre": "Meta · Web 99 España (frío)", "gasto": 196, "clics": 374, "leads": 6.0, "leads_cualificados": 3.0, "clientes": 1.03065, "cpl_cualificado": 65.3, "facturacion_12m": 546}, "M2": {"nombre": "Meta · Temporada Mallorca (frío)", "gasto": 1111, "clics": 1760, "leads": 39.0, "leads_cualificados": 21.0, "clientes": 5.3058, "cpl_cualificado": 48.3, "facturacion_12m": 3181}, "M3": {"nombre": "Meta · Remarketing", "gasto": 267, "clics": 519, "leads": 24.0, "leads_cualificados": 15.0, "clientes": 4.37985, "cpl_cualificado": 17.8, "facturacion_12m": 2327}}, "reglas": {"prob_mover_google_espana": 0.7518, "prob_mover_meta_espana": 0.78275, "sin_reglas": {"clients": {"p10": 15.0, "p50": 26.0, "p90": 41.0, "mean": 27.4596}, "rev12": {"p10": 8133.962611460167, "p50": 14605.395419632707, "p90": 25164.62170121981, "mean": 15879.134765270504}, "contrib12": {"p10": 1369.1471505493896, "p50": 5588.429703547106, "p90": 12536.686764714812, "mean": 6430.893874446705}}, "con_reglas": {"clients": {"p10": 14.0, "p50": 24.0, "p90": 39.0, "mean": 25.4992}, "rev12": {"p10": 7310.66783266187, "p50": 13637.89109667654, "p90": 24008.436214429203, "mean": 14890.23720940067}, "contrib12": {"p10": 1508.5247406692772, "p50": 5555.2138425106605, "p90": 12237.111691582677, "mean": 6368.303435770665}}}, "histograma_contrib12": {"conteos": [125, 1018, 2462, 3504, 3379, 2907, 2116, 1549, 1057, 656, 449, 250, 203, 118, 67, 51, 38, 17, 11, 6, 5, 9, 0, 3], "bordes": [-2498, -838, 822, 2482, 4142, 5802, 7462, 9122, 10782, 12442, 14102, 15762, 17422, 19082, 20742, 22402, 24063, 25723, 27383, 29043, 30703, 32363, 34023, 35683, 37343]}, "semanas": [{"semana": 1, "lunes": "2026-11-09", "google": 161.0, "meta": 105.0}, {"semana": 2, "lunes": "2026-11-16", "google": 161.0, "meta": 105.0}, {"semana": 3, "lunes": "2026-11-23", "google": 161.0, "meta": 105.0}, {"semana": 4, "lunes": "2026-11-30", "google": 161.0, "meta": 105.0}, {"semana": 5, "lunes": "2026-12-07", "google": 161.0, "meta": 133.0}, {"semana": 6, "lunes": "2026-12-14", "google": 161.0, "meta": 133.0}, {"semana": 7, "lunes": "2026-12-21", "google": 91.0, "meta": 70.0}, {"semana": 8, "lunes": "2026-12-28", "google": 91.0, "meta": 70.0}, {"semana": 9, "lunes": "2027-01-04", "google": 171.0, "meta": 138.0}, {"semana": 10, "lunes": "2027-01-11", "google": 231.0, "meta": 189.0}, {"semana": 11, "lunes": "2027-01-18", "google": 231.0, "meta": 189.0}, {"semana": 12, "lunes": "2027-01-25", "google": 231.0, "meta": 189.0}, {"semana": 13, "lunes": "2027-02-01", "google": 231.0, "meta": 189.0}]};
+// separador de miles siempre (toLocaleString no agrupa 4 cifras en español)
+const num = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const eur = (n) => num(n) + " €";
+const T = DATA.total, R = DATA.ratios;
+
+// ------------------------------------------------------------------ cifras
+document.getElementById("stats").innerHTML = [
+  ["Inversión típica", eur(T.spend.p50), "máximo 3.963 € · 13 semanas"],
+  ["Clientes nuevos", num(T.clients.p50), `(${num(T.clients.p10)} – ${num(T.clients.p90)})`],
+  ["Facturación a 12 meses", eur(T.rev12.p50), `(${eur(T.rev12.p10)} – ${eur(T.rev12.p90)})`],
+  ["Se paga con el primer encargo", Math.round(DATA.probabilidades.recupera_inversion_con_primer_encargo * 100) + " %", "de las simulaciones", true],
+].map(([l, v, s, red]) => `<div class="stat${red ? " red" : ""}"><span>${l}</span><b>${v}</b><span>${s}</span></div>`).join("");
+
+// ------------------------------------------------------------------ tooltips
+function tipper(box) {
+  const tip = box.querySelector(".tip");
+  return {
+    show(html, ev) {
+      tip.innerHTML = html; tip.style.opacity = 1;
+      const r = box.getBoundingClientRect();
+      let x = ev.clientX - r.left + 12, y = ev.clientY - r.top - 10;
+      if (x + tip.offsetWidth > r.width) x -= tip.offsetWidth + 24;
+      tip.style.left = x + "px"; tip.style.top = y + "px";
+    },
+    hide() { tip.style.opacity = 0; },
+  };
+}
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+// barra con esquinas superiores redondeadas (4 px), apoyada en la base
+function barPath(x, y, w, h, r = 4) {
+  r = Math.min(r, h, w / 2);
+  return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
+}
+
+// ------------------------------------------------------------------ semanas
+(function () {
+  const box = document.getElementById("weeks"), tt = tipper(box);
+  const W = 1000, H = 330, L = 50, B = 46, top = 30;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Presupuesto máximo por semana, Google y Meta" }, box);
+  const wk = DATA.semanas, max = 450;
+  const y = (v) => top + (H - B - top) * (1 - v / max);
+  const g = el("g", { class: "grid axis" }, svg);
+  for (let v = 0; v <= max; v += 150) {
+    el("line", { x1: L, x2: W, y1: y(v), y2: y(v) }, g);
+    el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end" }, g).textContent = v + " €";
+  }
+  const bw = (W - L) / wk.length;
+  // fases
+  const fases = [["Aprender", 0, 4], ["Optimizar", 4, 6], ["Navidad", 6, 8.4], ["Escalar", 8.4, 13]];
+  fases.forEach(([n, a, z], i) => {
+    if (i) el("line", { x1: L + a * bw, x2: L + a * bw, y1: 8, y2: H - B, stroke: "rgba(12,12,12,.25)", "stroke-dasharray": "3 4" }, svg);
+    const t = el("text", { x: L + a * bw + 6, y: 18, "font-size": 12, "font-weight": 700, fill: "#5d5851" }, svg); t.textContent = n.toUpperCase();
+  });
+  wk.forEach((w, i) => {
+    const x = L + i * bw + 6, ww = bw - 12;
+    const yg = y(w.google), ym = y(w.google + w.meta);
+    el("rect", { x, y: yg, width: ww, height: y(0) - yg, fill: "var(--google)" }, svg);
+    el("path", { d: barPath(x, ym, ww, yg - ym - 2), fill: "var(--meta)" }, svg);
+    const d = new Date(w.lunes);
+    const t = el("text", { x: x + ww / 2, y: H - B + 18, "text-anchor": "middle", class: "axis" }, svg);
+    t.textContent = d.getDate() + "/" + (d.getMonth() + 1);
+    t.setAttribute("font-size", 12); t.setAttribute("fill", "#5d5851");
+    const hit = el("rect", { x: L + i * bw, y: top, width: bw, height: H - B - top, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", (ev) => tt.show(`<b>Semana del ${d.getDate()}/${d.getMonth() + 1}</b><br>Google ${eur(w.google)}<br>Meta ${eur(w.meta)}<br>Total ${eur(w.google + w.meta)}`, ev));
+    hit.addEventListener("mouseleave", tt.hide);
+  });
+  el("text", { x: L, y: H - 6, "font-size": 12, fill: "#5d5851" }, svg).textContent = "Semana que empieza el lunes…";
+
+  const P = DATA.presupuesto_dia, F = DATA.fases;
+  const names = DATA.nombres;
+  let html = `<tr><th>Campaña</th>${F.map((f) => `<th class="n">${f.nombre}<br><span style="font-weight:400;text-transform:none;letter-spacing:0">${f.inicio.slice(8)}/${f.inicio.slice(5, 7)} – ${f.fin.slice(8)}/${f.fin.slice(5, 7)}</span></th>`).join("")}</tr>`;
+  for (const k in P) html += `<tr><td><span class="tag ${k[0] === "G" ? "g" : "m"}">${k}</span> ${names[k]}</td>${P[k].map((v) => `<td class="n">${v ? v + " €/día" : "–"}</td>`).join("")}</tr>`;
+  const tot = F.map((f, i) => Object.values(P).reduce((s, b) => s + b[i], 0));
+  html += `<tr><td><b>Total al día</b></td>${tot.map((t) => `<td class="n"><b>${t} €</b></td>`).join("")}</tr>`;
+  html += `<tr><td><b>Total de la fase</b></td>${tot.map((t, i) => `<td class="n"><b>${eur(t * F[i].dias)}</b></td>`).join("")}</tr>`;
+  document.getElementById("phases").innerHTML = html;
+})();
+
+// ------------------------------------------------------------------ campañas
+(function () {
+  const C = DATA.por_campana, P = DATA.presupuesto_dia;
+  const info = {
+    G1: ["Prueba con fecha de corte", "Búsquedas de precio y de «web para mi negocio» en toda España, sin Baleares.", "/lp/web-99/", "Textos de búsqueda (1-google-ads/)"],
+    G2: ["El motor", "Las mismas búsquedas y las de «diseño web Mallorca», solo para gente de la isla. Aquí COMA juega en casa.", "/lp/mallorca/", "Textos de búsqueda (1-google-ads/)", true],
+    G3: ["El seguro", "Quien ya os busca por el nombre. Cuesta céntimos y evita que otro se ponga delante.", "/", "Textos de marca"],
+    G4: ["El segundo producto", "SEO local y posicionamiento en IA desde enero. Lead caro, pero cada cliente paga cada mes.", "/lp/seo-local/", "Textos SEO (1-google-ads/)"],
+    M1: ["Prueba con fecha de corte", "Vídeo en Reels y feed para toda España (sin Baleares). Si en 4 semanas no baja de 40 €, se apaga.", "/lp/web-99/", "Vídeos A y B, carrusel, autoridad"],
+    M2: ["El segundo motor", "«La temporada se gana en invierno»: webs en 4 idiomas para negocios de Mallorca.", "/lp/mallorca/", "Vídeo temporada, idiomas, autoridad", true],
+    M3: ["El más rentable", "Para quien ya vio la oferta y no escribió. Desde el 7 de diciembre.", "/lp/web-99/ y /precios/", "«Sigue en pie», «Calcula tu web»"],
+  };
+  document.getElementById("camps").innerHTML = Object.keys(P).map((k) => {
+    const [role, txt, url, pcs, star] = info[k], c = C[k];
+    return `<div class="camp${star ? " star" : ""}">
+      <div><span class="tag ${k[0] === "G" ? "g" : "m"}">${k[0] === "G" ? "Google" : "Meta"}</span> <span class="role">${role}</span></div>
+      <h3>${c.nombre}</h3><p>${txt}</p>
+      <div class="bud">${P[k].map((v, i) => `<div><b>${v || "–"}</b>${["F1", "F2", "Nav.", "F3"][i]}</div>`).join("")}</div>
+      <p class="small">€/día por fase · Destino <code>${url}</code><br>Piezas: ${pcs}</p>
+      <p class="small">Típico: <b style="color:var(--ink)">${num(c.leads_cualificados)} leads cualificados</b> a ${eur(c.cpl_cualificado)} cada uno</p>
+    </div>`;
+  }).join("");
+})();
+
+// ------------------------------------------------------------------ histograma
+(function () {
+  const box = document.getElementById("hist"), tt = tipper(box);
+  const h = DATA.histograma_contrib12, W = 520, H = 300, L = 10, B = 62, top = 10;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Distribución del beneficio a 12 meses" }, box);
+  const max = Math.max(...h.conteos), n = h.conteos.length;
+  const x0 = h.bordes[0], x1 = h.bordes[n];
+  const X = (v) => L + (W - 2 * L) * (v - x0) / (x1 - x0);
+  const Y = (c) => top + (H - B - top) * (1 - c / max);
+  h.conteos.forEach((c, i) => {
+    const a = X(h.bordes[i]) + 1, b = X(h.bordes[i + 1]) - 1;
+    if (c > 0) el("path", { d: barPath(a, Y(c), b - a, Y(0) - Y(c), 3), fill: h.bordes[i + 1] <= 0 ? "#8a8278" : "var(--red)" }, svg);
+    const hit = el("rect", { x: a - 1, y: top, width: b - a + 2, height: H - B - top, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", (ev) => tt.show(`${eur(h.bordes[i])} a ${eur(h.bordes[i + 1])}<br><b>${(c / DATA.iteraciones * 100).toFixed(1)} %</b> de las simulaciones`, ev));
+    hit.addEventListener("mouseleave", tt.hide);
+  });
+  el("line", { x1: L, x2: W - L, y1: Y(0), y2: Y(0), stroke: "#0c0c0c" }, svg);
+  if (x0 < 0) {
+    el("line", { x1: X(0), x2: X(0), y1: top, y2: Y(0), stroke: "#0c0c0c", "stroke-dasharray": "4 4" }, svg);
+    el("text", { x: X(0) + 6, y: top + 12, "font-size": 12, fill: "#5d5851" }, svg).textContent = "0 €";
+  }
+  const p = T.contrib12;
+  [["Peor 10 %", p.p10], ["Típico", p.p50], ["Mejor 10 %", p.p90]].forEach(([l, v], i) => {
+    el("line", { x1: X(v), x2: X(v), y1: Y(0), y2: Y(0) + 8, stroke: "#0c0c0c", "stroke-width": 2 }, svg);
+    // típico en la primera fila; peor y mejor debajo, alineados hacia fuera para no chocar
+    const t = el("text", { x: X(v), y: Y(0) + (i === 1 ? 24 : 44), "text-anchor": ["end", "middle", "start"][i], "font-size": 12, fill: "#0c0c0c", "font-weight": i === 1 ? 700 : 400 }, svg);
+    t.textContent = `${l}: ${eur(v)}`;
+  });
+})();
+
+// ------------------------------------------------------------------ € por lead cualificado
+(function () {
+  const box = document.getElementById("cpl"), tt = tipper(box);
+  const C = DATA.por_campana, ks = Object.keys(C).filter((k) => k !== "G3").sort((a, b) => C[a].cpl_cualificado - C[b].cpl_cualificado);
+  const W = 520, rowH = 34, L = 190, top = 6, H = top + ks.length * rowH + 30, max = 80;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Coste por lead cualificado por campaña" }, box);
+  const X = (v) => L + (W - L - 50) * v / max;
+  [30, 45].forEach((v) => {
+    el("line", { x1: X(v), x2: X(v), y1: top, y2: H - 26, stroke: "rgba(12,12,12,.3)", "stroke-dasharray": "3 4" }, svg);
+    el("text", { x: X(v), y: H - 10, "text-anchor": "middle", "font-size": 12, fill: "#5d5851" }, svg).textContent = v + " €";
+  });
+  ks.forEach((k, i) => {
+    const v = C[k].cpl_cualificado, y = top + i * rowH;
+    const col = v <= 30 ? "var(--ok)" : v <= 45 ? "var(--warn)" : "var(--red)";
+    el("text", { x: L - 10, y: y + 21, "text-anchor": "end", "font-size": 13, fill: "#0c0c0c" }, svg).textContent = C[k].nombre.replace(" (frío)", "");
+    // barra horizontal: extremo redondeado a la derecha, apoyada en el eje
+    const w = X(v) - L, r = 4, hh = 20, yy = y + 7;
+    el("path", { d: `M${L},${yy}H${L + w - r}Q${L + w},${yy} ${L + w},${yy + r}V${yy + hh - r}Q${L + w},${yy + hh} ${L + w - r},${yy + hh}H${L}Z`, fill: col }, svg);
+    el("text", { x: X(v) + 6, y: y + 22, "font-size": 13, "font-weight": 700, fill: "#0c0c0c" }, svg).textContent = eur(v);
+    const hit = el("rect", { x: 0, y, width: W, height: rowH, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", (ev) => tt.show(`<b>${C[k].nombre}</b><br>${eur(v)} por lead cualificado<br>${num(C[k].leads_cualificados)} leads cualificados · gasto ${eur(C[k].gasto)}`, ev));
+    hit.addEventListener("mouseleave", tt.hide);
+  });
+  el("line", { x1: L, x2: L, y1: top, y2: H - 26, stroke: "#0c0c0c" }, svg);
+})();
+
+// ------------------------------------------------------------------ tabla de totales
+(function () {
+  const rows = [["Gasto en anuncios", "spend", eur], ["Leads (formularios)", "leads", num], ["Leads cualificados", "qleads", num], ["Clientes cerrados", "clients", num], ["Facturación del primer encargo", "rev1", eur], ["Facturación a 12 meses", "rev12", eur], ["Beneficio a 12 meses tras anuncios", "contrib12", eur]];
+  document.getElementById("totals").innerHTML = `<tr><th>13 semanas</th><th class="n">Peor 10 %</th><th class="n">Típico</th><th class="n">Mejor 10 %</th></tr>` +
+    rows.map(([l, k, f]) => `<tr><td>${l}</td><td class="n">${f(T[k].p10)}</td><td class="n"><b>${f(T[k].p50)}</b></td><td class="n">${f(T[k].p90)}</td></tr>`).join("") +
+    `<tr><td>€ por lead cualificado</td><td class="n">${eur(R.cpl_cualificado.p10)}</td><td class="n"><b>${eur(R.cpl_cualificado.p50)}</b></td><td class="n">${eur(R.cpl_cualificado.p90)}</td></tr>` +
+    `<tr><td>€ por cliente</td><td class="n">${eur(R.cac.p10)}</td><td class="n"><b>${eur(R.cac.p50)}</b></td><td class="n">${eur(R.cac.p90)}</td></tr>`;
+})();
+
+// ------------------------------------------------------------------ piezas
+(function () {
+  const v = (src, t, d) => `<figure class="piece"><video src="${src}.mp4" poster="${src}_portada.jpg" controls playsinline preload="none"></video><figcaption><b>${t}</b>${d}<br><a href="${src}.mp4">9:16</a> · <a href="${src.replace("9x16", "4x5")}.mp4">4:5</a></figcaption></figure>`;
+  const im = (src, t, d, wide) => `<figure class="piece${wide ? " wide" : ""}"><img src="${src}" alt="${t}"><figcaption><b>${t}</b>${d}</figcaption></figure>`;
+  const groups = [
+    ["Meta · España (M1)", "2-meta-espana/", [
+      v("2-meta-espana/M1-A_video-99_9x16", "A · «Tu web. 99 €»", "15 s. Gancho de precio + el diseño cambia de marca."),
+      v("2-meta-espana/M1-B_video-1500_9x16", "B · «¿Te han pedido 1.500 €?»", "12 s. La objeción de precio y la «trampa»: extras con precio."),
+      `<figure class="piece wide"><div class="carousel">${[1, 2, 3, 4, 5].map((i) => `<img src="2-meta-espana/M1-C_carrusel-${i}.png" alt="Tarjeta ${i}">`).join("")}</div><figcaption><b>C · Carrusel «Qué incluye»</b>5 tarjetas 1:1, en este orden.</figcaption></figure>`,
+      im("2-meta-espana/M1-D_autoridad_4x5.png", "D · Autoridad", "4:5. Solo con permiso de los clientes citados."),
+    ]],
+    ["Meta · Mallorca (M2)", "3-meta-mallorca/", [
+      v("3-meta-mallorca/M2-A_video-temporada_9x16", "A · «La temporada se gana en invierno»", "15 s. La misma web en ES, EN, DE y CA."),
+      v("3-meta-mallorca/M2-A_video-temporada-sin-marcas_9x16", "A · Versión sin marcas", "Igual, sin nombres de clientes en el cierre."),
+      im("3-meta-mallorca/M2-B_idiomas_4x5.png", "B · «Buenos días. Good morning…»", "4:5 (también en 9:16)."),
+    ]],
+    ["Meta · Remarketing (M3)", "4-remarketing/", [
+      im("4-remarketing/M3-A_sigue-en-pie_4x5.png", "A · «Sigue en pie»", "4:5 y 9:16."),
+      im("4-remarketing/M3-B_calcula_4x5.png", "B · «Calcula tu web»", "4:5 y 9:16. Lleva a /precios/."),
+    ]],
+    ["Google Ads", "1-google-ads/", [
+      im("1-google-ads/imagenes/G-imagen_1200x628.png", "Imagen 1,91:1", "Sin texto encima (norma de Google).", true),
+      im("1-google-ads/imagenes/G-imagen_1200x1200.png", "Imagen 1:1", ""),
+      im("1-google-ads/imagenes/G-logo_1200x1200.png", "Logotipo 1:1", ""),
+    ]],
+    ["LinkedIn · Despachos (opcional)", "5-linkedin-despachos-opcional/", [
+      im("5-linkedin-despachos-opcional/L1-despachos_1200x627.png", "Despachos 1200×627", "Presupuesto aparte, desde el 7 de enero.", true),
+      im("5-linkedin-despachos-opcional/L1-despachos_1080x1080.png", "Despachos 1:1", ""),
+    ]],
+  ];
+  document.getElementById("pieces").innerHTML = groups.map(([t, dir, items]) => `<div class="group"><h3>${t} <a class="small muted" href="${dir}" style="font-weight:400">${dir}</a></h3><div class="gallery">${items.join("")}</div></div>`).join("");
+})();
+
+// ------------------------------------------------------------------ checklist
+(function () {
+  const items = [
+    ["Formulario fiable", "PUBLIC_FORM_ENDPOINT (Formspree o Web3Forms) en Railway y volver a desplegar."],
+    ["Medición", "Google Tag Manager con GA4, conversión de Google Ads y píxel de Meta (docs/ADS.md)."],
+    ["Google Ads", "Cuenta en modo experto, facturación, GA4 vinculado, conversión «Lead formulario» principal."],
+    ["Meta", "Business Manager, píxel, dominio verificado y los 4 públicos personalizados del plan."],
+    ["Google Business Profile", "Ficha de COMA en Paseo Mallorca 16 verificada y vinculada a Google Ads."],
+    ["Prueba real", "Cada URL del plan en el móvil, cookies aceptadas, formulario enviado: llega el correo y cuenta la conversión."],
+    ["Permiso para citar clientes", "Un sí por escrito de las marcas citadas. Si no lo hay, usar las versiones sin marcas."],
+    ["Revisión legal", "Cookies y privacidad revisadas por el asesor."],
+    ["Agenda", "Alguien responde los leads en menos de 1 hora, de lunes a sábado."],
+  ];
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem("coma-ads-check") || "{}"); } catch {}
+  const ul = document.getElementById("checklist");
+  ul.innerHTML = items.map(([t, d], i) => `<li class="${saved[i] ? "done" : ""}"><input type="checkbox" id="c${i}" ${saved[i] ? "checked" : ""}><label for="c${i}"><b>${t}</b><span>${d}</span></label></li>`).join("");
+  ul.addEventListener("change", (e) => {
+    const i = e.target.id.slice(1);
+    saved[i] = e.target.checked;
+    e.target.parentElement.classList.toggle("done", e.target.checked);
+    try { localStorage.setItem("coma-ads-check", JSON.stringify(saved)); } catch {}
+  });
+})();
+</script>
+</body>
+</html>

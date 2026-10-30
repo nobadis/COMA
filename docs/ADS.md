@@ -49,6 +49,8 @@ Se guardan `utm_*`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid` y
 
 ## Estrategia de anuncios
 
+**Plan vigente (9 nov 2026 - 7 feb 2027): [`publicidad/01-PLAN-DE-CAMPANA.txt`](../publicidad/01-PLAN-DE-CAMPANA.txt).** Parte de esta estrategia y la ajusta con una simulación: más peso a Mallorca (Google y Meta), España como prueba con corte el 7 de diciembre, remarketing desde diciembre y SEO local desde enero. Lo que sigue es el razonamiento de base.
+
 Ningún plan de medios es seguro al céntimo. Este es el que mejor encaja con la oferta: el gancho es la web a 99 € (se entiende en un segundo) y el margen está en lo que se suma después (tienda, SEO a 99 €/mes, GEO, alojamiento). Un anuncio que solo cierra webs de 99 € pierde dinero en cuanto el lead cuesta más de lo que queda tras hacerla. Por eso el anuncio habla de 99 € y la landing (`/lp/web-99/`) lleva al presupuesto, donde se ven los extras, antes del formulario.
 
 **No enciendas campañas hasta tener esto:** `PUBLIC_FORM_ENDPOINT` activo (con `mailto:` no se puede fiar la conversión), la conversión "Lead" creada en cada plataforma y comprobada con un envío real, y cookies aceptadas en esa prueba. Sin eso, el algoritmo optimiza a ciegas.

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Vídeo C · La temporada se gana en invierno</title>
+<!--
+  Anuncio en frío de Meta (solo Mallorca). 15 s. Insight local: en invierno el negocio de Mallorca
+  tiene tiempo y en abril llega el turista que busca en inglés y alemán.
+  0-2,6 gancho · 2,6-8 la misma web cambia de idioma · 8-10,8 precio a la vista · 10,8-15 cierre
+  con confianza local (Palma desde 1997, referencias).
+-->
+<link rel="stylesheet" href="kit.css" />
+<style>
+  #g1 { font-size: 132px; }
+  #g2 { font-size: 132px; color: var(--red); }
+  #gE { margin-bottom: 40px; }
+  #cap { font-size: 104px; }
+  #langs { display: flex; gap: 12px; margin-top: 26px; }
+  #langs span { font-size: 36px; font-weight: 800; font-stretch: 120%; border: 3px solid var(--ink); padding: 10px 20px; }
+  #langs span.on { background: var(--ink); color: var(--paper); }
+  #ex { position: absolute; right: 0; top: 262px; font-size: 22px; color: var(--muted); }
+  .phone { left: 50%; transform-origin: 50% 0; }
+  .f916 #s2 .phone { top: 350px; transform: translateX(-50%) scale(1.12); }
+  .f45 #s2 .phone { top: 330px; transform: translateX(-50%) scale(0.95); }
+  .mw { position: absolute; inset: 0; background: #f4e6cf; color: #3a2416; display: flex; flex-direction: column; }
+  .mw .ph { height: 430px; background: linear-gradient(160deg, #e9a86a 0%, #c4512b 55%, #7a2e17 100%); position: relative; overflow: hidden; }
+  .mw .ph i { position: absolute; border-radius: 50%; background: #ffd9a0; width: 160px; height: 160px; right: 60px; top: 70px; opacity: .9; }
+  .mw .ph b { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; background: #2d5a6b; }
+  .mw .ph u { position: absolute; left: 0; right: 0; bottom: 120px; height: 60px; background: #3f7b8c; text-decoration: none; }
+  .mw nav { position: absolute; left: 30px; right: 30px; top: 60px; display: flex; justify-content: space-between; color: #fff; font: 700 26px Georgia, serif; z-index: 2; }
+  .mw nav span { font: 800 18px "Archivo V"; background: rgba(255,255,255,.2); padding: 8px 12px; }
+  .mw .tx { padding: 36px 34px; }
+  .mw small { display: block; font-size: 17px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: #c4512b; }
+  .mw h4 { font: 400 58px/1 Georgia, serif; letter-spacing: -0.02em; margin-top: 16px; }
+  .mw p { font-size: 21px; margin-top: 18px; line-height: 1.35; opacity: .8; }
+  .mw .b { display: inline-block; margin-top: 28px; padding: 18px 28px; font-size: 22px; font-weight: 800; background: #c4512b; color: #fff; }
+  #s3 .safe { display: flex; flex-direction: column; justify-content: center; }
+  #pt { font-size: 120px; margin-top: 30px; }
+  #chips { display: flex; flex-direction: column; gap: 22px; margin-top: 50px; align-items: flex-start; }
+  #pn { margin-top: 40px; font-size: 40px; font-weight: 600; }
+  .comma { position: absolute; right: 70px; color: var(--red); width: 150px; }
+  .f916 .comma { bottom: 150px; } .f45 .comma { display: none; }
+  #endH { font-size: 112px; margin-top: 46px; }
+  #endR { margin-top: 40px; font-size: 34px; line-height: 1.45; color: var(--paper); font-weight: 600; }
+  #endB { margin-top: 56px; }
+  #endP { margin-top: 40px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <section class="sc dark" id="s1"><div class="safe center">
+    <div class="eyebrow" id="gE">Negocios de Mallorca</div>
+    <div id="g1" class="h">La temporada<br>se gana en</div>
+    <div id="g2" class="h w">invierno.</div>
+  </div></section>
+
+  <section class="sc" id="s2"><div class="safe">
+    <div id="cap" class="h">Tu web en 4 idiomas<span class="c">.</span></div>
+    <div id="langs"><span id="l0">ES</span><span id="l1">EN</span><span id="l2">DE</span><span id="l3">CA</span></div>
+    <div class="phone"><div class="scr"><div class="mw">
+      <div class="ph"><i></i><u></u><b></b><nav>Sa Cuina<span id="mwL">ES</span></nav></div>
+      <div class="tx">
+        <small id="mwE">Palma · cocina mallorquina</small>
+        <h4 id="mwH">Producto de la isla, cada día</h4>
+        <p id="mwP">Menú de mediodía y carta de temporada a dos calles del mar.</p>
+        <div class="b" id="mwB">Reservar mesa</div>
+      </div>
+    </div></div></div>
+    <div id="ex">Web de ejemplo</div>
+  </div></section>
+
+  <section class="sc" id="s3"><svg class="comma" id="cm3" viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg><div class="safe">
+    <div class="eyebrow" id="pe">Lista antes de Semana Santa</div>
+    <div id="pt" class="h">Precio a la vista<span class="c">.</span></div>
+    <div id="chips">
+      <div class="chip" id="c0">Web a medida <em>99 €</em></div>
+      <div class="chip" id="c1">Cada idioma <em>+ 49 €</em></div>
+      <div class="chip" id="c2">Reservas online <em>+ 149 €</em></div>
+    </div>
+    <div id="pn">+ IVA. Pago único.</div>
+  </div></section>
+
+  <section class="sc dark" id="s4"><div class="safe center">
+    <div class="logo" id="endL" style="font-size:96px"><span>COMA</span><svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+    <div class="h" id="endH">Agencia de Palma<br>desde 1997<span class="c">.</span></div>
+    <div id="endR"><span class="small" style="font-size:26px;letter-spacing:.14em;text-transform:uppercase;font-weight:700">Han confiado en nosotros</span><br>Mallorca Live Festival · Meliá<br>RCD Mallorca · Ajuntament de Calvià</div>
+    <div class="btn" id="endB">Prepara la temporada <i>→</i></div>
+    <div class="small" id="endP">Paseo Mallorca, 16 · Palma<br><b style="color:var(--paper)">comunicacionenmallorca.com</b></div>
+  </div></section>
+</div>
+<script src="kit.js"></script>
+<script>
+  const { $, rise, slam, p, ease, S } = K;
+  const L = [
+    { c: "ES", e: "Palma · cocina mallorquina", h: "Producto de la isla, cada día", p: "Menú de mediodía y carta de temporada a dos calles del mar.", b: "Reservar mesa" },
+    { c: "EN", e: "Palma · Mallorcan kitchen", h: "Island produce, every day", p: "Lunch menu and seasonal dishes, two streets from the sea.", b: "Book a table" },
+    { c: "DE", e: "Palma · Mallorquinische Küche", h: "Frisch von der Insel, jeden Tag", p: "Mittagsmenü und Saisonkarte, zwei Straßen vom Meer.", b: "Tisch reservieren" },
+    { c: "CA", e: "Palma · cuina mallorquina", h: "Producte de l'illa, cada dia", p: "Menú de migdia i carta de temporada a dos carrers de la mar.", b: "Reservar taula" },
+  ];
+  // ?sinmarcas=1: versión sin nombres de clientes (si no hay permiso para citarlos en anuncios)
+  if (new URLSearchParams(location.search).has("sinmarcas"))
+    $("endR").innerHTML = '<span class="small" style="font-size:26px;letter-spacing:.14em;text-transform:uppercase;font-weight:700">29 años en la isla</span><br>Más de 100 pymes, marcas<br>y ayuntamientos de Mallorca';
+  S("s1", 0, 2.6, (t) => {
+    $("s1").firstElementChild.style.transform = `scale(${1 + 0.015 * t})`;
+    $("g2").style.transform = `scale(${1 + 0.06 * ease(p(t, 0.3, 0.6)) - 0.06 * ease(p(t, 0.6, 1))})`;
+  });
+  S("s2", 2.6, 8.0, (t) => {
+    rise($("cap"), t, 0.05, 0.4, 30);
+    rise($("langs"), t, 0.2, 0.4, 20);
+    const i = Math.min(3, Math.floor(Math.max(0, t - 0.6) / 1.15));
+    const l = L[i];
+    for (let j = 0; j < 4; j++) $("l" + j).classList.toggle("on", j === i);
+    $("mwL").textContent = l.c; $("mwE").textContent = l.e; $("mwH").textContent = l.h; $("mwP").textContent = l.p; $("mwB").textContent = l.b;
+    const f = (Math.max(0, t - 0.6) % 1.15);
+    document.querySelector("#s2 .tx").style.opacity = t > 0.6 && f < 0.12 ? f / 0.12 : 1;
+    const ph = document.querySelector("#s2 .phone");
+    const k = ease(p(t, 0, 0.6));
+    ph.style.marginTop = (1 - k) * 200 + "px";
+    ph.style.opacity = k;
+  });
+  S("s3", 8.0, 10.8, (t) => {
+    rise($("pe"), t, 0, 0.4, 16);
+    rise($("cm3"), t, 0.2, 0.6, 120);
+    rise($("pt"), t, 0.1, 0.4, 30);
+    ["c0", "c1", "c2"].forEach((id, j) => rise($(id), t, 0.5 + j * 0.4, 0.32, 30));
+    rise($("pn"), t, 1.8, 0.4, 16);
+  });
+  S("s4", 10.8, 99, (t) => {
+    rise($("endL"), t, 0.05, 0.4, 20);
+    rise($("endH"), t, 0.3, 0.5, 30);
+    rise($("endR"), t, 0.8, 0.5, 16);
+    rise($("endB"), t, 1.3, 0.4, 20);
+    rise($("endP"), t, 1.6, 0.4, 12);
+    const press = t >= 2.9 && t < 3.08;
+    $("endB").style.transform = `scale(${press ? 0.94 : 1})`;
+    $("endB").style.background = t >= 2.9 ? "var(--paper)" : "var(--red)";
+    $("endB").style.color = t >= 2.9 ? "var(--ink)" : "#fff";
+  });
+  start(15);
+</script>
+</body>
+</html>

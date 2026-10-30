@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Vídeo B · ¿Te han pedido 1.500 €?</title>
+<!--
+  Anuncio en frío de Meta (España). 12 s. Gancho: la objeción de precio que todo autónomo ha vivido.
+  0-2,6 pregunta y tachón · 2,6-5,2 «Nosotros: 99 €» · 5,2-8,6 «¿Y la trampa?»: extras con precio
+  a la vista · 8,6-12 cierre. Es una pregunta, no una comparación con nadie concreto.
+-->
+<link rel="stylesheet" href="kit.css" />
+<style>
+  #q1, #q3 { font-size: 110px; }
+  #q2wrap { position: relative; display: inline-block; margin: 20px 0; }
+  #q2 { font-size: 215px; white-space: nowrap; }
+  #strike { position: absolute; left: -20px; right: -20px; top: 52%; height: 34px; background: var(--red); transform-origin: 0 50%; }
+  #n1 { font-size: 120px; }
+  #n2 { font-size: 380px; white-space: nowrap; transform-origin: 0 60%; }
+  #n3 { font-size: 52px; font-weight: 600; margin-top: 20px; }
+  #tq { font-size: 140px; }
+  #tl { margin-top: 50px; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; font-size: 56px; font-weight: 600; padding: 24px 0; border-top: 2px solid var(--line); }
+  .row em { font-style: normal; font-weight: 800; color: var(--red); }
+  #tn { margin-top: 30px; font-size: 40px; font-weight: 600; }
+  .comma { position: absolute; right: 70px; color: var(--red); width: 150px; }
+  .f916 .comma { bottom: 150px; } .f45 .comma { display: none; }
+  #endH { font-size: 170px; margin-top: 50px; }
+  #endS { font-size: 46px; margin-top: 30px; font-weight: 600; }
+  #endB { margin-top: 60px; }
+  #endP { margin-top: 44px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <section class="sc" id="s1"><div class="safe center">
+    <div id="q1" class="h">¿Te han pedido</div>
+    <div id="q2wrap"><div id="q2" class="h w">1.500 €</div><div id="strike"></div></div>
+    <div id="q3" class="h">por una web?</div>
+  </div></section>
+
+  <section class="sc red" id="s2"><div class="safe center">
+    <div id="n1" class="h">Nosotros:</div>
+    <div id="n2" class="h w">99 €</div>
+    <div id="n3">+ IVA. Pago único.</div>
+  </div></section>
+
+  <section class="sc" id="s3"><div class="safe center">
+    <div id="tq" class="h">¿Y la trampa<span class="c">?</span></div>
+    <div id="tl">
+      <div class="row" id="r0"><span>No usamos plantillas</span><em>✓</em></div>
+      <div class="row" id="r1"><span>Idioma extra</span><em>49 €</em></div>
+      <div class="row" id="r2"><span>Reservas online</span><em>149 €</em></div>
+      <div class="row" id="r3"><span>Tienda online</span><em>349 €</em></div>
+    </div>
+    <div id="tn">Todo con precio a la vista. Sin sorpresas.</div>
+  </div></section>
+
+  <section class="sc" id="s4"><svg class="comma" id="cm4" viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg><div class="safe center">
+    <div class="logo" id="endL" style="font-size:96px"><span>COMA</span><svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+    <div class="h w" id="endH">Tu web.<br><span class="c">99 €</span><span style="font-size:.4em;letter-spacing:0"> + IVA</span></div>
+    <div id="endS">Calcula la tuya en 2 minutos.</div>
+    <div class="btn" id="endB">Ver precios <i>→</i></div>
+    <div class="small" id="endP">29 años en Mallorca · +100 pymes<br><b style="color:var(--ink)">comunicacionenmallorca.com</b></div>
+  </div></section>
+</div>
+<script src="kit.js"></script>
+<script>
+  const { $, rise, slam, p, ease, S } = K;
+  S("s1", 0, 2.6, (t) => {
+    $("s1").firstElementChild.style.transform = `scale(${1 + 0.015 * t})`;
+    $("strike").style.transform = `scaleX(${ease(p(t, 1.0, 1.35))})`;
+    $("q2").style.opacity = 1 - 0.55 * p(t, 1.2, 1.5);
+  });
+  S("s2", 2.6, 5.2, (t) => {
+    rise($("n1"), t, 0, 0.3, 20);
+    slam($("n2"), t, 0.25, 0.32, 1.8);
+    rise($("n3"), t, 0.8, 0.4, 16);
+  });
+  S("s3", 5.2, 8.6, (t) => {
+    rise($("tq"), t, 0, 0.4, 30);
+    ["r0", "r1", "r2", "r3"].forEach((id, j) => rise($(id), t, 0.5 + j * 0.38, 0.32, 30));
+    rise($("tn"), t, 2.2, 0.4, 16);
+  });
+  S("s4", 8.6, 99, (t) => {
+    rise($("endL"), t, 0.05, 0.4, 20);
+    rise($("cm4"), t, 0.2, 0.6, 120);
+    rise($("endH"), t, 0.3, 0.5, 30);
+    rise($("endS"), t, 0.8, 0.4, 16);
+    rise($("endB"), t, 1.1, 0.4, 20);
+    rise($("endP"), t, 1.4, 0.4, 12);
+    const press = t >= 2.3 && t < 2.48;
+    $("endB").style.transform = `scale(${press ? 0.94 : 1})`;
+    $("endB").style.background = t >= 2.3 ? "var(--ink)" : "var(--red)";
+  });
+  start(12);
+</script>
+</body>
+</html>

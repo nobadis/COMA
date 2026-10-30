@@ -1,0 +1,26 @@
+FUENTES DE LAS PIEZAS
+=====================
+
+Todo lo que hay en las carpetas de campaña sale de aquí. Si cambia un precio o un
+texto, se edita el HTML y se vuelve a generar. Desde la raíz del repo, con
+`npm install` hecho, Python 3 (numpy) y ffmpeg:
+
+  Vídeos (9:16, 4:5 y portadas):   bash publicidad/_fuentes/montar.sh
+  Imágenes fijas:                  node publicidad/_fuentes/render-estaticos.cjs
+  Textos y CSV de Google:          python3 publicidad/_fuentes/google_ads.py
+  Simulación:                      python3 publicidad/6-simulacion/simulacion.py
+
+Archivos
+  kit.css / kit.js ......... colores, tipografía y motor de animación comunes
+  video-A-99.html .......... vídeo «Tu web. 99 €» (15 s)
+  video-B-1500.html ........ vídeo «¿Te han pedido 1.500 €?» (12 s)
+  video-C-temporada.html ... vídeo «La temporada se gana en invierno» (15 s);
+                             con ?sinmarcas=1, sin nombres de clientes
+  estaticos.html ........... todas las imágenes fijas (cada una dice dónde se guarda)
+  musica.py ................ música sintetizada (sin derechos de autor)
+  google_ads.py ............ campañas de Google: comprueba los límites de caracteres
+  render.cjs / render-estaticos.cjs / montar.sh ... generan los archivos
+  capturas/ ................ capturas reales de la web usadas en las piezas
+
+Para ver un vídeo sin generarlo: abre su HTML en el navegador (se reproduce en
+bucle, sin sonido). Añade ?f=45 a la dirección para ver el formato 4:5.

@@ -1,0 +1,490 @@
+==============================================================================
+  COMA · PLAN DE PUBLICIDAD · 9 nov 2026 → 7 feb 2027 (13 semanas)
+  Todo lo que hay que configurar, cuándo, con cuánto dinero y qué subir.
+  Abre también 00-EMPIEZA-AQUI.html: es este mismo plan en visual, con las piezas.
+==============================================================================
+
+ÍNDICE
+  1. La estrategia en 1 minuto
+  2. Dinero y calendario
+  3. Qué esperar (simulación)
+  4. Antes de encender nada (31 oct → 8 nov)
+  5. Google Ads: configuración exacta
+  6. Meta (Facebook e Instagram): configuración exacta
+  7. Reglas del lunes (qué subir, qué apagar)
+  8. Qué hacer con cada lead (aquí se gana o se pierde el dinero)
+  9. Opcionales: LinkedIn para despachos y TikTok
+ 10. Qué hay en cada carpeta
+
+
+------------------------------------------------------------------------------
+1. LA ESTRATEGIA EN 1 MINUTO
+------------------------------------------------------------------------------
+
+La fórmula:
+
+  GANCHO que se entiende en 1 segundo   →  «Tu web. 99 €.»
+  + PRUEBA en 5 segundos                →  el diseño cambia de marca ante tus ojos
+  + JUGAR EN CASA                       →  Mallorca: 29 años, Palma, 4 idiomas
+  + VENDER EL SIGUIENTE PASO            →  idiomas, reservas, alojamiento, SEO
+  + CORTAR CADA LUNES lo que no rinde   →  reglas fijas, sin opiniones
+
+Por qué así:
+
+  · Los 99 € atraen, pero una web de 99 € sola no paga el anuncio. El dinero
+    está en lo que se suma: el cliente medio de España deja ~218 € en el primer
+    encargo y ~300 € más en 12 meses (alojamiento, correo, SEO). En Mallorca,
+    ~253 € + ~332 € (más idiomas y reservas). Por eso todos los anuncios
+    enseñan los extras CON PRECIO: el que entra ya sabe que puede sumar.
+
+  · Mallorca es donde COMA gana. La simulación lo dice claro: un lead
+    cualificado cuesta ~28 € en Google Mallorca y ~60-70 € en Google España.
+    Aquí hay confianza (desde 1997, Paseo Mallorca 16, referencias que la gente
+    conoce), reunión en persona y una necesidad que en la península no existe:
+    webs en inglés y alemán antes de la temporada. Por eso Mallorca se lleva
+    el dinero grande y España es una apuesta pequeña con fecha de corte.
+
+  · El momento es perfecto: de noviembre a febrero el negocio de Mallorca
+    tiene tiempo y prepara la temporada. Y enero es el mes en que más gente
+    busca «crear página web» (año nuevo, negocio nuevo) y el anuncio en Meta
+    es más barato (pasa la campaña de Navidad).
+
+  · Se frena en Navidad (21 dic → 6 ene): nadie contrata una web el día 28.
+
+  · NO hacemos Black Friday: en esa semana el anuncio en Meta sube de precio
+    y no somos una tienda. Seguimos igual y que pague más otro.
+
+  · Una sola promesa por campaña. Una landing por campaña (ya están hechas
+    en la web: /lp/web-99/, /lp/mallorca/, /lp/seo-local/).
+
+
+------------------------------------------------------------------------------
+2. DINERO Y CALENDARIO
+------------------------------------------------------------------------------
+
+Presupuesto máximo de anuncios: 3.963 € (si no se apagara nada).
+Lo típico, aplicando las reglas del lunes: ~3.140 €.
+Son importes que cobran Google y Meta. Facturan desde Irlanda: con CIF
+español la factura va sin IVA (inversión del sujeto pasivo, la declara
+vuestro asesor; no es un coste). Revisad en la factura de Google si añade
+algún recargo por el impuesto de servicios digitales.
+
+Por mes (máximo):  noviembre 836 € · diciembre 1.069 € · enero 1.638 € ·
+                   febrero (1-7) 420 €
+
+Las 4 fases (€ al día por campaña):
+
+                                  F1         F2         NAVIDAD    F3
+                                  Aprender   Optimizar  Frenar     Escalar
+                                  9 nov-     7 dic-     21 dic-    7 ene-
+                                  6 dic      20 dic     6 ene      7 feb
+                                  (28 días)  (14 días)  (17 días)  (32 días)
+  Google
+   G1 Web 99 España               10         10*        5*         12*
+   G2 Web Mallorca                12         12         7          14
+   G3 Marca COMA                   1          1         1           1
+   G4 SEO local                    -          -         -           6
+  Meta
+   M1 Web 99 España (frío)         7          7*        3*         10*
+   M2 Temporada Mallorca (frío)    8          8         4          12
+   M3 Remarketing                  -          4         3           5
+  -----------------------------------------------------------------------
+  Total al día                    38         42        23          60
+  Total de la fase             1.064 €      588 €     391 €     1.920 €
+
+  * Solo si pasan el corte del 7 de diciembre (sección 7). Si no pasan, se
+    apagan, el 30 % de su dinero se suma a M2 Temporada Mallorca y el resto
+    no se gasta.
+
+Por qué empieza en lunes 9 de noviembre: da una semana para dejar la
+medición perfecta (sección 4). Sin medición, el algoritmo aprende a ciegas.
+
+Qué semanas mirar con lupa:
+  · 9-22 nov: aprendizaje. No toques presupuestos los 7 primeros días.
+  · 7 dic: EL CORTE. Primera decisión grande con datos (sección 7).
+  · 7 ene: arranca la fase fuerte. Sube lo que funciona, entra SEO local.
+  · 1 feb: revisión final y plan de febrero-marzo (temporada).
+
+
+------------------------------------------------------------------------------
+3. QUÉ ESPERAR (SIMULACIÓN)
+------------------------------------------------------------------------------
+
+Archivo: 6-simulacion/ (script, resultados.csv y resultados.json).
+Monte Carlo de 20.000 escenarios: cada coste por clic, CTR, conversión y tasa
+de cierre se sortea entre un mínimo, un valor probable y un máximo (rangos de
+mercado en España para diseño web y pymes). Ningún plan es seguro al céntimo;
+esto dice qué es razonable esperar y qué pasa si sale mal.
+
+Las 13 semanas, aplicando las reglas:
+
+                                 Peor 10 %   Típico   Mejor 10 %
+  Gasto en anuncios               3.009 €    3.138 €    3.564 €
+  Leads (formularios)               103        158        244
+  Leads cualificados                 62         96        147
+  Clientes cerrados                  14         24         39
+  Facturación primer encargo      3.138 €    5.697 €    9.733 €
+  Facturación a 12 meses          7.311 €   13.638 €   24.008 €
+  Beneficio a 12 meses tras
+  pagar anuncios (*)              1.509 €    5.555 €   12.237 €
+
+  Coste por lead cualificado:  ~34 € típico (23 € - 51 €)
+  Coste por cliente:           ~136 € típico (85 € - 235 €)
+  Probabilidad de recuperar lo invertido solo con el primer encargo: 89 %
+  Probabilidad de que el año deje beneficio:                         98 %
+
+  (*) Supuesto de margen: el 50 % de lo puntual (webs, extras) y el 75 % de lo
+  mensual (alojamiento, correo, SEO). Cámbialo en simulacion.py con vuestros
+  costes reales y vuelve a ejecutarlo: python3 simulacion.py
+
+Por campaña (caso típico):
+  Google Mallorca        el motor: ~37 leads cualificados a ~28 € cada uno
+  Meta Remarketing       el más barato: ~18 € por lead cualificado
+  Meta Mallorca          volumen: ~21 leads cualificados a ~48 €
+  Google SEO local       caro por lead (~64 €) pero cada cliente vale ~900 €
+                         al año: compensa
+  España (Google y Meta) 3 de cada 4 veces no pasa el corte del 7 de
+                         diciembre. Es una prueba de 476 € para saber si el
+                         mercado nacional funciona; si funciona, es la
+                         puerta a crecer fuera de la isla.
+
+Capacidad: 24 clientes en 13 semanas son ~2 webs nuevas por semana; en el
+mejor caso, 3. Si no podéis entregar a ese ritmo, bajad presupuestos antes
+de que los plazos se alarguen (sección 7).
+
+Lo que más mueve el resultado (no es el anuncio): la rapidez y la calidad de
+la respuesta al lead, y cuántos extras se venden. Sección 8.
+
+
+------------------------------------------------------------------------------
+4. ANTES DE ENCENDER NADA (31 oct → 8 nov)
+------------------------------------------------------------------------------
+
+Sin esto NO se lanza. Ver docs/ADS.md para el detalle técnico.
+
+[ ] 1. Formulario fiable: crear Formspree o Web3Forms y poner su URL en
+       Railway → Variables → PUBLIC_FORM_ENDPOINT. Volver a desplegar.
+[ ] 2. Google Tag Manager: crear contenedor, poner PUBLIC_GTM_ID en Railway.
+       Dentro de GTM: GA4, conversión de Google Ads (evento generate_lead),
+       píxel de Meta (Lead en generate_lead, ViewContent en view_offer).
+       Sin GTM vale también con las variables directas (docs/ADS.md).
+[ ] 3. Google Ads: cuenta nueva en modo experto (no «inteligente»), facturación
+       con la tarjeta de la empresa, vincular GA4. Conversión «Lead formulario»
+       como PRINCIPAL; «Clic en contacto» como secundaria (solo observación).
+[ ] 4. Meta: Business Manager con la página de Facebook y la cuenta de
+       Instagram de COMA, cuenta publicitaria, píxel, verificar el dominio
+       (PUBLIC_META_DOMAIN_VERIFICATION). Crear estos públicos personalizados:
+         · Visitantes web 30 días (todo el sitio)
+         · Leads 180 días (evento Lead)
+         · Vieron 50 % de los vídeos 30 días
+         · Interactuaron con Instagram/Facebook 30 días
+[ ] 5. Ficha de Google Business Profile de COMA (Paseo Mallorca 16) verificada,
+       con fotos, horario y la web. Vincularla a Google Ads como recurso de
+       ubicación. Es gratis y en Mallorca vale oro. Añadir los perfiles
+       sociales a src/data/site.ts (social) para el SEO.
+[ ] 6. Prueba real: abrir cada URL de anuncio de este plan en el móvil,
+       aceptar cookies, enviar el formulario. Comprobar que llega el correo con
+       la línea [origen] y que la conversión aparece en Google Ads y en Meta
+       (Events Manager) antes de 24 h.
+[ ] 7. Permiso para citar clientes: los anuncios M1-D y el vídeo M2-A nombran a
+       Mallorca Live Festival, Meliá, RCD Mallorca y Ajuntament de Calvià.
+       Están en la web como referencias, pero un anuncio es otra cosa: pedid
+       un «sí» por escrito. Si no lo hay, usad M2-A_video-temporada-sin-marcas
+       y no subáis M1-D. Los anuncios de Google ya no nombran a nadie.
+[ ] 8. Que el asesor legal revise /cookies/ y /privacidad/ (docs/ADS.md).
+[ ] 9. Bloquear agenda: alguien responde leads en menos de 1 hora, de lunes a
+       sábado (sección 8). Tener a mano 2-3 webs entregadas para enseñar.
+
+
+------------------------------------------------------------------------------
+5. GOOGLE ADS: CONFIGURACIÓN EXACTA
+------------------------------------------------------------------------------
+
+Textos completos para copiar y pegar: 1-google-ads/textos-google.txt
+Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
+→ Cuenta → Importar → Pegar texto / desde archivo).
+Imágenes: 1-google-ads/imagenes/ (sin texto encima: Google no lo admite).
+
+Ajustes iguales para las 4 campañas
+  Tipo .......................... Búsqueda (Search). NO Performance Max, NO
+                                  Display, NO Demand Gen.
+  Objetivo ...................... Clientes potenciales, conversión «Lead
+                                  formulario».
+  Redes ......................... Solo Red de Búsqueda de Google. DESMARCAR
+                                  «Socios de búsqueda» y «Red de Display».
+  Idiomas ....................... Español y catalán.
+  Opción de ubicación ........... «Presencia: personas que están o suelen
+                                  estar en las ubicaciones» (NO «interés»).
+  AI Max / expansión de URL ..... DESACTIVADO.
+  Concordancia amplia ........... NO. Solo frase y exacta.
+  Recomendaciones automáticas ... Desactivar la aplicación automática
+                                  (Recomendaciones → Aplicar automáticamente).
+  Horario ....................... Todos los días 7:00-23:00.
+  Dispositivos .................. Sin ajustes.
+  Rotación de anuncios .......... Optimizar.
+  Recursos comunes .............. Enlaces de sitio, textos destacados,
+                                  fragmento, precios, imágenes y logotipo
+                                  (textos-google.txt, final). Ubicación desde
+                                  Business Profile.
+  Negativas ..................... Lista compartida «COMA negativas» aplicada a
+                                  las 4 campañas (textos-google.txt).
+
+Puja
+  Semanas 1-2 ..... «Maximizar clics» con CPC máximo: G1 2,50 € · G2 2,20 € ·
+                    G4 3,00 € · G3 0,80 €.
+  Desde 15 conversiones en la cuenta (≈ semana 3) ..... «Maximizar
+                    conversiones» sin CPA objetivo en G1 y G2.
+  Desde 30 conversiones en una campaña ..... CPA objetivo = 1,2 × su CPA real
+                    de los últimos 30 días.
+  G3 Marca se queda siempre en «Maximizar clics» con CPC máx. 0,80 €.
+
+Campañas
+  G1  COMA | Search | Web99 | España
+      10 €/día · España EXCLUYENDO Illes Balears · 9 nov
+      3 grupos: Precio · Autónomos y pymes · Profesional
+      Destino: /lp/web-99/   utm_campaign=web99-espana
+
+  G2  COMA | Search | Web | Mallorca          ← el motor
+      12 €/día · solo Illes Balears · 9 nov
+      2 grupos: Mallorca local (palabras con Mallorca/Palma) · Genérico en
+      Mallorca (las mismas palabras de G1, pero solo para gente de la isla)
+      Destino: /lp/mallorca/   utm_campaign=web-mallorca
+
+  G3  COMA | Search | Marca
+      1 €/día · España · 9 nov · solo exacta: quien ya os busca por el nombre.
+      Barata, y evita que otro se ponga delante. Destino: la home.
+
+  G4  COMA | Search | SEO local
+      6 €/día · España · DESDE EL 7 DE ENERO
+      2 grupos: SEO local · IA (GEO: «aparecer en chatgpt»… poca competencia,
+      tema nuevo; COMA llega antes que la mayoría)
+      Destino: /lp/seo-local/   utm_campaign=seo-local
+
+Cada lunes: Informes → Términos de búsqueda. Lo que no es un cliente
+(estudiantes, empleo, «gratis», otras marcas) va a la lista de negativas.
+
+
+------------------------------------------------------------------------------
+6. META (FACEBOOK E INSTAGRAM): CONFIGURACIÓN EXACTA
+------------------------------------------------------------------------------
+
+Ajustes iguales para las 3 campañas
+  Objetivo ...................... Clientes potenciales (Leads).
+  Ubicación de la conversión .... Sitio web. Evento: Lead (píxel).
+  Presupuesto ................... Del conjunto de anuncios (no Advantage+
+                                  de campaña): son importes pequeños.
+  Atribución .................... 7 días tras clic y 1 día tras visualización.
+  Ubicaciones ................... Manuales: todas MENOS Audience Network,
+                                  Messenger y columna derecha.
+  Mejoras Advantage+ creativo ... Desactivar música, superposiciones,
+                                  plantillas, expandir imagen y retoques
+                                  visuales (las piezas ya están hechas y llevan
+                                  su música). Dejar «variaciones de texto».
+  Formatos ...................... Sube el vídeo en 9:16 Y en 4:5 en el mismo
+                                  anuncio («Personalizar por ubicación»):
+                                  9:16 para Reels/Stories, 4:5 para el feed.
+  Portada ....................... El archivo _portada.jpg del mismo vídeo.
+  Botón ......................... «Más información».
+  Excluir siempre ............... Público «Leads 180 días».
+  Frecuencia a vigilar .......... Frío ≤ 3 por semana; remarketing ≤ 6.
+
+  M1  COMA | Meta | Web99 | España | Frío
+      7 €/día · 9 nov · España EXCLUYENDO Illes Balears · 28-60 años ·
+      Público Advantage+ activado (sin intereses: el vídeo ya filtra).
+      4 anuncios (carpeta 2-meta-espana/):
+
+      M1-A  Vídeo «Tu web. 99 €» (15 s)  M1-A_video-99_9x16.mp4 + _4x5.mp4
+        Texto 1: Tu web a medida por 99 € + IVA. Diseño propio, nunca una
+                 plantilla. Precio cerrado desde el primer día.
+        Texto 2: Hasta 4 páginas, perfecta en el móvil, con formulario, SEO
+                 básico y SSL. 99 € + IVA, pago único.
+        Texto 3: ¿Tu negocio aún no tiene web, o tiene una que da apuro
+                 enseñar? Lo arreglamos por 99 € + IVA.
+        Título:  Tu web por 99 € + IVA
+        Descripción: Precio cerrado. Sin plantillas.
+        URL: https://comunicacionenmallorca.com/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=a-video-99
+
+      M1-B  Vídeo «¿Te han pedido 1.500 €?» (12 s)  M1-B_video-1500_*.mp4
+        Texto 1: ¿Te han pedido 1.500 € por una web? Nosotros la hacemos por
+                 99 € + IVA. Y los extras, con precio a la vista.
+        Texto 2: Sin trampa: idioma extra 49 €, reservas 149 €, tienda 349 €.
+                 Calcula la tuya en 2 minutos, antes de hablar con nadie.
+        Título:  Calcula tu web en 2 minutos
+        Descripción: Web a medida desde 99 € + IVA
+        URL: https://comunicacionenmallorca.com/precios/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=b-video-1500
+
+      M1-C  Carrusel (5 tarjetas 1:1)  M1-C_carrusel-1.png … -5.png
+        Texto:   Esto es lo que incluye tu web de 99 € + IVA. Desliza →
+        Títulos de tarjeta: 1 Tu web por 99 € · 2 Diseño propio ·
+                 3 Hasta 4 páginas · 4 Lista para Google · 5 Extras a la vista
+        Activar «mostrar primero las tarjetas con mejor rendimiento»: NO
+        (el orden cuenta una historia).
+        URL (todas): …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=c-carrusel
+
+      M1-D  Imagen «Autoridad» 4:5  M1-D_autoridad_4x5.png  (solo con permiso)
+        Texto:   Hemos trabajado para Mallorca Live Festival, Meliá, RCD
+                 Mallorca o el Ajuntament de Calvià. Tu negocio merece lo
+                 mismo, desde 99 € + IVA.
+        Título:  29 años haciendo comunicación
+        URL: …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=d-autoridad
+
+  M2  COMA | Meta | Temporada | Mallorca | Frío          ← el segundo motor
+      8 €/día · 9 nov · Ubicación: Illes Balears · 25-65 años ·
+      Público Advantage+ activado. Destino: /lp/mallorca/
+      3 anuncios (carpeta 3-meta-mallorca/):
+
+      M2-A  Vídeo «La temporada se gana en invierno» (15 s)
+            M2-A_video-temporada_9x16.mp4 + _4x5.mp4
+            (sin permiso de los clientes: M2-A_video-temporada-sin-marcas_*)
+        Texto 1: En Mallorca, la temporada se gana en invierno. Tu web en
+                 español, inglés, alemán y catalán, con reservas online.
+                 Desde 99 € + IVA.
+        Texto 2: Tu cliente de abril ya está buscando dónde comer, dormir o
+                 reservar. Que te encuentre en su idioma.
+        Texto 3: Agencia de Palma desde 1997. Reunión en Paseo Mallorca 16 o
+                 por videollamada. Precio cerrado.
+        Título:  Prepara la temporada
+        Descripción: Agencia de Palma desde 1997
+        URL: https://comunicacionenmallorca.com/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=a-video-temporada
+
+      M2-B  Imagen «Buenos días. Good morning…»  M2-B_idiomas_4x5.png + _9x16
+        Texto:   Buenos días, good morning, guten Morgen, bon dia. Tu web en 4
+                 idiomas antes de que llegue la temporada. Web a medida 99 € +
+                 49 € por idioma (+ IVA).
+        Título:  Tu web en 4 idiomas
+        URL: …/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=b-idiomas
+
+      M2-C  Imagen «Autoridad» (la misma M1-D; solo con permiso)
+        Texto:   29 años haciendo comunicación en Mallorca: Mallorca Live
+                 Festival, Meliá, RCD Mallorca, Ajuntament de Calvià… y más de
+                 100 pymes de la isla. ¿La tuya es la siguiente?
+        URL: …/lp/mallorca/?utm_source=meta&utm_medium=paid_social&utm_campaign=temporada-mallorca&utm_content=c-autoridad
+
+      Ojo: «antes de Semana Santa» (21-28 mar 2027) es una promesa de plazo.
+      Mantenedla solo si podéis entregar a tiempo todo lo que entre.
+
+  M3  COMA | Meta | Remarketing
+      4 €/día · DESDE EL 7 DE DICIEMBRE · España (incluida Baleares)
+      Público Advantage+ DESACTIVADO. Incluir: Visitantes web 30 días +
+      Vieron 50 % de los vídeos 30 días + Interactuaron 30 días.
+      Excluir: Leads 180 días.
+      3 anuncios (carpeta 4-remarketing/):
+
+      M3-A  «Sigue en pie»  M3-A_sigue-en-pie_4x5.png + _9x16
+        Texto:   Tu web a medida por 99 € + IVA sigue en pie. Cuéntanos tu
+                 negocio en 2 minutos y te respondemos personalmente.
+        URL: …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=a-sigue-en-pie
+      M3-B  «Calcula tu web»  M3-B_calcula_4x5.png + _9x16
+        Texto:   Marca lo que necesitas y ves el precio al momento, antes de
+                 hablar con nadie.
+        URL: …/precios/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=b-calcula
+      M3-C  El carrusel M1-C (para quien vio el vídeo pero no entró)
+        URL: …/lp/web-99/?utm_source=meta&utm_medium=paid_social&utm_campaign=remarketing&utm_content=c-carrusel
+
+En enero (F3), añadir a M1 y M2 este texto extra (mismas piezas):
+  «Empieza 2027 con la web que tu negocio merece. A medida, desde 99 € + IVA,
+  precio cerrado.»
+
+
+------------------------------------------------------------------------------
+7. REGLAS DEL LUNES (15 minutos, siempre con datos de los últimos 14 días)
+------------------------------------------------------------------------------
+
+Lead cualificado = nombra un negocio real y no marca «solo estoy explorando».
+Apuntadlo en 7-seguimiento/leads.csv: sin eso no hay reglas que valgan.
+
+A. ANUNCIOS (Meta), desde 1.500 impresiones:
+   · CTR de enlace < 0,6 % ............................ apagar
+   · Vídeos: reproducciones de 3 s / impresiones < 25 % .. apagar (el gancho
+     no engancha)
+   · 40 € gastados sin ningún lead ...................... apagar
+   Siempre que queden al menos 2 anuncios vivos por conjunto.
+
+B. PALABRAS CLAVE (Google):
+   · 25 clics y 0 leads ................................. pausar
+   · Nivel de calidad < 5 ............................... revisar texto y landing
+   · Términos de búsqueda basura ........................ a negativas
+
+C. CAMPAÑAS (coste por lead cualificado):
+   · VERDE   ≤ 30 € ..... subir un 20 % cada 4 días (nunca más del 20 % de
+                          golpe: reinicia el aprendizaje)
+   · ÁMBAR  30-45 € ..... mantener y cambiar textos o piezas
+   · ROJO    > 45 € ..... ver regla D
+
+D. EL CORTE DEL 7 DE DICIEMBRE (España):
+   · G1 Google España con lead cualificado > 45 €  → apagar
+   · M1 Meta España con lead cualificado > 40 €    → apagar
+   El 30 % de su presupuesto pasa a M2 Meta Mallorca. El resto NO se gasta.
+   (Mallorca se satura si le echas todo: la simulación lo comprobó.)
+
+E. NEGOCIO (cada mes):
+   · Coste por cliente > 220 € durante 4 semanas y casi nadie compra extras:
+     parar y revisar la oferta, no el anuncio.
+   · Más de 4 webs firmadas en una semana: no subir presupuestos hasta
+     entregar. La calidad es la mejor publicidad.
+
+F. CUANDO HAYA 30 VENTAS: importar en Google Ads lo facturado de verdad
+   (conversiones sin conexión con gclid; la web ya lo guarda en el lead) y
+   pasar a puja por valor. Ahí el algoritmo busca clientes que compran
+   extras, no solo formularios.
+
+
+------------------------------------------------------------------------------
+8. QUÉ HACER CON CADA LEAD (aquí se gana o se pierde el dinero)
+------------------------------------------------------------------------------
+
+  1. Responder en menos de 1 hora (en horario). Un lead contestado en 5
+     minutos convierte varias veces más que uno contestado al día siguiente.
+     Primero WhatsApp o llamada si dejó teléfono; si no, email.
+  2. Tres preguntas: ¿qué negocio es? ¿qué quieres que haga la web (llamadas,
+     reservas, vender)? ¿para cuándo la necesitas?
+  3. Propuesta escrita en 24 h con el configurador de /precios/: la web de
+     99 € y los 2-3 extras que de verdad le sirven, cada uno con su precio.
+     En Mallorca casi siempre: idiomas + reservas + alojamiento.
+  4. Seguimiento: día 2, día 5 y día 10. Después, a la lista de remarketing.
+  5. Al entregar: proponer alojamiento (9 €/mes) y SEO local (99 €/mes), y
+     pedir la reseña en Google. Cada reseña abarata el siguiente cliente.
+
+Plantilla: 7-seguimiento/leads.csv (abre con Excel o Google Sheets).
+
+
+------------------------------------------------------------------------------
+9. OPCIONALES (presupuesto aparte, no está en los 3.963 €)
+------------------------------------------------------------------------------
+
+LinkedIn · COMA para despachos (ticket alto, poca gente)
+  Cuándo ........ 7 ene → 5 feb (30 días) · 15 €/día · 450 €
+  Objetivo ...... Visitas al sitio web → https://comunicacionenmallorca.com/despachos/?utm_source=linkedin&utm_medium=paid_social&utm_campaign=despachos&utm_content=facturas
+  Público ....... España · cargos: asesor fiscal, asesor contable, gestor
+                  administrativo, economista, socio director, director de
+                  asesoría · sectores: contabilidad, servicios jurídicos ·
+                  empresas de 2 a 50 personas.
+  Puja .......... CPC manual, máximo 4 €.
+  Piezas ........ 5-linkedin-despachos-opcional/ (1200x627 y 1080x1080)
+  Texto ......... Tus clientes envían las facturas por WhatsApp, email o foto.
+                  Tu despacho deja de teclearlas: la IA las lee y las deja en
+                  tu programa contable. Pide un diagnóstico gratuito.
+  Nunca hablar de 99 € aquí. Corte: 200 € sin una petición de diagnóstico →
+  apagar.
+
+TikTok (solo si M1 Meta España pasa el corte del 7 dic)
+  Mismo vídeo M1-A en 9:16, 8 €/día máximo, objetivo Clientes potenciales en
+  sitio web, España 25-54. URL: …/lp/web-99/?utm_source=tiktok&utm_medium=paid_social&utm_campaign=web99-espana&utm_content=a-video-99
+  Si a los 7 días el lead cuesta más que en Meta, se apaga.
+
+
+------------------------------------------------------------------------------
+10. QUÉ HAY EN CADA CARPETA
+------------------------------------------------------------------------------
+
+  00-EMPIEZA-AQUI.html ......... el plan en visual, con todas las piezas
+  01-PLAN-DE-CAMPANA.txt ....... este archivo
+  1-google-ads/ ................ textos, palabras clave (CSV) e imágenes
+  2-meta-espana/ ............... vídeos A y B, carrusel, imagen autoridad
+  3-meta-mallorca/ ............. vídeo temporada (con y sin marcas), idiomas
+  4-remarketing/ ............... «Sigue en pie» y «Calcula tu web»
+  5-linkedin-despachos-opcional/ piezas para despachos
+  6-simulacion/ ................ simulación (script + resultados)
+  7-seguimiento/ ............... plantilla para apuntar cada lead
+  _fuentes/ .................... el código de todas las piezas, por si hay que
+                                 cambiar un texto o un precio (ver LEEME.txt)

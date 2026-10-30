@@ -40,6 +40,8 @@ Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). El posicionamiento va en `<head>`, archi
 
 Ver [docs/ADS.md](docs/ADS.md): medición por variables `PUBLIC_*`, eventos (`generate_lead`, `view_offer`, `cta_click`), landings `/lp/*` y la estrategia de arranque (web a 99 € en Google Search y Meta).
 
+Plan de campaña nov 2026 - feb 2027 con todas las piezas (vídeos, imágenes, textos de Google, simulación): carpeta [`publicidad/`](publicidad/). Se empieza por `publicidad/00-EMPIEZA-AQUI.html` y `publicidad/01-PLAN-DE-CAMPANA.txt`.
+
 ## Webs de ejemplo para clientes
 
 Maquetas completas de webs de clientes servidas en `/ejemplos-web/<id>/<proyecto>/`. El `id` es aleatorio y largo, y las páginas no se enlazan, van con `noindex` (meta y cabecera `X-Robots-Tag`) y no están en el sitemap ni llevan la analítica de COMA. Cada página lleva marca de agua («Propuesta de diseño de COMA para <negocio> · no es la web oficial»): trama diagonal casi invisible más una etiqueta que enlaza a /contacto/.
