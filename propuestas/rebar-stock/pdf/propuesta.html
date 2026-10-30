@@ -69,7 +69,7 @@
   <div class="grid4" style="margin:3mm 0 4mm">
     <div class="kpi"><b>1 grúa</b><span>con electroimán, el escenario más exigente, en una zona de nave real</span></div>
     <div class="kpi"><b>4–5 meses</b><span>con punto de decisión seguir / parar en la semana 7</span></div>
-    <div class="kpi"><b>55–95 k€</b><span>escenario típico ~72.000 €, sin IVA; hardware reutilizable</span></div>
+    <div class="kpi"><b>54–96 k€</b><span>escenario típico ~72.000 €, sin IVA; hardware reutilizable</span></div>
     <div class="kpi"><b>≤ 0,1 %</b><span>asignaciones falsas dadas por verificadas (criterio clave)</span></div>
   </div>
   <p>La carretilla queda como <b>módulo opcional</b> (+16.000 a 30.000 €), con la misma lógica y la misma plataforma, para cuando se quiera cubrir calles exteriores o zonas sin grúa.</p>
@@ -138,13 +138,13 @@
   <table>
     <thead><tr><th style="width:7mm">#</th><th style="width:30%">Componente</th><th>Detalle</th></tr></thead>
     <tbody>
-      <tr><td><b class="c">1</b></td><td><b>Etiqueta bandera UHF</b></td><td>Plástico industrial (aprox. 100 × 105 mm), impresión por transferencia térmica, inlay UHF estándar y barato. La mitad con el chip queda separada del acero como una bandera. Datos de hoy + QR/DataMatrix grande por las dos caras como respaldo.</td></tr>
+      <tr><td><b class="c">1</b></td><td><b>Etiqueta bandera UHF</b></td><td>Plástico industrial resistente a intemperie, aceite y desgarro (aprox. 101,6 × 105 mm), con perforación de plegado: la mitad con el chip queda separada del acero como una bandera. Inlay UHF estándar (UCODE 8, TID de 96 bits bloqueado de fábrica), taladro para brida o alambre y perforación de corte entre etiquetas. Se imprime por transferencia térmica con su cinta específica. Datos de hoy + QR/DataMatrix grande como respaldo.</td></tr>
       <tr><td><b class="c">2</b></td><td><b>2 antenas direccionales</b></td><td>Polarización circular, a los lados del balancín o junto al imán, apuntando a la carga, con protección mecánica. Nunca bajo el imán. Posición final aprobada por el mantenedor de la grúa.</td></tr>
       <tr><td><b>3</b></td><td><b>Lector UHF industrial de 4 puertos</b></td><td>En el carro, en carcasa IP65/66. 2 puertos de reserva para añadir antenas si la prueba lo pide.</td></tr>
       <tr><td><b>4</b></td><td><b>PC industrial de borde</b></td><td>Guarda localmente todos los eventos si cae la red y los reenvía sin duplicados.</td></tr>
       <tr><td><b>5</b></td><td><b>Comunicaciones</b></td><td>Puente WiFi industrial o router 4G, con indicador «sin conexión» en cabina.</td></tr>
       <tr><td><b>6</b></td><td><b>Señales y posición (solo lectura)</b></td><td>Imán ON/OFF, subida/bajada o encoder de altura, traslación de puente y carro, carga si existe señal continua fiable (el limitador de sobrecarga no es una báscula). X/Y preferente desde PLC o encoders (Profinet, OPC-UA, Modbus) mediante contactos libres de tensión o pasarela.</td></tr>
-      <tr><td><b class="c">7</b></td><td><b>Alternativa de posición</b></td><td>Si no hay PLC accesible: 2 telémetros láser (puente y carro) con reflectores.</td></tr>
+      <tr><td><b class="c">7</b></td><td><b>Alternativa de posición</b></td><td>Si no hay PLC accesible: 2 telémetros láser de largo alcance (puente y carro) con reflectores, la solución habitual en parques de bobinas.</td></tr>
       <tr><td><b>8</b></td><td><b>Interfaz en cabina</b></td><td>Tablet robusta: verde / amarillo / rojo y pregunta de un toque. Sin cabina: pantalla en la nave, baliza en el puente y aviso en el móvil del operario.</td></tr>
       <tr><td><b>9</b></td><td><b>Útil de elevación</b></td><td>No se modifica. El sistema se adapta a imán, cadenas, gancho o gancho en C.</td></tr>
     </tbody>
@@ -160,7 +160,7 @@
       <tr><td>Restos que vuelven</td><td><b>1–2 nuevas</b></td><td>Vinculadas a la unidad original (colada y certificado).</td></tr>
     </tbody>
   </table>
-  <p>La impresora RFID de transferencia térmica codifica y <b>verifica el chip antes de imprimir</b> y marca las defectuosas. Se imprime en el mismo paso que hoy: no hay ningún paso nuevo. Cada chip tiene su propio código (EPC) y la plataforma asocia los 1–2 EPC de cada unidad. La prueba RF decide si basta 1 etiqueta por paquete, que es la principal palanca del coste recurrente.</p>
+  <p>La etiqueta llega en rollo (mandril de 76 mm, Ø exterior 185 mm), compatible con impresoras industriales RFID de 4". La impresora codifica y <b>verifica el chip antes de imprimir</b> y marca las defectuosas. Se imprime en el mismo paso que hoy: no hay ningún paso nuevo. Cada chip tiene su propio código (EPC) y la plataforma asocia los 1–2 EPC de cada unidad. La prueba RF decide si basta 1 etiqueta por paquete (en la referencia de laminador, los paquetes de barras llevan 1 porque no giran y los rollos 2), que es la principal palanca del coste recurrente.</p>
 
   <h2>Ubicaciones</h2>
   <p>La unidad básica es la <b>celda o calle</b>, no la coordenada exacta. En nave con grúa, las celdas se definen como polígonos sobre la X/Y de la grúa: <b>no hacen falta placas en el suelo</b>. También se definen celdas especiales: máquina X (consumo), camión / muelle X (expedición), recepción, carro de transferencia (tránsito) y estantería de restos.</p>
@@ -209,6 +209,7 @@
   <p><b>Comprobaciones de coherencia:</b> origen (la última ubicación conocida está cerca del punto donde se cogió; si no, se acepta la identidad y se marca «origen inesperado»), pareja de etiquetas (leer los 2 EPC, o uno con señal fuerte, refuerza la identificación) y peso opcional (la suma de pesos teóricos del ERP coincide con la carga medida con un margen de ±10–15 %).</p>
   <h3>Detección de DEJAR y ubicación</h3>
   <p>Imán OFF o bajada sin carga. Ubicación = celda que contiene la X/Y de la grúa. Si está a menos de 0,5 m del borde entre dos celdas, la ubicación queda incierta y se pregunta.</p>
+  <p><b>Confirmación al dejar:</b> tras soltar, las etiquetas de la carga dejan de moverse con la grúa y se siguen leyendo, más débiles, mientras el gancho sube sobre ese punto. Esa firma confirma que la carga quedó ahí y no en una celda vecina. Si la grúa tiene báscula (opcional), el peso al coger y al soltar es una evidencia más, útil en elevaciones de varias unidades.</p>
 
   <h2>Estados</h2>
   <div class="grid2">
@@ -386,12 +387,13 @@
   <table>
     <thead><tr><th style="width:30%">Alternativa</th><th>Por qué no</th><th style="width:17%">Veredicto</th></tr></thead>
     <tbody>
-      <tr><td><b>Leer las pilas con RFID</b> (lectores de techo, portales, barridos)</td><td>El acero refleja y bloquea el UHF: el interior de la pila no se lee y aparecen lecturas cruzadas. Hay un fracaso documentado intentando leer bobinas dentro de la pila desde la grúa sin separarlas.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>Leer las pilas con RFID</b> (lectores de techo, portales, barridos)</td><td>El acero refleja y bloquea el UHF: el interior de la pila no se lee y aparecen lecturas cruzadas. Los estudios publicados sobre parques de bobinas documentan el apantallamiento entre unidades y la lectura de vecinas.</td><td><span class="pill bad">Descartado</span></td></tr>
       <tr><td><b>Lectores fijos cubriendo todo el patio</b></td><td>Coste que crece con la superficie, lecturas cruzadas y la misma ceguera dentro de las pilas.</td><td><span class="pill bad">Descartado</span></td></tr>
       <tr><td><b>Flujo manual</b> (móvil, celdas pintadas, GPS del móvil)</td><td>El cliente ya lo tiene y depende del operario.</td><td><span class="pill bad">Descartado</span></td></tr>
-      <tr><td><b>Visión artificial como sistema principal</b> (OCR, QR, marcadores)</td><td>La cámara necesita ver la etiqueta, y las colgantes giran o quedan tapadas. El estudio más parecido (barras apiladas, dron con cámara 4K y QR, 2025) logra 94 % en interior y 80 % en exterior: insuficiente. Añade mantenimiento y dependencia de luz y lluvia.</td><td><span class="pill warn">Solo como medición en la prueba</span></td></tr>
+      <tr><td><b>Visión artificial como sistema principal</b> (OCR, QR, marcadores)</td><td>La cámara necesita ver la etiqueta, y las colgantes giran o quedan tapadas. El estudio más parecido (barras apiladas, dron con cámara 4K y QR, publicado en 2025) logra más del 94 % en interior y del 80 % en exterior: insuficiente. Las cámaras que sí funcionan en acería leen en un punto fijo y controlado (p. ej. la salida de la línea), no durante la manipulación; el OCR montado en grúa solo está maduro en puertos de contenedores. Añade mantenimiento y dependencia de luz y lluvia.</td><td><span class="pill warn">Solo como medición en la prueba</span></td></tr>
       <tr><td><b>BLE, UWB o RFID activo por paquete</b></td><td>3–60 € por etiqueta, con batería, y el acero los bloquea igual. Las etiquetas BLE sin batería (2,4 GHz) se bloquean aún más.</td><td><span class="pill bad">Descartado</span></td></tr>
       <tr><td><b>RFID sin chip, pinturas codificadas, marcas de agua digitales</b></td><td>Inmaduro o sigue necesitando línea de vista. No usamos al cliente como laboratorio.</td><td><span class="pill bad">Descartado</span></td></tr>
+      <tr><td><b>UWB / RTLS</b> (balizas y tags activos en equipos)</td><td>Válido para posicionar carretillas en patios grandes. En grúa, la X/Y del PLC o el láser es más precisa y más barata. Los tags activos en cada paquete siguen siendo inviables por coste y por el acero.</td><td><span class="pill info">Opción para carretillas</span></td></tr>
       <tr><td><b>GNSS / RTK</b></td><td>Rebotes junto a naves y grúas; carga desplazada respecto a la antena. En grúa la X/Y del PLC es mejor y gratuita.</td><td><span class="pill bad">No necesario</span></td></tr>
       <tr><td><b>Solo telemetría y peso</b></td><td>Detecta que hubo movimiento pero no qué unidad. Se usa como evidencia, no para identificar.</td><td><span class="pill info">Complemento</span></td></tr>
     </tbody>
@@ -406,12 +408,13 @@
   <table>
     <thead><tr><th style="width:30%">Caso</th><th>Qué demuestra</th></tr></thead>
     <tbody>
-      <tr><td><b>Laminador de rebar y alambrón</b> de un grupo siderúrgico global (Brasil)</td><td>Etiquetas colgantes RFID, 2 por rollo a 180° y 1 por paquete; antenas en carretillas y grúas; tags en pilares que dan una «dirección» a cada pieza; expedición automática y verificada; FIFO automático. En extensión a 3 plantas más.</td></tr>
-      <tr><td><b>Centro de servicio de acero</b> (Bélgica)</td><td>Grúas con lector RFID y X/Y por láser; impresión RFID con verificación del chip. <i>Atención:</i> el operario confirma cada movimiento; demuestra que la lectura funciona, no que funcione sin operario.</td></tr>
-      <tr><td><b>Fabricante de aceros especiales</b> (Francia)</td><td>Carretillas con lector, más de 6.000 unidades y 11 edificios, sin escaneos manuales según el proveedor (cifras no auditadas).</td></tr>
+      <tr><td><b>Laminador de rebar y alambrón</b> de un grupo siderúrgico global (Brasil)</td><td>Etiquetado automático al final de la línea de laminación (rollos a hasta 300 °C; etiqueta con escudo térmico apta para 200 °C). 2 etiquetas por rollo a 180° (el rollo puede girar) y 1 por paquete de barras (no gira). Lectura automática en carretillas, grúa de electroimán y grúa convencional; etiquetas rígidas en pilares y ubicaciones exteriores que dan una «dirección» a cada pieza; «luz verde» cuando el material llega a su ubicación sin entrada manual; FIFO; salida a camión o tren registrada sola, comprobando cantidad, dimensiones y material. Se está extendiendo a 3 plantas más.</td></tr>
+      <tr><td><b>Centro de servicio de acero</b> (Bélgica)</td><td>UHF en puentes grúa y carretillas, 2 etiquetas por palé, impresión RFID con verificación del chip. Piloto de alrededor de un año antes del despliegue; según el proveedor, la localización de palés es un 50 % más rápida. Muestra que el ciclo completo funciona, y que el piloto no se debe comprimir.</td></tr>
+      <tr><td><b>Fabricante de aceros especiales</b> (Francia)</td><td>Carretillas con lector en un recinto de 23 ha, más de 6.000 unidades etiquetadas, 6 carretillas equipadas e integración con su ERP; sin escaneos manuales según el proveedor (cifras no auditadas).</td></tr>
       <tr><td><b>Proyecto de lector en el gancho</b></td><td>Lector en el gancho y 2 telémetros láser que dan la X/Y al dejar la carga.</td></tr>
-      <tr><td><b>Estudio técnico (2021)</b> sobre bobinas con electroimán</td><td>La lectura con el imán activado es posible. Riesgo: lecturas de vecinas en recorridos cortos sobre pilas altas (cubierto en la sección 14).</td></tr>
-      <tr><td><b>Mercado</b></td><td>Ya existe al menos un módulo comercial de inventario RFID para rebar en EE. UU.: hay demanda y competencia. La diferencia de COMA: funcionamiento sin operario como criterio de aceptación, estados explícitos y contrato de eventos abierto.</td></tr>
+      <tr><td><b>Estudios técnicos</b> sobre bobinas con lector en la grúa y electroimán</td><td>La lectura con el imán activado es posible; el ajuste de potencia reduce las lecturas de vecinas. Un sistema académico vio crecer su tasa de error del 1,1 % al 9,1 % en días sucesivos: por eso aquí hay estados explícitos, medición y punto de seguir o parar (secciones 4, 9 y 14).</td></tr>
+      <tr><td><b>Fabricante de etiquetas (2025)</b></td><td>Carga con grúa usando etiquetas RFID de bandera y lectores en la grúa: hasta 10 m de alcance en entorno metálico y carga un 50 % más rápida, con comprobación automática de la lista de carga (cifras del proveedor).</td></tr>
+      <tr><td><b>Mercado</b></td><td>Ya existe al menos un módulo comercial de inventario RFID para rebar en EE. UU.; el resto del software del sector usa código de barras y escaneo manual: hay demanda y competencia. La diferencia de COMA: funcionamiento sin operario como criterio de aceptación, estados explícitos y contrato de eventos abierto.</td></tr>
     </tbody>
   </table>
 </div>
@@ -438,6 +441,7 @@
   <ul class="l">
     <li>Montaje provisional de lector y antenas en la grúa con electroimán. 300–500 etiquetas probando posiciones (1 frente a 2, extremo, centro, ¼–¾) y supervivencia.</li>
     <li>Escenarios obligatorios: paquetes de 12–14 m, varias unidades en una elevación, recorridos cortos sobre pilas altas, dejar junto a otras pilas, rollos con imán y, si hay pórtico, exterior con lluvia y de noche.</li>
+    <li>Registro de los datos RF en bruto de cada lectura (protocolo estándar LLRP), para ajustar umbrales con datos y no a ojo.</li>
     <li>Medición frente a la realidad: una cámara grabando cada movimiento (solo como instrumento de medición) y un observador. Objetivo: más de 1.000 movimientos medidos.</li>
   </ul>
   <h2>Fase 2 · Piloto operativo (10–12 semanas)</h2>
@@ -492,12 +496,12 @@
     <thead><tr><th>Concepto</th><th class="r">Desde</th><th class="r">Hasta</th></tr></thead>
     <tbody>
       <tr class="sub"><td colspan="3">Hardware (se reutiliza en el despliegue)</td></tr>
-      <tr><td>Impresora de transferencia térmica RFID</td><td class="r">3.500</td><td class="r">5.500</td></tr>
-      <tr><td>Etiquetas del piloto (~3.000, incluido inventario inicial; 0,30–0,80 €/ud)</td><td class="r">1.000</td><td class="r">2.500</td></tr>
-      <tr><td>Kit de puente grúa con electroimán<br/><small class="muted">Lector 4 puertos 1.200–2.000 · 2–4 antenas 500–2.000 · PC industrial 700–1.500 · WiFi/4G 300–1.000 · E/S de señales 300–800 · carcasas y soportes 800–2.000 · tablet o pantalla 800–1.800 · posición: 0 € si se lee del PLC o 3.000–6.000 con 2 telémetros láser</small></td><td class="r">8.000</td><td class="r">16.000</td></tr>
-      <tr><td>Terminal RFID de mano</td><td class="r">2.500</td><td class="r">4.500</td></tr>
+      <tr><td>Impresora de transferencia térmica RFID (4", rollo de 76 mm)</td><td class="r">2.500</td><td class="r">4.000</td></tr>
+      <tr><td>Etiquetas del piloto (~3.000, incluido inventario inicial; 0,30–1,00 €/ud, pendiente de cotización)</td><td class="r">1.500</td><td class="r">3.000</td></tr>
+      <tr><td>Kit de puente grúa con electroimán<br/><small class="muted">Lector 4 puertos 1.200–2.000 · 2–4 antenas 500–2.000 · PC industrial 700–1.500 · WiFi/4G 300–1.000 · E/S de señales 300–800 · carcasas y soportes 800–2.000 · tablet o pantalla 800–1.800 · posición: 0 € si se lee del PLC o 7.000–9.000 con 2 telémetros láser de largo alcance</small></td><td class="r">8.000</td><td class="r">19.000</td></tr>
+      <tr><td>Terminal RFID de mano (lector + móvil)</td><td class="r">2.000</td><td class="r">3.500</td></tr>
       <tr><td>Refuerzo de WiFi en la zona (si hace falta)</td><td class="r">0</td><td class="r">4.000</td></tr>
-      <tr><td><b>Subtotal hardware</b></td><td class="r"><b>15.000</b></td><td class="r"><b>32.500</b></td></tr>
+      <tr><td><b>Subtotal hardware</b></td><td class="r"><b>14.000</b></td><td class="r"><b>33.500</b></td></tr>
       <tr class="sub"><td colspan="3">Servicios</td></tr>
       <tr><td>Fase 0 · Auditoría y estudio de sitio</td><td class="r">4.000</td><td class="r">7.000</td></tr>
       <tr><td>Fase 1 · Prueba RF (equipos de prueba, ingeniería y análisis; se descuenta si se sigue)</td><td class="r">6.000</td><td class="r">11.000</td></tr>
@@ -505,7 +509,7 @@
       <tr><td>Plataforma COMA: motor de eventos, estados, mapa, discrepancias, integración ERP/MES y configuración</td><td class="r">18.000</td><td class="r">23.500</td></tr>
       <tr><td>Medición, auditorías e informe final</td><td class="r">4.000</td><td class="r">7.000</td></tr>
       <tr><td><b>Subtotal servicios</b></td><td class="r"><b>40.000</b></td><td class="r"><b>62.500</b></td></tr>
-      <tr class="tot"><td>TOTAL PILOTO VERSIÓN GRÚA · escenario típico ~72.000 €</td><td class="r">55.000</td><td class="r">95.000</td></tr>
+      <tr class="tot"><td>TOTAL PILOTO VERSIÓN GRÚA · escenario típico ~72.000 €</td><td class="r">54.000</td><td class="r">96.000</td></tr>
     </tbody>
   </table>
 
@@ -520,12 +524,14 @@
       <tr class="tot"><td>TOTAL OPCIÓN CARRETILLA</td><td class="r">16.000</td><td class="r">30.000</td></tr>
     </tbody>
   </table>
-  <p class="small muted">Con la opción, el piloto valida también la calle exterior con carretilla lateral y paquetes de 12–14 m (piloto completo: 71.000–125.000 €).</p>
+  <p class="small muted">Con la opción, el piloto valida también la calle exterior con carretilla lateral y paquetes de 12–14 m (piloto completo: 70.000–126.000 €).</p>
+  <h2>Opción · Báscula en la grúa</h2>
+  <p>Célula de carga inalámbrica o kit de báscula para el gancho o el imán, con integración: <b>3.000–5.000 €</b>. Aporta el peso como evidencia adicional (sección 4).</p>
 
   <h2>Despliegue (por unidad adicional, orientativo)</h2>
   <table>
     <tbody>
-      <tr><td>Grúa adicional</td><td class="r">8.000–16.000 hardware + 3.000–6.000 instalación</td></tr>
+      <tr><td>Grúa adicional</td><td class="r">8.000–19.000 hardware + 3.000–6.000 instalación</td></tr>
       <tr><td>Carretilla adicional</td><td class="r">8.000–15.000 + 2.000–4.000 instalación</td></tr>
       <tr><td>Referencias de ubicación del resto del patio (solo zonas de carretilla)</td><td class="r">3.000–10.000 según superficie</td></tr>
       <tr><td>Impresoras adicionales</td><td class="r">3.500–5.500 cada una</td></tr>
@@ -591,6 +597,7 @@
       <tr><td><b>R10 · Rechazo del personal</b> (sensación de vigilancia)</td><td>Informar al comité de empresa antes del piloto, dentro del RGPD; datos para el proceso, no para sancionar; el piloto no exige identificar al operario.</td></tr>
       <tr><td><b>R11 · Coste de etiquetas demasiado alto</b></td><td>Decidir 1 o 2 etiquetas con datos; precio por volumen; 2 solo en rollos y paquetes largos.</td></tr>
       <tr><td><b>R12 · Pérdida de red</b></td><td>Almacenamiento local, reenvío al volver la conexión e indicador en cabina.</td></tr>
+      <tr><td><b>R13 · Plazo del piloto</b></td><td>Los despliegues de referencia hicieron pilotos de alrededor de un año. Aquí el calendario es de 19 semanas porque se limita a una grúa y una zona; si la Fase 1 lo pide, se alarga la estabilización antes que recortar la medición.</td></tr>
     </tbody>
   </table>
   <h2>Escalera de decisión si la grúa no alcanza los criterios</h2>
