@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>COMA Rebar Stock · demo</title>
+<!--
+  Vídeo demo de COMA Rebar Stock, V2 (inglés, ~2 min, para clientes). Versión puente grúa.
+  Hilo conductor: la vida del paquete 004831 (recibir → almacenar → encontrar → usar) y una expedición.
+  Una ficha flotante acompaña al paquete en el patio 3D y se convierte en el pin del mapa web.
+  Cada fotograma se dibuja con window.render(t): render.cjs lo captura y sound.py genera los efectos
+  (sin música) a partir de window.CUES. Abierto en el navegador se reproduce en bucle, sin sonido.
+-->
+<style>
+  @font-face {
+    font-family: "Archivo V";
+    src: url("../../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+  }
+  :root {
+    --paper: #efece4;
+    --paper-2: #e4dfd3;
+    --ink: #0c0c0c;
+    --muted: #5d5851;
+    --nmuted: #a8a39b;
+    --line: rgba(12, 12, 12, 0.14);
+    --nline: rgba(239, 236, 228, 0.16);
+    --red: #e1112d;
+    --ok: #2f8f5b;
+    --okl: #5fe08f;
+    --warn: #e0a100;
+    --shadow: 0 40px 90px rgba(40, 32, 20, 0.16), 0 8px 24px rgba(40, 32, 20, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); }
+  body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+  #dark { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, #1c1c1c, #0c0c0c 70%); }
+  .layer { position: absolute; inset: 0; }
+  .h { font-weight: 700; font-stretch: 125%; letter-spacing: -0.04em; line-height: 0.98; }
+  .c { color: var(--red); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: 20px; color: var(--nmuted); }
+  .eyebrow::before { content: ""; width: 34px; height: 3px; background: var(--red); }
+  .light .eyebrow, .eyebrow.ink { color: var(--muted); }
+  .logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
+  .logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+
+  /* ------------------------------------------------------------ patio 3D */
+  #vp, #vp2 { position: absolute; inset: 0; perspective: 2600px; perspective-origin: 960px 540px; overflow: hidden; }
+  #vp2 { z-index: 6; pointer-events: none; }
+  #world { position: absolute; left: 0; top: 0; width: 1700px; height: 1100px; transform-style: preserve-3d; transform-origin: 0 0; }
+  #mapT { position: absolute; left: 0; top: 0; width: 1700px; height: 1100px; transform-origin: 0 0; }
+  .b3, .g3 { position: absolute; left: 0; top: 0; transform-style: preserve-3d; transform-origin: 0 0; }
+  .f { position: absolute; left: 0; top: 0; transform-origin: 0 0; backface-visibility: hidden; opacity: var(--o3d, 1); }
+  .flat { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .flat svg, #mapT svg, #map2 svg { width: 100%; height: 100%; display: block; }
+  #floor { width: 1700px; height: 1100px; background:
+      radial-gradient(ellipse at 55% 45%, rgba(255,255,255,0.05), transparent 65%),
+      linear-gradient(rgba(239,236,228,0.035) 1px, transparent 1px) 0 0 / 50px 50px,
+      linear-gradient(90deg, rgba(239,236,228,0.035) 1px, transparent 1px) 0 0 / 50px 50px,
+      #171717; }
+  .cellf { border: 2px dashed rgba(239,236,228,0.16); }
+  .cellf b { position: absolute; left: 10px; bottom: -40px; font-size: 26px; font-weight: 700; font-stretch: 115%; color: rgba(239,236,228,0.42); letter-spacing: 0.04em; }
+  .cellf.src { border: 3px solid rgba(225,17,45,0.9); box-shadow: 0 0 40px rgba(225,17,45,0.45), inset 0 0 40px rgba(225,17,45,0.25); }
+  .cellf.dst { border: 3px solid rgba(60,196,107,0.95); box-shadow: 0 0 40px rgba(60,196,107,0.45), inset 0 0 40px rgba(60,196,107,0.25); }
+  .zonef { border: 2px solid rgba(225,17,45,0.35); background: rgba(225,17,45,0.05); }
+  .zonef b { position: absolute; left: 12px; top: 8px; font-size: 19px; font-weight: 700; font-stretch: 118%; letter-spacing: 0.12em; color: rgba(239,236,228,0.5); }
+  .zonef.dst { border: 3px solid rgba(60,196,107,0.95); box-shadow: 0 0 40px rgba(60,196,107,0.45); }
+  .lane { background: repeating-linear-gradient(135deg, rgba(239,236,228,0.05) 0 14px, transparent 14px 28px); border: 2px solid rgba(239,236,228,0.12); }
+  .lane b { position: absolute; right: 16px; bottom: 10px; font-size: 19px; font-weight: 700; letter-spacing: 0.12em; color: rgba(239,236,228,0.45); }
+  .bun .ft { background:
+      linear-gradient(90deg, transparent 0 15%, #241f1c 15% 16.5%, transparent 16.5% 49%, #241f1c 49% 50.5%, transparent 50.5% 83%, #241f1c 83% 84.5%, transparent 84.5%),
+      repeating-linear-gradient(180deg, #8f7a6a 0 3px, #5f4d43 3px 6px); }
+  .bun .ff { background:
+      linear-gradient(90deg, transparent 0 15%, #1c1816 15% 16.5%, transparent 16.5% 49%, #1c1816 49% 50.5%, transparent 50.5% 83%, #1c1816 83% 84.5%, transparent 84.5%),
+      repeating-linear-gradient(180deg, #6c5a4e 0 3px, #46382f 3px 6px); }
+  .bun .fb { background: #3a2f29; }
+  .bun .fl, .bun .fr { background: radial-gradient(circle, #b3a191 0 2.2px, #3b302a 2.8px) 0 0 / 6px 6px; }
+  .bun.short .ft { background: repeating-linear-gradient(180deg, #8f7a6a 0 3px, #5f4d43 3px 6px); }
+  .hot .f { box-shadow: inset 0 0 0 3px #ff3048; }
+  .ttg { position: absolute; top: 4px; width: 11px; height: 15px; background: #cfc8bb; border-top: 4px solid #b80d24; }
+  .ttg.read { background: #fff; box-shadow: 0 0 14px 4px rgba(225,17,45,0.95); }
+  .disc { position: absolute; border-radius: 50%; background: #5e4d43; box-shadow: inset 0 0 0 2px #3c3029; opacity: var(--o3d, 1); }
+  .disc.top { background: radial-gradient(circle, #121212 0 25%, #a28c7c 26% 29%, #6d5a4e 30% 42%, #8b7566 43% 55%, #5f4d43 56% 68%, #8b7566 69% 80%, #5a483e 81% 100%); }
+  .crane .ft { background: linear-gradient(90deg, #3a3a3d 0 38%, var(--red) 38% 62%, #3a3a3d 62%); }
+  .crane .ff, .crane .fb { background: #2a2a2d; }
+  .crane .fl, .crane .fr { background: #222225; }
+  .dark3 .ft { background: #2b2b2e; }
+  .dark3 .ff, .dark3 .fb { background: #1f1f22; }
+  .dark3 .fl, .dark3 .fr { background: #18181a; }
+  .red3 .ft { background: #ff3048; }
+  .red3 .ff, .red3 .fb, .red3 .fl, .red3 .fr { background: #b80d24; }
+  .paper3 .ft { background: #efece4; }
+  .paper3 .ff, .paper3 .fb { background: #cfc9bd; }
+  .paper3 .fl, .paper3 .fr { background: #bdb7ab; }
+  .mag .ft { background: #2c2c2c; }
+  .mag .ff, .mag .fb, .mag .fl, .mag .fr { background: repeating-linear-gradient(90deg, #3a3a3a 0 6px, #262626 6px 12px); }
+  .mag.on .ff, .mag.on .fb, .mag.on .fl, .mag.on .fr { background: repeating-linear-gradient(90deg, #ff3048 0 6px, #8d0a1c 6px 12px); }
+  .cable { position: absolute; left: 0; top: 0; width: 4px; background: #8d877c; transform-origin: 0 0; opacity: var(--o3d, 1); }
+  .ring { position: absolute; left: -130px; top: -130px; width: 260px; height: 260px; border-radius: 50%; border: 3px solid rgba(225,17,45,0.9); }
+  .shadow { position: absolute; width: 380px; height: 110px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,0.75), transparent 70%); }
+  .anchor { position: absolute; width: 2px; height: 2px; }
+
+  /* ------------------------------------------------------------ capas sobre el 3D */
+  #ov { position: absolute; inset: 0; pointer-events: none; }
+  #chips { position: absolute; inset: 0; pointer-events: none; }
+  .chip { position: absolute; left: 0; top: 0; }
+  .chip .card { position: absolute; left: -10px; bottom: 34px; min-width: 300px; background: #f6f4ef; color: var(--ink); padding: 14px 18px 14px 20px; border-left: 5px solid var(--red); box-shadow: 0 24px 50px rgba(0,0,0,0.45); white-space: nowrap; }
+  .chip .card b { display: block; font-size: 30px; font-weight: 750; font-stretch: 112%; letter-spacing: -0.02em; }
+  .chip .card span { display: block; font-size: 17px; color: var(--muted); margin-top: 2px; }
+  .chip .card em { display: inline-flex; align-items: center; gap: 8px; margin-top: 9px; font-style: normal; font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .chip .card em i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+  .chip .card em span { display: inline; font-size: 15px; color: inherit; margin: 0; }
+  .chip .stem { position: absolute; left: -1px; bottom: 0; width: 2px; height: 34px; background: rgba(239,236,228,0.8); }
+  .chip .dot { position: absolute; left: -7px; bottom: -7px; width: 14px; height: 14px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 5px rgba(225,17,45,0.3); }
+  .qpin { position: absolute; left: 0; top: 0; width: 46px; height: 46px; margin: -60px 0 0 -23px; border-radius: 50%; background: var(--paper); color: var(--ink); font-weight: 800; font-size: 28px; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,0.5); }
+
+  .veil { position: absolute; left: 0; bottom: 0; width: 1250px; height: 560px; background: radial-gradient(ellipse at 0% 100%, rgba(12,12,12,0.94), rgba(12,12,12,0.7) 42%, transparent 72%); }
+  .cap { position: absolute; left: 110px; bottom: 96px; width: 820px; color: var(--paper); }
+  .cap h2 { font-size: 64px; margin-top: 18px; }
+  .cap p { font-size: 27px; line-height: 1.36; margin-top: 18px; color: var(--nmuted); max-width: 700px; }
+
+  /* recorrido del paquete (arriba, fijo entre escenas) */
+  #life { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; background: rgba(12,12,12,0.88); padding: 6px; z-index: 20; }
+  #life span { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--nmuted); padding: 8px 16px; }
+  #life span.on { background: var(--red); color: #fff; }
+  #life span.done { color: var(--paper); }
+  #life i { color: rgba(239,236,228,0.3); font-style: normal; font-size: 14px; }
+  #ff { position: absolute; left: 50%; top: 84px; transform: translateX(-50%); background: var(--paper); color: var(--ink); padding: 11px 24px; font-size: 21px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; z-index: 21; opacity: 0; }
+
+  /* paneles */
+  .glass { position: absolute; background: rgba(18,18,18,0.9); border: 1px solid var(--nline); color: var(--paper); box-shadow: 0 40px 80px rgba(0,0,0,0.45); }
+  .glass h6 { font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nmuted); font-weight: 650; }
+  .live { right: 70px; top: 110px; width: 520px; padding: 24px 26px; }
+  .live .hd { display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 650; }
+  .live .hd small { font-size: 16px; color: var(--nmuted); display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .gdot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3cc46b; box-shadow: 0 0 10px #3cc46b; }
+  .steps { margin-top: 18px; }
+  .steps div { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 14px; padding: 13px 0; border-top: 1px solid var(--nline); font-size: 22px; color: var(--nmuted); }
+  .steps div i { width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(239,236,228,0.25); font-style: normal; font-size: 15px; font-weight: 700; display: grid; place-items: center; }
+  .steps div small { font-size: 16px; }
+  .steps div.on { color: var(--paper); }
+  .steps div.on i { border-color: var(--red); background: var(--red); color: #fff; }
+  .steps div.done { color: var(--paper); }
+  .steps div.done i { border-color: #3cc46b; background: #3cc46b; color: #0c0c0c; }
+  .rec { margin-top: 16px; padding: 18px 20px; background: rgba(47,143,91,0.2); border-left: 5px solid #3cc46b; }
+  .rec b { display: block; font-size: 28px; color: var(--okl); font-weight: 750; }
+  .rec span { display: block; font-size: 18px; color: var(--paper); margin-top: 6px; }
+  .rec small { display: block; font-size: 15px; color: var(--nmuted); margin-top: 4px; }
+  .fl { display: grid; grid-template-columns: 12px 1fr; gap: 14px; padding: 13px 0; border-top: 1px solid var(--nline); font-size: 20px; }
+  .fl i { width: 12px; height: 12px; border-radius: 50%; background: #3cc46b; margin-top: 7px; }
+  .fl small { display: block; font-size: 15px; color: var(--nmuted); }
+  .fl.dim { opacity: 0.5; }
+  .bigT { font-size: 30px; font-weight: 700; margin-top: 8px; }
+  .dn { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--nline); font-size: 20px; }
+  .dn i { width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(239,236,228,0.3); font-style: normal; display: grid; place-items: center; font-size: 13px; font-weight: 700; }
+  .dn.ok i { background: #3cc46b; border-color: #3cc46b; color: #0c0c0c; }
+  .dn.bad { color: #ff6b7d; }
+  .dn.bad i { background: var(--red); border-color: var(--red); color: #fff; }
+  .dn small { color: var(--nmuted); font-size: 16px; }
+  .alert { margin-top: 16px; padding: 16px 18px; background: var(--red); color: #fff; font-size: 20px; line-height: 1.35; }
+  .alert b { display: block; font-size: 24px; }
+  .okbar { margin-top: 16px; padding: 16px 18px; background: rgba(47,143,91,0.22); border-left: 5px solid #3cc46b; color: #8ff0b2; font-size: 21px; font-weight: 650; }
+
+  /* ------------------------------------------------------------ escenas 2D */
+  #s1 .q { font-size: 104px; color: var(--paper); }
+  #s1 .q em { font-style: normal; color: var(--red); }
+  #s1 .t2 { margin-top: 34px; font-size: 40px; color: var(--paper); font-weight: 600; display: flex; align-items: center; gap: 20px; }
+  #s1 .t2 b { font-size: 16px; letter-spacing: 0.16em; background: var(--paper); color: var(--ink); padding: 8px 14px; font-weight: 800; text-transform: uppercase; }
+  #s2logo { font-size: 230px; color: var(--paper); }
+  #s2eb { margin-top: 30px; font-size: 30px; }
+  #s2t { margin-top: 44px; font-size: 46px; color: var(--paper); font-weight: 600; max-width: 1300px; line-height: 1.2; }
+  #s2t span { color: var(--nmuted); }
+
+  #lbl { position: absolute; left: 150px; top: 150px; width: 520px; transform-origin: 0 0; }
+  #lbl .prn { height: 34px; background: #2a2a2d; position: relative; }
+  #lbl .prn::after { content: ""; position: absolute; left: 30px; right: 30px; top: 22px; height: 6px; background: #0c0c0c; }
+  #lbl .paperL { overflow: hidden; height: 0; }
+  #lbl .lab { background: #fbfaf6; padding: 26px 28px; display: grid; grid-template-columns: 1fr 120px; gap: 18px; border-top: 10px solid var(--red); }
+  #lbl .lab b { display: block; font-size: 48px; font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; }
+  #lbl .lab span { display: block; font-size: 19px; color: #3a3631; margin-top: 4px; line-height: 1.35; }
+  #lbl .qr { width: 120px; height: 120px; background: repeating-linear-gradient(90deg, #111 0 8px, transparent 8px 13px, #111 13px 17px, transparent 17px 26px), #fff; -webkit-mask: repeating-linear-gradient(0deg, #000 0 10px, rgba(0,0,0,.25) 10px 15px); }
+  #lbl .chipi { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red); border-top: 1px dashed rgba(12,12,12,0.25); padding-top: 14px; }
+  #lbl .chipi svg { width: 34px; height: 34px; }
+  .co { position: absolute; width: 380px; color: var(--paper); background: rgba(18,18,18,0.9); border: 1px solid var(--nline); padding: 18px 20px; }
+  .co .n { display: inline-grid; place-items: center; width: 32px; height: 32px; background: var(--red); color: #fff; font-weight: 700; font-size: 17px; margin-bottom: 10px; font-style: normal; }
+  .co b { display: block; font-size: 25px; line-height: 1.15; }
+  .co span { display: block; font-size: 18px; color: var(--nmuted); margin-top: 6px; line-height: 1.35; }
+
+  /* ------------------------------------------------------------ web */
+  .bw { position: absolute; left: 110px; top: 60px; width: 1700px; height: 960px; background: var(--paper); box-shadow: 0 60px 120px rgba(40,32,20,0.22), 0 0 0 1px rgba(12,12,12,0.12); overflow: hidden; }
+  .bw .tb { height: 46px; background: #e4dfd3; display: flex; align-items: center; gap: 10px; padding: 0 18px; border-bottom: 1px solid var(--line); }
+  .bw .tb i { width: 12px; height: 12px; border-radius: 50%; background: #c9c2b4; }
+  .bw .tb .url { margin-left: 28px; background: #f6f4ef; padding: 6px 18px; font-size: 16px; color: var(--muted); width: 560px; }
+  .bw .tb .url b { color: var(--ink); font-weight: 600; }
+  .side { position: absolute; left: 110px; top: 106px; width: 240px; height: 914px; background: var(--ink); color: var(--paper); padding: 28px 22px; }
+  .side .lg { font-size: 34px; }
+  .side ul { margin-top: 40px; list-style: none; }
+  .side li { font-size: 18px; padding: 12px 14px; color: var(--nmuted); border-left: 3px solid transparent; }
+  .side li.on { background: rgba(239,236,228,0.08); color: var(--paper); border-left-color: var(--red); }
+  .hdr { position: absolute; left: 380px; top: 124px; width: 1400px; height: 76px; display: flex; align-items: center; gap: 20px; }
+  .hdr h3 { font-size: 36px; font-weight: 700; font-stretch: 118%; letter-spacing: -0.03em; }
+  .srch { margin-left: auto; width: 600px; height: 60px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; padding: 0 20px; font-size: 23px; gap: 12px; color: var(--muted); }
+  .srch.on { border-color: var(--ink); color: var(--ink); box-shadow: 0 0 0 3px rgba(12,12,12,0.06); }
+  .srch .cur { display: inline-block; width: 2px; height: 26px; background: var(--ink); }
+  .kpis { position: absolute; left: 380px; top: 218px; width: 1400px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); }
+  .kpis div { padding: 12px 20px 0 0; font-size: 16px; color: var(--muted); height: 92px; }
+  .kpis b { display: block; font-size: 38px; color: var(--ink); font-weight: 700; font-stretch: 115%; margin-top: 2px; letter-spacing: -0.03em; }
+  .kpis b small { font-size: 18px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+  #map2 { position: absolute; left: 380px; top: 330px; width: 1000px; height: 647px; background: #fff; box-shadow: 0 0 0 1px var(--line); }
+  .feed { position: absolute; left: 1410px; top: 330px; width: 370px; height: 647px; background: #fff; border: 1px solid var(--line); padding: 20px; overflow: hidden; }
+  .feed h5, #res2 h5, #drawer h6 { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 650; }
+  .fi { display: grid; grid-template-columns: 12px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 17px; line-height: 1.35; }
+  .fi i { width: 12px; height: 12px; border-radius: 50%; margin-top: 6px; background: var(--ok); }
+  .fi small { display: block; color: var(--muted); font-size: 14px; }
+  .fi.hl { background: rgba(225,17,45,0.06); margin: 0 -20px; padding-left: 20px; padding-right: 20px; box-shadow: inset 4px 0 0 var(--red); }
+  #res2 { position: absolute; left: 380px; top: 330px; width: 860px; background: #fff; border: 1px solid var(--ink); padding: 20px 24px; box-shadow: var(--shadow); }
+  .rr { display: grid; grid-template-columns: 110px 120px 80px 90px 80px 80px 1fr; gap: 10px; align-items: center; padding: 14px 10px; border-bottom: 1px solid var(--line); font-size: 19px; }
+  .rr.hd { font-size: 14px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 650; }
+  .rr.sel { background: rgba(225,17,45,0.07); box-shadow: inset 4px 0 0 var(--red); }
+  .rr .st { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ok); }
+  #drawer { position: absolute; left: 1250px; top: 106px; width: 560px; height: 914px; background: #fff; border-left: 1px solid var(--line); box-shadow: -30px 0 60px rgba(40,32,20,0.12); padding: 34px 36px; }
+  #drawer .id { font-size: 64px; font-weight: 750; font-stretch: 118%; letter-spacing: -0.03em; margin-top: 10px; }
+  #drawer .sub { font-size: 20px; color: var(--muted); margin-top: 4px; }
+  #drawer .now { margin-top: 18px; display: flex; gap: 16px; align-items: center; font-size: 20px; }
+  #drawer .now b { background: var(--ink); color: #fff; padding: 6px 14px; font-size: 22px; }
+  #drawer .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin-top: 24px; }
+  #drawer .facts div { font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 8px; }
+  #drawer .facts b { display: block; font-size: 21px; color: var(--ink); font-weight: 600; }
+  #drawer h6 { margin: 30px 0 12px; }
+  .tl { position: relative; padding-left: 28px; }
+  .tl::before { content: ""; position: absolute; left: 7px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+  .tl div { position: relative; font-size: 20px; padding: 9px 0; }
+  .tl div::before { content: ""; position: absolute; left: -26px; top: 15px; width: 12px; height: 12px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px #fff; }
+  .tl div.now::before { background: var(--red); box-shadow: 0 0 0 5px rgba(225,17,45,0.22); }
+  .tl div.next::before { background: var(--paper-2); }
+  .tl small { color: var(--muted); font-size: 16px; display: block; }
+  #cursor { position: absolute; left: 0; top: 0; pointer-events: none; }
+  #cursor .rip { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--red); opacity: 0; }
+  .phone { position: absolute; width: 380px; height: 760px; background: #0c0c0c; border-radius: 56px; padding: 12px; box-shadow: 0 50px 100px rgba(0,0,0,0.35); }
+  .phone .scr { width: 100%; height: 100%; border-radius: 45px; overflow: hidden; background: var(--paper); position: relative; padding: 70px 24px 20px; }
+  #ph1 { left: 1400px; top: 200px; }
+  #ph1 .id { font-size: 46px; font-weight: 750; font-stretch: 118%; letter-spacing: -0.03em; margin-top: 8px; }
+  #ph1 .loc { margin-top: 16px; background: var(--ink); color: #fff; padding: 18px; }
+  #ph1 .loc small { display: block; font-size: 14px; color: var(--nmuted); letter-spacing: 0.12em; text-transform: uppercase; }
+  #ph1 .loc b { font-size: 54px; font-weight: 750; font-stretch: 118%; }
+  #ph1 .mini { margin-top: 16px; height: 220px; background: #fff; border: 1px solid var(--line); }
+
+  /* ------------------------------------------------------------ cabina */
+  .tab { position: absolute; width: 960px; height: 640px; background: #151515; border-radius: 40px; padding: 30px; box-shadow: 0 60px 120px rgba(0,0,0,0.5), inset 0 0 0 3px #2c2c2c; }
+  .tab .scr { position: relative; width: 100%; height: 100%; border-radius: 12px; background: var(--paper); overflow: hidden; }
+  .tbar { height: 62px; background: var(--ink); color: var(--paper); display: flex; align-items: center; padding: 0 24px; gap: 14px; font-size: 21px; font-weight: 600; }
+  .tbar small { margin-left: auto; color: var(--nmuted); font-size: 17px; display: flex; gap: 8px; align-items: center; font-weight: 500; }
+  .tst { height: 72px; display: flex; align-items: center; padding: 0 26px; gap: 14px; font-size: 26px; font-weight: 750; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; }
+  .tst.warn { background: var(--warn); color: #1d1600; }
+  .tst.bad { background: var(--red); }
+  .tq { padding: 26px 30px 0; }
+  .tq h3 { font-size: 42px; font-weight: 700; font-stretch: 112%; letter-spacing: -0.02em; line-height: 1.08; }
+  .tq p { font-size: 21px; color: var(--muted); margin-top: 8px; }
+  .tb2 { height: 104px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 700; background: #fff; border: 2px solid var(--line); }
+  .tb2.pri { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .tdone { position: absolute; left: 30px; right: 30px; bottom: 26px; padding: 18px 22px; background: #e3f1e8; color: var(--ok); font-size: 23px; font-weight: 650; border-left: 5px solid var(--ok); }
+  #fing { position: absolute; left: 0; top: 0; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; background: rgba(239,236,228,0.3); border: 3px solid rgba(239,236,228,0.8); }
+  #frip { position: absolute; left: 0; top: 0; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; border: 3px solid var(--red); opacity: 0; }
+
+  /* valor */
+  #val .hd { position: absolute; left: 110px; top: 100px; width: 1150px; }
+  #val .hd h2 { font-size: 76px; margin-top: 20px; }
+  .vrows { position: absolute; left: 110px; top: 480px; width: 1100px; }
+  .vr { display: grid; grid-template-columns: 110px 1fr; gap: 20px; padding: 18px 0 20px; border-top: 1px solid var(--line); }
+  .vr .n { font-size: 54px; font-weight: 800; font-stretch: 125%; letter-spacing: -0.06em; color: var(--red); line-height: 0.9; }
+  .vr b { display: block; font-size: 34px; font-weight: 700; font-stretch: 118%; letter-spacing: -0.03em; }
+  .vr span { display: block; font-size: 22px; color: var(--muted); margin-top: 6px; }
+  #ph2 { left: 1400px; top: 150px; }
+  #ph2 h4 { font-size: 30px; font-weight: 700; font-stretch: 115%; letter-spacing: -0.02em; }
+  .pk { border-top: 1px solid var(--line); padding: 12px 0; margin-top: 10px; }
+  .pk small { display: block; font-size: 14px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .pk b { font-size: 46px; font-weight: 750; font-stretch: 118%; letter-spacing: -0.03em; }
+  .pk b em { font-style: normal; font-size: 19px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+  .ex { background: #fff; border-left: 4px solid var(--warn); padding: 12px 14px; margin-top: 10px; font-size: 17px; line-height: 1.3; }
+  .ex small { display: block; font-size: 14px; color: var(--muted); }
+  #valf { position: absolute; left: 110px; bottom: 50px; font-size: 26px; font-weight: 600; }
+  #valf span { color: var(--muted); font-weight: 400; }
+
+  /* cierre */
+  #end .lg { font-size: 210px; }
+  #end .eb { margin-top: 26px; font-size: 26px; }
+  #end .t { font-size: 60px; margin-top: 54px; max-width: 1450px; }
+  #end .t span { color: var(--muted); }
+  #end .meta { display: flex; margin-top: 46px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  #end .meta span { font-size: 24px; padding: 16px 34px; }
+  #end .meta span + span { border-left: 1px solid var(--line); }
+  #end .btn { margin-top: 44px; font-size: 24px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 26px 40px; display: inline-flex; gap: 60px; }
+  #end .btn span { color: var(--red); }
+  #end .url { margin-top: 26px; font-size: 24px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="dark"></div>
+  <div id="vp"><div id="world"></div></div>
+  <div id="vp2"><div id="mapT"></div></div>
+  <svg id="ov" width="1920" height="1080"></svg>
+  <div id="chips"></div>
+
+  <div id="life"><span>Receive</span><i>›</i><span>Store</span><i>›</i><span>Find</span><i>›</i><span>Use</span><i>›</i><span>Ship</span></div>
+  <div id="ff">⏩ Later that day</div>
+
+  <!-- 1 · hoy -->
+  <section class="layer" id="s1">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 22%, rgba(12,12,12,0.88), rgba(12,12,12,0.3) 55%, transparent)"></div>
+    <div class="center" style="justify-content:flex-start;padding-top:130px">
+      <div class="h q" id="s1a">Where is bundle <em>004831</em>?</div>
+      <div class="t2" id="s1b"><b>Today</b>Someone has to walk the yard to find out.</div>
+    </div>
+  </section>
+
+  <!-- 2 · logo -->
+  <section class="layer" id="s2" style="background:radial-gradient(ellipse at 50% 45%, #1c1c1c, #0c0c0c 70%)">
+    <div class="center">
+      <div id="s2logo" class="logo"><span id="s2w">COMA</span><svg id="s2c" viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+      <div id="s2eb" class="eyebrow">Rebar Stock</div>
+      <div id="s2t">Your crane already moves every bundle<span>. Now it also records where it goes.</span></div>
+    </div>
+  </section>
+
+  <!-- 3 · qué se añade -->
+  <section class="layer" id="s3">
+    <div class="veil"></div>
+    <div id="lbl"><div class="prn"></div><div class="paperL" id="lblp"><div class="lab">
+      <div><b>004831</b><span>Ø16 · B500SD · 12 m<br/>Heat H-61844 · 2,140 kg</span></div><div class="qr"></div>
+      <div class="chipi"><svg viewBox="0 0 34 34"><rect x="7" y="7" width="20" height="20" fill="none" stroke="#e1112d" stroke-width="3"/><path d="M12 2v5M17 2v5M22 2v5M12 27v5M17 27v5M22 27v5M2 12h5M2 17h5M2 22h5M27 12h5M27 17h5M27 22h5" stroke="#e1112d" stroke-width="2.5"/></svg>RFID chip inside</div>
+    </div></div></div>
+    <div class="co" id="co1"><i class="n">2</i><b>A reader and two antennas</b><span>On the crane, next to the magnet.</span></div>
+    <div class="co" id="co2"><i class="n">3</i><b>Position from the crane</b><span>It already knows where it is.</span></div>
+    <div class="co" id="co3"><i class="n">4</i><b>A screen in the cab</b><span>It only speaks up when it needs to.</span></div>
+    <div class="cap" id="c3a"><div class="eyebrow">What we add · 1</div><h2 class="h">The label you print today. Now with a chip<span class="c">.</span></h2><p>Same printer step, same people. Tied to the bundle as always.</p></div>
+    <div class="cap" id="c3b"><div class="eyebrow">What we add · 2–4</div><h2 class="h">A small kit on the crane<span class="c">.</span></h2><p>The operator works exactly as today. Nothing to scan, nothing to type.</p></div>
+  </section>
+
+  <!-- 4 · recibir y almacenar -->
+  <section class="layer" id="s4">
+    <div class="veil"></div>
+    <div class="cap" id="c4a"><div class="eyebrow">Receive</div><h2 class="h">The crane lifts it off the truck<span class="c">.</span></h2><p>The tag is read the moment the bundle hangs from the magnet.</p></div>
+    <div class="cap" id="c4b"><div class="eyebrow">Receive</div><h2 class="h">The tag travels with the load<span class="c">.</span></h2><p>The system knows exactly which bundle is moving.</p></div>
+    <div class="cap" id="c4c"><div class="eyebrow">Receive</div><h2 class="h">Released in A-01<span class="c">.</span></h2><p>The crane's position at release gives the place.</p></div>
+    <div class="cap" id="c4d"><div class="eyebrow">Receive</div><h2 class="h">Received. In stock. Recorded<span class="c">.</span></h2><p>No scanning, no typing. In real time.</p></div>
+    <div class="cap" id="c4e"><div class="eyebrow">Store</div><h2 class="h">Every move after that, too<span class="c">.</span></h2><p>Reorganise the yard as often as you need. The record follows.</p></div>
+    <div class="glass live" id="live">
+      <div class="hd">Crane 1 · Bay 2<small><span class="gdot"></span>Live</small></div>
+      <div class="steps">
+        <div id="st0"><i>1</i><span>Pick</span><small>magnet on · tag read</small></div>
+        <div id="st1"><i>2</i><span>Move</span><small>load identified</small></div>
+        <div id="st2"><i>3</i><span>Drop</span><small>place from the crane</small></div>
+      </div>
+      <div class="rec" id="rec"><b>✓ 004831 received</b><span>Truck → A-01 · 10:42</span><small>Recorded automatically · stock updated</small></div>
+    </div>
+    <div class="glass live" id="fd1">
+      <h6>Crane 1 · today</h6>
+      <div class="fl" id="fl2" style="margin-top:12px"><i></i><div><b>004831</b> A-01 → C-03<small>14:05 · recorded automatically</small></div></div>
+      <div class="fl dim"><i></i><div><b>005140</b> Truck → A-01<small>13:52</small></div></div>
+      <div class="fl dim"><i></i><div><b>004912</b> B-04 → B-03<small>13:40</small></div></div>
+      <div class="fl dim"><i></i><div><b>004831</b> Truck → A-01<small>10:42</small></div></div>
+    </div>
+  </section>
+
+  <!-- 5 · encontrar (web) -->
+  <section class="layer" id="app">
+    <div class="bw ch"><div class="tb"><i></i><i></i><i></i><div class="url">🔒 <b>stock.comunicacionenmallorca.com</b>/plant/bay-2</div></div></div>
+    <div class="side ch">
+      <div class="lg logo">COMA<svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+      <div style="font-size:13px;letter-spacing:.16em;color:var(--red);font-weight:700;margin-top:8px;text-transform:uppercase;font-stretch:120%">Rebar Stock</div>
+      <ul><li class="on" id="nav0">Live map</li><li id="nav1">Search</li><li>Moves</li><li>Shipping</li><li>Consumption</li><li>Reports</li></ul>
+    </div>
+    <div class="hdr ch"><h3 id="ttl">Bay 2 · Live</h3><div class="srch" id="srch">⌕ <span id="sq">Search heat, Ø, grade, order…</span><span class="cur" id="sqc"></span></div></div>
+    <div class="kpis ch">
+      <div>In stock<b>1,284 <small>units · 2,716 t</small></b></div>
+      <div>Moves today<b>412</b></div>
+      <div>Recorded automatically<b>410</b></div>
+      <div>Waiting for a tap<b>2</b></div>
+    </div>
+    <div id="map2"></div>
+    <div class="feed ch" id="feed"><h5>Live</h5>
+      <div class="fi hl"><i></i><div><b>004831</b> A-01 → C-03<small>Crane 1 · 14:05</small></div></div>
+      <div class="fi"><i></i><div><b>005140</b> Truck → A-01<small>Crane 1 · 13:52</small></div></div>
+      <div class="fi"><i></i><div><b>004912</b> B-04 → B-03<small>Crane 1 · 13:40</small></div></div>
+      <div class="fi"><i></i><div><b>004655</b> opened · Shear line 1<small>13:31</small></div></div>
+      <div class="fi"><i></i><div><b>004831</b> Truck → A-01<small>Crane 1 · 10:42</small></div></div>
+    </div>
+    <div id="res2">
+      <h5>Ø16 · 12 m · 4 units · oldest first</h5>
+      <div class="rr hd"><span>Unit</span><span>Heat</span><span>Length</span><span>kg</span><span>Cell</span><span>Age</span><span>Status</span></div>
+      <div class="rr"><b>004702</b><span>H-61207</span><span>12 m</span><span>2,080</span><b>A-03</b><span>41 d</span><span class="st">● In stock</span></div>
+      <div class="rr"><b>004830</b><span>H-61844</span><span>12 m</span><span>2,120</span><b>B-02</b><span>26 d</span><span class="st">● In stock</span></div>
+      <div class="rr"><b>005088</b><span>H-62019</span><span>12 m</span><span>2,460</span><b>B-03</b><span>12 d</span><span class="st">● In stock</span></div>
+      <div class="rr" id="rr0"><b>004831</b><span>H-61844</span><span>12 m</span><span>2,140</span><b>C-03</b><span>today</span><span class="st">● In stock</span></div>
+    </div>
+    <div id="drawer">
+      <div class="eyebrow ink" style="font-size:15px">Bundle</div>
+      <div class="id">004831</div>
+      <div class="sub">Ø16 · B500SD · 12 m · heat H-61844</div>
+      <div class="now">Now in <b>C-03</b> <span style="color:var(--ok);font-weight:650">● In stock</span></div>
+      <div class="facts"><div>Weight<b>2,140 kg</b></div><div>Certificate<b>3.1 · linked</b></div><div>Received<b>Today · 10:42</b></div><div>Reserved for<b>Order 26-1187</b></div></div>
+      <h6>History</h6>
+      <div class="tl">
+        <div>Received · truck → A-01<small>Today 10:42 · crane 1 · automatic</small></div>
+        <div class="now">Moved · A-01 → C-03<small>Today 14:05 · crane 1 · automatic</small></div>
+        <div class="next">Next: Shear line 1 · order 26-1187<small>Planned</small></div>
+      </div>
+    </div>
+    <div class="phone" id="ph1"><div class="scr">
+      <div class="eyebrow ink" style="font-size:13px">Find</div>
+      <div class="id">004831</div>
+      <div style="font-size:16px;color:var(--muted)">Ø16 · 12 m · 2,140 kg</div>
+      <div class="loc"><small>Bay 2 · cell</small><b>C-03</b></div>
+      <div class="mini"><svg viewBox="0 0 330 220" width="100%" height="100%"><g fill="#fff" stroke="#0c0c0c" stroke-opacity=".2" stroke-width="2"><rect x="10" y="10" width="95" height="60"/><rect x="117" y="10" width="95" height="60"/><rect x="224" y="10" width="95" height="60"/><rect x="10" y="80" width="95" height="60"/><rect x="117" y="80" width="95" height="60"/><rect x="10" y="150" width="95" height="60"/><rect x="117" y="150" width="95" height="60"/><rect x="224" y="150" width="95" height="60"/></g><rect x="224" y="80" width="95" height="60" fill="#e1112d" fill-opacity=".12" stroke="#e1112d" stroke-width="4"/><circle cx="271" cy="110" r="10" fill="#e1112d"/></svg></div>
+      <div style="margin-top:14px;font-size:16px;color:var(--muted)">From the office, the yard or the road.</div>
+    </div></div>
+    <div id="cursor"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M4 2l16 9-7 2-3 7z" fill="#0c0c0c" stroke="#fff" stroke-width="1.5"/></svg><div class="rip"></div></div>
+  </section>
+
+  <!-- 6 · usar y expedir (sobre el 3D) -->
+  <section class="layer" id="s6">
+    <div class="veil"></div>
+    <div class="cap" id="c6a"><div class="eyebrow">Use</div><h2 class="h">To the machine? It's marked open<span class="c">.</span></h2><p>Confirmed by the machine's own program scan. Your ERP keeps counting the kilos.</p></div>
+    <div class="cap" id="c6b"><div class="eyebrow">Ship</div><h2 class="h">Load the truck. Checked against the delivery note<span class="c">.</span></h2><p>Two bundles in one lift? Both identified.</p></div>
+    <div class="cap" id="c6c"><div class="eyebrow">Ship</div><h2 class="h">Wrong bundle? Seen before the truck leaves<span class="c">.</span></h2><p>The cab screen warns the operator right away.</p></div>
+    <div class="cap" id="c6d"><div class="eyebrow">Ship</div><h2 class="h">Right material. Dispatched<span class="c">.</span></h2><p>Stock and delivery note updated automatically.</p></div>
+    <div class="glass live" id="cons" style="top:auto;bottom:96px">
+      <h6>Bundle 004831</h6>
+      <div class="bigT" id="consT">Moving to Shear line 1…</div>
+      <div class="dn ok" id="ce1" style="margin-top:12px"><i>✓</i><span>Crane drop at Shear line 1</span><small></small></div>
+      <div class="dn ok" id="ce2"><i>✓</i><span>Program scanned at the machine</span><small></small></div>
+      <div class="dn" id="ce3"><i>kg</i><span>Kilos consumed</span><small>from your ERP</small></div>
+    </div>
+    <div class="glass live" id="dnp">
+      <h6>Delivery note DN-2231 · truck 4417-KLM</h6>
+      <div class="bigT" id="dnT">2 / 6 loaded</div>
+      <div id="dnl" style="margin-top:10px"></div>
+      <div class="alert" id="dnA"><b>Not on this delivery note</b>005377 was loaded. Take it off. Missing: 005615, 005616.</div>
+      <div class="okbar" id="dnO">✓ 6 / 6 match · dispatched · stock updated</div>
+    </div>
+    <div class="tab" id="cab" style="left:110px;top:110px;transform-origin:0 0"><div class="scr">
+      <div class="tbar">Crane 1 · Cab<small><span class="gdot"></span>10:58</small></div>
+      <div class="tst bad">● Take 005377 off</div>
+      <div class="tq"><h3>005377 is not on delivery note DN-2231.</h3><p>Still missing: 005615 and 005616 · Ø25 · 14 m · C-02</p></div>
+    </div></div>
+  </section>
+
+  <!-- 7 · si duda, pregunta -->
+  <section class="layer" id="s7">
+    <div style="position:absolute;inset:0;background:rgba(12,12,12,0.74)"></div>
+    <div class="cap" style="bottom:auto;top:270px;width:700px"><div class="eyebrow">When in doubt</div><h2 class="h">Not sure? It asks. One tap<span class="c">.</span></h2><p>Most moves need nothing at all. If a doubt stays open, the supervisor sees it. Nothing is guessed.</p></div>
+    <div class="tab" id="tab" style="left:860px;top:220px"><div class="scr">
+      <div class="tbar">Crane 1 · Cab<small><span class="gdot"></span>11:06</small></div>
+      <div class="tst warn">● Confirm the cell</div>
+      <div class="tq"><h3>Did you drop 004912 in <span style="color:var(--red)">B-03</span>?</h3><p>Released right on the border with B-04.</p></div>
+      <svg viewBox="0 0 430 220" style="position:absolute;left:30px;top:290px;width:430px;height:220px">
+        <rect x="10" y="10" width="200" height="200" fill="#fff" stroke="#0c0c0c" stroke-opacity=".25" stroke-width="2"/>
+        <rect x="220" y="10" width="200" height="200" fill="#fff" stroke="#0c0c0c" stroke-opacity=".25" stroke-width="2"/>
+        <rect x="190" y="10" width="50" height="200" fill="#e0a100" fill-opacity=".2"/>
+        <text x="24" y="44" font-size="26" font-weight="700" fill="#0c0c0c">B-03</text><text x="234" y="44" font-size="26" font-weight="700" fill="#0c0c0c">B-04</text>
+        <circle cx="206" cy="120" r="13" fill="#e1112d"/><circle id="pdot" cx="206" cy="120" r="13" fill="none" stroke="#e1112d" stroke-width="3"/>
+      </svg>
+      <div style="position:absolute;right:30px;top:290px;width:380px;display:flex;flex-direction:column;gap:14px"><div class="tb2 pri" id="tbY">✓ Yes, B-03</div><div class="tb2">No, B-04</div></div>
+      <div class="tdone" id="tAd">✓ 004912 · B-03 · confirmed in one tap</div>
+    </div></div>
+    <div id="fing"></div><div id="frip"></div>
+  </section>
+
+  <!-- 8 · qué gana el cliente -->
+  <section class="layer" id="val">
+    <div class="hd"><div class="eyebrow ink">What you get</div><h2 class="h">Your stock, always up to date. Without asking anyone to scan<span class="c">.</span></h2></div>
+    <div class="vrows">
+      <div class="vr"><span class="n">01</span><div><b>Live stock by cell</b><span>What you have and where it is, on any screen.</span></div></div>
+      <div class="vr"><span class="n">02</span><div><b>Any bundle in seconds</b><span>By heat, Ø, grade, order or age. Oldest first.</span></div></div>
+      <div class="vr"><span class="n">03</span><div><b>The right material on every truck</b><span>Checked against the delivery note before it leaves.</span></div></div>
+      <div class="vr"><span class="n">04</span><div><b>Every move traced</b><span>From arrival to the machine or the customer.</span></div></div>
+    </div>
+    <div class="phone" id="ph2"><div class="scr">
+      <div class="eyebrow ink" style="font-size:13px">Supervisor</div>
+      <h4 style="margin-top:8px">Today, bay 2</h4>
+      <div class="pk"><small>Moves</small><b>412</b></div>
+      <div class="pk"><small>Recorded automatically</small><b>410</b></div>
+      <div class="pk"><small>To confirm</small><b>2 <em>· about 3 min</em></b></div>
+      <div class="ex">005090 · B-03 or B-04?<small>Check with the handheld</small></div>
+      <div class="ex">004655 · consumed in ERP, still in A-01<small>Opened yesterday</small></div>
+    </div></div>
+    <div id="valf">Start with one crane<span class="c">.</span> <span>Add forklifts when you're ready.</span></div>
+  </section>
+
+  <!-- 9 · cierre -->
+  <section class="layer" id="end">
+    <div class="center">
+      <div class="logo lg" id="e0">COMA<svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
+      <div class="eyebrow ink eb" id="e1">Rebar Stock</div>
+      <div class="h t" id="e2">Your crane already moves every bundle<span class="c">.</span> <span>Now it tells you where.</span></div>
+      <div class="meta" id="e3"><span>Pilot on one crane</span><span>4–5 months</span><span>Decision at week 7</span></div>
+      <div class="btn" id="e4">Book a site visit <span>→</span></div>
+      <div class="url" id="e5">comunicacionenmallorca.com</div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const DURATION = 126;
+  const $ = (id) => document.getElementById(id);
+  const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const p = (x, a, b) => cl((x - a) / (b - a));
+  const ease = (x) => 1 - Math.pow(1 - x, 3.2);
+  const smooth = (x) => x * x * (3 - 2 * x);
+  const eio = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const show = (el, on) => (el.style.display = on ? "" : "none");
+
+  /** Aparición: sube un poco, se enfoca y gana opacidad. */
+  function rise(el, t, at, dur = 0.8, dist = 26) {
+    const k = ease(p(t, at, at + dur));
+    el.style.opacity = k;
+    el.style.transform = `translateY(${(1 - k) * dist}px)`;
+    el.style.filter = k < 1 && k > 0 ? `blur(${(1 - k) * 8}px)` : "none";
+  }
+  /** Igual que rise, y desaparece a partir de `out`. */
+  function riseOut(el, t, at, out, dur = 0.7, dist = 26) {
+    show(el, t >= at - 0.05 && t < out + 0.55);
+    rise(el, t, at, dur, dist);
+    if (t > out) {
+      const k = ease(p(t, out, out + 0.5));
+      el.style.opacity = 1 - k;
+      el.style.transform = `translateY(${-k * 16}px)`;
+    }
+  }
+
+  // efectos de sonido: sound.py los lee de cues.json
+  const CUES = [];
+  const cue = (t, k, v = 1) => CUES.push({ t: +t.toFixed(3), k, v });
+
+  // ================================================================== PATIO 3D
+  const WORLD = $("world");
+  const t3 = (x, y, z) => `translate3d(${x}px,${y}px,${z}px)`;
+  function mk(cls, parent, css) {
+    const e = document.createElement("div");
+    if (cls) e.className = cls;
+    if (css) Object.assign(e.style, css);
+    (parent || WORLD).appendChild(e);
+    return e;
+  }
+  /** Caja 3D: (x,y,z) esquina, w a lo largo de X, d en Y, h hacia arriba. */
+  function box(parent, x, y, z, w, d, h, cls, faces = "tfblr") {
+    const b = mk("b3 " + cls, parent);
+    b.style.transform = t3(x, y, z);
+    const F = {};
+    const px = (n) => n + "px";
+    if (faces.includes("t")) F.t = mk("f ft", b, { width: px(w), height: px(d), transform: `translateZ(${h}px)` });
+    if (faces.includes("f")) F.f = mk("f ff", b, { width: px(w), height: px(h), transform: `translate3d(0,${d}px,${h}px) rotateX(-90deg)` });
+    if (faces.includes("b")) F.b = mk("f fb", b, { width: px(w), height: px(h), transform: "rotateX(90deg)" });
+    if (faces.includes("l")) F.l = mk("f fl", b, { width: px(h), height: px(d), transform: "rotateY(-90deg)" });
+    if (faces.includes("r")) F.r = mk("f fr", b, { width: px(h), height: px(d), transform: `translate3d(${w}px,0,${h}px) rotateY(90deg)` });
+    b.F = F;
+    return b;
+  }
+  function flat(parent, x, y, z, w, h, cls, html) {
+    const e = mk("flat " + (cls || ""), parent, { width: w + "px", height: h + "px", transform: t3(x, y, z) });
+    if (html) e.innerHTML = html;
+    return e;
+  }
+
+  mk("flat", WORLD, { transform: "translateZ(0)" }).id = "floor";
+  const COLX = { A: 440, B: 840, C: 1240 };
+  const ROWY = [40, 250, 460, 670];
+  const CW = 380, CH = 190, BL = 360, BD = 48, BH = 40;
+  const CELLS = {};
+  for (const c of "ABC") ROWY.forEach((y, r) => (CELLS[`${c}-0${r + 1}`] = { x: COLX[c], y, w: CW, h: CH }));
+  const CELLEL = {};
+  for (const [n, c] of Object.entries(CELLS)) CELLEL[n] = flat(WORLD, c.x, c.y, 1, c.w, c.h, "cellf", `<b>${n}</b>`);
+  flat(WORLD, 30, 40, 1, 380, 190, "zonef", "<b>STRAIGHTENER 2</b>");
+  const ZSHEAR = flat(WORLD, 30, 250, 1, 380, 190, "zonef", "<b>SHEAR LINE 1</b>");
+  flat(WORLD, 30, 460, 1, 380, 190, "zonef", "<b>REMNANTS</b>");
+  flat(WORLD, 30, 670, 1, 380, 190, "zonef", "<b>RECEPTION</b>");
+  flat(WORLD, 440, 885, 1, 1230, 190, "lane", "<b>DOCK 1</b>");
+
+  const slotPos = (cell, slot, layer) => ({ x: CELLS[cell].x + 10, y: CELLS[cell].y + 20 + slot * 52, z: layer * BH });
+  const UNITS = {};
+  let serial = 4600;
+  const STACK = { "A-01": [3, 2], "A-02": [3, 3, 1], "A-03": [3, 2, 2], "B-01": [3, 3], "B-02": [3, 2], "B-03": [3, 3, 2], "B-04": [2, 1], "C-01": [3, 3, 2], "C-02": [3, 2, 1], "C-03": [2, 1], "C-04": [3, 3] };
+  const NAMED = { "A-02/2/0": "005102", "C-01/2/0": "005611", "C-01/2/1": "005612", "C-04/1/2": "005377" };
+  function bundle(id, pos, vis) {
+    const el = box(WORLD, pos.x, pos.y, pos.z, BL, BD, BH, "bun");
+    const tags = [86, 266].map((x) => mk("ttg", el.F.f, { left: x + "px" }));
+    const an = mk("anchor", el, { transform: t3(BL / 2, BD / 2, BH + 2) });
+    UNITS[id] = { id, el, tags, an, home: pos, start: pos, moves: [], vis };
+    return UNITS[id];
+  }
+  for (const [cell, layers] of Object.entries(STACK))
+    layers.forEach((n, layer) => {
+      for (let s = 0; s < n; s++) bundle(NAMED[`${cell}/${layer}/${s}`] || String(serial++).padStart(6, "0"), slotPos(cell, s, layer));
+    });
+  // rollos en A-04
+  function coil(cx, cy) {
+    const g = mk("g3", WORLD);
+    g.style.transform = t3(cx - 44, cy - 44, 0);
+    for (let k = 0; k < 8; k++) mk("disc", g, { width: "88px", height: "88px", transform: `translateZ(${k * 9}px)` });
+    mk("disc top", g, { width: "88px", height: "88px", transform: "translateZ(70px)" });
+  }
+  [722, 814].forEach((y) => [500, 592, 684, 776].forEach((x) => coil(x, y)));
+  // máquinas
+  box(WORLD, 90, 90, 0, 150, 120, 30, "dark3");
+  box(WORLD, 270, 70, 0, 120, 150, 95, "paper3");
+  box(WORLD, 270, 70, 95, 120, 20, 8, "red3");
+  box(WORLD, 40, 300, 0, 290, 90, 46, "dark3"); // mesa de alimentación de la cizalla
+  flat(WORLD, 40, 300, 47, 290, 90, "", "").style.background = "repeating-linear-gradient(90deg, #555 0 6px, transparent 6px 22px)";
+  box(WORLD, 335, 285, 0, 70, 120, 110, "paper3");
+  box(WORLD, 335, 285, 110, 70, 16, 8, "red3");
+  box(WORLD, 50, 500, 0, 330, 120, 60, "dark3");
+  [0, 1].forEach((i) => box(WORLD, 70 + i * 160, 520, 60, 140, 40, 26, "bun short"));
+  // camión en el muelle (de entrada al principio, de salida después)
+  box(WORLD, 700, 898, 0, 800, 160, 40, "dark3", "tfr");
+  box(WORLD, 700, 898, 40, 800, 160, 30, "dark3");
+  box(WORLD, 1510, 900, 0, 130, 156, 110, "dark3");
+  box(WORLD, 1510, 900, 110, 130, 156, 5, "red3", "t");
+  const FF = 97.6;
+  bundle("004831", { x: 720, y: 957, z: 70 });
+  bundle("004832", { x: 720, y: 905, z: 70 }, (t) => t < 50);
+  bundle("004833", { x: 1100, y: 905, z: 70 }, (t) => t < 50);
+  bundle("004834", { x: 1100, y: 957, z: 70 }, (t) => t < 50);
+  bundle("005601", { x: 720, y: 905, z: 70 }, (t) => t >= 50);
+  bundle("005602", { x: 720, y: 957, z: 70 }, (t) => t >= 50);
+  bundle("005615", { x: 720, y: 1009, z: 70 }, (t) => t >= FF);
+  bundle("005616", { x: 1100, y: 1009, z: 70 }, (t) => t >= FF);
+
+  // grúa
+  [-70, 1146].forEach((y) => box(WORLD, -40, y, 300, 1780, 24, 24, "dark3"));
+  [[-40, -70], [1716, -70], [-40, 1146], [1716, 1146]].forEach(([x, y]) => box(WORLD, x, y, 0, 24, 24, 300, "dark3"));
+  const BR = mk("g3", WORLD);
+  box(BR, -24, -86, 324, 48, 1262, 32, "crane");
+  box(BR, -44, -96, 312, 88, 40, 44, "dark3");
+  box(BR, -44, 1150, 312, 88, 40, 44, "dark3");
+  box(BR, 26, 1060, 236, 74, 74, 84, "paper3"); // cabina, en el extremo del muelle
+  box(BR, 26, 1060, 320, 74, 74, 4, "red3", "t");
+  const anCab = mk("anchor", BR, { transform: t3(100, 1100, 280) });
+  const anPos = mk("anchor", BR, { transform: t3(0, 1150, 356) });
+  const TR = mk("g3", WORLD);
+  box(TR, -64, -50, 356, 128, 100, 30, "dark3");
+  box(TR, -52, -38, 386, 44, 32, 18, "red3");
+  box(TR, 10, -38, 386, 40, 32, 18, "paper3");
+  const cables = [-46, 40].map(() => mk("cable", TR, {}));
+  const HK = mk("g3", WORLD);
+  box(HK, -178, -16, 0, 356, 32, 22, "paper3");
+  const mags = [box(HK, -160, -30, -24, 96, 60, 24, "mag"), box(HK, 64, -30, -24, 96, 60, 24, "mag")];
+  box(HK, -204, -12, -36, 24, 24, 40, "red3");
+  box(HK, 180, -12, -36, 24, 24, 40, "red3");
+  const anAnt = mk("anchor", HK, { transform: t3(204, 0, -10) });
+  const anLoad = mk("anchor", HK, { transform: t3(0, 0, -62) });
+  const rings = [0, 1, 2, 3, 4, 5].map(() => mk("ring", HK, {}));
+  const SH = mk("shadow", WORLD);
+  const TILES = $("mapT");
+
+  // ------------------------------------------------------------------ guion de la grúa
+  const CK = [];
+  const MAG = [];
+  const H = 240;
+  const key = (t, x, y, z) => CK.push({ t, x, y, z });
+  const lastXYZ = () => { const k = CK[CK.length - 1]; return [k.x, k.y, k.z]; };
+  const goto = (t0, t1, x, y, z = H) => { key(t0, ...lastXYZ()); key(t1, x, y, z); cue(t0, "travel", t1 - t0); };
+  const centre = (pos) => ({ x: pos.x + BL / 2, y: pos.y + BD / 2 });
+  function lift(T, ids, dest) {
+    const us = ids.map((i) => UNITS[i]);
+    const src = us.map((u) => centre(u.home));
+    const sx = src.reduce((a, c) => a + c.x, 0) / src.length, sy = src.reduce((a, c) => a + c.y, 0) / src.length;
+    const zPick = Math.max(...us.map((u) => u.home.z)) + BH + 24;
+    const dc = dest.map(centre);
+    const dx = dc.reduce((a, c) => a + c.x, 0) / dc.length, dy = dc.reduce((a, c) => a + c.y, 0) / dc.length;
+    const zDrop = Math.max(...dest.map((d) => d.z)) + BH + 24;
+    key(T.down0, sx, sy, H);
+    key(T.down1, sx, sy, zPick);
+    key(T.up0, sx, sy, zPick);
+    key(T.up1, sx, sy, H);
+    key(T.go1, dx, dy, H);
+    key(T.dn1, dx, dy, zDrop);
+    key(T.rel + 0.25, dx, dy, zDrop);
+    key(T.rel + 1.4, dx, dy, H);
+    MAG.push([T.mag, T.rel]);
+    us.forEach((u, i) => {
+      u.moves.push({ tp: T.mag, td: T.rel, off: { x: centre(u.home).x - sx, y: centre(u.home).y - sy }, dest: dest[i] });
+      u.home = dest[i];
+    });
+    cue(T.down0, "hoist", T.down1 - T.down0);
+    cue(T.mag, "clunk");
+    cue(T.up0, "hoist", T.up1 - T.up0);
+    cue(T.up1, "travel", T.go1 - T.up1);
+    cue(T.go1, "hoist", T.dn1 - T.go1);
+    cue(T.rel, "release");
+  }
+
+  // intro: un movimiento cualquiera de fondo
+  key(0, 630, 294, H);
+  lift({ down0: 0.6, down1: 1.6, mag: 1.75, up0: 1.9, up1: 2.9, go1: 5.8, dn1: 6.8, rel: 7.0 }, ["005102"], [slotPos("B-04", 1, 1)]);
+  goto(9, 12, 900, 981);
+  // 004831: camión → A-01 (recibir)
+  lift({ down0: 27.6, down1: 29.0, mag: 29.2, up0: 29.4, up1: 30.8, go1: 35.0, dn1: 36.4, rel: 36.6 }, ["004831"], [slotPos("A-01", 2, 1)]);
+  // A-01 → C-03 (almacenar, a cámara rápida)
+  goto(39.5, 43.6, 630, 188);
+  lift({ down0: 44.0, down1: 44.6, mag: 44.7, up0: 44.8, up1: 45.4, go1: 47.0, dn1: 47.6, rel: 47.75 }, ["004831"], [slotPos("C-03", 1, 1)]);
+  // C-03 → mesa de la cizalla (usar)
+  lift({ down0: 69.8, down1: 70.8, mag: 71.0, up0: 71.2, up1: 72.2, go1: 75.4, dn1: 76.4, rel: 76.6 }, ["004831"], [{ x: 10, y: 321, z: 46 }]);
+  // expedición: dos paquetes en una elevación
+  goto(78.2, 81.6, 1430, 110);
+  lift({ down0: 81.8, down1: 82.8, mag: 83.0, up0: 83.2, up1: 84.2, go1: 86.4, dn1: 87.4, rel: 87.6 }, ["005611", "005612"], [{ x: 1100, y: 905, z: 70 }, { x: 1100, y: 957, z: 70 }]);
+  // el paquete equivocado
+  goto(89.2, 90.4, 1430, 818);
+  lift({ down0: 90.5, down1: 91.3, mag: 91.5, up0: 91.6, up1: 92.4, go1: 94.0, dn1: 94.8, rel: 95.0 }, ["005377"], [{ x: 720, y: 1009, z: 70 }]);
+  UNITS["005377"].moves.push({ tp: FF, td: FF, dest: slotPos("C-04", 2, 1) });
+  key(FF - 0.01, ...lastXYZ());
+  key(FF, 1280, 700, H);
+
+  function crane(t) {
+    if (t <= CK[0].t) return CK[0];
+    for (let i = 1; i < CK.length; i++) {
+      const a = CK[i - 1], b = CK[i];
+      if (t <= b.t) {
+        const k = b.t === a.t ? 1 : eio(p(t, a.t, b.t));
+        return { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k), z: lerp(a.z, b.z, k) };
+      }
+    }
+    return CK[CK.length - 1];
+  }
+  const magOn = (t) => MAG.some(([a, b]) => t >= a && t < b);
+  const carried = (u, t) => u.moves.some((m) => t >= m.tp && t < m.td);
+  function unitPos(u, t, c) {
+    let cur = u.start;
+    for (const m of u.moves) {
+      if (t < m.tp) return cur;
+      if (t < m.td) return { x: c.x + m.off.x - BL / 2, y: c.y + m.off.y - BD / 2, z: c.z - 24 - BH };
+      cur = m.dest;
+    }
+    return cur;
+  }
+  const MOVING = Object.values(UNITS).filter((u) => u.moves.length);
+  const VIS = Object.values(UNITS).filter((u) => u.vis);
+
+  // ------------------------------------------------------------------ cámara
+  const RX = 1000 / 1700; // escala del mapa de la web
+  const CAM = [
+    { t: 0, fx: 900, fy: 560, fz: 0, s: 0.62, ax: 52, az: -30, sx: 960, sy: 660 },
+    { t: 8.6, fx: 880, fy: 560, fz: 0, s: 0.68, ax: 50, az: -24, sx: 960, sy: 660 },
+    { t: 12.6, fx: 1000, fy: 860, fz: 60, s: 0.92, ax: 50, az: -24, sx: 1180, sy: 430 },
+    { t: 21.0, fx: 1000, fy: 860, fz: 60, s: 0.98, ax: 50, az: -26, sx: 1180, sy: 430 },
+    { t: 26.4, fx: 760, fy: 600, fz: 40, s: 0.8, ax: 50, az: -22, sx: 780, sy: 470 },
+    { t: 36.0, fx: 680, fy: 470, fz: 40, s: 0.86, ax: 50, az: -22, sx: 780, sy: 470 },
+    { t: 41.0, fx: 820, fy: 400, fz: 40, s: 0.8, ax: 50, az: -22, sx: 780, sy: 470 },
+    { t: 46.0, fx: 1000, fy: 420, fz: 40, s: 0.8, ax: 50, az: -22, sx: 780, sy: 470 },
+    { t: 49.6, fx: 1060, fy: 480, fz: 20, s: 0.78, ax: 48, az: -20, sx: 820, sy: 520 },
+    { t: 53.4, fx: 850, fy: 550, fz: 0, s: RX, ax: 0, az: 0, sx: 880, sy: 653.5 },
+    { t: 67.6, fx: 850, fy: 550, fz: 0, s: RX, ax: 0, az: 0, sx: 880, sy: 653.5 },
+    { t: 70.0, fx: 820, fy: 470, fz: 40, s: 0.7, ax: 50, az: -22, sx: 640, sy: 470 },
+    { t: 76.6, fx: 500, fy: 420, fz: 40, s: 0.86, ax: 50, az: -22, sx: 700, sy: 470 },
+    { t: 79.0, fx: 520, fy: 430, fz: 40, s: 0.86, ax: 50, az: -22, sx: 700, sy: 470 },
+    { t: 82.0, fx: 1200, fy: 440, fz: 40, s: 0.84, ax: 48, az: -22, sx: 760, sy: 620 },
+    { t: 88.0, fx: 1150, fy: 780, fz: 40, s: 0.9, ax: 48, az: -22, sx: 780, sy: 430 },
+    { t: 95.0, fx: 1100, fy: 840, fz: 40, s: 0.96, ax: 48, az: -20, sx: 780, sy: 400 },
+    { t: 110, fx: 1080, fy: 840, fz: 40, s: 1.02, ax: 47, az: -19, sx: 780, sy: 400 },
+  ];
+  function cam(t) {
+    if (t <= CAM[0].t) return CAM[0];
+    for (let i = 1; i < CAM.length; i++) {
+      const a = CAM[i - 1], b = CAM[i];
+      if (t <= b.t) {
+        const k = eio(p(t, a.t, b.t));
+        const o = {};
+        for (const kk of ["fx", "fy", "fz", "ax", "az", "sx", "sy"]) o[kk] = lerp(a[kk], b[kk], k);
+        o.s = Math.exp(lerp(Math.log(a.s), Math.log(b.s), k));
+        return o;
+      }
+    }
+    return CAM[CAM.length - 1];
+  }
+
+  function renderWorld(t, o3d) {
+    const c = crane(t);
+    BR.style.transform = t3(c.x, 0, 0);
+    TR.style.transform = t3(c.x, c.y, 0);
+    HK.style.transform = t3(c.x, c.y, c.z);
+    const L = 356 - (c.z + 22);
+    cables.forEach((e, i) => { e.style.height = L + "px"; e.style.transform = `translate3d(${[-46, 40][i]}px,0,356px) rotateX(-90deg)`; });
+    const on = magOn(t);
+    mags.forEach((m) => m.classList.toggle("on", on));
+    SH.style.transform = t3(c.x - 190, c.y - 55, 2);
+    SH.style.opacity = (0.25 + 0.45 * (1 - c.z / 260)) * o3d;
+    for (const u of MOVING) { const q = unitPos(u, t, c); u.el.style.transform = t3(q.x, q.y, q.z); }
+    for (const u of VIS) show(u.el, u.vis(t));
+    rings.forEach((r, i) => {
+      const ph = (t * 1.25 + (i % 3) / 3) % 1;
+      r.style.opacity = (on ? 1 : 0) * (1 - ph) * 0.9 * o3d;
+      r.style.transform = t3(i < 3 ? -192 : 192, 0, -30) + ` scale(${0.25 + ph * 1.1})`;
+    });
+    for (const u of MOVING) { const k = carried(u, t); u.tags.forEach((g) => g.classList.toggle("read", k)); u.el.classList.toggle("hot", k); }
+    // la etiqueta nueva de 004831 parpadea al llegar al paquete
+    if (t > 17 && t < 27) UNITS["004831"].tags.forEach((g) => g.classList.toggle("read", (t * 1.5) % 1 < 0.6));
+    CELLEL["A-01"].classList.toggle("dst", t > 36.7 && t < 43.5);
+    CELLEL["C-03"].classList.toggle("dst", t > 47.8 && t < 51);
+    ZSHEAR.classList.toggle("dst", t > 76.7 && t < 80);
+    CELLEL["C-01"].classList.toggle("src", t > 81.6 && t < 83.2);
+    CELLEL["C-04"].classList.toggle("src", t > 90.2 && t < 91.6);
+    WORLD.style.setProperty("--o3d", o3d);
+  }
+
+  // ================================================================== MAPA (web y proyección)
+  const COUNT = { "A-01": [6, 12.5], "A-02": [6, 14.8], "A-03": [7, 15.2], "A-04": [8, 19.2], "B-01": [6, 13.1], "B-02": [5, 10.6], "B-03": [8, 19.6], "B-04": [4, 8.2], "C-01": [8, 17.9], "C-02": [6, 13.6], "C-03": [4, 8.6], "C-04": [6, 12.9] };
+  function mapSVG(idp, pin) {
+    let s = `<svg viewBox="0 0 1700 1100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="1700" height="1100" fill="#faf8f4"/>`;
+    s += `<g stroke="#0c0c0c" stroke-opacity=".05">${Array.from({ length: 34 }, (_, i) => `<line x1="${i * 50}" y1="0" x2="${i * 50}" y2="1100"/>`).join("")}${Array.from({ length: 22 }, (_, i) => `<line x1="0" y1="${i * 50}" x2="1700" y2="${i * 50}"/>`).join("")}</g>`;
+    [["STRAIGHTENER 2", 40], ["SHEAR LINE 1", 250], ["REMNANTS", 460], ["RECEPTION", 670]].forEach(([n, y]) => (s += `<rect x="30" y="${y}" width="380" height="190" fill="#e1112d" fill-opacity=".05" stroke="#e1112d" stroke-opacity=".35" stroke-width="3"/><text x="48" y="${y + 40}" font-size="26" font-weight="700" letter-spacing="3" fill="#0c0c0c" fill-opacity=".55">${n}</text>`));
+    s += `<rect x="440" y="885" width="1230" height="190" fill="#0c0c0c" fill-opacity=".03" stroke="#0c0c0c" stroke-opacity=".2" stroke-width="3" stroke-dasharray="14 10"/><text x="1640" y="1055" text-anchor="end" font-size="26" font-weight="700" letter-spacing="3" fill="#0c0c0c" fill-opacity=".5">DOCK 1</text>`;
+    for (const [n, c] of Object.entries(CELLS)) {
+      s += `<g id="${idp}${n}"><rect x="${c.x}" y="${c.y}" width="${c.w}" height="${c.h}" fill="#fff" stroke="#0c0c0c" stroke-opacity=".22" stroke-width="3"/><rect x="${c.x}" y="${c.y}" width="10" height="${c.h}" fill="#2f8f5b"/>`;
+      s += `<text x="${c.x + 30}" y="${c.y + 52}" font-size="38" font-weight="750" fill="#0c0c0c">${n}</text><text x="${c.x + 30}" y="${c.y + 100}" font-size="27" fill="#5d5851">${COUNT[n][0]} units · ${COUNT[n][1]} t</text>`;
+      s += `<rect class="hl" x="${c.x - 6}" y="${c.y - 6}" width="${c.w + 12}" height="${c.h + 12}" fill="none" stroke="#e1112d" stroke-width="8" opacity="0"/></g>`;
+    }
+    if (pin) s += `<g transform="translate(1430,580)"><line x1="0" y1="0" x2="0" y2="-70" stroke="#0c0c0c" stroke-width="3"/><circle r="14" fill="#e1112d"/><circle id="${idp}pr" r="14" fill="none" stroke="#e1112d" stroke-width="4"/><rect x="-6" y="-150" width="230" height="80" fill="#0c0c0c"/><rect x="-6" y="-150" width="8" height="80" fill="#e1112d"/><text x="18" y="-96" font-size="40" font-weight="800" fill="#fff">004831</text></g>`;
+    return s + `</svg>`;
+  }
+  $("map2").innerHTML = mapSVG("m2", true);
+  TILES.innerHTML = mapSVG("mt", false);
+
+  // ================================================================== FICHAS ancladas al 3D
+  const CHIP = mk("chip", $("chips"));
+  CHIP.innerHTML = '<div class="stem"></div><div class="dot"></div><div class="card"><b id="chB">004831</b><span id="chS"></span><em id="chE"><i></i><span></span></em></div>';
+  const QPINS = ["004600", "004606", "004615", "004624", "004633", "004648", "004655"].filter((id) => UNITS[id]).map((id) => ({ u: UNITS[id], el: mk("qpin", $("chips")) }));
+  QPINS.forEach((q) => (q.el.textContent = "?"));
+  function place(el, anchor) {
+    const r = anchor.getBoundingClientRect();
+    el.style.transform = `translate(${r.left + r.width / 2}px,${r.top + r.height / 2}px)`;
+  }
+  const SPEC = "Ø16 · B500SD · 12 m · 2,140 kg";
+  const GRN = "#2f8f5b", RED = "#e1112d";
+  /** Qué dice la ficha en cada momento (004831 y, en expedición, la carga). */
+  function chipState(t) {
+    const u = UNITS["004831"].an;
+    if (t < 16.6) return null;
+    if (t < 29.2) return { an: u, b: "004831", s: SPEC, e: ["On the truck", "#5d5851"] };
+    if (t < 36.7) return { an: u, b: "004831", s: SPEC, e: [t < 30.6 ? "Tag read · on the crane" : "Moving with crane 1", RED] };
+    if (t < 44.7) return { an: u, b: "004831", s: SPEC, e: ["✓ In stock · A-01", GRN] };
+    if (t < 47.8) return { an: u, b: "004831", s: SPEC, e: ["Moving with crane 1", RED] };
+    if (t < 54.2) return { an: u, b: "004831", s: SPEC, e: ["✓ In stock · C-03", GRN] };
+    if (t < 68.4) return null;
+    if (t < 76.7) return { an: u, b: "004831", s: SPEC, e: t < 71 ? ["✓ In stock · C-03", GRN] : ["Moving to Shear line 1", RED] };
+    if (t < 80.4) return { an: u, b: "004831", s: "Order 26-1187 · Shear line 1", e: ["● Open · in use", RED] };
+    if (t > 83.0 && t < 89) return { an: t < 87.6 ? anLoad : UNITS["005611"].an, b: "005611 + 005612", s: "2 bundles · one lift · DN-2231", e: t < 87.6 ? ["Both identified", RED] : ["✓ On the truck", GRN] };
+    if (t > 91.5 && t < 95.5) return { an: t < 95 ? anLoad : UNITS["005377"].an, b: "005377", s: "Ø16 · B500SD · 12 m", e: t < 95 ? ["Moving with crane 1", RED] : ["✕ Not on DN-2231", RED] };
+    return null;
+  }
+  function renderChips(t, yard) {
+    const st = yard ? chipState(t) : null;
+    CHIP.style.display = st ? "" : "none";
+    if (st) {
+      place(CHIP, st.an);
+      $("chB").textContent = st.b;
+      $("chS").textContent = st.s;
+      $("chE").style.color = st.e[1];
+      $("chE").querySelector("span").textContent = st.e[0];
+      let o = 1;
+      if (t < 17.4) o = ease(p(t, 16.6, 17.4));
+      if (t > 53.4 && t < 54.2) o = 1 - p(t, 53.4, 54.2);
+      if (t > 68.4 && t < 69.2) o = p(t, 68.4, 69.2);
+      CHIP.style.opacity = o;
+    }
+    QPINS.forEach((q, i) => {
+      const a = 1.4 + i * 0.35;
+      const on = yard && t > a && t < 8.6;
+      q.el.style.display = on ? "" : "none";
+      if (on) {
+        place(q.el, q.u.an);
+        const k = ease(p(t, a, a + 0.4));
+        q.el.style.opacity = k * (1 - p(t, 8.0, 8.5));
+        q.el.style.transform += ` translateY(${Math.sin(t * 3 + i) * 4}px) scale(${0.4 + 0.6 * k})`;
+      }
+    });
+  }
+
+  // ================================================================== ESCENAS
+  const scenes = [];
+  const S = (id, a, z, upd) => scenes.push({ el: $(id), a, z, upd });
+
+  // 1 · hoy
+  S("s1", 0, 8.6, (t) => {
+    rise($("s1a"), t, 0.3, 0.9);
+    rise($("s1b"), t, 3.6, 0.8);
+  });
+  cue(0.3, "swish"); for (let i = 0; i < 7; i++) cue(1.4 + i * 0.35, "pop", 0.45); cue(3.6, "pop");
+
+  // 2 · logo
+  S("s2", 8.4, 12.9, (t) => {
+    const k = ease(p(t, 0.2, 1.3));
+    $("s2w").style.opacity = k;
+    $("s2w").style.letterSpacing = `${lerp(0.12, -0.02, k)}em`;
+    $("s2w").style.filter = k < 1 ? `blur(${(1 - k) * 10}px)` : "none";
+    const ct = t - 1.0;
+    const y = ct < 0 ? -1 : -Math.exp(-ct * 6) * Math.cos(ct * 14);
+    $("s2c").style.opacity = ct < 0 ? 0 : cl(ct * 6);
+    $("s2c").style.transform = `translateY(${y * 120}px)`;
+    rise($("s2eb"), t, 1.6, 0.8, 14);
+    rise($("s2t"), t, 2.1, 0.9, 16);
+  });
+  cue(8.6, "whoosh"); cue(9.45, "drop"); cue(10.0, "chime");
+
+  // 3 · qué se añade
+  const CO = [
+    { el: "co1", an: () => anAnt, at: 18.6, x: 1460, y: 150 },
+    { el: "co2", an: () => anPos, at: 19.8, x: 1460, y: 330 },
+    { el: "co3", an: () => anCab, at: 21.0, x: 1460, y: 510 },
+  ];
+  CO.forEach((c) => Object.assign($(c.el).style, { left: c.x + "px", top: c.y + "px" }));
+  S("s3", 12.6, 26.2, (t) => {
+    const T = t + 12.6;
+    riseOut($("c3a"), T, 13.2, 17.6, 0.8);
+    riseOut($("c3b"), T, 18.0, 25.6, 0.8);
+    // la etiqueta sale de la impresora y vuela hasta el paquete del camión
+    const lb = $("lbl");
+    $("lblp").style.height = `${ease(p(T, 13.4, 15.0)) * 260}px`;
+    const fk = eio(p(T, 15.8, 16.8));
+    if (fk > 0) {
+      const r = UNITS["004831"].tags[0].getBoundingClientRect();
+      const tx = r.left + r.width / 2 - 150, ty = r.top + r.height / 2 - 150;
+      lb.style.transform = `translate(${tx * fk}px,${ty * fk}px) scale(${1 - fk * 0.97})`;
+      lb.style.opacity = (T < 13.2 ? 0 : 1) * (1 - p(T, 16.5, 16.8));
+    } else {
+      lb.style.transform = "";
+      lb.style.opacity = T < 13.2 ? 0 : ease(p(T, 13.2, 13.5));
+    }
+    let svg = "";
+    CO.forEach((c) => {
+      riseOut($(c.el), T, c.at, 25.4, 0.6, 14);
+      const k = ease(p(T, c.at, c.at + 0.6)) * (1 - p(T, 25.4, 25.9));
+      if (k <= 0) return;
+      const r = c.an().getBoundingClientRect();
+      const ax = r.left + r.width / 2, ay = r.top + r.height / 2;
+      svg += `<line x1="${ax}" y1="${ay}" x2="${lerp(ax, c.x - 2, k)}" y2="${lerp(ay, c.y + 24, k)}" stroke="#efece4" stroke-opacity="${0.7 * k}" stroke-width="2"/><circle cx="${ax}" cy="${ay}" r="${7 + 4 * Math.sin(T * 5)}" fill="none" stroke="#e1112d" stroke-width="3" opacity="${k}"/><circle cx="${ax}" cy="${ay}" r="4" fill="#e1112d" opacity="${k}"/>`;
+    });
+    $("ov").innerHTML = svg;
+  });
+  cue(12.7, "whoosh"); cue(13.4, "print"); cue(14.1, "print"); cue(15.8, "swish"); cue(16.75, "pop"); CO.forEach((c) => cue(c.at, "pop", 0.7));
+
+  // 4 · recibir + almacenar
+  const C4 = [["c4a", 27.0, 30.6], ["c4b", 30.8, 36.2], ["c4c", 36.4, 38.4], ["c4d", 38.6, 42.9], ["c4e", 43.6, 50.0]];
+  S("s4", 26.2, 50.4, (t) => {
+    const T = t + 26.2;
+    C4.forEach(([id, a, z]) => riseOut($(id), T, a, z, 0.6, 20));
+    riseOut($("live"), T, 26.8, 42.9, 0.8, 30);
+    const step = T < 29.2 ? -1 : T < 30.8 ? 0 : T < 36.4 ? 1 : T < 36.8 ? 2 : 3;
+    [0, 1, 2].forEach((i) => ($("st" + i).className = i === step ? "on" : i < step ? "done" : ""));
+    show($("rec"), T > 36.8);
+    $("rec").style.opacity = ease(p(T, 36.8, 37.3));
+    riseOut($("fd1"), T, 43.6, 49.6, 0.8, 30);
+    $("fl2").style.opacity = T > 47.8 ? 1 : 0;
+  });
+  cue(37.0, "verified"); cue(43.5, "ffwd"); cue(47.9, "notif");
+
+  // 5 · encontrar (web)
+  S("app", 51.6, 68.0, (t) => {
+    const T = t + 51.6;
+    // el marco aparece alrededor del patio aplanado y se va antes de volver al 3D
+    const fk = ease(p(T, 51.8, 53.4)) * (1 - p(T, 66.4, 67.2));
+    document.querySelectorAll("#app .ch").forEach((e) => (e.style.opacity = fk));
+    $("map2").style.opacity = p(T, 53.2, 53.6) * (1 - p(T, 67.4, 67.9));
+    $("m2pr").setAttribute("r", 14 + ((T * 1.4) % 1) * 30);
+    $("m2pr").setAttribute("stroke-opacity", 1 - ((T * 1.4) % 1));
+    // búsqueda
+    const q = "Ø16 · 12 m";
+    const qn = Math.floor(cl((T - 55.2) / 0.12, 0, q.length));
+    $("srch").classList.toggle("on", T > 54.9 && T < 66.4);
+    $("sq").textContent = T > 55.1 ? q.slice(0, qn) : "Search heat, Ø, grade, order…";
+    $("sqc").style.display = T > 54.9 && T < 57 && (T * 2) % 1 < 0.6 ? "" : "none";
+    $("ttl").textContent = T > 56.6 ? "Search" : "Bay 2 · Live";
+    $("nav0").className = T > 56.6 ? "" : "on";
+    $("nav1").className = T > 56.6 ? "on" : "";
+    show($("res2"), T > 56.6 && T < 66.4);
+    rise($("res2"), T, 56.6, 0.6, 20);
+    ["C-03", "A-03", "B-02", "B-03"].forEach((n, i) => document.querySelector(`#m2${n} .hl`).setAttribute("opacity", T > 56.9 + i * 0.12 && T < 66.4 ? 0.5 + 0.5 * Math.sin(T * 6) : 0));
+    $("rr0").classList.toggle("sel", T > 58.6);
+    show($("feed"), T < 58.9);
+    show($("drawer"), T > 58.9 && T < 66.6);
+    $("drawer").style.transform = `translateX(${(1 - ease(p(T, 58.9, 59.7))) * 600}px)`;
+    $("drawer").style.opacity = 1 - p(T, 66.0, 66.6);
+    // el mismo paquete en el móvil
+    show($("ph1"), T > 62.6 && T < 66.6);
+    const pk = ease(p(T, 62.6, 63.6));
+    $("ph1").style.transform = `translateY(${(1 - pk) * 900}px) rotate(${(1 - pk) * 6}deg)`;
+    $("ph1").style.opacity = 1 - p(T, 66.0, 66.6);
+    // cursor: clic en 004831 (última fila de la tabla)
+    const path = [[57.2, 1900, 900], [58.4, 560, 580], [58.7, 560, 580], [60.4, 1600, 1000]];
+    let px = 1900, py = 900;
+    for (let i = 1; i < path.length; i++) if (T >= path[i - 1][0]) { const k = eio(p(T, path[i - 1][0], path[i][0])); px = lerp(path[i - 1][1], path[i][1], k); py = lerp(path[i - 1][2], path[i][2], k); }
+    $("cursor").style.transform = `translate(${px}px,${py}px)`;
+    $("cursor").style.opacity = T > 57.2 && T < 60.4 ? 1 : 0;
+    const rp = p(T, 58.45, 59.0);
+    $("cursor").querySelector(".rip").style.opacity = rp > 0 && rp < 1 ? 1 - rp : 0;
+    $("cursor").querySelector(".rip").style.transform = `scale(${0.5 + rp * 1.4})`;
+  });
+  cue(51.0, "whoosh"); for (let i = 0; i < 10; i++) cue(55.2 + i * 0.12, "key", 0.8); cue(56.6, "pop"); cue(58.5, "click"); cue(58.9, "swish"); cue(62.6, "swish"); cue(63.4, "notif"); cue(66.6, "whoosh");
+
+  // 6 · usar + expedir
+  const DN = [["005601", "Ø12 · 12 m"], ["005602", "Ø12 · 12 m"], ["005611", "Ø20 · 12 m"], ["005612", "Ø20 · 12 m"], ["005615", "Ø25 · 14 m"], ["005616", "Ø25 · 14 m"]];
+  S("s6", 68.6, 101.4, (t) => {
+    const T = t + 68.6;
+    riseOut($("c6a"), T, 70.0, 79.8, 0.8);
+    riseOut($("c6b"), T, 81.0, 94.9, 0.8);
+    riseOut($("c6c"), T, 95.1, 97.4, 0.6);
+    riseOut($("c6d"), T, 97.8, 101.4, 0.6);
+    riseOut($("cons"), T, 70.4, 79.8, 0.8, 30);
+    $("consT").innerHTML = T < 76.7 ? "Moving to Shear line 1…" : "<span style='color:#ff5a6e'>● Open</span> · in use";
+    $("ce1").style.opacity = T > 76.7 ? 1 : 0.15;
+    $("ce2").style.opacity = T > 77.6 ? 1 : 0.15;
+    $("ce3").style.opacity = T > 78.4 ? 1 : 0.15;
+    riseOut($("dnp"), T, 81.4, 101.4, 0.8, 30);
+    const loaded = (id) => (id === "005601" || id === "005602" ? true : id === "005611" || id === "005612" ? T > 87.7 : T > FF + 0.3);
+    const rows = DN.map(([id, d]) => `<div class="dn ${loaded(id) ? "ok" : ""}"><i>${loaded(id) ? "✓" : ""}</i><span><b>${id}</b> <small>${d}</small></span><small>${loaded(id) ? "on truck" : "pending"}</small></div>`);
+    const wrong = T > 95.0 && T < FF;
+    if (wrong) rows.push(`<div class="dn bad"><i>!</i><span><b>005377</b> <small>Ø16 · 12 m</small></span><small>not on DN</small></div>`);
+    $("dnl").innerHTML = rows.join("");
+    $("dnT").innerHTML = T > FF + 0.3 ? "<span style='color:#5fe08f'>6 / 6</span> loaded" : `${DN.filter(([id]) => loaded(id)).length} / 6 loaded`;
+    show($("dnA"), wrong);
+    show($("dnO"), T > FF + 0.6);
+    // la pantalla de la cabina con el aviso
+    show($("cab"), T > 95.2 && T < FF);
+    const ck = ease(p(T, 95.2, 95.8));
+    $("cab").style.transform = `scale(${0.6 * (0.85 + 0.15 * ck)})`;
+    $("cab").style.opacity = ck * (1 - p(T, FF - 0.3, FF));
+  });
+  cue(68.6, "whoosh"); cue(76.8, "verified", 0.8); cue(77.6, "tick"); cue(78.4, "tick"); cue(81.4, "pop"); cue(87.8, "verified", 0.8); cue(95.1, "alert"); cue(FF - 0.4, "ffwd"); cue(FF + 0.6, "verified");
+
+  // 7 · si duda, pregunta
+  S("s7", 101.2, 110.0, (t) => {
+    const T = t + 101.2;
+    rise(document.querySelector("#s7 .cap"), T, 101.6, 0.8);
+    const k = ease(p(T, 101.3, 102.3));
+    $("tab").style.transform = `translateY(${(1 - k) * 160}px) scale(${0.92 + 0.08 * k})`;
+    $("tab").style.opacity = k;
+    $("pdot").setAttribute("r", 13 + ((T * 1.5) % 1) * 22);
+    $("pdot").setAttribute("stroke-opacity", 1 - ((T * 1.5) % 1));
+    $("tAd").style.opacity = ease(p(T, 105.6, 106.0));
+    $("tbY").style.transform = T > 105.2 && T < 105.45 ? "scale(.96)" : "";
+    const fpath = [[103.8, 1900, 1160], [105.2, 1640, 630], [106.6, 1900, 1160]];
+    let fx = 1900, fy = 1160;
+    for (let i = 1; i < fpath.length; i++) if (T >= fpath[i - 1][0]) { const kk = eio(p(T, fpath[i - 1][0], fpath[i][0])); fx = lerp(fpath[i - 1][1], fpath[i][1], kk); fy = lerp(fpath[i - 1][2], fpath[i][2], kk); }
+    const r1 = p(T, 105.2, 105.8);
+    $("fing").style.transform = `translate(${fx}px,${fy}px)`;
+    $("frip").style.transform = `translate(${fx}px,${fy}px) scale(${1 + r1 * 1.4})`;
+    $("fing").style.opacity = T > 103.8 && T < 106.6 ? 1 : 0;
+    $("frip").style.opacity = r1 > 0 && r1 < 1 ? 1 - r1 : 0;
+  });
+  cue(101.3, "swish"); cue(102.3, "ask"); cue(105.25, "tap"); cue(105.6, "verified", 0.7);
+
+  // 8 · valor
+  S("val", 109.8, 120.0, (t) => {
+    rise(document.querySelector("#val .hd"), t, 0.3, 0.9);
+    document.querySelectorAll(".vr").forEach((r, i) => rise(r, t, 1.4 + i * 0.5, 0.7, 20));
+    rise($("ph2"), t, 1.0, 1.0, 60);
+    rise($("valf"), t, 4.4, 0.8, 14);
+  });
+  cue(109.9, "whoosh"); [111.2, 111.7, 112.2, 112.7].forEach((x) => cue(x, "pop", 0.6)); cue(114.2, "pop", 0.6);
+
+  // 9 · cierre
+  S("end", 119.8, 999, (t) => {
+    rise($("e0"), t, 0.2, 1.0, 20);
+    rise($("e1"), t, 0.6, 0.8, 14);
+    rise($("e2"), t, 1.1, 0.9, 18);
+    rise($("e3"), t, 1.8, 0.8, 14);
+    rise($("e4"), t, 2.3, 0.8, 14);
+    rise($("e5"), t, 2.7, 0.8, 12);
+  });
+  cue(119.9, "whoosh"); cue(120.2, "chime");
+
+  // ambiente de nave mientras se ve el patio
+  [[0, 8.6], [12.6, 53.8], [66.8, 110]].forEach(([a, b]) => cue(a, "amb", b - a));
+
+  // ================================================================== RENDER
+  const LIFE = [...document.querySelectorAll("#life span")];
+  function render(t) {
+    const yard = t < 8.7 || (t >= 12.5 && t < 54) || (t >= 66.7 && t < 110.4);
+    let dk = 1;
+    if (t >= 50 && t < 67) dk = 1 - smooth(p(t, 50.6, 53.0));
+    if (t >= 67) dk = smooth(p(t, 67.4, 69.4));
+    if (t >= 109.6) dk = 1 - smooth(p(t, 109.6, 110.4));
+    $("dark").style.opacity = dk;
+    $("vp").style.display = $("vp2").style.display = yard ? "" : "none";
+    if (yard) {
+      const c = cam(t);
+      $("world").style.transform = `translate3d(${c.sx}px,${c.sy}px,0) rotateX(${c.ax}deg) rotateZ(${c.az}deg) scale3d(${c.s},${c.s},${c.s}) translate3d(${-c.fx}px,${-c.fy}px,${-c.fz}px)`;
+      $("mapT").style.transform = `translate3d(${c.sx}px,${c.sy}px,0) rotateX(${c.ax}deg) rotateZ(${c.az}deg) scale(${c.s}) translate(${-c.fx}px,${-c.fy}px)`;
+      // del 3D al mapa y vuelta: se apaga el relieve y aparece el plano
+      let flatK = 0, tileK = 0;
+      if (t >= 50 && t < 54) { flatK = smooth(p(t, 50.8, 52.6)); tileK = smooth(p(t, 51.8, 53.3)); }
+      if (t >= 66.7 && t < 71) { flatK = 1 - smooth(p(t, 68.0, 69.6)); tileK = 1 - smooth(p(t, 67.6, 68.4)); }
+      TILES.style.opacity = tileK;
+      let vo = 1;
+      if (t < 8.7) vo = 1 - smooth(p(t, 8.3, 8.7));
+      if (t >= 12.5 && t < 13.2) vo = smooth(p(t, 12.5, 13.2));
+      if (t >= 53.4 && t < 54) vo = 1 - smooth(p(t, 53.4, 54));
+      if (t >= 66.7 && t < 67.4) vo = smooth(p(t, 66.8, 67.4));
+      if (t >= 109.6) vo = 1 - smooth(p(t, 109.6, 110.4));
+      $("vp").style.opacity = $("vp2").style.opacity = vo;
+      $("vp").style.zIndex = (t >= 49.5 && t < 54) || (t >= 66.5 && t < 70) ? 5 : "";
+      renderWorld(t, 1 - flatK);
+    }
+    $("ov").style.display = t >= 17 && t < 26.2 ? "" : "none";
+    for (const s of scenes) {
+      const on = t >= s.a && t < s.z;
+      s.el.style.display = on ? "block" : "none";
+      if (!on) continue;
+      const kin = s.a === 0 ? 1 : smooth(p(t, s.a, s.a + 0.45));
+      const kout = s.z > DURATION ? 1 : smooth(p(s.z - t, 0, 0.45));
+      s.el.style.opacity = Math.min(kin, kout);
+      s.upd(t - s.a);
+    }
+    renderChips(t, yard);
+    // recorrido del paquete, arriba
+    const stage = t < 43.6 ? 0 : t < 50.4 ? 1 : t < 68.6 ? 2 : t < 80.6 ? 3 : 4;
+    LIFE.forEach((s, i) => (s.className = i === stage ? "on" : i < stage ? "done" : ""));
+    $("life").style.opacity = Math.min(p(t, 26.4, 27.2), 1 - p(t, 101.0, 101.6));
+    const ffa = t > 43.4 && t < 47.6 ? Math.min(p(t, 43.4, 43.9), 1 - p(t, 47.1, 47.6)) : t > FF - 0.4 && t < FF + 1.4 ? Math.sin(p(t, FF - 0.4, FF + 1.4) * Math.PI) : 0;
+    $("ff").style.opacity = ffa;
+    $("ff").textContent = t < 60 ? "⏩ Later that day" : "⏩ 4 minutes later";
+  }
+  window.render = render;
+  window.DURATION = DURATION;
+  window.CUES = CUES;
+
+  if (!navigator.webdriver) {
+    const t0 = performance.now();
+    const loop = () => { render(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); };
+    document.fonts.ready.then(loop);
+  } else {
+    render(0);
+  }
+</script>
+</body>
+</html>
