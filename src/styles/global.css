@@ -3,8 +3,8 @@
 
 /* ------------------------------------------------------------------ tokens */
 :root {
-  --paper: #efece4;
-  --paper-2: #e4dfd3;
+  --paper: #f6f1e8;
+  --paper-2: #ece4d6;
   --ink: #0c0c0c;
   --ink-2: #1a1a1a;
   --muted: #5d5851;
@@ -13,7 +13,7 @@
   --red-ink: #b80d24;
   --night: #0c0c0c;
   --night-2: #161616;
-  --night-line: rgb(239 236 228 / 0.18);
+  --night-line: rgb(246 241 232 / 0.18);
   --night-muted: #a8a39b;
 
   --font:

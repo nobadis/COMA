@@ -19,7 +19,7 @@ const comma =
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face{font-family:A;src:url(data:font/woff2;base64,${font}) format("woff2");font-weight:100 900;font-stretch:62% 125%}
 *{margin:0;box-sizing:border-box}
-body{width:1200px;height:630px;background:#f3f0ea;font-family:A;color:#121212;position:relative;overflow:hidden;padding:64px 72px;display:flex;flex-direction:column;justify-content:space-between}
+body{width:1200px;height:630px;background:#f6f1e8;font-family:A;color:#121212;position:relative;overflow:hidden;padding:64px 72px;display:flex;flex-direction:column;justify-content:space-between}
 .glow{position:absolute;width:900px;height:900px;right:-380px;top:-420px;border-radius:50%;background:radial-gradient(closest-side,rgba(225,17,45,.28),rgba(225,17,45,0) 70%)}
 .c{position:absolute;right:70px;top:70px}
 .logo{font-variation-settings:"wdth" 125;font-weight:700;font-size:44px;letter-spacing:-.02em}
@@ -27,7 +27,7 @@ body{width:1200px;height:630px;background:#f3f0ea;font-family:A;color:#121212;po
 h1{font-variation-settings:"wdth" 125;font-weight:600;font-size:92px;line-height:.92;letter-spacing:-.045em;max-width:900px}
 h1 span{color:#e1112d}
 .row{display:flex;gap:16px;align-items:center;font-size:26px}
-.pill{background:#121212;color:#f3f0ea;border-radius:999px;padding:14px 26px;font-weight:600}
+.pill{background:#121212;color:#f6f1e8;border-radius:999px;padding:14px 26px;font-weight:600}
 .pill b{color:#ff5068}
 .muted{color:#5f5a54}
 </style></head><body><div class="glow"></div><div class="c">${comma}</div>
