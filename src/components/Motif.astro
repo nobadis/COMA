@@ -6,7 +6,7 @@ interface Props {
 const { kind } = Astro.props;
 ---
 
-<div class={`mo mo--${kind}`} aria-hidden="true">
+<div class={`mo mo--${kind}`} aria-hidden="true" data-loop>
   {
     kind === "web" && (
       <svg viewBox="0 0 400 300">

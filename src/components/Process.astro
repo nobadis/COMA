@@ -18,7 +18,7 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
         <p class="eyebrow" data-reveal>{eyebrow}</p>
         <h2 data-split>{title}</h2>
       </div>
-      <p class="pr__hint" aria-hidden="true">Sigue bajando <span>→</span></p>
+      <p class="pr__hint" aria-hidden="true" data-loop>Sigue bajando <span>→</span></p>
     </div>
     <div class="pr__viewport">
       <ol class="pr__track" data-hscroll-track data-hs data-pin-track>
@@ -138,6 +138,39 @@ const { eyebrow = "Cómo trabajamos", title, steps } = Astro.props;
       background: var(--red);
       transform-origin: 0 50%;
       transform: scaleX(var(--p));
+    }
+  }
+  /* escritorio con view-timeline: la galería y la barra las mueve el compositor; el JS solo
+     mide la distancia (--hd) y la altura de la sección */
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) and (timeline-scope: --a) and (animation-range: exit-crossing 0% exit-crossing 100%) {
+      .pr {
+        view-timeline: --prx block;
+        /* sin el scroll-padding-top de la página (si no, el efecto empezaría 5rem antes) */
+        view-timeline-inset: 0;
+      }
+      .pr__track {
+        animation: pr-x linear both;
+      }
+      .pr__bar i {
+        transform: scaleX(0);
+        animation: pr-fill linear both;
+      }
+      .pr__track:not(.tl),
+      .pr__bar:not(.tl) i {
+        animation-timeline: --prx;
+        animation-range: contain 0% contain 100%;
+      }
+      @keyframes pr-x {
+        to {
+          transform: translate3d(calc(var(--hd, 0px) * -1), 0, 0);
+        }
+      }
+      @keyframes pr-fill {
+        to {
+          transform: scaleX(1);
+        }
+      }
     }
   }
   /* móvil: carrusel con imán, se desliza con el pulgar */

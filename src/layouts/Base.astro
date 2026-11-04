@@ -206,7 +206,7 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" data-nointro={minimal ? "" : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -263,7 +263,7 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
         d.classList.add("js");
         try {
           var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (!reduced && !sessionStorage.getItem("coma_intro")) d.classList.add("intro-on");
+          if (!reduced && !d.hasAttribute("data-nointro") && !sessionStorage.getItem("coma_intro")) d.classList.add("intro-on");
           if (sessionStorage.getItem("coma_curtain")) d.classList.add("curtain-open");
         } catch (e) {}
       })();

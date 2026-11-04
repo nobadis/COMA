@@ -694,6 +694,23 @@ html {
   transform-origin: 0 50%;
   transform: scaleX(var(--sp, 0));
 }
+/* la barra de progreso la mueve el compositor con el scroll (sin JS por fotograma) */
+@supports (animation-timeline: scroll()) {
+  .sp i {
+    animation: sp-fill linear both;
+  }
+  .sp:not(.tl) i {
+    animation-timeline: scroll(root);
+  }
+  @keyframes sp-fill {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
 @media (hover: none) {
   /* sin hover: los hovers pegajosos del táctil no deben dejar estados a medias */
   .btn:hover::before {
@@ -836,6 +853,12 @@ html {
   .curtain {
     transition-duration: 0.45s;
   }
+}
+/* animaciones en bucle fuera de pantalla: en pausa (muchas son de SVG y corren en el hilo
+   principal, recalculando estilo y pintando en cada fotograma aunque no se vean) */
+[data-loop].is-off,
+[data-loop].is-off * {
+  animation-play-state: paused !important;
 }
 /* secciones largas bajo el pliegue: se pintan al acercarse (carga y scroll más ligeros) */
 .faq,

@@ -257,11 +257,12 @@ function bindEvents() {
     if (tag) track(tag, { label: el.dataset.trackLabel, href });
   });
 
-  // Profundidad de scroll: 50 % y 90 %, una vez por página.
+  // Profundidad de scroll: 50 % y 90 %, una vez por página. Se mide en un temporizador (entre
+  // fotogramas, con el layout ya calculado) y no en cada evento de scroll.
   const seen = new Set<number>();
-  let ticking = false;
+  let timer = 0;
   const check = () => {
-    ticking = false;
+    timer = 0;
     const max = document.documentElement.scrollHeight - window.innerHeight;
     if (max <= 0) return;
     const pct = (window.scrollY / max) * 100;
@@ -271,17 +272,12 @@ function bindEvents() {
         track("scroll_depth", { percent: t });
       }
     }
+    if (seen.size === 2) window.removeEventListener("scroll", onScroll);
   };
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(check);
-      }
-    },
-    { passive: true }
-  );
+  const onScroll = () => {
+    if (!timer) timer = window.setTimeout(check, 250);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
 }
 
 /** Eventos que se disparan al cargar la página (p. ej. /gracias/ → generate_lead). */

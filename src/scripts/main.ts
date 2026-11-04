@@ -1,5 +1,6 @@
 import Lenis from "lenis";
 import { initPinned, initScrollFx } from "./scrollfx";
+import { onScrollFrame } from "./frame";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -112,13 +113,21 @@ window.addEventListener("pageshow", (e) => {
 const header = document.querySelector<HTMLElement>("[data-header]");
 if (header) {
   let lastY = window.scrollY;
-  const onScroll = () => {
+  let hidden: boolean | null = null;
+  let stuck: boolean | null = null;
+  onScrollFrame(() => {
     const y = window.scrollY;
-    header.classList.toggle("is-hidden", y > 160 && y > lastY + 4);
-    header.classList.toggle("is-stuck", y > 40);
+    const h = y > 160 && y > lastY + 4;
+    const s = y > 40;
     lastY = y;
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
+    if (h === hidden && s === stuck) return;
+    return () => {
+      hidden = h;
+      stuck = s;
+      header.classList.toggle("is-hidden", h);
+      header.classList.toggle("is-stuck", s);
+    };
+  });
 
   // Cambia la cabecera a modo oscuro cuando pasa por encima de una sección [data-dark].
   const darkUnder = new Set<Element>();
@@ -228,26 +237,41 @@ const scrubs = Array.from(document.querySelectorAll<HTMLElement>("[data-scrub]")
   return { el, spans: Array.from(el.children) as HTMLElement[] };
 });
 if (scrubs.length) {
-  let ticking = false;
-  const update = () => {
-    ticking = false;
+  // Solo se miden las frases visibles, y solo se tocan las palabras que cambian.
+  const lit = new Map<HTMLElement, number>();
+  const seen = new Set<HTMLElement>();
+  const io = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) =>
+        e.isIntersecting ? seen.add(e.target as HTMLElement) : seen.delete(e.target as HTMLElement)
+      ),
+    { rootMargin: "25% 0px" }
+  );
+  scrubs.forEach(({ el }) => io.observe(el));
+  onScrollFrame(() => {
     const vh = window.innerHeight;
+    const changes: [HTMLElement[], number, number][] = [];
     scrubs.forEach(({ el, spans }) => {
+      if (!seen.has(el) && lit.has(el)) return;
       const r = el.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
-      const lit = Math.round(p * spans.length);
-      spans.forEach((s, idx) => s.classList.toggle("on", idx < lit));
+      const n = Math.round(p * spans.length);
+      const prev = lit.get(el) ?? -1;
+      if (n !== prev) {
+        lit.set(el, n);
+        changes.push([spans, prev, n]);
+      }
     });
-  };
-  const req = () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-  };
-  window.addEventListener("scroll", req, { passive: true });
-  window.addEventListener("resize", req);
-  update();
+    if (!changes.length) return;
+    return () => {
+      for (const [spans, prev, n] of changes) {
+        if (prev < 0) spans.forEach((s, idx) => s.classList.toggle("on", idx < n));
+        else
+          for (let i = Math.min(prev, n); i < Math.max(prev, n); i++)
+            spans[i].classList.toggle("on", i < n);
+      }
+    };
+  });
 }
 
 /* --------------------------------------------------------------- counters */
@@ -274,21 +298,46 @@ introDone.then(() =>
 
 /* ------------------------------------------------- pointer: spot + magnet */
 if (finePointer && !reduced) {
+  // La caja se mide al entrar (y tras un scroll), no en cada movimiento del puntero.
+  const boxes = new Map<HTMLElement, DOMRect>();
+  window.addEventListener("scroll", () => boxes.clear(), { passive: true });
+  const box = (el: HTMLElement) => {
+    let r = boxes.get(el);
+    if (!r) boxes.set(el, (r = el.getBoundingClientRect()));
+    return r;
+  };
   document.querySelectorAll<HTMLElement>("[data-spot]").forEach((el) => {
+    el.addEventListener("pointerenter", () => boxes.delete(el));
     el.addEventListener("pointermove", (e) => {
-      const r = el.getBoundingClientRect();
+      const r = box(el);
       el.style.setProperty("--mx", `${e.clientX - r.left}px`);
       el.style.setProperty("--my", `${e.clientY - r.top}px`);
     });
   });
   document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((el) => {
-    el.addEventListener("pointermove", (e) => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * 0.25;
-      const y = (e.clientY - r.top - r.height / 2) * 0.35;
-      el.style.transform = `translate(${x}px, ${y}px)`;
+    let raf = 0;
+    let x = 0;
+    let y = 0;
+    el.addEventListener("pointerenter", () => {
+      el.style.transform = "";
+      boxes.delete(el);
     });
-    el.addEventListener("pointerleave", () => (el.style.transform = ""));
+    el.addEventListener("pointermove", (e) => {
+      const r = box(el);
+      x = (e.clientX - r.left - r.width / 2) * 0.25;
+      y = (e.clientY - r.top - r.height / 2) * 0.35;
+      if (!raf)
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+        });
+    });
+    el.addEventListener("pointerleave", () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      el.style.transform = "";
+      boxes.delete(el);
+    });
   });
 }
 
@@ -300,25 +349,52 @@ if (cursor && finePointer && !reduced) {
   let cy = 0;
   let tx = 0;
   let ty = 0;
+  let running = false;
+  let on = false;
+  let big = false;
+  let hotTarget: EventTarget | null = null;
+  // El bucle solo corre mientras el círculo persigue al puntero; quieto, no gasta fotogramas.
+  const loop = () => {
+    cx += (tx - cx) * 0.2;
+    cy += (ty - cy) * 0.2;
+    if (Math.abs(tx - cx) < 0.1 && Math.abs(ty - cy) < 0.1) {
+      cx = tx;
+      cy = ty;
+      running = false;
+    }
+    cursor.style.transform = `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`;
+    if (running) requestAnimationFrame(loop);
+  };
   window.addEventListener(
     "pointermove",
     (e) => {
       tx = e.clientX;
       ty = e.clientY;
-      cursor.classList.add("is-on");
-      const hot = (e.target as HTMLElement).closest("a, button, summary, label, [data-magnetic]");
-      cursor.classList.toggle("is-big", !!hot);
+      if (!on) {
+        on = true;
+        cursor.classList.add("is-on");
+      }
+      if (e.target !== hotTarget) {
+        hotTarget = e.target;
+        const hot = !!(e.target as HTMLElement).closest?.(
+          "a, button, summary, label, [data-magnetic]"
+        );
+        if (hot !== big) {
+          big = hot;
+          cursor.classList.toggle("is-big", hot);
+        }
+      }
+      if (!running) {
+        running = true;
+        requestAnimationFrame(loop);
+      }
     },
     { passive: true }
   );
-  document.addEventListener("pointerleave", () => cursor.classList.remove("is-on"));
-  const loop = () => {
-    cx += (tx - cx) * 0.2;
-    cy += (ty - cy) * 0.2;
-    cursor.style.transform = `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`;
-    requestAnimationFrame(loop);
-  };
-  loop();
+  document.addEventListener("pointerleave", () => {
+    on = false;
+    cursor.classList.remove("is-on");
+  });
 }
 
 /* ------------------------------------------------------------ kinetic type */
@@ -360,11 +436,15 @@ if (kinetics.length && finePointer && !reduced) {
   let my = -9999;
   let running = false;
   const level = new WeakMap<HTMLElement, number>();
+  const shown = new Map<HTMLElement, string>();
   const frame = () => {
     let active = false;
+    // Lectura: todas las medidas juntas (un solo layout por fotograma)…
+    const vh = window.innerHeight;
+    const todo: [HTMLElement, number][] = [];
     for (const { el, letters } of kinetics) {
       const r = el.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) continue;
+      if (r.bottom < 0 || r.top > vh) continue;
       for (const l of letters) {
         const b = l.getBoundingClientRect();
         const d = Math.hypot(b.left + b.width / 2 - mx, b.top + b.height / 2 - my);
@@ -375,9 +455,18 @@ if (kinetics.length && finePointer && !reduced) {
         if (Math.abs(next - cur) < 0.004) continue;
         active = true;
         level.set(l, next);
-        l.style.setProperty("--kw", String(Math.round(108 + next * 17)));
-        l.style.setProperty("--kg", String(Math.round(600 + next * 300)));
+        todo.push([l, next]);
       }
+    }
+    // …y escritura después (antes se medía letra a letra entre escrituras: un layout por letra).
+    for (const [l, next] of todo) {
+      const w = Math.round(108 + next * 17);
+      const g = Math.round(600 + next * 300);
+      const key = `${w}/${g}`;
+      if (shown.get(l) === key) continue;
+      shown.set(l, key);
+      l.style.setProperty("--kw", String(w));
+      l.style.setProperty("--kg", String(g));
     }
     running = active;
     if (active) requestAnimationFrame(frame);
@@ -438,24 +527,38 @@ document.querySelectorAll<HTMLElement>("[data-hs]").forEach((el) => {
 
 /* ------------------------------------------------------------ scroll progress */
 const sp = document.querySelector<HTMLElement>("[data-sp]");
-if (sp) {
-  let pending = false;
-  const paint = () => {
-    pending = false;
+// Con scroll-timeline la barra la mueve el CSS (global.css); si no, un fotograma por scroll.
+if (sp && !(typeof CSS !== "undefined" && CSS.supports("animation-timeline: scroll()"))) {
+  let shownSp = "";
+  onScrollFrame(() => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    sp.style.setProperty("--sp", (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4));
-  };
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!pending) {
-        pending = true;
-        requestAnimationFrame(paint);
-      }
-    },
-    { passive: true }
+    const v = (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4);
+    if (v === shownSp) return;
+    return () => {
+      shownSp = v;
+      sp.style.setProperty("--sp", v);
+    };
+  });
+}
+
+/* ------------------------------------------- bucles fuera de pantalla en pausa */
+const loops = document.querySelectorAll<HTMLElement>("[data-loop]");
+if (loops.length) {
+  const loopIO = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        const off = !e.isIntersecting;
+        e.target.classList.toggle("is-off", off);
+        // Las animaciones SMIL (<animate*>) no obedecen a animation-play-state.
+        e.target.querySelectorAll("svg").forEach((svg) => {
+          if (!svg.querySelector("animate, animateMotion, animateTransform")) return;
+          if (off) svg.pauseAnimations();
+          else svg.unpauseAnimations();
+        });
+      }),
+    { rootMargin: "120px 0px" }
   );
-  paint();
+  loops.forEach((el) => loopIO.observe(el));
 }
 
 /* --------------------------------------------------------- scroll effects */

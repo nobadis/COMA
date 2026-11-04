@@ -42,7 +42,8 @@ function priority(path) {
 export default defineConfig({
   site: SITE,
   trailingSlash: "always",
-  build: { format: "directory", inlineStylesheets: "auto" },
+  // CSS en línea: sin hoja externa que bloquee el primer pintado (una ida y vuelta menos).
+  build: { format: "directory", inlineStylesheets: "always" },
   redirects: { "/trabajos/": "/" },
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   integrations: [

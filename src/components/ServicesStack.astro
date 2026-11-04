@@ -251,6 +251,70 @@ const panels = [
   .svs__more .link-arrow {
     margin-left: auto;
   }
+  /* el oscurecido y el encogido de cada panel siguen la entrada del siguiente, en CSS
+     (view-timeline con nombre; el JS de respaldo solo corre sin soporte, ver frame.ts) */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) and (timeline-scope: --a) and (animation-range: exit-crossing 0% exit-crossing 100%) {
+      .svs__stack {
+        timeline-scope: --pn2, --pn3, --pn4;
+      }
+      .pn:nth-child(2) {
+        view-timeline: --pn2 block;
+      }
+      .pn:nth-child(3) {
+        view-timeline: --pn3 block;
+      }
+      .pn:nth-child(4) {
+        view-timeline: --pn4 block;
+      }
+      .pn:nth-child(-n + 3)::after {
+        opacity: 0;
+        animation: pn-dim linear both;
+      }
+      .pn:nth-child(1):not(.tl)::after {
+        animation-timeline: --pn2;
+      }
+      .pn:nth-child(2):not(.tl)::after {
+        animation-timeline: --pn3;
+      }
+      .pn:nth-child(3):not(.tl)::after {
+        animation-timeline: --pn4;
+      }
+      .pn:nth-child(-n + 3):not(.tl)::after {
+        animation-range: entry 0% entry 100vh;
+      }
+      @keyframes pn-dim {
+        to {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+  @media (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) and (timeline-scope: --a) and (animation-range: exit-crossing 0% exit-crossing 100%) {
+      .pn:nth-child(-n + 3) > .pn__in {
+        transform: none;
+        animation: pn-shrink linear both;
+      }
+      .pn:nth-child(1):not(.tl) > .pn__in {
+        animation-timeline: --pn2;
+      }
+      .pn:nth-child(2):not(.tl) > .pn__in {
+        animation-timeline: --pn3;
+      }
+      .pn:nth-child(3):not(.tl) > .pn__in {
+        animation-timeline: --pn4;
+      }
+      .pn:nth-child(-n + 3):not(.tl) > .pn__in {
+        animation-range: entry 0% entry 100vh;
+      }
+      @keyframes pn-shrink {
+        to {
+          transform: scale(0.95);
+        }
+      }
+    }
+  }
   @supports (animation-timeline: view()) {
     .pn__title {
       animation: ttl linear both;

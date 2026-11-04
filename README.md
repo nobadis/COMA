@@ -9,6 +9,7 @@ Web de [comunicacionenmallorca.com](https://comunicacionenmallorca.com) (Publico
 - `src/components/` — secciones reutilizables (hero, servicios, demo de agente IA, flujo de automatización, FAQ, CTA…).
 - `src/styles/global.css` — sistema de diseño (tokens, tipografía, botones, animaciones).
 - `src/scripts/main.ts` — scroll suave (Lenis), cabecera, menú móvil, animaciones y banner de cookies.
+- Rendimiento: los efectos ligados al scroll van en CSS (`animation-timeline`, en el compositor) y el JS de respaldo pasa por un único fotograma que lee antes de escribir (`src/scripts/frame.ts`). Las animaciones en bucle llevan `data-loop` y se pausan fuera de pantalla. El CSS va en línea en cada página.
 - `public/` — favicon, robots y cabeceras de seguridad (`serve.json`, `_headers`, `.htaccess`).
 
 ## Comandos
