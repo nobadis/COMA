@@ -28,19 +28,20 @@ FASES = [
     ("T3", "Rentabilizar", date(2027, 1, 7), 32, 1.15, 0.85, 1.00),
 ]
 # EL PLAN: € al día por campaña y fase (T1, T2, NAV, T3)
-PLAN = {"G2": (10, 9, 0, 10), "M3": (0, 0, 0, 2)}
-NOMBRE = {"G2": "Google · Web Mallorca", "M3": "Meta · Remarketing", "G4": "Google · SEO local", "M2": "Meta · Mallorca (frío)", "G1": "Google · España"}
+PLAN = {"G2": (10, 9, 0, 10), "M3": (0, 0, 0, 2), "G5": (4, 4, 0, 4)}
+NOMBRE = {"G2": "Google · Web Mallorca", "M3": "Meta · Remarketing", "G5": "Google · A medida Mallorca", "G4": "Google · SEO local", "M2": "Meta · Mallorca (frío)", "G1": "Google · España"}
 
 # Alternativas que se descartan (mismos supuestos, mismos cortes)
 ALTERNATIVAS = {
-    "El plan (Google Mallorca + remarketing en enero)": PLAN,
+    "El plan: web (790 €) + línea a medida (296 €)": PLAN,
+    "Solo la web (790 €)": {"G2": (10, 9, 0, 10), "M3": (0, 0, 0, 2)},
     "Mismo dinero, mitad en Meta Mallorca": {"G2": (7, 6, 0, 7), "M2": (3, 3, 0, 3), "M3": (0, 0, 0, 2)},
     "Mismo dinero, parte en Google España": {"G2": (7, 6, 0, 7), "G1": (3, 3, 0, 3), "M3": (0, 0, 0, 2)},
-    "+160 €: Google Mallorca a tope (12 €/día)": {"G2": (12, 12, 0, 12), "M3": (0, 0, 0, 2)},
-    "+190 €: añadir SEO local en enero": {"G2": (10, 9, 0, 10), "M3": (0, 0, 0, 2), "G4": (0, 0, 0, 6)},
-    "+440 €: añadir Meta Mallorca": {"G2": (10, 9, 0, 10), "M3": (0, 0, 0, 2), "M2": (6, 6, 0, 6)},
+    "Web a tope (12 €/día) en vez de la línea a medida": {"G2": (12, 12, 0, 12), "M3": (0, 0, 0, 2)},
+    "Web + Meta Mallorca en vez de la línea a medida": {"G2": (10, 9, 0, 10), "M3": (0, 0, 0, 2), "M2": (4, 4, 0, 4)},
 }
 MARGEN_PUNTUAL, MARGEN_RECURRENTE = 0.50, 0.75  # supuesto: cámbialo con tus costes reales
+PROYECTO = (1200, 3000, 8000)  # proyecto a medida de pyme (automatización, integración, agente, app): mín., probable, máx.
 
 
 def simular(plan, pesimista=False, seed=2026):
@@ -54,20 +55,28 @@ def simular(plan, pesimista=False, seed=2026):
         "G1": dict(cpc=tri(0.9, 1.6, 2.8), cvr=tri(0.03, 0.05, 0.08), q=tri(0.40, 0.55, 0.68), close=tri(0.12, 0.20, 0.30), one=218, rec=300),
         "G4": dict(cpc=tri(1.2, 2.0, 3.5), cvr=tri(0.025, 0.045, 0.075), q=tri(0.5, 0.62, 0.75), close=tri(0.12, 0.20, 0.30), one=124, rec=782),
         "M2": dict(cpm=tri(4, 6.5, 10), ctr=tri(0.007, 0.012, 0.018), lpv=tri(0.65, 0.75, 0.85), cvr=tri(0.015, 0.028, 0.045), q=tri(0.40, 0.55, 0.68), close=tri(0.14, 0.22, 0.32), one=253, rec=332),
+        # «software a medida», «automatizar procesos», «IA para empresas» en Baleares: poco volumen
+        "G5": dict(cap=1.6, cpc=tri(1.5, 2.8, 5.0), cvr=tri(0.03, 0.06, 0.10), q=tri(0.35, 0.50, 0.65), close=tri(0.12, 0.22, 0.35)),
         "M3": dict(cpm=tri(6, 9, 14), ctr=tri(0.010, 0.016, 0.025), lpv=tri(0.70, 0.80, 0.88), cvr=tri(0.03, 0.055, 0.09), q=tri(0.50, 0.62, 0.74), close=tri(0.18, 0.26, 0.36), one=253, rec=332),
     }
     T = {k: np.zeros(N) for k in ("spend", "leads", "q", "cl", "rev1", "rev12")}
     por = {k: {m: np.zeros(N) for m in T} for k in plan}
+    proyecto = rng.triangular(*PROYECTO, N)
     visitas = np.zeros(N)
     vivo = np.ones(N, bool)
+    vivo5 = np.ones(N, bool)  # la línea a medida tiene su propio corte
     corte1 = corte2 = None
     for i, (fid, _, _, dias, conv, cpm_m, cpc_m) in enumerate(FASES):
         if fid == "T2":  # corte 1 (7 dic): 1 cliente, o 5 leads cualificados a 35 € o menos
-            vivo = (T["cl"] >= 1) | ((T["q"] >= 5) & (T["spend"] / np.maximum(T["q"], 0.5) <= 35))
+            w = {m: sum(por[k][m] for k in por if k != "G5") for m in ("cl", "q", "spend")}
+            vivo = (w["cl"] >= 1) | ((w["q"] >= 5) & (w["spend"] / np.maximum(w["q"], 0.5) <= 35))
             corte1 = vivo.copy()
         if fid == "T3":  # corte 2 (7 ene): al menos 1 cliente firmado
-            vivo = vivo & (T["cl"] >= 1)
+            web_cl = sum(por[k]["cl"] for k in por if k != "G5")
+            vivo = vivo & (web_cl >= 1)
             corte2 = vivo.copy()
+            if "G5" in por:  # a medida: al menos 1 diagnóstico real pedido
+                vivo5 = por["G5"]["q"] >= 1
         for k, b in plan.items():
             if b[i] == 0:
                 continue
@@ -84,14 +93,18 @@ def simular(plan, pesimista=False, seed=2026):
                 vis = gasto / (f["cpm"] * cpm_m) * 1000 * f["ctr"] * f["lpv"]
                 if k == "M3":  # el remarketing solo alcanza a quien ya visitó la web
                     vis = np.minimum(vis, visitas * 0.35)
-            gasto, vis = gasto * vivo, vis * vivo
+            alive = vivo5 if k == "G5" else vivo
+            gasto, vis = gasto * alive, vis * alive
             if k != "M3":
                 visitas += vis
             leads = rng.poisson(np.maximum(vis * f["cvr"] * conv * landing, 0))
             q = rng.binomial(leads, np.clip(f["q"], 0, 1))
             cl = rng.binomial(q, np.clip(f["close"] * seguimiento, 0, 0.9))
-            e1 = f["one"] if k == "G4" else 99 + (f["one"] - 99) * extras
-            r12 = cl * (e1 + f["rec"] * extras)
+            if k == "G5":
+                e1, r12 = proyecto, cl * proyecto
+            else:
+                e1 = f["one"] if k == "G4" else 99 + (f["one"] - 99) * extras
+                r12 = cl * (e1 + f["rec"] * extras)
             for dst in (T, por[k]):
                 dst["spend"] += gasto
                 dst["leads"] += leads
@@ -124,7 +137,8 @@ for mundo, pes in (("base", False), ("pesimista", True)):
             "al_menos_1_cliente": float(np.mean(T["cl"] >= 1)), "al_menos_10_clientes": float(np.mean(T["cl"] >= 10)),
         },
         "peor_caso_bolsillo_p95": float(np.percentile(T["spend"] - T["rev1"], 95)),
-        "por_campana": {k: {"gasto": float(np.median(v["spend"])), "leads_cualificados": float(np.median(v["q"])), "clientes": float(np.mean(v["cl"])),
+        "por_campana": {k: {"gasto": float(np.median(v["spend"])), "gasto_medio": float(np.mean(v["spend"])), "leads_cualificados": float(np.median(v["q"])), "clientes": float(np.mean(v["cl"])),
+                             "prob_1_venta": float(np.mean(v["cl"] >= 1)), "facturacion_media": float(np.mean(v["rev1"])), "facturacion_p90": float(np.percentile(v["rev1"], 90)),
                              "cpl_cualificado": float(np.nanmedian(np.where(v["q"] > 0, v["spend"] / np.maximum(v["q"], 1), np.nan)))} for k, v in por.items()},
     }
     if mundo == "base":

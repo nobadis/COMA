@@ -41,7 +41,7 @@ Se guardan `utm_*`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid` y
 
 ## Landings (`src/data/landings.ts`)
 
-`/lp/web-99/`, `/lp/seo-local/`, `/lp/agentes-ia/`, `/lp/mallorca/`, `/lp/temporada/` (Pack Temporada: web + inglés + alemán + reservas, suma de los precios de `pricing.ts`), `/lp/tu-empresa/`. Son `noindex`, fuera del sitemap, sin menú ni pie de navegación, con formulario corto y las demos interactivas (SEO/IA en el buscador, chat del agente, selector de marca) como "publi inmersiva". Los rastreadores de Google Ads y Meta pueden leerlas. Para añadir una: nuevo objeto en `landings.ts`.
+`/lp/web-99/`, `/lp/seo-local/`, `/lp/agentes-ia/`, `/lp/mallorca/`, `/lp/temporada/` (Pack Temporada: web + inglés + alemán + reservas, suma de los precios de `pricing.ts`), `/lp/a-medida/` (soluciones a medida con diagnóstico gratis), `/lp/tu-empresa/`. Son `noindex`, fuera del sitemap, sin menú ni pie de navegación, con formulario corto y las demos interactivas (SEO/IA en el buscador, chat del agente, selector de marca) como "publi inmersiva". Los rastreadores de Google Ads y Meta pueden leerlas. Para añadir una: nuevo objeto en `landings.ts`.
 
 ## Outbound
 
@@ -49,7 +49,7 @@ Se guardan `utm_*`, `gclid`, `gbraid`, `wbraid`, `fbclid`, `ttclid`, `msclkid` y
 
 ## Estrategia de anuncios
 
-**Plan vigente (9 nov 2026 - 7 feb 2027): [`publicidad/01-PLAN-DE-CAMPANA.txt`](../publicidad/01-PLAN-DE-CAMPANA.txt).** Tope de 800 €, todo en Google Search para Mallorca (lo de más retorno por euro en la simulación), pagado en tres tramos con dos cortes (7 dic y 7 ene): si no hay señal, se para. Remarketing en Meta solo en enero, vídeos en redes sin pagar y un test Web 99 € vs Pack Temporada en enero. Lo que sigue es el razonamiento de base.
+**Plan vigente (9 nov 2026 - 7 feb 2027): [`publicidad/01-PLAN-DE-CAMPANA.txt`](../publicidad/01-PLAN-DE-CAMPANA.txt).** Máximo 1.086 €, todo en Google Search para Mallorca (lo de más retorno por euro en la simulación) en dos líneas: web desde 99 € (G2, landing `/lp/mallorca/`) y soluciones a medida (G5, landing `/lp/a-medida/`). Se paga por tramos con cortes (7 dic y 7 ene): si no hay señal, se para. Remarketing en Meta solo en enero, vídeos en redes sin pagar y un test Web 99 € vs Pack Temporada en enero. Lo que sigue es el razonamiento de base.
 
 Ningún plan de medios es seguro al céntimo. Este es el que mejor encaja con la oferta: el gancho es la web a 99 € (se entiende en un segundo) y el margen está en lo que se suma después (tienda, SEO a 99 €/mes, GEO, alojamiento). Un anuncio que solo cierra webs de 99 € pierde dinero en cuanto el lead cuesta más de lo que queda tras hacerla. Por eso el anuncio habla de 99 € y la landing (`/lp/web-99/`) lleva al presupuesto, donde se ven los extras, antes del formulario.
 

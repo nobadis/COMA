@@ -1,7 +1,8 @@
 ==============================================================================
-  COMA · PLAN DE PUBLICIDAD · TOPE 800 € · 9 nov 2026 → 7 feb 2027
-  Máximo retorno por euro y riesgo pequeño: se paga por tramos y solo se
-  sigue si los números lo justifican.
+  COMA · PLAN DE PUBLICIDAD · 9 nov 2026 → 7 feb 2027
+  Dos líneas, un canal: Google en Mallorca. Web desde 99 € (el motor) y
+  soluciones a medida (el ticket alto). Máximo 1.086 €, pagados por tramos:
+  solo se sigue si los números lo justifican.
   Visual: 00-EMPIEZA-AQUI.html · Qué hacer cada día: 04-AGENDA-DIA-A-DIA.txt
 ==============================================================================
 
@@ -12,7 +13,7 @@
   4. Antes de encender (2 → 8 nov)
   5. Google Ads: configuración exacta
   6. Meta: solo remarketing, en enero
-  7. Redes sin pagar: los vídeos, gratis
+  7. Lo gratis: tus clientes y las redes
   8. Qué hacer con cada lead
   9. Lo que NO hacemos (y por qué)
  10. Qué hay en cada carpeta
@@ -22,36 +23,39 @@
 1. LA ESTRATEGIA EN 1 MINUTO
 ------------------------------------------------------------------------------
 
-  TODO EL DINERO DE PAGO VA A UN SOLO SITIO: GOOGLE, A GENTE DE MALLORCA QUE
-  ESTÁ BUSCANDO UNA WEB. Lo demás se hace gratis.
+  TODO EL DINERO DE PAGO VA A GOOGLE, A GENTE DE MALLORCA QUE YA ESTÁ
+  BUSCANDO LO QUE HACES. Dos campañas, una por línea de negocio:
+
+  G2 · WEB DESDE 99 €  ...... El motor. Muchos leads, rápidos y baratos
+                              (~25 € cada lead cualificado). Trae clientes
+                              casi seguro y cada uno es alguien a quien
+                              ofrecer después lo demás.
+  G5 · A MEDIDA ............. El ticket alto. «Software a medida»,
+                              «automatizar procesos», «IA para empresas».
+                              Pocos leads, pero un proyecto (~1.200-8.000 €)
+                              vale como 10-30 webs.
 
   Por qué Google Mallorca y nada más:
-  · Es gente que ya busca lo que vendes: no hay que convencerla de que
-    necesita una web, solo de que la haga COMA.
-  · Aquí juegas en casa: 29 años en Palma, referencias que la gente conoce,
-    reunión en persona y webs en inglés y alemán para la temporada.
-  · En la simulación es lo que más rinde por euro: el lead cualificado sale a
-    ~25 € (Meta en frío ~48 €, Google España ~65 €).
-  · Tiene un techo natural: en Mallorca hay las búsquedas que hay (~12 €/día
-    de clics). Por eso el plan no necesita más de 800 €.
+  · Intención: quien busca «diseño web Mallorca» o «software a medida
+    Palma» ya ha decidido comprar. No hay que convencerle de que lo
+    necesita, solo de que lo haga COMA.
+  · Jugar en casa: 29 años en Palma, referencias que la gente conoce y
+    reunión en persona. Para un proyecto a medida, la confianza lo es todo.
+  · Es lo que más rinde por euro en la simulación (sección 3). Meta en frío
+    y Google en toda España rinden menos en las dos líneas.
+  · Tiene techo: en Baleares hay las búsquedas que hay (web ~12 €/día,
+    a medida ~4 €/día). Más dinero no compraría más clientes.
 
-  La fórmula, en 3 tramos con 2 cortes:
-    TRAMO 1 · Validar    9 nov → 6 dic    280 €   ¿Funciona?
-         CORTE 1 · lun 7 dic: sigue solo si hay señal
-    TRAMO 2 · Confirmar  7 → 20 dic       126 €   ¿Se repite?
-         Navidad (21 dic → 6 ene): todo en pausa, 0 €
-         CORTE 2 · jue 7 ene: sigue solo si ya hay un cliente que paga
-    TRAMO 3 · Rentabilizar  7 ene → 7 feb 384 €   Más clientes + test del
-                                                 Pack Temporada
-    ---------------------------------------------
-    TOTAL                                 790 €   (tope blindado: 800 €)
+  Cómo se vende «a medida» sin sonar vago: la promesa es «si una tarea os
+  quita horas, la resolvemos a medida» y la prueba son ejemplos que todo el
+  mundo reconoce (WhatsApps que se contestan solos, presupuestos en un clic,
+  datos que pasan solos entre programas, informes que se hacen solos). La
+  entrada es un diagnóstico gratis de 30 minutos y la propuesta va con
+  precio cerrado.
 
-  Lo que más te puedes jugar de tu bolsillo es el TRAMO 1: 280 €. Si ahí no
-  hay señal, se para y ya está.
-
-  Lo que más mueve el resultado no es el anuncio, es contestar cada lead en
-  menos de 1 hora y proponer los extras que de verdad le sirven (sección 8).
-  Eso es gratis.
+  Y lo gratis que más rinde: escribir a tus +100 clientes actuales
+  (sección 7) y preguntar a cada lead de la web qué le quita horas
+  (sección 8).
 
 
 ------------------------------------------------------------------------------
@@ -62,37 +66,45 @@
                                9 nov-    7-20 dic  21 dic-   7 ene-
                                6 dic               6 ene     7 feb
   G2 Google · Web Mallorca     10 €/día  9 €/día   pausa     10 €/día   726 €
-  M3 Meta · Remarketing        -         -         -         2 €/día     64 €
+  G5 Google · A medida         4 €/día   4 €/día   pausa     4 €/día    296 €
+  M3 Meta · Remarketing web    -         -         -         2 €/día     64 €
   ---------------------------------------------------------------------------
-  Gasto del tramo              280 €     126 €     0 €       384 €      790 €
-  Gasto acumulado              280 €     406 €     406 €     790 €
+  Gasto del tramo              392 €     182 €     0 €       512 €    1.086 €
+  Gasto acumulado              392 €     574 €     574 €   1.086 €
 
-  CORTE 1 · lunes 7 de diciembre (con los 280 € del tramo 1)
-    SEGUIR   si hay al menos 1 cliente firmado, o al menos 5 leads
-             cualificados a 35 € o menos cada uno.
-    PIVOTAR  si hay 2-4 leads cualificados, o 5 o más pero entre 35 y 50 €:
-             el tramo 2 sigue con UN cambio (02-METRICAS, sección 5) y el
-             21 dic se decide: sin cliente y con menos de 5 cualificados,
-             PARAR.
-    PARAR    si hay 0-1 leads cualificados, o cuestan más de 50 €.
-             Gasto final: 280 €, menos lo que hayas facturado.
+  Lo más que arriesgas antes de ver resultados: el tramo 1, 392 €.
 
-  CORTE 2 · jueves 7 de enero (con 406 € gastados)
-    SEGUIR   si hay al menos 1 cliente firmado que vino de los anuncios.
-    PARAR    si no. Gasto final: 406 €.
-    WOW      si hay 3 clientes o más y el lead cualificado sale a 20 € o
-             menos: TENEMOS ALGO. Se hace el tramo 3 tal cual y se prepara
-             la temporada (febrero-marzo) con la regla de autofinanciación:
-             el presupuesto siguiente sale, como mucho, del 30 % de lo que
-             los anuncios ya han facturado. Nunca más de tu bolsillo.
+  CORTES DE LA WEB (G2 y M3)
+  Corte 1 · lunes 7 dic (280 € gastados en G2)
+    SEGUIR   ≥ 1 cliente firmado, o ≥ 5 leads cualificados a ≤ 35 €.
+    PIVOTAR  2-4 leads cualificados, o 5 o más a 35-50 €: el tramo 2 sigue
+             con UN cambio (02-METRICAS, sección 4) y el 21 dic, sin cliente
+             y con < 5 cualificados, PARAR.
+    PARAR    0-1 leads cualificados, o > 50 € cada uno.
+  Corte 2 · jueves 7 ene (406 € gastados en G2)
+    SEGUIR   ≥ 1 cliente firmado que vino de los anuncios.
+    WOW      ≥ 3 clientes y ≤ 20 € por lead cualificado.
+    PARAR    0 clientes.
+
+  CORTE DE A MEDIDA (G5) · jueves 7 ene (168 € gastados)
+    Esta línea tiene pocos leads: se le da más tiempo, un solo corte.
+    SEGUIR   ≥ 1 diagnóstico pedido por una empresa real.
+    WOW      ≥ 1 propuesta enviada o proyecto firmado.
+    PARAR    0 diagnósticos: G5 se queda en pausa.
+  Las dos líneas son independientes: si una para, la otra sigue.
+
+  Si sale WOW, la temporada (febrero-marzo) se paga con la REGLA DE
+  AUTOFINANCIACIÓN: el presupuesto nuevo sale, como mucho, del 30 % de lo
+  que los anuncios ya han facturado. Nunca más de tu bolsillo.
 
   Cómo se blinda el tope (5 nov, antes de encender):
   GOOGLE
-   · G2 con fecha de fin el 7 feb 2027.
-   · Herramientas → Reglas automatizadas → «Pausar campañas»: si el «Coste»
-     de G2 desde el 9 nov es mayor o igual que el límite, se pausa.
-     Comprobación cada hora. Límite: 280 € hasta el 7 dic, 406 € hasta el
-     7 ene y 726 € después (se edita la regla en cada corte).
+   · G2 y G5 con fecha de fin el 7 feb 2027.
+   · Herramientas → Reglas automatizadas → «Pausar campañas», una por
+     campaña: si el «Coste» desde el 9 nov es mayor o igual que el límite,
+     se pausa. Comprobación cada hora. Límites, que se editan en cada corte:
+       G2: 280 € hasta el 7 dic · 406 € hasta el 7 ene · 726 € después
+       G5: 112 € hasta el 7 dic · 168 € hasta el 7 ene · 296 € después
    · Google puede gastar hasta el doble del diario un día suelto, pero la
      regla corta al llegar al límite.
   META
@@ -116,39 +128,47 @@ PESIMISTA (la mitad de conversión y un 30 % menos de cierre). Incluye los
 cortes: si no hay señal, se para. No es una promesa: es el abanico
 razonable, incluido el caso malo.
 
-                                  MUNDO BASE                      PESIMISTA
+LAS DOS LÍNEAS JUNTAS                MUNDO BASE                     PESIMISTA
                            peor 10 %   típico   mejor 10 %         típico
-  Gasto en anuncios           689 €     790 €      790 €            790 €
-  Leads cualificados             14        31         51               12
-  Clientes                        2         8         16                2
-  Facturación primer encargo  561 €   2.083 €    4.081 €            506 €
-  Facturación a 12 meses    1.277 €   4.781 €    9.600 €          1.158 €
-  Beneficio a 12 meses (*)     25 €   2.277 €    5.417 €            -47 €
+  Gasto en anuncios           916 €   1.084 €    1.086 €            958 €
+  Leads cualificados             16        34         55               13
+  Clientes (web + a medida)       3         9         16                2
+  Facturación primer encargo  997 €   3.559 €   10.902 €            751 €
+  Facturación a 12 meses    2.187 €   6.897 €   15.406 €          1.708 €
+  Beneficio a 12 meses (*)    378 €   3.186 €    7.834 €             89 €
 
-  Mundo base: cada euro vuelve 2,7 veces en el primer encargo y 6,1 en un
-  año. El primer encargo paga los anuncios en el 88 % de los casos; el año
-  deja beneficio en el 90 %. Lead cualificado: ~25 €.
-  Mundo pesimista: se queda en tablas (~0 €), y en el 95 % de los casos no
-  pierdes más de ~460 € después de lo facturado. Los cortes lo frenan antes.
+  Mundo base: cada euro vuelve 3,6 veces en el primer encargo y 6,8 en un
+  año. El primer encargo paga los anuncios en el 90 % de los casos; el año
+  deja beneficio en el 93 %.
+  Mundo pesimista: se queda en tablas, y los cortes frenan el gasto.
 
-  (*) Supuesto de margen: el 50 % de lo puntual (webs, extras) y el 75 % de
-  lo mensual (alojamiento, correo, SEO). Cámbialo en simulacion.py.
+  Por línea (mundo base):
+  · Web (G2 + M3): ~8 clientes; el 92 % de las veces hay al menos uno.
+    ~25 € por lead cualificado.
+  · A medida (G5): el 45 % de las veces sale al menos un proyecto. Gasto
+    medio ~260 €, facturación media ~2.800 €. Es una apuesta: casi la mitad
+    de las veces no sale nada, pero cuando sale, paga diez veces su coste.
 
-¿Y si pongo un poco más? Simulado (mismos supuestos y cortes):
+  (*) Supuesto de margen: el 50 % de lo puntual (webs, extras, proyectos) y
+  el 75 % de lo mensual (alojamiento, correo, SEO). Cámbialo en
+  simulacion.py. El valor de un proyecto a medida se supone entre 1.200 y
+  8.000 € (lo más probable, 3.000 €): ajústalo a tus proyectos reales.
 
-  Opción                               Gasto  Clientes  Beneficio  Prob. de
-                                                         12 meses   ganar
-  EL PLAN                               790 €      8     2.277 €     90 %
-  Mismo dinero, mitad en Meta Mallorca  790 €      7     1.937 €     87 %
-  Mismo dinero, parte en Google España  790 €      7     1.708 €     85 %
-  +160 €: Google Mallorca a tope         952 €     10     2.685 €     93 %
-  +190 €: añadir SEO local en enero     982 €      9     2.492 €     90 %
-  +440 €: añadir Meta Mallorca         1.234 €     11     2.824 €     93 %
+¿Por qué esto y no otra cosa? Simulado (mismos supuestos y cortes):
 
-  Ningún extra multiplica las probabilidades: la de ganar dinero se queda
-  en el 90-93 %. Más dinero compra un par de clientes más, no más
-  seguridad. Por eso el tope es 800 €. Si en enero sale WOW, el «+160 €»
-  es lo primero que se añade en febrero, pagado con lo facturado.
+  Opción                                Gasto   Benef.   Prob. de
+                                                12 m.    ganar
+  EL PLAN: web + línea a medida        1.084 €  3.186 €    93 %
+  Solo la web                            790 €  2.266 €    90 %
+  Web a tope (12 €/día), sin a medida    952 €  2.655 €    93 %
+  Web + Meta Mallorca, sin a medida    1.086 €  2.651 €    92 %
+  Mismo dinero que la web, mitad Meta    790 €  1.927 €    87 %
+  Mismo dinero, parte en Google España   790 €  1.721 €    85 %
+
+  Con el mismo dinero, la línea a medida deja unos 500 € más de beneficio
+  que poner más en la web o en Meta. Los anuncios de IA genérica («¿quieres
+  usar la IA y no sabes cómo?») en Meta o en toda España se descartaron: con
+  300-600 € dan un 14-25 % de probabilidad de vender algo.
 
 
 ------------------------------------------------------------------------------
@@ -159,8 +179,9 @@ GRATIS Y DE MÁS IMPACTO
 [ ] Ficha de Google Business Profile de COMA (Paseo Mallorca 16) verificada,
     con fotos, horario y la web. Pedid reseña a 20 clientes actuales: las
     reseñas abaratan cada clic de Google y suben la conversión.
-[ ] Escribir a 20 clientes actuales: «¿conoces a alguien que necesite
-    web?». La recomendación es el cliente más barato que existe.
+[ ] Mensaje personal a TODOS tus clientes actuales (sección 7): qué tarea
+    les quita horas (línea a medida) y si conocen a alguien que necesite
+    web. Es el canal que más proyectos a medida puede traer, y es gratis.
 [ ] 30 mensajes a negocios de Mallorca (restaurantes, hoteles pequeños,
     clínicas) con su landing personalizada:
     https://comunicacionenmallorca.com/lp/tu-empresa/?e=NOMBRE&s=SECTOR&c=Palma&utm_source=email&utm_medium=outbound&utm_campaign=temporada
@@ -175,6 +196,7 @@ TÉCNICO (docs/ADS.md)
     conversión «Lead formulario» PRINCIPAL.
 [ ] Meta: Business Manager con la página e Instagram de COMA, cuenta
     publicitaria, píxel, dominio verificado. Público «Visitantes web 30 días».
+[ ] Reglas automatizadas de coste para G2 (280 €) y G5 (112 €).
 [ ] Prueba real: abrir las URL de los anuncios en el móvil, aceptar cookies,
     enviar el formulario. Llega el correo con [origen] y la conversión
     aparece en Google Ads en 24 h. Si no aparece, NO se enciende.
@@ -221,8 +243,26 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
                                   ubicación (textos-google.txt, al final).
   Negativas ..................... Lista «COMA negativas» (textos-google.txt).
 
-  TEST DE ENERO (7 ene → 7 feb): Web de 99 € frente a Pack Temporada de
-  346 €. Experimento de Google al 50 % sobre G2, con los anuncios del grupo
+  G5  COMA | Search | A medida | Mallorca
+  Igual que G2 (tipo, redes, ubicación, idiomas, horario, AI Max y
+  concordancia), salvo:
+  Presupuesto ................... 4 €/día · pausa del 21 dic al 6 ene.
+  Puja .......................... «Maximizar clics», CPC máximo 4 €, todo el
+                                  periodo (con pocos leads no hay datos para
+                                  pujas automáticas).
+  Grupos ........................ «Software a medida», «Automatizar» e «IA
+                                  para empresas» (textos-google.txt).
+  Destino ....................... /lp/a-medida/ (diagnóstico gratis)
+  Recursos ...................... Los suyos (textos-google.txt): enlaces a
+                                  automatizaciones, agentes de IA, despachos
+                                  y contacto. No uses los de la web.
+  Negativas ..................... Lista «COMA negativas a medida»: fuera
+                                  cursos, empleo, «gratis», «qué es»…
+  Ojo con los leads: «quiero una app como Uber por 500 €» no es un lead
+  cualificado. Cualificado = empresa real con un problema concreto.
+
+  TEST DE ENERO (7 ene → 7 feb), solo en G2: Web de 99 € frente a Pack
+  Temporada de 346 €. Experimento de Google al 50 % sobre G2, con los anuncios del grupo
   «EXPERIMENTO» de textos-google.txt → /lp/temporada/. Paso a paso y quién
   gana: 03-MENSAJE-Y-TESTS-AB.txt.
 
@@ -266,13 +306,32 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
 
 
 ------------------------------------------------------------------------------
-7. REDES SIN PAGAR: LOS VÍDEOS, GRATIS
+7. LO GRATIS: TUS CLIENTES Y LAS REDES
 ------------------------------------------------------------------------------
 
+  TUS +100 CLIENTES (2-6 nov, y otra vez el 11 ene)
+  Para un proyecto a medida, la confianza lo es todo, y ellos ya te la
+  tienen. Escribirles es legal: ya son clientes. Un mensaje personal (no
+  un boletín), por WhatsApp o email, con su nombre:
+
+    Hola, [nombre]: en COMA ahora también resolvemos a medida esas tareas
+    que se comen horas cada semana: WhatsApps que se contestan solos,
+    presupuestos en un clic, datos que pasan solos de un programa a otro,
+    informes que se hacen solos… ¿Hay algo así en [empresa]? Si quieres, te
+    hago un diagnóstico gratis de 30 minutos y te digo qué tiene sentido y
+    cuánto costaría, con precio cerrado. Y si conoces a alguien que necesite
+    web, también le ayudamos. Un abrazo, [firma]
+
+  Apunta cada respuesta en 6-seguimiento/leads.csv (canal: clientes).
+
+  REDES SIN PAGAR
   Los vídeos e imágenes de 3-redes-sin-pagar/ no se pagan: se publican en el
   Instagram, Facebook y LinkedIn de COMA y en el estado de WhatsApp, y se
   mandan a clientes y contactos. Cuestan 0 €, alimentan el remarketing de
   enero y sirven de TEST GRATIS de ángulos (03-MENSAJE-Y-TESTS-AB.txt).
+  En LinkedIn, además, una publicación cada 2 semanas sobre un problema
+  real resuelto a medida (sin datos del cliente si no da permiso): es el
+  sitio donde el mensaje «¿quieres usar la IA y no sabes cómo?» funciona.
 
   Un vídeo por semana, el martes a las 13:00 (se repite el ciclo):
     sem. 9 nov   M2-A «La temporada se gana en invierno» (o sin marcas)
@@ -296,7 +355,9 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
      dejó teléfono; si no, email.
   2. Tres preguntas: ¿qué negocio es? ¿qué quieres que haga la web (llamadas,
      reservas, vender)? ¿para cuándo la necesitas?
-     Y una cuarta para aprender: «¿qué te hizo escribirnos?».
+     Y otras dos: «¿qué te hizo escribirnos?» (para aprender) y «¿hay alguna
+     tarea que os quite horas cada semana?» (si dice que sí: diagnóstico a
+     medida). Cada cliente de web es un posible proyecto a medida.
   3. Propuesta escrita en 24 h con el configurador de /precios/: la web de
      99 € y los 2-3 extras que de verdad le sirven, cada uno con su precio.
      Negocio con turistas: proponer el Pack Temporada (web + inglés + alemán
@@ -304,6 +365,10 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
   4. Seguimiento: día 2, día 5 y día 10.
   5. Al entregar: proponer alojamiento (9 €/mes) y SEO local (99 €/mes), y
      pedir la reseña en Google y un contacto que necesite web.
+  LEADS DE A MEDIDA (G5 o clientes): diagnóstico de 30 min en menos de una
+  semana → propuesta con alcance, plazos y precio cerrado en 3 días →
+  seguimiento día 3, 7 y 14. Si el proyecto es grande, proponer empezar
+  por una primera parte pequeña con precio cerrado.
   Apuntarlo todo en 6-seguimiento/leads.csv.
 
 
@@ -316,7 +381,11 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
     gratis.
   · Google en toda España: el lead sale a más del doble que en Mallorca y no
     jugamos en casa. Se valida aquí primero.
-  · Display, Performance Max, TikTok, LinkedIn: más alcance, menos intención.
+  · Anuncios de «IA para tu empresa» en Meta o en toda España: con 300-600 €
+    dan un 14-25 % de probabilidad de vender algo. Ese mensaje va a
+    LinkedIn y a tus clientes, gratis.
+  · Display, Performance Max, TikTok, LinkedIn de pago: más alcance, menos
+    intención.
   · Campaña de marca en Google: quien busca «COMA» ya te encuentra gratis.
   · SEO local de pago en enero: añade 190 € y no mejora la probabilidad.
   · Black Friday, descuentos, «solo hoy»: no somos una tienda; destruyen el

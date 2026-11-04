@@ -1,5 +1,5 @@
 ==============================================================================
-  COMA · MÉTRICAS Y DECISIONES (plan de 800 €)
+  COMA · MÉTRICAS Y DECISIONES (web + a medida, máximo 1.086 €)
   Qué mirar, cuándo, y qué hacer con cada número: SEGUIR, PIVOTAR, PARAR o
   WOW. El semáforo de 00-EMPIEZA-AQUI.html hace estas cuentas por ti.
 ==============================================================================
@@ -27,10 +27,14 @@ lunes solo se vigila y se limpia.
                                  WOW      SEGUIR     PIVOTAR    PARAR
   G2 Google Mallorca             ≤ 20 €   20-35 €    35-50 €    > 50 €
   M3 Remarketing (enero)         ≤ 12 €   12-25 €    25-35 €    > 35 €
+  G5 A medida (€ por diagnóstico
+     pedido por empresa real)    ≤ 40 €   40-90 €    90-150 €   > 150 €
 
   Por qué: un cliente de Mallorca deja ~253 € en el primer encargo. Si se
   cierra 1 de cada 4 leads cualificados, a 35 € el lead el cliente cuesta
   ~140 € y el primer encargo ya paga el anuncio con margen. A 50 €, ya no.
+  En a medida, un proyecto vale ~3.000 € y se cierra ~1 de cada 4-5
+  diagnósticos: aguanta hasta ~150 € por diagnóstico.
 
 
 2. LOS CORTES (las únicas decisiones grandes)
@@ -47,7 +51,14 @@ lunes solo se vigila y se limpia.
     WOW      ≥ 3 clientes y lead cualificado ≤ 20 €.
     PARAR    0 clientes.
 
-  CIERRE · lunes 1 feb y domingo 7 feb (790 € gastados)
+  CORTE DE A MEDIDA · jueves 7 ene (168 € gastados en G5)
+    SEGUIR   ≥ 1 diagnóstico pedido por una empresa real.
+    WOW      ≥ 1 propuesta enviada o proyecto firmado.
+    PARAR    0 diagnósticos: G5 se queda en pausa.
+    Solo un corte: con ~1 lead cada 2 semanas, cortar antes sería decidir
+    con ruido. Es independiente de los cortes de la web.
+
+  CIERRE · lunes 1 feb y domingo 7 feb (hasta 1.086 € gastados)
     La brújula: FACTURACIÓN DEL PRIMER ENCARGO ÷ GASTO EN ANUNCIOS
       WOW > 2,5 · SEGUIR 1,2-2,5 · PIVOTAR 0,8-1,2 · PARAR < 0,8
     WOW o SEGUIR: hay canal. En febrero se repite con la regla de
@@ -105,14 +116,18 @@ lunes solo se vigila y se limpia.
 5. CUANDO SALE «WOW» (tenemos algo)
 -----------------------------------
   TENEMOS ALGO = en el corte 2, 3 clientes o más con el lead cualificado a
-  ≤ 20 €, o en el cierre, facturación ÷ gasto > 2,5.
+  ≤ 20 €, o en el cierre, facturación ÷ gasto > 2,5. En a medida: un
+  proyecto firmado.
   Entonces, y solo entonces, para febrero-marzo (temporada):
   · REGLA DE AUTOFINANCIACIÓN: el presupuesto nuevo sale, como mucho, del
     30 % de lo que los anuncios ya han facturado. Nunca de tu bolsillo.
   · Lo primero que se añade: Google Mallorca a su tope (12 €/día).
   · Lo segundo: la oferta ganadora del test de enero (web o Pack) como
     mensaje principal.
-  · Lo tercero, si sobra: SEO local o Ibiza y Menorca con la misma campaña.
+  · Si el WOW es de a medida: G5 a su tope (~5 €/día) y un caso real
+    (con permiso) en LinkedIn y en la landing /lp/a-medida/.
+  · Lo tercero, si sobra: SEO local o Ibiza y Menorca con las mismas
+    campañas.
 
 
 6. ALARMAS: PARAR YA, SIN ESPERAR AL LUNES
@@ -127,7 +142,7 @@ lunes solo se vigila y se limpia.
 
 7. DE DÓNDE SALEN LAS CIFRAS
 ----------------------------
-  Google Ads → Campañas → G2 (columnas: coste, clics, CTR, CPC medio,
+  Google Ads → Campañas → G2 y G5 (columnas: coste, clics, CTR, CPC medio,
                conversiones, nivel de calidad en Palabras clave)
   Meta → Administrador de anuncios → M3 (importe gastado, clics en el
          enlace, clientes potenciales)

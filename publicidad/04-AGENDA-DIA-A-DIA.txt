@@ -1,5 +1,5 @@
 ==============================================================================
-  COMA · AGENDA DÍA A DÍA (2 nov 2026 → 7 feb 2027) · TOPE 800 €
+  COMA · AGENDA DÍA A DÍA (2 nov 2026 → 7 feb 2027) · MÁXIMO 1.086 €
   Solo hay que ejecutar esto, en orden. PLAN = 01-PLAN-DE-CAMPANA.txt ·
   MÉTRICAS = 02-METRICAS-Y-DECISIONES.txt · TESTS = 03-MENSAJE-Y-TESTS-AB.txt
 ==============================================================================
@@ -21,25 +21,28 @@ Lun 2 nov  [ ] Formulario con endpoint y Google Tag Manager en Railway.
            [ ] Pedir permiso a las marcas citadas (Mallorca Live, Meliá,
                RCD Mallorca, Calvià).
 Mar 3 nov  [ ] Google Business Profile verificado. Pedir reseña a 20
-               clientes y un contacto que necesite web.
+               clientes.
+           [ ] Mensaje personal a TODOS los clientes actuales: ¿qué tarea os
+               quita horas? (texto en el PLAN, sección 7). Terminar el 6 nov.
 Mié 4 nov  [ ] Google Ads: cuenta, facturación, GA4, conversión «Lead».
            [ ] Meta: Business Manager, píxel, dominio, límite de gasto de la
                cuenta 64 €.
-Jue 5 nov  [ ] Google Ads Editor: importar google-ads-editor.csv y crear G2
-               EN PAUSA con textos-google.txt. Fecha de fin: 7 feb.
-           [ ] Regla automatizada: pausar G2 si el coste desde el 9 nov
-               llega a 280 €.
+Jue 5 nov  [ ] Google Ads Editor: importar google-ads-editor.csv y crear G2 y
+               G5 EN PAUSA con textos-google.txt. Fecha de fin: 7 feb.
+           [ ] Reglas automatizadas: pausar G2 si su coste desde el 9 nov
+               llega a 280 €, y G5 si llega a 112 €.
 Vie 6 nov  [ ] 30 mensajes a negocios de Mallorca con /lp/tu-empresa/
                (PLAN, sección 4).
-Sáb 7 nov  [ ] Prueba real: abrir la URL de G2 en el móvil, aceptar cookies,
-               enviar el formulario. Llega el correo con [origen].
+Sáb 7 nov  [ ] Prueba real: abrir las URL de G2 (/lp/mallorca/) y G5
+               (/lp/a-medida/) en el móvil, aceptar cookies, enviar el
+               formulario. Llega el correo con [origen].
 Dom 8 nov  [ ] ¿Aparece la conversión de la prueba en Google Ads? Si no,
                NO se enciende el lunes: se arregla primero.
 
 
-TRAMO 1 · VALIDAR (9 nov → 6 dic) · 10 €/día · tope 280 €
+TRAMO 1 · VALIDAR (9 nov → 6 dic) · 14 €/día · tope 392 €
 ------------------------------------------------------------------------------
-Lun 9 nov  [ ] 9:00 · Encender G2 (10 €/día).
+Lun 9 nov  [ ] 9:00 · Encender G2 (10 €/día) y G5 (4 €/día).
 Mar 10 nov [ ] Redes: M2-A «La temporada se gana en invierno» (TEST 1).
 Vie 13 nov [ ] Alarmas: ¿gasta? ¿Hay clics? ¿Se registran conversiones?
 Lun 16 nov [ ] Primer lunes: términos de búsqueda y negativas.
@@ -55,17 +58,20 @@ CORTE 1 · LUNES 7 DE DICIEMBRE (MÉTRICAS, sección 2)
 ------------------------------------------------------------------------------
 Lun 7 dic  [ ] Contar leads cualificados, clientes y € por lead (28 días).
                SEGUIR / PIVOTAR → G2 a 9 €/día y regla de coste a 406 €.
-               PARAR → pausar G2. Fin del plan (gasto: 280 €).
+               PARAR → pausar G2 (gasto de la web: 280 €).
+           [ ] G5 sigue igual (su corte es el 7 ene). Su regla de coste,
+               a 168 €.
            [ ] TEST 1: ¿qué vídeo tuvo más retención? Se publica de nuevo
                mañana.
 
 
-TRAMO 2 · CONFIRMAR (7 → 20 dic) · 9 €/día · tope acumulado 406 €
+TRAMO 2 · CONFIRMAR (7 → 20 dic) · 13 €/día · tope acumulado 574 €
 ------------------------------------------------------------------------------
 Mar 8 dic  [ ] Redes: el ganador del TEST 1.
 Lun 14 dic [ ] Lunes.
 Mar 15 dic [ ] Redes: M2-B «Buenos días. Good morning…».
-Lun 21 dic [ ] Pausar G2 (Navidad). Si se pivotó: decidir hoy (MÉTRICAS, 2).
+Lun 21 dic [ ] Pausar G2 y G5 (Navidad). Si se pivotó la web: decidir hoy
+               (MÉTRICAS, 2).
 
 
 NAVIDAD · PAUSA (21 dic → 6 ene) · 0 €
@@ -75,8 +81,11 @@ NAVIDAD · PAUSA (21 dic → 6 ene) · 0 €
 
 CORTE 2 · JUEVES 7 DE ENERO
 ------------------------------------------------------------------------------
-Jue 7 ene  [ ] ¿Hay al menos 1 cliente firmado que vino de los anuncios?
-               NO → G2 sigue en pausa. Fin del plan (gasto: 406 €).
+Jue 7 ene  [ ] A MEDIDA: ¿al menos 1 diagnóstico pedido por una empresa real?
+               SÍ → G5 a 4 €/día y regla de coste a 296 €.
+               NO → G5 sigue en pausa (gasto: 168 €).
+           [ ] WEB: ¿al menos 1 cliente firmado que vino de los anuncios?
+               NO → G2 sigue en pausa (gasto: 406 €).
                SÍ → seguir:
            [ ] G2 a 10 €/día. Regla de coste a 726 €.
            [ ] TEST 2: crear el experimento Web vs Pack en G2 (TESTS, 4).
@@ -85,14 +94,15 @@ Jue 7 ene  [ ] ¿Hay al menos 1 cliente firmado que vino de los anuncios?
                temporada con la regla de autofinanciación (MÉTRICAS, 5).
 
 
-TRAMO 3 · RENTABILIZAR (7 ene → 7 feb) · 12 €/día · tope total 790 €
+TRAMO 3 · RENTABILIZAR (7 ene → 7 feb) · hasta 16 €/día · tope total 1.086 €
 ------------------------------------------------------------------------------
 Lun 11 ene [ ] Lunes. Redes (mar 12): M2-A Pack Temporada.
+           [ ] Segundo mensaje a los clientes que no contestaron en noviembre.
 Lun 18 ene [ ] Lunes. Redes (mar 19): M1-F imagen facilidad.
 Lun 25 ene [ ] Lunes. Redes (mar 26): M1-D autoridad o el ganador.
 Lun 1 feb  [ ] Cierre provisional: facturación ÷ gasto (MÉTRICAS, 2).
                TEST 2 provisional: ¿Web o Pack?
                Redes (mar 2): M2-D imagen Pack.
-Dom 7 feb  [ ] Fin. Apagar G2 y M3. Veredicto del TEST 2. Última fila del
+Dom 7 feb  [ ] Fin. Apagar G2, G5 y M3. Veredicto del TEST 2. Última fila del
                cuadro semanal. Si hay WOW o SEGUIR: plan de temporada
                pagado con lo facturado.

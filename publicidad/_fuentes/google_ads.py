@@ -82,12 +82,43 @@ D_PACK = [
 ]
 MLL_LOCAL = ["diseño web mallorca", "diseño web palma", "pagina web mallorca", "paginas web palma de mallorca", "agencia diseño web mallorca", "agencia marketing mallorca", "empresa paginas web mallorca", "diseñador web mallorca", "diseño web baleares", "agencia de comunicacion mallorca"]
 
-# Una sola campaña: Google Mallorca (la de más retorno por euro según la simulación).
+H_MEDIDA = [
+    ("Software a Medida en Mallorca", 1), ("Tareas que se Hacen Solas", 1),
+    ("Automatización e IA a Medida", 0), ("Diagnóstico Gratis de 30 Min", 0), ("Precio Cerrado por Escrito", 0),
+    ("Agencia de Palma desde 1997", 0), ("Conectamos tus Programas", 0), ("WhatsApp que se Contesta Solo", 0),
+    ("Presupuestos en un Clic", 0), ("Informes que se Hacen Solos", 0), ("Agentes de IA con Supervisión", 0),
+    ("Sin Cambiar tus Programas", 0), ("Más de 100 Pymes Confían", 0), ("Reunión en Palma o por Vídeo", 0),
+    ("Pide tu Diagnóstico Gratis", 0),
+]
+D_MEDIDA = [
+    "Automatizaciones, integraciones, agentes de IA y apps internas hechas para vuestro caso.",
+    "Diagnóstico gratis de 30 min: las tareas que más horas os quitan y cómo resolverlas.",
+    "Precio cerrado por escrito antes de empezar. Nos conectamos a los programas que ya usáis.",
+    "Agencia de Palma desde 1997 y más de 100 pymes. Reunión en Paseo Mallorca 16 o por vídeo.",
+]
+MEDIDA_SOFT = ["software a medida", "desarrollo software a medida", "programa a medida para empresa", "aplicacion a medida", "desarrollo aplicaciones empresa", "programador mallorca", "programador palma", "desarrollo software mallorca", "empresa software mallorca", "empresa desarrollo software palma"]
+MEDIDA_AUTO = ["automatizar procesos", "automatizacion de procesos empresa", "automatizar tareas empresa", "automatizar facturas", "integrar programas empresa", "conectar crm", "consultor automatizacion", "experto n8n", "experto make automatizacion"]
+MEDIDA_IA = ["inteligencia artificial para empresas", "ia para empresas", "chatbot para empresa", "agente ia empresa", "chatbot whatsapp empresa", "implantar ia en empresa", "consultoria ia mallorca", "consultoria inteligencia artificial"]
+NEG_MEDIDA = ["curso", "cursos", "gratis", "gratuito", "master", "formacion", "aprender", "tutorial", "empleo", "trabajo", "oferta de empleo", "practicas", "sueldo", "que es", "descargar", "plantilla", "chatgpt gratis", "pdf", "tfg", "universidad", "freelance"]
+SITELINKS_MEDIDA = [
+    ("Automatizaciones", "Leads, facturas e informes", "que se gestionan solos", "/automatizaciones/"),
+    ("Agentes de IA", "Atienden y reservan 24/7", "con supervisión humana", "/agentes-ia/"),
+    ("Para despachos", "Facturas que se leen solas", "directas a tu programa contable", "/despachos/"),
+    ("Contacto", "Paseo Mallorca 16, Palma", "Te respondemos personalmente", "/contacto/"),
+]
+
+# Google Mallorca (web) y Google Mallorca (a medida): las dos de más retorno por euro en la simulación.
+# El grupo PACK solo se usa en el experimento de enero (03-MENSAJE-Y-TESTS-AB.txt). (la de más retorno por euro según la simulación).
 # El grupo PACK solo se usa en el experimento de enero (03-MENSAJE-Y-TESTS-AB.txt).
 CAMPAIGNS = [
     dict(id="G2", name="COMA | Search | Web | Mallorca", camp="web-mallorca", budget="10 €/día (9 €/día del 7 al 20 dic; pausada del 21 dic al 6 ene)", geo="Illes Balears (solo Presencia)", groups=[
         dict(name="Mallorca local", kws=MLL_LOCAL, path="/lp/mallorca/", content="rsa-local", h=H_MLL, d=D_MLL, p=("Mallorca", "Web")),
         dict(name="Genérico en Mallorca", kws=GEN_PRECIO + GEN_NEGOCIO + GEN_PRO, path="/lp/mallorca/", content="rsa-generico", h=H_MLL, d=D_MLL, p=("Mallorca", "Web-99")),
+    ]),
+    dict(id="G5", name="COMA | Search | A medida | Mallorca", camp="a-medida", budget="4 €/día (pausada del 21 dic al 6 ene)", geo="Illes Balears (solo Presencia)", negs="medida", groups=[
+        dict(name="Software a medida", kws=MEDIDA_SOFT, path="/lp/a-medida/", content="rsa-software", h=H_MEDIDA, d=D_MEDIDA, p=("A-Medida", "Software")),
+        dict(name="Automatizar", kws=MEDIDA_AUTO, path="/lp/a-medida/", content="rsa-automatizar", h=H_MEDIDA, d=D_MEDIDA, p=("A-Medida", "Automatizar")),
+        dict(name="IA para empresas", kws=MEDIDA_IA, path="/lp/a-medida/", content="rsa-ia", h=H_MEDIDA, d=D_MEDIDA, p=("A-Medida", "IA")),
     ]),
     dict(id="G2-PACK", name="COMA | Search | Web | Mallorca — anuncios del EXPERIMENTO (desde 7 ene)", camp="web-mallorca", budget="el de G2 (el experimento reparte 50/50)", geo="la de G2", groups=[
         dict(name="Mallorca local (experimento)", kws=[], path="/lp/temporada/", content="rsa-pack-local", h=H_PACK, d=D_PACK, p=("Mallorca", "Temporada")),
@@ -118,7 +149,7 @@ for c in CAMPAIGNS:
         for p in g["p"]:
             if len(p) > 15: err.append(f"ruta >15: {p}")
         if not 3 <= len(g["h"]) <= 15: err.append(f"{g['name']}: {len(g['h'])} títulos")
-for t, l1, l2, _ in SITELINKS:
+for t, l1, l2, _ in SITELINKS + SITELINKS_MEDIDA:
     if len(t) > 25 or len(l1) > 35 or len(l2) > 35: err.append(f"enlace: {t}")
 for x in CALLOUTS:
     if len(x) > 25: err.append(f"destacado: {x}")
@@ -139,8 +170,8 @@ with open(os.path.join(OUT, "google-ads-editor.csv"), "w", newline="", encoding=
                 types = ["Exact"] if g.get("exact_only") else ["Phrase", "Exact"]
                 for t in types:
                     w.writerow([c["name"], g["name"], k, t, url(g["path"], c["camp"], g["content"])])
-        if c["id"] == "G2":
-            for n in NEG:
+        if c["id"] in ("G2", "G5"):
+            for n in NEG_MEDIDA if c["id"] == "G5" else NEG:
                 w.writerow([c["name"], "", n, "Campaign Negative Phrase", ""])
 
 # ------------------------------------------------------------------ texto para copiar y pegar
@@ -169,9 +200,17 @@ for c in CAMPAIGNS:
         L.append("  Descripciones (máx. 90):")
         for d in g["d"]:
             L.append(f"    {d}")
+    if c["id"] == "G5":
+        L.append("")
+        L.append("  Recursos propios de G5 (no usar los de la web):")
+        L.append("  Enlaces de sitio:")
+        for t, l1, l2, p in SITELINKS_MEDIDA:
+            L.append(f"    {t} · {l1} · {l2} · {BASE}{p}")
+        L.append("  Textos destacados: Diagnóstico gratis · Precio cerrado · Desde 1997 · +100 pymes · Reunión en Palma")
+        L.append("  Negativas (lista «COMA negativas a medida»): " + ", ".join(NEG_MEDIDA))
     L.append("")
 L.append("=" * 78)
-L.append("RECURSOS COMUNES (se añaden a nivel de cuenta y valen para todas)")
+L.append("RECURSOS DE G2 (WEB): se añaden a nivel de campaña, solo en G2")
 L.append("=" * 78)
 L.append("Enlaces de sitio (texto · línea 1 · línea 2 · URL):")
 for t, l1, l2, p in SITELINKS:

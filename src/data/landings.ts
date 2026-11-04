@@ -17,12 +17,14 @@ export interface Landing {
   bullets: string[];
   cta: string;
   /** Demo inmersiva que se muestra bajo el titular. */
-  demo: "geo" | "agent" | "brand";
+  demo: "geo" | "agent" | "brand" | "flow";
   offer: { label: string; price: string; note: string };
   steps: Item[];
   faq: Item[];
   /** Interés que se adjunta al lead. */
   interest: string;
+  /** Texto del botón de la cabecera. Por defecto, «Web desde 99 €». */
+  headerCta?: string;
   /** Si es true, el titular admite ?e=Empresa&s=sector&c=ciudad (outbound personalizado). */
   personalize?: boolean;
 }
@@ -240,6 +242,63 @@ export const landings: Landing[] = [
       },
     ],
     interest: "Pack Temporada",
+    headerCta: `Pack Temporada · ${pack} €`,
+  },
+  {
+    slug: "a-medida",
+    title: "Software y automatización a medida para tu empresa",
+    description:
+      "Automatizaciones, integraciones, agentes de IA y aplicaciones internas a medida para pymes. Diagnóstico gratis de 30 minutos y propuesta con precio cerrado. Agencia de Palma desde 1997.",
+    eyebrow: "A medida · Palma desde 1997",
+    h1: "Si una tarea os quita horas, la resolvemos a medida",
+    lead: "Automatizaciones, integraciones, agentes de IA y aplicaciones internas hechas para vuestro caso, no para el de todos. Empezamos con un diagnóstico gratis y una propuesta con precio cerrado.",
+    bullets: [
+      "WhatsApps y emails que se contestan solos, con supervisión humana",
+      "Presupuestos, facturas e informes que se hacen solos",
+      "Datos que pasan solos entre vuestros programas",
+      "Diagnóstico gratis y precio cerrado antes de empezar",
+    ],
+    cta: "Pedir diagnóstico gratis",
+    demo: "flow",
+    offer: {
+      label: "Diagnóstico",
+      price: "Gratis",
+      note: "30 minutos. Salís con las tareas que más horas os quitan y una propuesta con precio cerrado.",
+    },
+    steps: [
+      {
+        title: "Diagnóstico",
+        text: "Nos contáis qué os quita tiempo y vemos qué tiene sentido resolver.",
+      },
+      {
+        title: "Propuesta",
+        text: "Alcance, plazos y precio cerrado, por escrito, antes de empezar.",
+      },
+      {
+        title: "Lo construimos",
+        text: "Lo probamos con vuestros datos, formamos al equipo y damos soporte.",
+      },
+    ],
+    faq: [
+      {
+        title: "¿Qué tipo de problemas resolvéis?",
+        text: "Cualquier tarea repetitiva o que dependa de pasar datos a mano: atención a clientes, presupuestos, facturas, informes, reservas, inventario o la conexión entre programas que no se hablan.",
+      },
+      {
+        title: "¿Cuánto cuesta?",
+        text: "Depende del alcance. Lo sabéis antes de empezar: precio cerrado por escrito tras el diagnóstico, que es gratis.",
+      },
+      {
+        title: "¿Tengo que cambiar mis programas?",
+        text: "No. Nos conectamos a lo que ya usáis (CRM, facturación, email, Google Workspace, Microsoft 365…) y solo desarrollamos lo que falta.",
+      },
+      {
+        title: "¿Trabajáis fuera de Mallorca?",
+        text: "Sí, por videollamada. En Palma, también en persona: estamos en el Paseo Mallorca, 16.",
+      },
+    ],
+    interest: "A medida",
+    headerCta: "Diagnóstico gratis",
   },
   {
     slug: "tu-empresa",

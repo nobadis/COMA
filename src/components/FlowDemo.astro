@@ -1,6 +1,12 @@
 ---
 import Arrow from "./Arrow.astro";
 
+interface Props {
+  /** En las landings (/lp/) no se enlaza fuera: false oculta el enlace al servicio. */
+  showLink?: boolean;
+}
+const { showLink = true } = Astro.props;
+
 const steps = [
   { k: "Trigger", t: "Llega un contacto", s: "Formulario web, Instagram o anuncio" },
   { k: "IA", t: "Se clasifica solo", s: "Interés, urgencia y presupuesto" },
@@ -20,7 +26,7 @@ const steps = [
           Conectamos tus herramientas para que cada lead, factura o informe siga su camino sin que
           nadie tenga que copiar y pegar.
         </p>
-        <a href="/automatizaciones/" class="link-arrow">Ver automatizaciones <Arrow /></a>
+        {showLink && <a href="/automatizaciones/" class="link-arrow">Ver automatizaciones <Arrow /></a>}
       </div>
     </div>
 

@@ -9,6 +9,7 @@ import MinimalFoot from "../../components/MinimalFoot.astro";
 import GeoDemo from "../../components/GeoDemo.astro";
 import AgentDemo from "../../components/AgentDemo.astro";
 import BrandPlay from "../../components/BrandPlay.astro";
+import FlowDemo from "../../components/FlowDemo.astro";
 import { landings, type Landing } from "../../data/landings";
 import { years, site } from "../../data/site";
 
@@ -19,7 +20,7 @@ const { l } = Astro.props as { l: Landing };
 ---
 
 <Base title={l.title} description={l.description} minimal>
-  <MinimalBar slot="header" />
+  <MinimalBar slot="header" cta={l.headerCta} />
   <MinimalFoot slot="footer" />
   <section class="lp">
     <div class="wrap lp__grid">
@@ -56,6 +57,7 @@ const { l } = Astro.props as { l: Landing };
   {l.demo === "geo" && <GeoDemo showLink={false} />}
   {l.demo === "agent" && <AgentDemo showLink={false} />}
   {l.demo === "brand" && <BrandPlay />}
+  {l.demo === "flow" && <FlowDemo showLink={false} />}
 
   <Trust />
   <span hidden data-track-load="view_offer" data-track-label={`lp-${l.slug}`}></span>
