@@ -117,7 +117,12 @@ if (header) {
   let stuck: boolean | null = null;
   onScrollFrame(() => {
     const y = window.scrollY;
-    const h = y > 160 && y > lastY + 4;
+    // Solo cuenta el scroll real: un fotograma sin movimiento no debe volver a mostrarla.
+    if (y === lastY) return;
+    // Se oculta al bajar y reaparece al subir (o cerca del inicio). Los pasos mínimos del final
+    // de un scroll con inercia no cambian nada: antes la volvían a mostrar al acabar de bajar.
+    const d = y - lastY;
+    const h = y <= 160 ? false : d > 4 ? true : d < -4 ? false : !!hidden;
     const s = y > 40;
     lastY = y;
     if (h === hidden && s === stuck) return;
