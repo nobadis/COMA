@@ -34,10 +34,10 @@
   .files a { display: inline-flex; gap: 8px; align-items: center; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 700; padding: 12px 18px; font-size: 15px; }
   .files a.alt { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
   /* cifras */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0; border: 1px solid var(--ink); margin-top: 26px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 0; border: 1px solid var(--ink); margin-top: 26px; }
   .stats .stat { box-shadow: 0 0 0 1px var(--ink); }
   .stat { background: var(--paper); padding: 22px; }
-  .stat b { display: block; font-size: 44px; font-weight: 700; font-stretch: 110%; letter-spacing: -.03em; line-height: 1.05; }
+  .stat b { display: block; white-space: nowrap; font-size: clamp(30px, 3vw, 40px); font-weight: 700; font-stretch: 110%; letter-spacing: -.03em; line-height: 1.05; }
   .stat span { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; }
   .stat.red { background: var(--red); color: #fff; } .stat.red span { color: rgba(255,255,255,.85); }
   /* fórmula */
@@ -130,9 +130,9 @@
 <header>
   <div class="wrap">
     <div class="logo"><span>COMA</span><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
-    <div class="eyebrow" style="margin-top:40px">Plan de publicidad · tope 800 € · 9 nov 2026 → 7 feb 2027</div>
-    <h1>800 € donde más rinden. Y solo si funcionan<span class="c">.</span></h1>
-    <p class="lead">Todo el dinero de pago va a Google, a gente de Mallorca que ya busca una web. Se paga en tres tramos con dos cortes: si no hay señal, se para. Lo más que te juegas de tu bolsillo es el primer tramo, 280 €. Los vídeos se publican gratis.</p>
+    <div class="eyebrow" style="margin-top:40px">Plan de publicidad · máximo 1.086 € · 9 nov 2026 → 7 feb 2027</div>
+    <h1>Dos líneas, un canal. Y solo si funcionan<span class="c">.</span></h1>
+    <p class="lead">Todo el dinero de pago va a Google, a gente de Mallorca que ya busca lo que haces: la web desde 99 € (el motor) y las soluciones a medida (el ticket alto). Se paga por tramos con cortes: si no hay señal, se para. Antes de ver resultados arriesgas 392 €. Lo demás es gratis: tus clientes, las redes y los vídeos.</p>
     <div class="files">
       <a href="04-AGENDA-DIA-A-DIA.txt">Qué hacer cada día (TXT) →</a>
       <a class="alt" href="01-PLAN-DE-CAMPANA.txt">Plan exacto</a>
@@ -149,13 +149,14 @@
 <section>
   <div class="wrap">
     <div class="eyebrow">La estrategia</div>
-    <h2>Un canal, tres tramos, dos cortes<span class="c">.</span></h2>
+    <h2>Un canal, dos líneas, tramos con cortes<span class="c">.</span></h2>
     <div class="formula">
-      <div><b>Intención, no alcance</b><p>En Google, quien busca «diseño web Mallorca» ya quiere una web. No hay que convencerle de que la necesita, solo de que la haga COMA.</p></div>
+      <div><b>Intención, no alcance</b><p>Quien busca «diseño web Mallorca» o «software a medida Palma» ya ha decidido. Solo hay que convencerle de que lo haga COMA.</p></div>
+      <div><b>Web: el motor</b><p>Muchos leads, rápidos y baratos (~25 €). Cada cliente es alguien a quien ofrecer después lo demás.</p></div>
+      <div><b>A medida: el ticket alto</b><p>«Si una tarea os quita horas, la resolvemos a medida». Pocos leads, pero un proyecto vale como 10-30 webs.</p></div>
       <div><b>Jugar en casa</b><p>29 años en Palma, referencias que la gente conoce, reunión en persona y webs en inglés y alemán para la temporada.</p></div>
-      <div><b>El mejor euro</b><p>En la simulación, el lead cualificado sale a unos 25 €. En Meta en frío, a unos 48 €; en Google España, a unos 65 €.</p></div>
-      <div><b>Pagar por tramos</b><p>280 € para saber si funciona. Solo se sigue con señal, y lo siguiente se paga con lo que ya se ha facturado.</p></div>
-      <div><b>Lo gratis suma</b><p>Vídeos en redes, reseñas en Google, recomendaciones y 30 mensajes a negocios de la isla.</p></div>
+      <div><b>Pagar por tramos</b><p>392 € para saber si funciona. Solo se sigue con señal, y lo siguiente se paga con lo que ya se ha facturado.</p></div>
+      <div><b>Lo gratis suma</b><p>Un mensaje personal a tus +100 clientes, vídeos en redes, reseñas y preguntar a cada lead qué le quita horas.</p></div>
     </div>
   </div>
 </section>
@@ -163,18 +164,18 @@
 <section>
   <div class="wrap">
     <div class="eyebrow">Dinero y calendario</div>
-    <h2>790 € en 13 semanas. Tope: 800 €<span class="c">.</span></h2>
+    <h2>1.086 € como máximo, en 13 semanas<span class="c">.</span></h2>
     <div class="camps" id="tramos"></div>
-    <div class="chart" id="weeks"><div class="legend"><span><i style="background:var(--google)"></i>Google Mallorca</span><span><i style="background:var(--meta)"></i>Meta remarketing</span></div><div class="tip"></div></div>
-    <p class="small muted" style="margin-top:12px">Tope blindado: en Google, una regla automatizada pausa la campaña al llegar al límite de cada tramo (280 €, 406 € y 726 €); en Meta, el límite de gasto de la cuenta es de 64 €. Lo que sobre de un tramo no pasa al siguiente.</p>
+    <div class="chart" id="weeks"><div class="legend"><span><i style="background:var(--google)"></i>Google Mallorca (web + a medida)</span><span><i style="background:var(--meta)"></i>Meta remarketing</span></div><div class="tip"></div></div>
+    <p class="small muted" style="margin-top:12px">Tope blindado: en Google, una regla automatizada pausa cada campaña al llegar al límite de su tramo (web: 280, 406 y 726 €; a medida: 112, 168 y 296 €); en Meta, el límite de gasto de la cuenta es de 64 €. Lo que sobre de un tramo no pasa al siguiente.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow">¿Y si pongo más?</div>
-    <h2>Más dinero no compra más seguridad<span class="c">.</span></h2>
-    <p class="lead">Las mismas simulaciones, gastando de otra forma o gastando más. La probabilidad de ganar dinero se queda en el 85-93 % en todas: lo extra trae un par de clientes más, no más seguridad. Por eso el tope es 800 €.</p>
+    <div class="eyebrow">Alternativas</div>
+    <h2>Por qué esto y no otra cosa<span class="c">.</span></h2>
+    <p class="lead">Las mismas simulaciones, gastando de otra forma. Con el mismo dinero, la línea a medida deja unos 500 € más de beneficio que poner más en la web o en Meta. Los anuncios de IA genérica se descartaron: con 300-600 € dan un 14-25 % de probabilidad de vender algo.</p>
     <div class="scroll"><table class="tbl" id="alts"></table></div>
   </div>
 </section>
@@ -195,7 +196,7 @@
         <div class="scroll"><table class="tbl" id="totals" style="margin-top:8px"></table></div>
       </div>
     </div>
-    <p class="small muted" style="margin-top:14px">Valor de un cliente de Mallorca (precios de la web): unos 253 € el primer encargo y 332 € más en un año. Margen supuesto: 50 % de lo puntual y 75 % de lo mensual. Cámbialo en <code>5-simulacion/simulacion.py</code> y vuelve a ejecutarlo.</p>
+    <p class="small muted" style="margin-top:14px">Valor de un cliente de web en Mallorca (precios de la web): unos 253 € el primer encargo y 332 € más en un año. Proyecto a medida: entre 1.200 y 8.000 € (lo más probable, 3.000 €); ajústalo a tus proyectos reales. Margen supuesto: 50 % de lo puntual y 75 % de lo mensual. Cámbialo en <code>5-simulacion/simulacion.py</code> y vuelve a ejecutarlo.</p>
   </div>
 </section>
 
@@ -213,8 +214,9 @@
     <div class="sem">
       <div class="sem__in">
         <label>Momento<select id="sMom">
-          <option value="c1">Corte 1 · lun 7 dic</option>
-          <option value="c2">Corte 2 · jue 7 ene</option>
+          <option value="c1">Web · corte 1 · lun 7 dic</option>
+          <option value="c2">Web · corte 2 · jue 7 ene</option>
+          <option value="med">A medida · corte · jue 7 ene (leads cualificados = diagnósticos)</option>
           <option value="fin">Cierre · 1-7 feb</option>
           <option value="lun">Un lunes cualquiera (solo vigilar)</option>
         </select></label>
@@ -237,6 +239,8 @@
       <div><b>Facilidad</b><p>Nos cuentas en 2 minutos. Nosotros la diseñamos, la publicamos y la dejamos funcionando.</p></div>
       <div><b>Nunca</b><p>«Barato», plazos sin propuesta, cifras de resultados, «primer puesto» ni descuentos.</p></div>
     </div>
+    <h3 style="margin-top:40px">Y la línea a medida: «Si una tarea os quita horas, la resolvemos a medida.»</h3>
+    <p class="muted" style="margin-top:8px;max-width:760px">«Cualquier problema» es la promesa; la prueba son ejemplos que todo el mundo reconoce: WhatsApps que se contestan solos, presupuestos en un clic, datos que pasan solos entre programas, informes que se hacen solos. Entrada: diagnóstico gratis de 30 minutos. Salida: propuesta con precio cerrado. Landing: <code>/lp/a-medida/</code>. Nunca: «la IA lo hace todo» ni «sustituye a tu equipo».</p>
     <div class="camps" style="margin-top:34px">
       <div class="camp"><div><span class="tag o">Gratis</span> <span class="role">9 nov → 6 dic</span></div><h3>Test 1 · ¿Qué ángulo engancha más?</h3><p>Un vídeo por semana en las redes de COMA: temporada, facilidad, precio y transparencia. Gana el que más gente ve pasados los 3 segundos.</p><p class="small">El ganador se vuelve a publicar, inspira los títulos de Google y es la primera pieza del remarketing.</p></div>
       <div class="camp star"><div><span class="tag g">Google</span> <span class="role">7 ene → 7 feb</span></div><h3>Test 2 · ¿Web de 99 € o Pack Temporada de 346 €?</h3><p>Experimento de Google al 50 % dentro de la misma campaña y con el mismo dinero. El Pack lleva a su propia landing, /lp/temporada/.</p><p class="small"><b style="color:var(--ink)">Gana</b> el que más facture por euro (al principio, el que tenga más euros en propuestas). Será el mensaje de la temporada.</p></div>
@@ -268,7 +272,7 @@
     <h2>Donde se gana el dinero de verdad<span class="c">.</span></h2>
     <div class="formula">
       <div><b>Respuesta en menos de 1 hora</b><p>Mejor WhatsApp o llamada. Un lead que espera al día siguiente ya ha pedido otros tres presupuestos.</p></div>
-      <div><b>Tres preguntas y una más</b><p>¿Qué negocio es? ¿Qué debe conseguir la web? ¿Para cuándo la necesita? Y: ¿qué te hizo escribirnos?</p></div>
+      <div><b>Tres preguntas y dos más</b><p>¿Qué negocio es? ¿Qué debe conseguir la web? ¿Para cuándo? Y: ¿qué te hizo escribirnos? ¿Hay alguna tarea que os quite horas?</p></div>
       <div><b>Propuesta en 24 h</b><p>Los 99 € y los 2-3 extras que de verdad le sirven. Si trabaja con turistas, el Pack Temporada.</p></div>
       <div><b>Seguimiento</b><p>Día 2, día 5 y día 10.</p></div>
       <div><b>Al entregar</b><p>Alojamiento, SEO local, la reseña en Google y un contacto que necesite web.</p></div>
@@ -297,16 +301,17 @@
 </footer>
 
 <script>
-const DATA = {"iteraciones": 20000, "plan": {"G2": [10, 9, 0, 10], "M3": [0, 0, 0, 2]}, "nombres": {"G2": "Google · Web Mallorca", "M3": "Meta · Remarketing", "G4": "Google · SEO local", "M2": "Meta · Mallorca (frío)", "G1": "Google · España"}, "fases": [{"id": "T1", "nombre": "Validar", "inicio": "2026-11-09", "fin": "2026-12-06", "dias": 28}, {"id": "T2", "nombre": "Confirmar", "inicio": "2026-12-07", "fin": "2026-12-20", "dias": 14}, {"id": "NAV", "nombre": "Navidad: pausa", "inicio": "2026-12-21", "fin": "2027-01-06", "dias": 17}, {"id": "T3", "nombre": "Rentabilizar", "inicio": "2027-01-07", "fin": "2027-02-07", "dias": 32}], "tope": 800, "asignado": 790, "base": {"total": {"spend": {"p10": 688.7805472781843, "p50": 790.0, "p90": 790.0, "media": 743.8568737751169}, "leads": {"p10": 22.0, "p50": 47.0, "p90": 75.0, "media": 47.9805}, "q": {"p10": 14.0, "p50": 31.0, "p90": 51.0, "media": 32.0665}, "cl": {"p10": 2.0, "p50": 8.0, "p90": 16.0, "media": 8.7674}, "rev1": {"p10": 561.0279304018153, "p50": 2083.4095332892057, "p90": 4081.000171597764, "media": 2257.4515925876353}, "rev12": {"p10": 1276.5988345344622, "p50": 4781.475882468928, "p90": 9600.435782878421, "media": 5252.951758425914}, "benef12": {"p10": 25.265448409827158, "p50": 2277.388840637539, "p90": 5416.6232579617645, "media": 2631.49404689741}}, "roi_primer_encargo": {"p10": 0.7101619372174878, "p50": 2.653116929276603, "p90": 5.251669002246631, "media": 2.885773877011311}, "roi_12m": {"p10": 1.6159478918157748, "p50": 6.082211531305895, "p90": 12.335279521459864, "media": 6.714838444746383}, "cpl_cualificado": {"p10": 15.192307692307692, "p50": 25.483870967741936, "p90": 49.375, "media": 31.65448709683661}, "prob": {"pasa_corte_1": 0.9261, "pasa_corte_2": 0.9167, "primer_encargo_cubre_anuncios": 0.87575, "beneficio_12m_positivo": 0.9015, "al_menos_1_cliente": 0.9167, "al_menos_10_clientes": 0.3962}, "peor_caso_bolsillo_p95": 280.0, "por_campana": {"G2": {"gasto": 726.0, "leads_cualificados": 27.0, "clientes": 7.6177, "cpl_cualificado": 26.88888888888889}, "M3": {"gasto": 64.0, "leads_cualificados": 4.0, "clientes": 1.1497, "cpl_cualificado": 16.0}}}, "histograma_benef12": {"conteos": [2354, 2445, 3577, 3503, 2609, 1952, 1290, 824, 525, 368, 207, 133, 82, 55, 27, 14, 9, 6, 7, 7, 2, 2, 1, 1], "bordes": [-537, 282, 1100, 1918, 2736, 3555, 4373, 5191, 6010, 6828, 7646, 8464, 9283, 10101, 10919, 11738, 12556, 13374, 14192, 15011, 15829, 16647, 17465, 18284, 19102]}, "pesimista": {"total": {"spend": {"p10": 280.0, "p50": 790.0, "p90": 790.0, "media": 587.3333787506634}, "leads": {"p10": 4.0, "p50": 18.0, "p90": 37.0, "media": 19.05265}, "q": {"p10": 2.0, "p50": 12.0, "p90": 26.0, "media": 12.763}, "cl": {"p10": 0.0, "p50": 2.0, "p90": 6.0, "media": 2.4574}, "rev1": {"p10": 0.0, "p50": 505.51060358621066, "p90": 1583.402338862857, "media": 633.2931969232635}, "rev12": {"p10": 0.0, "p50": 1157.645096481762, "p90": 3704.53373516215, "media": 1474.095263017572}, "benef12": {"p10": -280.0, "p50": -47.085220456368404, "p90": 1605.6556773799168, "media": 359.9147692816998}}, "roi_primer_encargo": {"p10": 0.0, "p50": 0.6419349113573407, "p90": 2.0353285225709534, "media": 0.8102508120013062}, "roi_12m": {"p10": 0.0, "p50": 1.471641326875109, "p90": 4.7621636389846635, "media": 1.8859212212456231}, "cpl_cualificado": {"p10": 30.384615384615383, "p50": 56.0, "p90": 140.0, "media": 82.85346622902343}, "prob": {"pasa_corte_1": 0.62395, "pasa_corte_2": 0.6065, "primer_encargo_cubre_anuncios": 0.37325, "beneficio_12m_positivo": 0.48595, "al_menos_1_cliente": 0.6065, "al_menos_10_clientes": 0.0137}, "peor_caso_bolsillo_p95": 458.50364781924617, "por_campana": {"G2": {"gasto": 726.0, "leads_cualificados": 10.0, "clientes": 2.18355, "cpl_cualificado": 56.0}, "M3": {"gasto": 64.0, "leads_cualificados": 1.0, "clientes": 0.27385, "cpl_cualificado": 32.0}}}, "alternativas": [{"nombre": "El plan (Google Mallorca + remarketing en enero)", "base": {"gasto": 790.0, "clientes": 8.0, "benef12": 2277.388840637539, "prob_beneficio": 0.9015, "prob_10_clientes": 0.3962, "roi12": 6.082211531305895}, "pesimista": {"gasto": 790.0, "clientes": 2.0, "benef12": -47.085220456368404, "prob_beneficio": 0.48595, "prob_10_clientes": 0.0137, "roi12": 1.471641326875109}}, {"nombre": "Mismo dinero, mitad en Meta Mallorca", "base": {"gasto": 790.0, "clientes": 7.0, "benef12": 1937.0354291862868, "prob_beneficio": 0.86835, "prob_10_clientes": 0.30965, "roi12": 5.3920202197774465}, "pesimista": {"gasto": 790.0, "clientes": 2.0, "benef12": -266.44644071855043, "prob_beneficio": 0.429, "prob_10_clientes": 0.00665, "roi12": 1.0431972374229308}}, {"nombre": "Mismo dinero, parte en Google España", "base": {"gasto": 790.0, "clientes": 7.0, "benef12": 1707.891657631145, "prob_beneficio": 0.85135, "prob_10_clientes": 0.2718, "roi12": 4.93460761269286}, "pesimista": {"gasto": 790.0, "clientes": 1.0, "benef12": -280.0, "prob_beneficio": 0.39855, "prob_10_clientes": 0.0053, "roi12": 0.7850238840843295}}, {"nombre": "+160 €: Google Mallorca a tope (12 €/día)", "base": {"gasto": 952.0, "clientes": 10.0, "benef12": 2685.31127159536, "prob_beneficio": 0.92515, "prob_10_clientes": 0.516, "roi12": 6.1162407154886225}, "pesimista": {"gasto": 925.9457517196472, "clientes": 3.0, "benef12": 46.54205887145406, "prob_beneficio": 0.5129, "prob_10_clientes": 0.02275, "roi12": 1.6424246426902822}}, {"nombre": "+190 €: añadir SEO local en enero", "base": {"gasto": 982.0, "clientes": 9.0, "benef12": 2492.0886257497564, "prob_beneficio": 0.89915, "prob_10_clientes": 0.45025, "roi12": 5.476870910368649}, "pesimista": {"gasto": 982.0, "clientes": 2.0, "benef12": -161.44329167189676, "prob_beneficio": 0.45435, "prob_10_clientes": 0.01755, "roi12": 1.3002588526832195}}, {"nombre": "+440 €: añadir Meta Mallorca", "base": {"gasto": 1234.0, "clientes": 11.0, "benef12": 2823.8994138763474, "prob_beneficio": 0.9335, "prob_10_clientes": 0.60195, "roi12": 5.149484734567195}, "pesimista": {"gasto": 1234.0, "clientes": 3.0, "benef12": -71.42404294042035, "prob_beneficio": 0.4773, "prob_10_clientes": 0.0356, "roi12": 1.473285609859991}}], "semanas": [{"semana": 1, "lunes": "2026-11-09", "google": 70.0, "meta": 0.0}, {"semana": 2, "lunes": "2026-11-16", "google": 70.0, "meta": 0.0}, {"semana": 3, "lunes": "2026-11-23", "google": 70.0, "meta": 0.0}, {"semana": 4, "lunes": "2026-11-30", "google": 70.0, "meta": 0.0}, {"semana": 5, "lunes": "2026-12-07", "google": 63.0, "meta": 0.0}, {"semana": 6, "lunes": "2026-12-14", "google": 63.0, "meta": 0.0}, {"semana": 7, "lunes": "2026-12-21", "google": 0.0, "meta": 0.0}, {"semana": 8, "lunes": "2026-12-28", "google": 0.0, "meta": 0.0}, {"semana": 9, "lunes": "2027-01-04", "google": 40.0, "meta": 8.0}, {"semana": 10, "lunes": "2027-01-11", "google": 70.0, "meta": 14.0}, {"semana": 11, "lunes": "2027-01-18", "google": 70.0, "meta": 14.0}, {"semana": 12, "lunes": "2027-01-25", "google": 70.0, "meta": 14.0}, {"semana": 13, "lunes": "2027-02-01", "google": 70.0, "meta": 14.0}]};
+const DATA = {"iteraciones": 20000, "plan": {"G2": [10, 9, 0, 10], "M3": [0, 0, 0, 2], "G5": [4, 4, 0, 4]}, "nombres": {"G2": "Google · Web Mallorca", "M3": "Meta · Remarketing", "G5": "Google · A medida Mallorca", "G4": "Google · SEO local", "M2": "Meta · Mallorca (frío)", "G1": "Google · España"}, "fases": [{"id": "T1", "nombre": "Validar", "inicio": "2026-11-09", "fin": "2026-12-06", "dias": 28}, {"id": "T2", "nombre": "Confirmar", "inicio": "2026-12-07", "fin": "2026-12-20", "dias": 14}, {"id": "NAV", "nombre": "Navidad: pausa", "inicio": "2026-12-21", "fin": "2027-01-06", "dias": 17}, {"id": "T3", "nombre": "Rentabilizar", "inicio": "2027-01-07", "fin": "2027-02-07", "dias": 32}], "tope": 800, "asignado": 1086, "base": {"total": {"spend": {"p10": 915.8281896061306, "p50": 1084.1951528781187, "p90": 1086.0, "media": 1002.809465794082}, "leads": {"p10": 26.0, "p50": 53.0, "p90": 84.0, "media": 54.06055}, "q": {"p10": 16.0, "p50": 34.0, "p90": 55.0, "media": 35.07345}, "cl": {"p10": 3.0, "p50": 9.0, "p90": 16.0, "media": 9.4372}, "rev1": {"p10": 996.5458063770947, "p50": 3558.881830070257, "p90": 10902.16619747568, "media": 5074.807747119062}, "rev12": {"p10": 2186.6947287460803, "p50": 6896.7845755142025, "p90": 15406.167629273485, "media": 8062.256958110164}, "benef12": {"p10": 377.6347293272486, "p50": 3185.757196732304, "p90": 7834.474186716707, "media": 3775.1813160087763}}, "roi_primer_encargo": {"p10": 0.9672341320292568, "p50": 3.5769774600429907, "p90": 10.510731675375647, "media": 4.953548059256418}, "roi_12m": {"p10": 2.1714806974569307, "p50": 6.801243110818801, "p90": 14.723970476251681, "media": 7.823382611944174}, "cpl_cualificado": {"p10": 18.940949195603086, "p50": 30.912625136527673, "p90": 57.6, "media": 37.6502102377716}, "prob": {"pasa_corte_1": 0.9246, "pasa_corte_2": 0.916, "primer_encargo_cubre_anuncios": 0.89575, "beneficio_12m_positivo": 0.93005, "al_menos_1_cliente": 0.9482, "al_menos_10_clientes": 0.44975}, "peor_caso_bolsillo_p95": 448.0, "por_campana": {"G2": {"gasto": 726.0, "gasto_medio": 684.7733479239674, "leads_cualificados": 27.0, "clientes": 7.5943, "prob_1_venta": 0.916, "facturacion_media": 1955.1667669324559, "facturacion_p90": 3609.569694147386, "cpl_cualificado": 26.88888888888889}, "M3": {"gasto": 64.0, "gasto_medio": 58.624, "leads_cualificados": 4.0, "clientes": 1.14955, "prob_1_venta": 0.6087, "facturacion_media": 296.21889659956184, "facturacion_p90": 746.9390351664201, "cpl_cualificado": 16.0}, "G5": {"gasto": 296.0, "gasto_medio": 259.4121178701144, "leads_cualificados": 3.0, "clientes": 0.69335, "prob_1_venta": 0.44785, "facturacion_media": 2823.4220835870437, "facturacion_p90": 8002.361574524609, "cpl_cualificado": 74.0}}}, "histograma_benef12": {"conteos": [1976, 3268, 3832, 3344, 2624, 1775, 1176, 742, 427, 306, 181, 124, 84, 58, 27, 19, 8, 13, 7, 3, 2, 1, 2, 1], "bordes": [-878, 365, 1609, 2852, 4096, 5339, 6583, 7826, 9070, 10313, 11557, 12800, 14044, 15287, 16531, 17774, 19018, 20261, 21505, 22748, 23992, 25235, 26479, 27722, 28966]}, "pesimista": {"total": {"spend": {"p10": 448.0, "p50": 958.0, "p90": 1086.0, "media": 819.4381524715551}, "leads": {"p10": 5.0, "p50": 21.0, "p90": 41.0, "media": 21.79585}, "q": {"p10": 3.0, "p50": 13.0, "p90": 27.0, "media": 14.13695}, "cl": {"p10": 0.0, "p50": 2.0, "p90": 6.0, "media": 2.70895}, "rev1": {"p10": 0.0, "p50": 750.7421786260903, "p90": 4902.725208304588, "media": 1569.975000830303}, "rev12": {"p10": 0.0, "p50": 1708.1564676419348, "p90": 6164.940678842688, "media": 2417.5154415225093}, "benef12": {"p10": -576.0, "p50": 89.20608782256659, "p90": 2534.376176218484, "media": 601.204678462751}}, "roi_primer_encargo": {"p10": 0.0, "p50": 0.7457073874968045, "p90": 5.5421535074524035, "media": 1.7857017215501356}, "roi_12m": {"p10": 0.0, "p50": 1.7030874655129016, "p90": 6.760685901918102, "media": 2.6226104804013426}, "cpl_cualificado": {"p10": 36.84615384615385, "p50": 68.42857142857143, "p90": 192.0, "media": 101.36145556879579}, "prob": {"pasa_corte_1": 0.62425, "pasa_corte_2": 0.6084, "primer_encargo_cubre_anuncios": 0.4059, "beneficio_12m_positivo": 0.5228, "al_menos_1_cliente": 0.67745, "al_menos_10_clientes": 0.01855}, "peor_caso_bolsillo_p95": 639.070265219826, "por_campana": {"G2": {"gasto": 726.0, "gasto_medio": 549.1479218669039, "leads_cualificados": 10.0, "clientes": 2.1979, "prob_1_venta": 0.6084, "facturacion_media": 565.6881861243984, "facturacion_p90": 1422.155609655656, "cpl_cualificado": 56.0}, "M3": {"gasto": 64.0, "gasto_medio": 38.9376, "leads_cualificados": 1.0, "clientes": 0.28335, "prob_1_venta": 0.21555, "facturacion_media": 73.09179238945627, "facturacion_p90": 275.7474795252541, "cpl_cualificado": 32.0}, "G5": {"gasto": 248.47732605418042, "gasto_medio": 231.35263060465132, "leads_cualificados": 1.0, "clientes": 0.2277, "prob_1_venta": 0.1882, "facturacion_media": 931.1950223164484, "facturacion_p90": 4134.134769400766, "cpl_cualificado": 148.0}}}, "alternativas": [{"nombre": "El plan: web (790 €) + línea a medida (296 €)", "base": {"gasto": 1084.1951528781187, "clientes": 9.0, "benef12": 3185.757196732304, "prob_beneficio": 0.93005, "prob_10_clientes": 0.44975, "roi12": 6.801243110818801}, "pesimista": {"gasto": 958.0, "clientes": 2.0, "benef12": 89.20608782256659, "prob_beneficio": 0.5228, "prob_10_clientes": 0.01855, "roi12": 1.7030874655129016}}, {"nombre": "Solo la web (790 €)", "base": {"gasto": 790.0, "clientes": 8.0, "benef12": 2266.0873319978846, "prob_beneficio": 0.90215, "prob_10_clientes": 0.3923, "roi12": 6.06298249612008}, "pesimista": {"gasto": 790.0, "clientes": 2.0, "benef12": -29.745453862503723, "prob_beneficio": 0.49, "prob_10_clientes": 0.0146, "roi12": 1.504389411482245}}, {"nombre": "Mismo dinero, mitad en Meta Mallorca", "base": {"gasto": 790.0, "clientes": 7.0, "benef12": 1926.5144649371841, "prob_beneficio": 0.86995, "prob_10_clientes": 0.3131, "roi12": 5.372011821786357}, "pesimista": {"gasto": 790.0, "clientes": 1.0, "benef12": -279.20051910949974, "prob_beneficio": 0.42815, "prob_10_clientes": 0.0067, "roi12": 1.0089085358825645}}, {"nombre": "Mismo dinero, parte en Google España", "base": {"gasto": 790.0, "clientes": 7.0, "benef12": 1720.7669009076583, "prob_beneficio": 0.85115, "prob_10_clientes": 0.27275, "roi12": 4.956555624513725}, "pesimista": {"gasto": 790.0, "clientes": 1.0, "benef12": -280.0, "prob_beneficio": 0.39685, "prob_10_clientes": 0.00465, "roi12": 0.7683430303393516}}, {"nombre": "Web a tope (12 €/día) en vez de la línea a medida", "base": {"gasto": 952.0, "clientes": 10.0, "benef12": 2654.719035039443, "prob_beneficio": 0.92775, "prob_10_clientes": 0.51015, "roi12": 6.045771131449031}, "pesimista": {"gasto": 928.9401957765933, "clientes": 3.0, "benef12": 66.73261838929318, "prob_beneficio": 0.5207, "prob_10_clientes": 0.023, "roi12": 1.6757491007358327}}, {"nombre": "Web + Meta Mallorca en vez de la línea a medida", "base": {"gasto": 1086.0, "clientes": 10.0, "benef12": 2650.753188074562, "prob_beneficio": 0.9233, "prob_10_clientes": 0.54005, "roi12": 5.378494981665984}, "pesimista": {"gasto": 1086.0, "clientes": 3.0, "benef12": -55.62933742395376, "prob_beneficio": 0.4829, "prob_10_clientes": 0.02795, "roi12": 1.4803070992802057}}], "semanas": [{"semana": 1, "lunes": "2026-11-09", "google": 98.0, "meta": 0.0}, {"semana": 2, "lunes": "2026-11-16", "google": 98.0, "meta": 0.0}, {"semana": 3, "lunes": "2026-11-23", "google": 98.0, "meta": 0.0}, {"semana": 4, "lunes": "2026-11-30", "google": 98.0, "meta": 0.0}, {"semana": 5, "lunes": "2026-12-07", "google": 91.0, "meta": 0.0}, {"semana": 6, "lunes": "2026-12-14", "google": 91.0, "meta": 0.0}, {"semana": 7, "lunes": "2026-12-21", "google": 0.0, "meta": 0.0}, {"semana": 8, "lunes": "2026-12-28", "google": 0.0, "meta": 0.0}, {"semana": 9, "lunes": "2027-01-04", "google": 56.0, "meta": 8.0}, {"semana": 10, "lunes": "2027-01-11", "google": 98.0, "meta": 14.0}, {"semana": 11, "lunes": "2027-01-18", "google": 98.0, "meta": 14.0}, {"semana": 12, "lunes": "2027-01-25", "google": 98.0, "meta": 14.0}, {"semana": 13, "lunes": "2027-02-01", "google": 98.0, "meta": 14.0}]};
 const num = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const eur = (n) => (n < 0 ? "-" : "") + num(Math.abs(n)) + " €";
 const pc = (x) => Math.round(x * 100) + " %";
 const B = DATA.base, PE = DATA.pesimista, T = B.total;
 
 document.getElementById("stats").innerHTML = [
-  ["Tope de gasto", "800 €", "790 € asignados · 13 semanas"],
-  ["Lo más que arriesgas al empezar", "280 €", "el tramo 1; luego, solo con señal"],
+  ["Gasto máximo", "1.086 €", "web 790 € + a medida 296 €"],
+  ["Lo que arriesgas al empezar", "392 €", "el tramo 1; luego, solo con señal"],
   ["Clientes nuevos", num(T.cl.p50), `(${num(T.cl.p10)} – ${num(T.cl.p90)})`],
+  ["Proyecto a medida", pc(B.por_campana.G5.prob_1_venta), "de probabilidad de al menos uno"],
   ["Facturación a 12 meses", eur(T.rev12.p50), `(${eur(T.rev12.p10)} – ${eur(T.rev12.p90)})`],
   ["El primer encargo paga los anuncios", pc(B.prob.primer_encargo_cubre_anuncios), "de las simulaciones", true],
 ].map(([l, v, s, red]) => `<div class="stat${red ? " red" : ""}"><span>${l}</span><b>${v}</b><span>${s}</span></div>`).join("");
@@ -324,18 +329,18 @@ function barPath(x, y, w, h, r = 4) { r = Math.min(r, h, w / 2); return `M${x},$
 
 // ------------------------------------------------------------------ tramos
 document.getElementById("tramos").innerHTML = [
-  ["g", "9 nov → 6 dic", "Tramo 1 · Validar", "Google Mallorca a 10 €/día. ¿Funciona?", "280 €"],
-  ["o", "lun 7 dic", "Corte 1", "Sigue con 1 cliente, o con 5 leads cualificados a 35 € o menos. Si no hay señal, se para: gasto final, 280 €.", "decisión"],
-  ["g", "7 → 20 dic", "Tramo 2 · Confirmar", "Google Mallorca a 9 €/día. ¿Se repite?", "126 €"],
-  ["o", "21 dic → 6 ene", "Navidad", "Todo en pausa: nadie contrata una web el día 28.", "0 €"],
-  ["o", "jue 7 ene", "Corte 2", "Sigue si ya hay al menos 1 cliente que paga. Si no, se para: gasto final, 406 €.", "decisión"],
-  ["g", "7 ene → 7 feb", "Tramo 3 · Rentabilizar", "Google a 10 €/día + remarketing a 2 €/día + test Web vs Pack.", "384 €"],
+  ["g", "9 nov → 6 dic", "Tramo 1 · Validar", "Web a 10 €/día y a medida a 4 €/día. ¿Funciona?", "392 €"],
+  ["o", "lun 7 dic", "Corte 1 (web)", "La web sigue con 1 cliente, o con 5 leads cualificados a 35 € o menos. Si no, se para. A medida sigue hasta su corte.", "decisión"],
+  ["g", "7 → 20 dic", "Tramo 2 · Confirmar", "Web a 9 €/día y a medida a 4 €/día. ¿Se repite?", "182 €"],
+  ["o", "21 dic → 6 ene", "Navidad", "Todo en pausa: nadie contrata nada el día 28.", "0 €"],
+  ["o", "jue 7 ene", "Corte 2 (web) y corte de a medida", "Web: sigue si hay 1 cliente que paga. A medida: sigue si alguna empresa real ha pedido diagnóstico. Si no, cada una se para.", "decisión"],
+  ["g", "7 ene → 7 feb", "Tramo 3 · Rentabilizar", "Web 10 €/día + remarketing 2 €/día + a medida 4 €/día + test Web vs Pack.", "512 €"],
 ].map(([t, d, h, p, m]) => `<div class="camp${t === "o" ? "" : " star"}"><div><span class="tag ${t === "g" ? "g" : "o"}">${m}</span> <span class="role">${d}</span></div><h3>${h}</h3><p>${p}</p></div>`).join("");
 
 // ------------------------------------------------------------------ semanas
 (function () {
   const box = document.getElementById("weeks"), tt = tipper(box);
-  const W = 1000, H = 260, L = 50, Bm = 46, top = 30, wk = DATA.semanas, max = 90;
+  const W = 1000, H = 260, L = 50, Bm = 46, top = 30, wk = DATA.semanas, max = 120;
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Gasto máximo por semana" }, box);
   const y = (v) => top + (H - Bm - top) * (1 - v / max);
   const g = el("g", { class: "grid axis" }, svg);
@@ -437,6 +442,10 @@ document.getElementById("alts").innerHTML = `<tr><th>Opción</th><th class="n">G
         if (c >= 3 && cplq <= 20) { cls = "wow"; title = "WOW · TENEMOS ALGO"; msg = "Tramo 3 tal cual y, en paralelo, se prepara la temporada con la regla de autofinanciación: hasta el 30 % de lo facturado."; }
         else if (c >= 1) { cls = "go"; title = "SEGUIR"; msg = "Al tramo 3: G2 a 10 €/día, regla de coste a 726 €, remarketing a 2 €/día y test Web vs Pack."; }
         else { cls = "stop"; title = "PARAR"; msg = "Ningún cliente tras 406 €. G2 se queda en pausa. Revisa la venta (tabla de abajo) antes de volver a intentarlo."; }
+      } else if (m === "med") {
+        if ((v.rev ?? 0) > 0 || c >= 1) { cls = "wow"; title = "WOW · TENEMOS ALGO"; msg = "Hay proyecto a medida. G5 sigue (4 €/día, regla de coste a 296 €) y, con permiso del cliente, se cuenta el caso en LinkedIn."; }
+        else if (q >= 1) { cls = "go"; title = "SEGUIR"; msg = "Alguna empresa real ha pedido diagnóstico: G5 sigue a 4 €/día y la regla de coste sube a 296 €."; }
+        else { cls = "stop"; title = "PARAR"; msg = "Ningún diagnóstico en 2 meses: G5 se queda en pausa (gasto: 168 €). La línea a medida sigue por tus clientes y LinkedIn."; }
       } else if (m === "fin") {
         const r = div(v.rev, v.spend);
         cls = st(r, [2.5, 1.2, 0.8], false); title = LAB[cls];
@@ -492,11 +501,11 @@ document.getElementById("alts").innerHTML = `<tr><th>Opción</th><th class="n">G
 (function () {
   const items = [
     ["Google Business Profile", "Ficha de COMA verificada. Reseñas pedidas a 20 clientes."],
-    ["Recomendaciones", "20 clientes: «¿conoces a alguien que necesite web?»"],
+    ["Tus clientes", "Mensaje personal a todos: ¿qué tarea os quita horas? (texto en el plan, sección 7)."],
     ["30 mensajes", "A negocios de Mallorca con su landing personalizada (/lp/tu-empresa/)."],
     ["Formulario fiable", "PUBLIC_FORM_ENDPOINT en Railway y volver a desplegar."],
     ["Medición", "Google Tag Manager con GA4, conversión de Google Ads y píxel de Meta."],
-    ["Google Ads", "Cuenta en modo experto, G2 en pausa, fecha de fin y regla de coste a 280 €."],
+    ["Google Ads", "Cuenta en modo experto, G2 y G5 en pausa, fecha de fin y reglas de coste (280 € y 112 €)."],
     ["Meta", "Business Manager, píxel, dominio verificado y límite de gasto de 64 €."],
     ["Prueba real", "Formulario enviado desde el móvil: llega el correo y cuenta la conversión."],
     ["Permisos", "Sí por escrito de las marcas citadas, o usar las versiones sin marcas."],

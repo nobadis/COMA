@@ -24,6 +24,19 @@
                       publicamos y te la dejamos funcionando.
   ...y el PRECIO como prueba de que no hay trampa: 99 € + IVA.
 
+  LA LÍNEA A MEDIDA (G5, /lp/a-medida/, clientes actuales)
+  «Si una tarea os quita horas, la resolvemos a medida.»
+  «Cualquier problema» es la promesa, pero no se vende «cualquier cosa»: se
+  enseñan ejemplos que todo el mundo reconoce, y cada uno es una puerta:
+  · WhatsApps y emails que se contestan solos (con supervisión humana)
+  · Presupuestos, facturas e informes que se hacen solos
+  · Datos que pasan solos entre programas que no se hablan
+  · Facturas que se leen solas (el caso de despachos, como ejemplo)
+  Entrada sin riesgo: diagnóstico gratis de 30 minutos. Salida: propuesta
+  con alcance, plazos y precio cerrado por escrito.
+  Nunca: «la IA lo hace todo», horas ahorradas sin medirlas, plazos sin
+  propuesta, «sustituye a tu equipo».
+
   Lo que NUNCA dice una pieza de COMA:
   · «barato», «el más barato», «low cost»          (mata el valor)
   · plazos que no estén en la propuesta («en 48 h»)  (no se puede garantizar)
@@ -93,6 +106,10 @@
                   El ganador es el mensaje de la temporada (febrero-marzo).
   Honestidad .... Con ~6-12 leads por lado, es una señal fuerte, no una
                   prueba estadística. Se decide igual: es mejor que adivinar.
+
+  En a medida no hay test: con ~1 lead cada 2 semanas no habría con qué
+  comparar. Google rota solo los títulos de G5 y, cuando haya 5
+  diagnósticos, la columna «qué le convenció» dirá qué ejemplo atrae más.
 
   ¿Y por qué no se prueban más cosas? Con 2-4 leads por semana, un test de
   landing o de títulos necesitaría meses para decir algo. Los títulos los
