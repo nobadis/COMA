@@ -279,6 +279,7 @@ export function initPinned() {
   if (!sections.length) return;
   const supported = typeof CSS !== "undefined" && CSS.supports("animation-timeline: view()");
   const mq = window.matchMedia("(max-width: 899px) and (prefers-reduced-motion: no-preference)");
+  const desktop = window.matchMedia("(min-width: 900px)");
   let raf = 0;
 
   const apply = () => {
@@ -290,7 +291,10 @@ export function initPinned() {
       if (!track || !stick) continue;
       if (!on) {
         // En escritorio la altura de una galería [data-hscroll] la pone initScrollFx: no se toca.
-        if (section.classList.contains("is-pinned") && !section.hasAttribute("data-hscroll"))
+        if (
+          section.classList.contains("is-pinned") &&
+          !(section.hasAttribute("data-hscroll") && desktop.matches)
+        )
           section.style.removeProperty("height");
         section.classList.remove("is-pinned");
         section.style.removeProperty("--pin-d");

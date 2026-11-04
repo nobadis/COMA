@@ -71,7 +71,7 @@ if (curtain && root.classList.contains("curtain-open")) {
     requestAnimationFrame(() => {
       curtain.classList.add("is-out");
       root.classList.remove("curtain-open");
-      window.setTimeout(resetCurtain, 900);
+      window.setTimeout(resetCurtain, 700);
     })
   );
 }
@@ -93,7 +93,7 @@ if (curtain) {
     }
     curtain.classList.remove("is-out");
     curtain.classList.add("is-in");
-    window.setTimeout(() => (location.href = url.href), finePointer ? 620 : 460);
+    window.setTimeout(() => (location.href = url.href), finePointer ? 460 : 370);
   });
 }
 // Volver con el botón «atrás» (bfcache): quitar la cortina.

@@ -47,6 +47,8 @@ const {
   minimal = false,
 } = Astro.props;
 const noindex = noindexProp || minimal;
+// La intro solo abre la home (si es la primera página de la visita): el resto entra directo.
+const intro = !minimal && Astro.url.pathname === "/";
 const stickyCta = stickyProp && !minimal;
 const fullTitle = title ? `${title} | COMA` : `${site.title} · Consultoría tecnológica, diseño e IA`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
@@ -206,7 +208,7 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
 ---
 
 <!doctype html>
-<html lang="es" data-nointro={minimal ? "" : undefined}>
+<html lang="es" data-nointro={intro ? undefined : ""}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -263,7 +265,8 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
         d.classList.add("js");
         try {
           var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (!reduced && !d.hasAttribute("data-nointro") && !sessionStorage.getItem("coma_intro")) d.classList.add("intro-on");
+          if (d.hasAttribute("data-nointro")) sessionStorage.setItem("coma_intro", "1");
+          else if (!reduced && !sessionStorage.getItem("coma_intro")) d.classList.add("intro-on");
           if (sessionStorage.getItem("coma_curtain")) d.classList.add("curtain-open");
         } catch (e) {}
       })();
@@ -279,15 +282,19 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   </head>
   <body>
-    <div class="intro" aria-hidden="true" data-intro>
-      <div class="intro__word">
-        {["C", "O", "M", "A"].map((l, i) => <span style={`--i:${i}`}>{l}</span>)}<svg viewBox="0 0 20 40"
-          ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"></path></svg
-        >
-      </div>
-      <span class="intro__count">Comunicación en Mallorca · <span data-intro-count>0</span>%</span>
-      <i class="intro__bar"></i>
-    </div>
+    {
+      intro && (
+        <div class="intro" aria-hidden="true" data-intro>
+          <div class="intro__word">
+            {["C", "O", "M", "A"].map((l, i) => <span style={`--i:${i}`}>{l}</span>)}<svg viewBox="0 0 20 40"
+              ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"></path></svg
+            >
+          </div>
+          <span class="intro__count">Comunicación en Mallorca · <span data-intro-count>0</span>%</span>
+          <i class="intro__bar"></i>
+        </div>
+      )
+    }
     <div class="curtain" aria-hidden="true" data-curtain>
       <svg viewBox="0 0 20 40"
         ><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"></path></svg
