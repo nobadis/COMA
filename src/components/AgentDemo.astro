@@ -228,8 +228,11 @@ const script = [
     border-radius: 999px;
     padding: 0.35rem 0.85rem;
   }
-  .ad__chat.is-typing::after {
+  /* el hueco del «escribiendo…» está siempre reservado: el chat no cambia de altura (si no,
+     todo lo que hay debajo da un salto en cada mensaje) */
+  .ad__chat::after {
     content: "";
+    visibility: hidden;
     width: 3.2rem;
     height: 2.1rem;
     border-radius: 18px;
@@ -240,8 +243,11 @@ const script = [
       radial-gradient(circle 3px, var(--night-muted) 98%, transparent) 2.05rem 50% / 8px 8px no-repeat,
       var(--night-2);
     border: 1px solid var(--night-line);
-    animation: typing 1s ease-in-out infinite;
     order: 99;
+  }
+  .ad__chat.is-typing::after {
+    visibility: visible;
+    animation: typing 1s ease-in-out infinite;
   }
   .ad__chat.is-typing .ad__msg.is-wait {
     order: 100;

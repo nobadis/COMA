@@ -10,7 +10,8 @@ const CONSENT_KEY = "coma_cookie_consent";
 let lenis: Lenis | null = null;
 // El scroll suave de Lenis solo en escritorio: en móvil el desplazamiento nativo es más fluido.
 if (!reduced && finePointer) {
-  lenis = new Lenis({ lerp: 0.1, anchors: { offset: -90 }, autoRaf: true });
+  // Las anclas usan el scroll-padding-top de la página (5rem), igual que el scroll nativo en móvil.
+  lenis = new Lenis({ lerp: 0.1, anchors: true, autoRaf: true });
 }
 
 /* ------------------------------------------------------- intro + curtain */

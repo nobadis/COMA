@@ -330,10 +330,11 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     const shiftX = () =>
       lastItem.evaluate((e) => new DOMMatrixReadOnly(getComputedStyle(e).transform).m41);
     expect(await shiftX()).toBeGreaterThan(50); // todavía desplazado hacia la derecha
+    // con el final de la sección ya en pantalla (alto real de la ventana), todas en su sitio
     const bottom = await page.evaluate(
-      () => document.querySelector(".pf").getBoundingClientRect().bottom + scrollY
+      () => document.querySelector(".pf").getBoundingClientRect().bottom + scrollY - innerHeight
     );
-    await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), bottom - 900);
+    await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), bottom);
     await page.waitForTimeout(400);
     expect(await shiftX()).toBe(0);
   });
