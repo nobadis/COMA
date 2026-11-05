@@ -47,10 +47,12 @@ Mar 10 nov [ ] Redes: M2-A «La temporada se gana en invierno» (TEST 1).
 Vie 13 nov [ ] Alarmas: ¿gasta? ¿Hay clics? ¿Se registran conversiones?
 Lun 16 nov [ ] Primer lunes: términos de búsqueda y negativas.
 Mar 17 nov [ ] Redes: M1-E «¿Sin tiempo para tu web?».
+           [ ] LinkedIn: M4-A «¿Tienes ideas y no sabes por dónde empezar?».
 Lun 23 nov [ ] Lunes. ¿15 conversiones? → «Maximizar conversiones».
 Mar 24 nov [ ] Redes: M1-A «Tu web. 99 €».
 Vie 27 nov     Black Friday: no se toca nada.
-Lun 30 nov [ ] Lunes.
+Lun 30 nov [ ] Lunes. G5: ¿algún lead cualificado del grupo «Tengo una
+               idea»? Si ninguno en 3 semanas, pausar ese grupo.
 Mar 1 dic  [ ] Redes: M1-B «¿Te han pedido 1.500 €?».
 
 
@@ -70,6 +72,7 @@ TRAMO 2 · CONFIRMAR (7 → 20 dic) · 13 €/día · tope acumulado 574 €
 Mar 8 dic  [ ] Redes: el ganador del TEST 1.
 Lun 14 dic [ ] Lunes.
 Mar 15 dic [ ] Redes: M2-B «Buenos días. Good morning…».
+           [ ] LinkedIn: M4-A de nuevo, o un caso real resuelto a medida.
 Lun 21 dic [ ] Pausar G2 y G5 (Navidad). Si se pivotó la web: decidir hoy
                (MÉTRICAS, 2).
 
@@ -98,7 +101,7 @@ TRAMO 3 · RENTABILIZAR (7 ene → 7 feb) · hasta 16 €/día · tope total 1.0
 ------------------------------------------------------------------------------
 Lun 11 ene [ ] Lunes. Redes (mar 12): M2-A Pack Temporada.
            [ ] Segundo mensaje a los clientes que no contestaron en noviembre.
-Lun 18 ene [ ] Lunes. Redes (mar 19): M1-F imagen facilidad.
+Lun 18 ene [ ] Lunes. Redes (mar 19): M4-A «¿Tienes ideas…?».
 Lun 25 ene [ ] Lunes. Redes (mar 26): M1-D autoridad o el ganador.
 Lun 1 feb  [ ] Cierre provisional: facturación ÷ gasto (MÉTRICAS, 2).
                TEST 2 provisional: ¿Web o Pack?

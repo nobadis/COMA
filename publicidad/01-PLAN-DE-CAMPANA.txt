@@ -53,6 +53,13 @@
   entrada es un diagnóstico gratis de 30 minutos y la propuesta va con
   precio cerrado.
 
+  Y un segundo ángulo para a medida, el ACOMPAÑAMIENTO: muchos empresarios
+  tienen ideas pero no saben por dónde empezar, ni cómo, ni quién les puede
+  ayudar. A ellos: «¿Tienes ideas y no sabes por dónde empezar? Te
+  acompañamos.» Con la IA, más asequible de lo que creen, y con 29 años de
+  experiencia detrás. Va en Google (grupo «Tengo una idea»), en LinkedIn,
+  en el mensaje a tus clientes y, discreto, en la landing /lp/a-medida/.
+
   Y lo gratis que más rinde: escribir a tus +100 clientes actuales
   (sección 7) y preguntar a cada lead de la web qué le quita horas
   (sección 8).
@@ -250,8 +257,12 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
   Puja .......................... «Maximizar clics», CPC máximo 4 €, todo el
                                   periodo (con pocos leads no hay datos para
                                   pujas automáticas).
-  Grupos ........................ «Software a medida», «Automatizar» e «IA
-                                  para empresas» (textos-google.txt).
+  Grupos ........................ «Software a medida», «Automatizar», «IA
+                                  para empresas» y «Tengo una idea» (el
+                                  ángulo acompañamiento: «cómo aplicar la IA
+                                  en mi empresa», «digitalizar mi negocio»,
+                                  «crear una aplicación para mi empresa»…).
+                                  Mismo presupuesto: Google reparte.
   Destino ....................... /lp/a-medida/ (diagnóstico gratis)
   Recursos ...................... Los suyos (textos-google.txt): enlaces a
                                   automatizaciones, agentes de IA, despachos
@@ -259,7 +270,10 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
   Negativas ..................... Lista «COMA negativas a medida»: fuera
                                   cursos, empleo, «gratis», «qué es»…
   Ojo con los leads: «quiero una app como Uber por 500 €» no es un lead
-  cualificado. Cualificado = empresa real con un problema concreto.
+  cualificado. Cualificado = empresa real con un problema concreto o una
+  idea para su propio negocio. El grupo «Tengo una idea» traerá más
+  curiosos: si a las 3 semanas ninguno de sus leads es cualificado, se
+  pausa ese grupo y su dinero se queda en los otros tres.
 
   TEST DE ENERO (7 ene → 7 feb), solo en G2: Web de 99 € frente a Pack
   Temporada de 346 €. Experimento de Google al 50 % sobre G2, con los anuncios del grupo
@@ -317,9 +331,10 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
     Hola, [nombre]: en COMA ahora también resolvemos a medida esas tareas
     que se comen horas cada semana: WhatsApps que se contestan solos,
     presupuestos en un clic, datos que pasan solos de un programa a otro,
-    informes que se hacen solos… ¿Hay algo así en [empresa]? Si quieres, te
-    hago un diagnóstico gratis de 30 minutos y te digo qué tiene sentido y
-    cuánto costaría, con precio cerrado. Y si conoces a alguien que necesite
+    informes que se hacen solos… ¿Hay algo así en [empresa]? ¿O alguna idea
+    que tengáis en la cabeza y nunca hayáis sabido por dónde empezar? Si
+    quieres, te hago un diagnóstico gratis de 30 minutos y te digo qué tiene
+    sentido y cuánto costaría, con precio cerrado. Y si conoces a alguien que necesite
     web, también le ayudamos. Un abrazo, [firma]
 
   Apunta cada respuesta en 6-seguimiento/leads.csv (canal: clientes).
@@ -329,9 +344,13 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
   Instagram, Facebook y LinkedIn de COMA y en el estado de WhatsApp, y se
   mandan a clientes y contactos. Cuestan 0 €, alimentan el remarketing de
   enero y sirven de TEST GRATIS de ángulos (03-MENSAJE-Y-TESTS-AB.txt).
-  En LinkedIn, además, una publicación cada 2 semanas sobre un problema
-  real resuelto a medida (sin datos del cliente si no da permiso): es el
-  sitio donde el mensaje «¿quieres usar la IA y no sabes cómo?» funciona.
+  En LinkedIn, además, una publicación cada 2 semanas, alternando:
+  · un problema real resuelto a medida (sin datos del cliente si no da
+    permiso), y
+  · el ángulo acompañamiento: «¿Tienes ideas y no sabes por dónde
+    empezar?», con la imagen M4-A (1:1 en LinkedIn, 4:5 en Instagram).
+  Es el sitio donde el mensaje «¿quieres usar la IA y no sabes cómo?»
+  funciona.
 
   Un vídeo por semana, el martes a las 13:00 (se repite el ciclo):
     sem. 9 nov   M2-A «La temporada se gana en invierno» (o sin marcas)
@@ -340,8 +359,9 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
     sem. 30 nov  M1-B «¿Te han pedido 1.500 €?»
     sem. 7 dic   el que mejor haya funcionado (más retención a 3 s)
     sem. 14 dic  M2-B «Buenos días. Good morning…» (imagen)
+    (LinkedIn, sem. 16 nov y 14 dic: M4-A «¿Tienes ideas…?»)
     sem. 11 ene  M2-A pack «Pack Temporada»
-    sem. 18 ene  M1-F «¿Sin tiempo para tu web?» (imagen)
+    sem. 18 ene  M4-A «¿Tienes ideas y no sabes por dónde empezar?»
     sem. 25 ene  M1-D autoridad (solo con permiso) o el ganador
     sem. 1 feb   M2-D «Pack Temporada» (imagen)
   Los textos de cada publicación: los de 03-MENSAJE-Y-TESTS-AB.txt, sección 6.

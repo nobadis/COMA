@@ -88,7 +88,7 @@ H_MEDIDA = [
     ("Agencia de Palma desde 1997", 0), ("Conectamos tus Programas", 0), ("WhatsApp que se Contesta Solo", 0),
     ("Presupuestos en un Clic", 0), ("Informes que se Hacen Solos", 0), ("Agentes de IA con Supervisión", 0),
     ("Sin Cambiar tus Programas", 0), ("Más de 100 Pymes Confían", 0), ("Reunión en Palma o por Vídeo", 0),
-    ("Pide tu Diagnóstico Gratis", 0),
+    ("Te Acompañamos Hasta el Final", 0),
 ]
 D_MEDIDA = [
     "Automatizaciones, integraciones, agentes de IA y apps internas hechas para vuestro caso.",
@@ -96,10 +96,26 @@ D_MEDIDA = [
     "Precio cerrado por escrito antes de empezar. Nos conectamos a los programas que ya usáis.",
     "Agencia de Palma desde 1997 y más de 100 pymes. Reunión en Paseo Mallorca 16 o por vídeo.",
 ]
+# Ángulo «acompañamiento»: quien tiene ideas pero no sabe por dónde empezar ni quién le ayuda
+H_IDEA = [
+    ("¿Tienes una Idea? Te Ayudamos", 1), ("¿No Sabes por Dónde Empezar?", 1),
+    ("Te Acompañamos Hasta el Final", 0), ("De la Idea a que Funcione", 0), ("Más Asequible de lo que Crees", 0),
+    ("IA Aplicada con Cabeza", 0), ("29 Años y a la Vanguardia", 0), ("Diagnóstico Gratis de 30 Min", 0),
+    ("Precio Cerrado por Escrito", 0), ("Agencia de Palma desde 1997", 0), ("Software y Automatización", 0),
+    ("Te Decimos Qué Tiene Sentido", 0), ("Reunión en Palma o por Vídeo", 0), ("Más de 100 Pymes Confían", 0),
+    ("Ven con tu Idea", 0),
+]
+D_IDEA = [
+    "¿Tienes ideas y no sabes por dónde empezar? Las ordenamos contigo y te acompañamos.",
+    "Con la IA, soluciones que antes no estaban al alcance de una pyme hoy son asequibles.",
+    "Diagnóstico gratis: qué tiene sentido, por dónde empezar y cuánto cuesta. Precio cerrado.",
+    "Desde 1997 en Palma. Te decimos con sinceridad qué merece la pena y qué no.",
+]
+MEDIDA_IDEA = ["no se por donde empezar digitalizar empresa", "como aplicar la ia en mi empresa", "como usar la ia en mi negocio", "digitalizar mi negocio", "ayuda para digitalizar mi empresa", "crear una aplicacion para mi empresa", "hacer una app para mi negocio", "desarrollar una idea de aplicacion", "empresa para desarrollar mi idea", "cuanto cuesta hacer una aplicacion"]
 MEDIDA_SOFT = ["software a medida", "desarrollo software a medida", "programa a medida para empresa", "aplicacion a medida", "desarrollo aplicaciones empresa", "programador mallorca", "programador palma", "desarrollo software mallorca", "empresa software mallorca", "empresa desarrollo software palma"]
 MEDIDA_AUTO = ["automatizar procesos", "automatizacion de procesos empresa", "automatizar tareas empresa", "automatizar facturas", "integrar programas empresa", "conectar crm", "consultor automatizacion", "experto n8n", "experto make automatizacion"]
 MEDIDA_IA = ["inteligencia artificial para empresas", "ia para empresas", "chatbot para empresa", "agente ia empresa", "chatbot whatsapp empresa", "implantar ia en empresa", "consultoria ia mallorca", "consultoria inteligencia artificial"]
-NEG_MEDIDA = ["curso", "cursos", "gratis", "gratuito", "master", "formacion", "aprender", "tutorial", "empleo", "trabajo", "oferta de empleo", "practicas", "sueldo", "que es", "descargar", "plantilla", "chatgpt gratis", "pdf", "tfg", "universidad", "freelance"]
+NEG_MEDIDA = ["juego", "videojuego", "como uber", "como glovo", "gratis app", "sin programar", "no code gratis", "curso", "cursos", "gratis", "gratuito", "master", "formacion", "aprender", "tutorial", "empleo", "trabajo", "oferta de empleo", "practicas", "sueldo", "que es", "descargar", "plantilla", "chatgpt gratis", "pdf", "tfg", "universidad", "freelance"]
 SITELINKS_MEDIDA = [
     ("Automatizaciones", "Leads, facturas e informes", "que se gestionan solos", "/automatizaciones/"),
     ("Agentes de IA", "Atienden y reservan 24/7", "con supervisión humana", "/agentes-ia/"),
@@ -119,6 +135,7 @@ CAMPAIGNS = [
         dict(name="Software a medida", kws=MEDIDA_SOFT, path="/lp/a-medida/", content="rsa-software", h=H_MEDIDA, d=D_MEDIDA, p=("A-Medida", "Software")),
         dict(name="Automatizar", kws=MEDIDA_AUTO, path="/lp/a-medida/", content="rsa-automatizar", h=H_MEDIDA, d=D_MEDIDA, p=("A-Medida", "Automatizar")),
         dict(name="IA para empresas", kws=MEDIDA_IA, path="/lp/a-medida/", content="rsa-ia", h=H_MEDIDA, d=D_MEDIDA, p=("A-Medida", "IA")),
+        dict(name="Tengo una idea", kws=MEDIDA_IDEA, path="/lp/a-medida/", content="rsa-idea", h=H_IDEA, d=D_IDEA, p=("Tu-Idea", "Empezamos")),
     ]),
     dict(id="G2-PACK", name="COMA | Search | Web | Mallorca — anuncios del EXPERIMENTO (desde 7 ene)", camp="web-mallorca", budget="el de G2 (el experimento reparte 50/50)", geo="la de G2", groups=[
         dict(name="Mallorca local (experimento)", kws=[], path="/lp/temporada/", content="rsa-pack-local", h=H_PACK, d=D_PACK, p=("Mallorca", "Temporada")),

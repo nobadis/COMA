@@ -120,7 +120,7 @@ Presupuesto: 4 €/día (pausada del 21 dic al 6 ene) · Ubicación: Illes Balea
     Sin Cambiar tus Programas      
     Más de 100 Pymes Confían       
     Reunión en Palma o por Vídeo   
-    Pide tu Diagnóstico Gratis     
+    Te Acompañamos Hasta el Final  
   Descripciones (máx. 90):
     Automatizaciones, integraciones, agentes de IA y apps internas hechas para vuestro caso.
     Diagnóstico gratis de 30 min: las tareas que más horas os quitan y cómo resolverlas.
@@ -155,7 +155,7 @@ Presupuesto: 4 €/día (pausada del 21 dic al 6 ene) · Ubicación: Illes Balea
     Sin Cambiar tus Programas      
     Más de 100 Pymes Confían       
     Reunión en Palma o por Vídeo   
-    Pide tu Diagnóstico Gratis     
+    Te Acompañamos Hasta el Final  
   Descripciones (máx. 90):
     Automatizaciones, integraciones, agentes de IA y apps internas hechas para vuestro caso.
     Diagnóstico gratis de 30 min: las tareas que más horas os quitan y cómo resolverlas.
@@ -189,12 +189,48 @@ Presupuesto: 4 €/día (pausada del 21 dic al 6 ene) · Ubicación: Illes Balea
     Sin Cambiar tus Programas      
     Más de 100 Pymes Confían       
     Reunión en Palma o por Vídeo   
-    Pide tu Diagnóstico Gratis     
+    Te Acompañamos Hasta el Final  
   Descripciones (máx. 90):
     Automatizaciones, integraciones, agentes de IA y apps internas hechas para vuestro caso.
     Diagnóstico gratis de 30 min: las tareas que más horas os quitan y cómo resolverlas.
     Precio cerrado por escrito antes de empezar. Nos conectamos a los programas que ya usáis.
     Agencia de Palma desde 1997 y más de 100 pymes. Reunión en Paseo Mallorca 16 o por vídeo.
+
+  Grupo de anuncios: Tengo una idea
+  URL final: https://comunicacionenmallorca.com/lp/a-medida/?utm_source=google&utm_medium=cpc&utm_campaign=a-medida&utm_content=rsa-idea
+  Ruta visible: comunicacionenmallorca.com/Tu-Idea/Empezamos
+  Palabras clave ("frase" y [exacta]):
+    - no se por donde empezar digitalizar empresa
+    - como aplicar la ia en mi empresa
+    - como usar la ia en mi negocio
+    - digitalizar mi negocio
+    - ayuda para digitalizar mi empresa
+    - crear una aplicacion para mi empresa
+    - hacer una app para mi negocio
+    - desarrollar una idea de aplicacion
+    - empresa para desarrollar mi idea
+    - cuanto cuesta hacer una aplicacion
+  Títulos (máx. 30 caracteres; FIJADO 1 = fijar en la posición 1):
+    ¿Tienes una Idea? Te Ayudamos  FIJADO 1
+    ¿No Sabes por Dónde Empezar?   FIJADO 1
+    Te Acompañamos Hasta el Final  
+    De la Idea a que Funcione      
+    Más Asequible de lo que Crees  
+    IA Aplicada con Cabeza         
+    29 Años y a la Vanguardia      
+    Diagnóstico Gratis de 30 Min   
+    Precio Cerrado por Escrito     
+    Agencia de Palma desde 1997    
+    Software y Automatización      
+    Te Decimos Qué Tiene Sentido   
+    Reunión en Palma o por Vídeo   
+    Más de 100 Pymes Confían       
+    Ven con tu Idea                
+  Descripciones (máx. 90):
+    ¿Tienes ideas y no sabes por dónde empezar? Las ordenamos contigo y te acompañamos.
+    Con la IA, soluciones que antes no estaban al alcance de una pyme hoy son asequibles.
+    Diagnóstico gratis: qué tiene sentido, por dónde empezar y cuánto cuesta. Precio cerrado.
+    Desde 1997 en Palma. Te decimos con sinceridad qué merece la pena y qué no.
 
   Recursos propios de G5 (no usar los de la web):
   Enlaces de sitio:
@@ -203,7 +239,7 @@ Presupuesto: 4 €/día (pausada del 21 dic al 6 ene) · Ubicación: Illes Balea
     Para despachos · Facturas que se leen solas · directas a tu programa contable · https://comunicacionenmallorca.com/despachos/
     Contacto · Paseo Mallorca 16, Palma · Te respondemos personalmente · https://comunicacionenmallorca.com/contacto/
   Textos destacados: Diagnóstico gratis · Precio cerrado · Desde 1997 · +100 pymes · Reunión en Palma
-  Negativas (lista «COMA negativas a medida»): curso, cursos, gratis, gratuito, master, formacion, aprender, tutorial, empleo, trabajo, oferta de empleo, practicas, sueldo, que es, descargar, plantilla, chatgpt gratis, pdf, tfg, universidad, freelance
+  Negativas (lista «COMA negativas a medida»): juego, videojuego, como uber, como glovo, gratis app, sin programar, no code gratis, curso, cursos, gratis, gratuito, master, formacion, aprender, tutorial, empleo, trabajo, oferta de empleo, practicas, sueldo, que es, descargar, plantilla, chatgpt gratis, pdf, tfg, universidad, freelance
 
 ==============================================================================
 G2-PACK · COMA | Search | Web | Mallorca — anuncios del EXPERIMENTO (desde 7 ene)

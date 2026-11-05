@@ -251,7 +251,7 @@ export const landings: Landing[] = [
       "Automatizaciones, integraciones, agentes de IA y aplicaciones internas a medida para pymes. Diagnóstico gratis de 30 minutos y propuesta con precio cerrado. Agencia de Palma desde 1997.",
     eyebrow: "A medida · Palma desde 1997",
     h1: "Si una tarea os quita horas, la resolvemos a medida",
-    lead: "Automatizaciones, integraciones, agentes de IA y aplicaciones internas hechas para vuestro caso, no para el de todos. Empezamos con un diagnóstico gratis y una propuesta con precio cerrado.",
+    lead: "Automatizaciones, integraciones, agentes de IA y aplicaciones internas hechas para vuestro caso, no para el de todos. ¿Tenéis una idea y no sabéis por dónde empezar? Os acompañamos desde el diagnóstico gratis hasta que funciona, con precio cerrado.",
     bullets: [
       "WhatsApps y emails que se contestan solos, con supervisión humana",
       "Presupuestos, facturas e informes que se hacen solos",
@@ -263,12 +263,12 @@ export const landings: Landing[] = [
     offer: {
       label: "Diagnóstico",
       price: "Gratis",
-      note: "30 minutos. Salís con las tareas que más horas os quitan y una propuesta con precio cerrado.",
+      note: "30 minutos. Salís con las tareas que más horas os quitan, qué tiene sentido hacer primero y una propuesta con precio cerrado.",
     },
     steps: [
       {
         title: "Diagnóstico",
-        text: "Nos contáis qué os quita tiempo y vemos qué tiene sentido resolver.",
+        text: "Nos contáis qué os quita tiempo o esa idea que tenéis en la cabeza, aunque no sepáis por dónde empezar.",
       },
       {
         title: "Propuesta",
@@ -276,17 +276,21 @@ export const landings: Landing[] = [
       },
       {
         title: "Lo construimos",
-        text: "Lo probamos con vuestros datos, formamos al equipo y damos soporte.",
+        text: "Lo probamos con vuestros datos, formamos al equipo y seguimos a vuestro lado.",
       },
     ],
     faq: [
+      {
+        title: "Tengo ideas, pero no sé por dónde empezar",
+        text: "Es lo más habitual, y para eso está el diagnóstico. Ordenamos las ideas juntos, os decimos con sinceridad qué tiene sentido y qué no, y os acompañamos en cada paso.",
+      },
       {
         title: "¿Qué tipo de problemas resolvéis?",
         text: "Cualquier tarea repetitiva o que dependa de pasar datos a mano: atención a clientes, presupuestos, facturas, informes, reservas, inventario o la conexión entre programas que no se hablan.",
       },
       {
         title: "¿Cuánto cuesta?",
-        text: "Depende del alcance. Lo sabéis antes de empezar: precio cerrado por escrito tras el diagnóstico, que es gratis.",
+        text: "Depende del alcance, y suele ser menos de lo que se imagina: con la IA y las herramientas actuales, muchas soluciones que antes estaban fuera del alcance de una pyme hoy son asequibles. Lo sabéis antes de empezar, con precio cerrado por escrito.",
       },
       {
         title: "¿Tengo que cambiar mis programas?",
@@ -295,6 +299,10 @@ export const landings: Landing[] = [
       {
         title: "¿Trabajáis fuera de Mallorca?",
         text: "Sí, por videollamada. En Palma, también en persona: estamos en el Paseo Mallorca, 16.",
+      },
+      {
+        title: "¿Por qué vosotros?",
+        text: "Llevamos desde 1997 ayudando a empresas a comunicar y a trabajar mejor, y hoy aplicamos la IA y la automatización con los pies en la tierra: solo lo que os ahorra tiempo o dinero de verdad.",
       },
     ],
     interest: "A medida",
