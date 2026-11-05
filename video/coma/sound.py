@@ -1,6 +1,9 @@
 """
-Sonido del vídeo general de COMA (34 s, 120 BPM): efectos de interfaz que mandan sobre un pulso
-suave (bombo redondo, shaker, bajo y colchón cálido). Mismos tiempos que promo.html.
+Sonido del vídeo general de COMA (40 s, 104 BPM: un tiempo = 0,575 s). Mismos tiempos que promo.html.
+Tono de consultora: cálido, claro y sin golpes. Piano, colchón suave, marimba y una percusión
+discreta que entra con los servicios. Los cambios de escena llevan un soplo de aire, no un impacto;
+los detalles de interfaz (teclas, avisos, revisiones) suenan pequeños y limpios.
+Todo sintetizado con numpy (sin derechos de autor).
 Uso: python sound.py salida.wav
 """
 import sys
@@ -8,15 +11,16 @@ import wave
 import numpy as np
 
 SR = 44100
-DUR = 34.0
+DUR = 40.0
 N = int(SR * DUR)
-rng = np.random.default_rng(23)
+BEAT = 0.575
+rng = np.random.default_rng(29)
 NOTE = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
 
 
 def m(name):
     n, o = name[:-1], int(name[-1])
-    return 12 * (o + 1) + NOTE[n[0]] + (1 if "#" in n else 0)
+    return 12 * (o + 1) + NOTE[n[0]] + (1 if "#" in n else 0) - (1 if n.endswith("b") else 0)
 
 
 def hz(x):
@@ -49,8 +53,8 @@ def fade(n, a, r):
 def reverb(x, secs=2.4, wet=0.3):
     n = int(secs * SR)
     t = np.arange(n) / SR
-    ir = band(rng.standard_normal(n) * np.exp(-t / (secs / 6.5)), 300, 7000)
-    ir[: int(0.02 * SR)] = 0
+    ir = band(rng.standard_normal(n) * np.exp(-t / (secs / 6.5)), 250, 6500)
+    ir[: int(0.025 * SR)] = 0
     ir /= np.sqrt(np.sum(ir**2))
     M = len(x) + n
     return x + wet * np.fft.irfft(np.fft.rfft(x, M) * np.fft.rfft(ir, M), M)[: len(x)]
@@ -69,238 +73,257 @@ class Bus:
         self.R[i : i + len(s)] += s * np.sqrt(1 + pan)
 
 
-# ---------------------------------------------------------------------- sonidos
-def felt(f, d=2.5):
+# ---------------------------------------------------------------------- instrumentos
+def piano(f, d=3.0, bright=1.0):
+    """Piano de fieltro: ataque suave, armónicos que se apagan antes que la fundamental."""
     t = tt(d)
-    s = sum(a * np.sin(2 * np.pi * f * k * t) * np.exp(-t * (0.9 + 0.9 * k)) for k, a in ((1, 1), (2, 0.35), (3, 0.12), (4, 0.05)))
-    return s * fade(len(t), 0.01, 0.3)
+    s = sum(a * np.sin(2 * np.pi * f * k * t * (1 + 0.0004 * k * k)) * np.exp(-t * (0.7 + 1.1 * k))
+            for k, a in ((1, 1), (2, 0.42 * bright), (3, 0.16 * bright), (4, 0.07 * bright), (5, 0.03 * bright)))
+    return s * fade(len(t), 0.006, 0.4)
 
 
-def pluck(f, d=0.5):
+def marimba(f, d=0.7):
     t = tt(d)
-    s = np.sin(2 * np.pi * f * t) + 0.3 * np.sin(4 * np.pi * f * t) * np.exp(-t * 18)
-    return s * np.exp(-t * 7) * fade(len(t), 0.003, 0.05)
+    s = np.sin(2 * np.pi * f * t) * np.exp(-t * 6) + 0.25 * np.sin(2 * np.pi * f * 4 * t) * np.exp(-t * 26)
+    return s * fade(len(t), 0.002, 0.08)
 
 
-def glass(f, d=1.8):
+def chime(f, d=2.2):
     t = tt(d)
-    s = sum(a * np.sin(2 * np.pi * f * r * t) * np.exp(-t * dec) for r, a, dec in ((1, 1, 1.8), (2.76, 0.3, 3.5), (5.4, 0.1, 7)))
-    return s * fade(len(t), 0.003, 0.3)
+    s = sum(a * np.sin(2 * np.pi * f * r * t) * np.exp(-t * dec) for r, a, dec in ((1, 1, 1.6), (2.76, 0.22, 3.2), (5.4, 0.06, 6)))
+    return s * fade(len(t), 0.004, 0.4)
 
 
-def tap(f=1600, d=0.08):
-    t = tt(d)
-    return np.sin(2 * np.pi * f * t) * np.exp(-t / 0.011) + band(noise(d), 2500, 9000) * np.exp(-t / 0.0025) * 0.3
-
-
-def thock(d=0.2):
-    """Corte de palabra: golpe grave, redondo, sin agresividad."""
-    t = tt(d)
-    f = 110 + 90 * np.exp(-t / 0.015)
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.045) + band(noise(d), 1500, 6000) * np.exp(-t / 0.004) * 0.15
-
-
-def thud(d=0.25):
-    t = tt(d)
-    f = 90 + 60 * np.exp(-t / 0.02)
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.05) + band(noise(d), 800, 5000) * np.exp(-t / 0.03) * 0.25
-
-
-def swish(d=0.45, lo=600, hi=5000):
-    t = tt(d)
-    n = noise(d)
-    out = np.zeros_like(n)
-    K = 12
-    S = len(n) // K
-    for c in range(K):
-        k = c / (K - 1)
-        seg = band(n[c * S : (c + 1) * S + 512], lo * (1 + 2 * k), hi * (0.6 + 0.6 * k))[:S]
-        out[c * S : c * S + len(seg)] = seg
-    return out * np.sin(np.pi * np.clip(t / d, 0, 1)) ** 2
-
-
-def sent():
-    d = 0.28
-    t = tt(d)
-    f = 500 + 900 * (t / d) ** 1.5
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * t / d) ** 2 * 0.5 + swish(d, 1200, 6000) * 0.4
-
-
-def received():
-    out = np.zeros(int(0.9 * SR))
-    for i, n in enumerate(("E5", "A5")):
-        s = glass(hz(n), 0.8) * (1 if i else 0.8)
-        j = int(i * 0.08 * SR)
-        out[j : j + len(s)] += s
-    return out
-
-
-def key():
-    t = tt(0.05)
-    return band(noise(0.05), 1200, 7000) * np.exp(-t / 0.005) + np.sin(2 * np.pi * 430 * t) * np.exp(-t / 0.008) * 0.5
-
-
-def kick(d=0.4):
-    t = tt(d)
-    f = 48 + 60 * np.exp(-t / 0.03)
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.16) * fade(len(t), 0.002, 0.05)
-
-
-def shaker(d=0.08):
-    t = tt(d)
-    return band(noise(d), 5000, 13000) * np.sin(np.pi * t / d) ** 2
-
-
-def rim(d=0.12):
-    t = tt(d)
-    return (np.sin(2 * np.pi * 820 * t) * np.exp(-t / 0.012) + band(noise(d), 1500, 7000) * np.exp(-t / 0.006) * 0.4)
-
-
-def bass(f, d):
-    t = tt(d)
-    return (np.sin(2 * np.pi * f * t) + 0.15 * np.sin(4 * np.pi * f * t)) * np.exp(-t * 1.6) * fade(len(t), 0.005, 0.08)
-
-
-def pad(notes, d):
+def pad(notes, d, att=0.9, rel=1.4):
     t = tt(d)
     s = np.zeros_like(t)
     for n in notes:
         f = hz(n)
-        for det, a in ((-4, 0.5), (0, 1), (5, 0.5)):
+        for det, a in ((-5, 0.5), (0, 1), (6, 0.5)):
             ff = f * 2 ** (det / 1200)
-            s += a * (np.sin(2 * np.pi * ff * t) + 0.12 * np.sin(4 * np.pi * ff * t))
-    return s * fade(len(t), 0.8, 1.2) / len(notes)
+            s += a * (np.sin(2 * np.pi * ff * t) + 0.08 * np.sin(4 * np.pi * ff * t))
+    trem = 1 + 0.05 * np.sin(2 * np.pi * 0.3 * t)
+    return s * trem * fade(len(t), att, rel) / len(notes)
 
 
-def rise_tone(d):
+def kick(d=0.35):
+    """Bombo redondo y corto, sin chasquido."""
     t = tt(d)
-    f = 300 + 500 * (t / d) ** 1.3
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * t / d) ** 2
+    f = 52 + 38 * np.exp(-t / 0.025)
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.11) * fade(len(t), 0.003, 0.05)
+
+
+def rim(d=0.08):
+    t = tt(d)
+    return (np.sin(2 * np.pi * 1700 * t) * np.exp(-t / 0.006) * 0.5 + band(noise(d), 2500, 8000) * np.exp(-t / 0.004) * 0.35)
+
+
+def shaker(d=0.09):
+    t = tt(d)
+    return band(noise(d), 6000, 13000) * np.sin(np.pi * t / d) ** 3
+
+
+def bass(f, d):
+    t = tt(d)
+    return (np.sin(2 * np.pi * f * t) + 0.12 * np.sin(4 * np.pi * f * t)) * np.exp(-t * 1.1) * fade(len(t), 0.01, 0.1)
+
+
+def air(d=0.95, lo=250, hi=2600):
+    """Soplo suave para los cambios de panel."""
+    t = tt(d)
+    return band(noise(d), lo, hi) * np.sin(np.pi * np.clip(t / d, 0, 1)) ** 2.4
+
+
+def swell(d, lo=300, hi=5000):
+    """Aire que crece despacio y se abre (entrada en la coma)."""
+    n = noise(d)
+    K = 14
+    S_ = len(n) // K
+    out = np.zeros_like(n)
+    for c in range(K):
+        k = c / (K - 1)
+        seg = band(n[c * S_ : (c + 1) * S_ + 512], lo * (1 + 2 * k), hi * (0.4 + 0.6 * k))[:S_]
+        out[c * S_ : c * S_ + len(seg)] = seg
+    t = tt(d)[: len(out)]
+    return out * np.sin(np.pi / 2 * np.clip(t / d, 0, 1)) ** 3 * fade(len(out), 0.05, 0.25)
+
+
+def tick(f=2400, d=0.05):
+    t = tt(d)
+    return np.sin(2 * np.pi * f * t) * np.exp(-t / 0.008) + band(noise(d), 3000, 9000) * np.exp(-t / 0.003) * 0.25
+
+
+def key():
+    t = tt(0.045)
+    return band(noise(0.045), 1500, 6500) * np.exp(-t / 0.005) + np.sin(2 * np.pi * 380 * t) * np.exp(-t / 0.007) * 0.4
+
+
+def scan(d):
+    t = tt(d)
+    return band(noise(d), 4000, 9000) * (0.5 + 0.5 * np.sin(2 * np.pi * 6 * t)) * np.sin(np.pi * t / d) ** 2
 
 
 # ----------------------------------------------------------------------- música
 mus = Bus()
+B = lambda k: 9.95 + k * BEAT  # tiempo k contado desde la llegada del primer panel (9,95 s)
+
+# acordes: (inicio, fin, notas del colchón, raíz)
 chords = [
-    (0.0, 3.7, ["A2", "E3", "C4", "G4"]), (3.6, 3.5, ["F2", "C3", "A3", "E4"]),
-    (7.0, 3.7, ["C3", "G3", "D4", "E4"]), (10.6, 2.9, ["A2", "E3", "C4", "G4"]),
-    (13.4, 3.1, ["F2", "C3", "A3", "E4"]), (16.4, 3.1, ["G2", "D3", "A3", "E4"]),
-    (19.4, 3.7, ["C3", "G3", "E4", "B4"]), (23.0, 3.1, ["F2", "C3", "A3", "E4"]),
-    (26.0, 2.9, ["G2", "D3", "B3", "E4"]), (28.8, 5.2, ["C3", "G3", "C4", "E4", "D5"]),
+    (0.0, 2.45, ["C3", "G3", "B3", "E4"], "C2"),           # portada
+    (2.45, 4.4, ["A2", "E3", "G3", "C4"], "A1"),
+    (4.4, 5.92, ["F2", "C3", "E3", "A3"], "F1"),           # entrada en la coma
+    (5.92, 7.65, ["F2", "C3", "E3", "G3", "A3"], "F1"),    # cómo pensamos
+    (7.65, 9.95, ["G2", "D3", "F3", "B3"], "G1"),
+    (B(0), B(4), ["A2", "E3", "G3", "C4"], "A1"),          # 01
+    (B(4), B(8), ["F2", "C3", "E3", "A3"], "F1"),
+    (B(8), B(12), ["D3", "A3", "C4", "F4"], "D2"),         # 02
+    (B(12), B(16), ["G2", "D3", "F3", "B3"], "G1"),
+    (B(16), B(20), ["C3", "G3", "B3", "E4"], "C2"),        # 03
+    (B(20), B(24), ["E2", "B2", "D3", "G3"], "E1"),
+    (B(24), B(28), ["F2", "C3", "E3", "A3"], "F1"),        # 04
+    (B(28), B(32), ["G2", "D3", "F3", "B3"], "G1"),
+    (B(32), B(36), ["A2", "E3", "G3", "C4"], "A1"),        # cómo trabajamos
+    (B(36), B(40), ["F2", "C3", "E3", "A3"], "F1"),
+    (B(40), B(44), ["E2", "B2", "D3", "G3"], "E1"),        # quiénes somos
+    (B(44), 35.825, ["D3", "A3", "C4", "F4"], "D2"),
+    (35.825, 40.0, ["C3", "G3", "B3", "D4", "E4"], "C2"),  # tu próximo paso
 ]
-roots = {7.0: "C2", 10.6: "A1", 13.4: "F1", 16.4: "G1", 19.4: "C2", 26.0: "G1", 28.8: "C2"}
-for t0, d, notes in chords:
-    mus.add(t0, pad(notes, d + 1.0), 0.07)
+for a, z, notes, _ in chords:
+    mus.add(a, pad(notes, z - a + 1.2), 0.06)
 
-# Pulso suave: servicios (7–19.4) completo; «lo que ganas» (19.4–23) solo bombo y bajo;
-# la filosofía (23–26) en silencio rítmico; vuelve en la prueba y el cierre (26–30.8).
-for i in range(80):
-    b = 7.0 + i * 0.5
-    if b >= 30.8:
-        break
-    if 23.0 <= b < 26.0:
-        continue
-    full = b < 19.4 or b >= 26.0
-    if i % 2 == 0:
-        mus.add(b, kick(), 0.17)
-        root = max(k for k in roots if k <= b)
-        mus.add(b, bass(hz(roots[root]) * 2, 0.9), 0.09)
-    elif full:
-        mus.add(b, rim(), 0.05, pan=0.2)
-    if full:
-        mus.add(b + 0.25, shaker(), 0.035, pan=-0.3)
-        mus.add(b, shaker(), 0.02, pan=0.3)
-arp = {7.0: ["C4", "E4", "G4", "D5"], 10.6: ["A3", "C4", "E4", "G4"], 13.4: ["F4", "A4", "C5", "E5"],
-       16.4: ["G4", "A4", "D5", "E5"]}
-for t0, notes in arp.items():
-    for j in range(6):
-        mus.add(t0 + j * 0.5 + 0.25, pluck(hz(notes[j % 4])), 0.05, pan=(-0.4, 0.4)[j % 2])
 
-# Piano: la promesa, la filosofía y el cierre
-for t0, n in ((3.75, "A4"), (4.75, "C5"), (4.75, "E4"),
-              (23.15, "F3"), (23.15, "C4"), (23.15, "A4"), (23.2, "E5"), (24.0, "G5"),
-              (28.9, "C3"), (28.9, "G3"), (28.9, "E4"), (28.95, "C5"), (29.6, "G5")):
-    mus.add(t0, felt(hz(n), 3.5), 0.14)
+def root_at(x):
+    r = None
+    for a, z, _, root in chords:
+        if a <= x + 1e-6:
+            r = root
+    return r
+
+
+# percusión discreta: entra con los servicios, baja en «quiénes somos» y vuelve suave al final
+def groove(a, z, kick_g=0.16, rim_g=0.035, sh_g=0.022, bass_g=0.085):
+    k = 0
+    x = a
+    while x < z - 1e-6:
+        beat = k % 4
+        if beat in (0, 2):
+            mus.add(x, kick(), kick_g)
+        if beat in (1, 3) and rim_g:
+            mus.add(x, rim(), rim_g, pan=0.15)
+        if sh_g:
+            mus.add(x + BEAT / 2, shaker(), sh_g, pan=0.35)
+            mus.add(x, shaker(), sh_g * 0.6, pan=-0.35)
+        r = root_at(x)
+        if r and bass_g and beat in (0, 2):
+            mus.add(x, bass(hz(r) * 2, BEAT * 1.9), bass_g)
+        x += BEAT
+        k += 1
+
+
+groove(7.65, 9.95, kick_g=0, rim_g=0, sh_g=0.014, bass_g=0)       # el shaker anuncia lo que viene
+groove(B(0), B(32), kick_g=0.19, rim_g=0.036, sh_g=0.025, bass_g=0.1)
+groove(B(32), B(40), kick_g=0.19, rim_g=0.036, sh_g=0.025, bass_g=0.1)
+groove(35.825, 39.0, kick_g=0.12, rim_g=0, sh_g=0.018, bass_g=0.08)
+
+# marimba en corcheas durante los servicios: dibuja cada acorde
+arps = {
+    B(0): ["A4", "C5", "E5", "G5"], B(4): ["F4", "A4", "C5", "E5"],
+    B(8): ["D5", "F5", "A5", "C6"], B(12): ["G4", "B4", "D5", "F5"],
+    B(16): ["C5", "E5", "G5", "B5"], B(20): ["E4", "G4", "B4", "D5"],
+    B(24): ["F4", "A4", "C5", "E5"], B(28): ["G4", "B4", "D5", "F5"],
+    B(32): ["A4", "C5", "E5", "G5"], B(36): ["F4", "A4", "C5", "E5"],
+}
+order = (0, 1, 2, 3, 2, 1, 2, 3)
+for t0, notes in arps.items():
+    for j in range(8):
+        mus.add(t0 + j * BEAT / 2, marimba(hz(notes[order[j]])), 0.045 if j % 2 else 0.058, pan=(-0.4, 0.4)[j % 2])
+
+# piano: el motivo de la marca (sube y se abre) en la portada, en la coma y en el cierre
+motif = [("E4", 0.0), ("G4", 0.29), ("B4", 0.575), ("D5", 0.86)]
+for t0 in (0.15, 2.45):
+    for n, dt in motif:
+        mus.add(t0 + dt, piano(hz(n), 2.6), 0.09)
+for n in ("C3", "G3", "E4"):
+    mus.add(0.15, piano(hz(n), 4.0, 0.8), 0.08)
+for n in ("A2", "E3", "C4"):
+    mus.add(2.45, piano(hz(n), 3.5, 0.8), 0.07)
+# florece al entrar en la coma
+for n, dt in (("F3", 0), ("C4", 0.02), ("E4", 0.04), ("A4", 0.06), ("G5", 0.35), ("E5", 0.62)):
+    mus.add(5.92 + dt, piano(hz(n), 4.0), 0.085)
+# cómo pensamos: el piano sigue la frase mientras se lee
+for t0, n in ((7.65, "D4"), (7.65, "B3"), (7.94, "F4"), (8.225, "A4"), (8.8, "G4"), (9.375, "B4")):
+    mus.add(t0, piano(hz(n), 2.8), 0.075)
+# quiénes somos: piano solo, reflexivo
+for t0, n in ((B(40), "E4"), (B(40), "B3"), (B(41), "G4"), (B(42), "D5"), (B(44), "F4"), (B(44), "C4"), (B(45), "A4"), (B(46), "E5")):
+    mus.add(t0, piano(hz(n), 3.0), 0.1)
+# tu próximo paso: el motivo resuelto
+for n, dt in (("C3", 0), ("G3", 0.02), ("E4", 0.04), ("B4", 0.06)):
+    mus.add(35.825 + dt, piano(hz(n), 5.0), 0.08)
+for n, dt in (("E5", 0.575), ("G5", 0.86), ("B5", 1.15), ("D6", 1.44)):
+    mus.add(35.825 + dt, piano(hz(n), 3.0), 0.07)
+for n, dt in (("C4", 0), ("G4", 0.03), ("E5", 0.06)):
+    mus.add(38.125 + dt, piano(hz(n), 3.5), 0.07)
 
 # ----------------------------------------------------------------------- efectos
 fx = Bus()
-# 1 · el día a día: un golpe por cada problema
-for i, n in enumerate(("A3", "C4", "E4", "G4")):
-    t0 = 0.15 + i * 0.85
-    fx.add(t0, thock(), 0.35)
-    fx.add(t0, felt(hz(n), 1.8), 0.13)
-# notificaciones que se acumulan, lejanas
-for t0, pn in ((0.5, -0.6), (1.35, 0.6), (2.2, -0.4), (2.6, 0.5), (3.0, -0.2)):
-    fx.add(t0, received(), 0.035, pan=pn)
+# portada: cada palabra, una nota limpia
+for t0, n in ((0.75, "E6"), (1.9, "G6"), (3.05, "C7")):
+    fx.add(t0, chime(hz(n), 1.6), 0.035, pan=-0.2)
+    fx.add(t0, tick(1800, 0.04), 0.03, pan=-0.2)
+fx.add(0.8, air(0.8, 300, 2200), 0.03, pan=0.3)  # sube la franja de servicios
+# entrada en la coma: aire que crece y se abre
+fx.add(4.25, swell(1.7, 250, 4500), 0.11)
+fx.add(5.92, chime(hz("A6"), 2.4), 0.04, pan=0.2)
+fx.add(5.92, chime(hz("E6"), 2.4), 0.03, pan=-0.2)
 
-# 2 · la promesa
-fx.add(3.75, thock(), 0.22)
-fx.add(4.75, thock(), 0.22)
-fx.add(4.75, glass(hz("E6")), 0.06)
+# cambios de panel: un soplo
+for t0 in (9.0, 13.6, 18.2, 22.8, 27.4, 31.4, 34.875):
+    fx.add(t0, air(0.95), 0.05, pan=rng.uniform(-0.2, 0.2))
 
-# Cambios de plano
-for t0 in (3.6, 7.0, 10.6, 13.4, 16.4, 19.4, 23.0, 26.0, 28.8):
-    fx.add(t0 - 0.2, swish(0.45), 0.08, pan=rng.uniform(-0.3, 0.3))
+# 01 · cada paso hecho: marimba que sube y un clic
+for i, (t0, n) in enumerate(((11.1, "C6"), (11.675, "E6"), (12.25, "G6"), (12.825, "C7"))):
+    fx.add(t0, marimba(hz(n), 0.6), 0.09, pan=-0.3 + 0.2 * i)
+    fx.add(t0, tick(2600, 0.04), 0.04, pan=-0.3 + 0.2 * i)
 
-# 3 · web: aparece, se desplaza, llega el móvil y la etiqueta de precio
-fx.add(7.15, swish(0.7, 300, 3000), 0.1, pan=0.3)
-# la bombilla se enciende: clic de interruptor, parpadeo y un zumbido cálido muy suave
-fx.add(7.55, tap(700, 0.09), 0.22, pan=0.4)
-fx.add(7.68, tap(900, 0.05), 0.08, pan=0.4)
-hum_t = tt(2.6)
-hum = (np.sin(2 * np.pi * 100 * hum_t) + 0.3 * np.sin(2 * np.pi * 200 * hum_t)) * np.sin(np.pi * hum_t / 2.6) ** 2
-fx.add(7.6, hum, 0.03, pan=0.4)
-fx.add(7.62, glass(hz("E6")), 0.05, pan=0.4)
-fx.add(8.6, swish(1.0, 400, 3000), 0.07, pan=0.3)
-fx.add(8.35, thud(), 0.16, pan=0.6)
-fx.add(9.35, thud(), 0.2, pan=0.5)
-fx.add(9.37, glass(hz("C6")), 0.07, pan=0.5)
+# 02 · el agente lee (escaneo suave), rellena campos y tu equipo aprueba
+fx.add(14.9, scan(2.05), 0.018, pan=-0.2)
+for i in range(4):
+    fx.add(15.125 + i * BEAT, tick(2100 + 150 * i, 0.04), 0.05, pan=0.3)
+fx.add(17.425, tick(1300, 0.05), 0.07, pan=0.3)
+fx.add(17.43, chime(hz("G6"), 1.6), 0.045, pan=0.3)
+fx.add(17.5, chime(hz("D7"), 1.4), 0.025, pan=0.3)
 
-# 4 · SEO y GEO: teclear la búsqueda, resultado, respuesta de la IA
-for i in range(0, 17, 2):
-    fx.add(11.05 + i * 0.035, key(), 0.16, pan=0.3)
-fx.add(11.75, tap(1700, 0.07), 0.14, pan=0.3)
-fx.add(12.25, received(), 0.08, pan=0.3)
+# 03 · la web baja: soplos cortos en cada parada
+for t0 in (19.45, 20.25, 21.05):
+    fx.add(t0, air(0.75, 400, 3200), 0.035, pan=0.25)
 
-# 5 · agente: conversación de madrugada
-fx.add(13.95, sent(), 0.18, pan=0.35)
-fx.add(14.7, received(), 0.08, pan=0.35)
-fx.add(15.3, sent(), 0.16, pan=0.35)
-fx.add(15.75, received(), 0.08, pan=0.35)
-
-# 6 · automatización: cada paso hecho sube una nota
-for i, n in enumerate(("C5", "E5", "G5", "C6")):
-    fx.add(17.15 + i * 0.5, pluck(hz(n), 0.6), 0.16, pan=0.35)
-    fx.add(17.15 + i * 0.5, tap(2200, 0.05), 0.06, pan=0.35)
-
-# 7 · lo que ganas: cada palabra, una nota cálida
-for i, n in enumerate(("E4", "G4", "C5", "E5")):
-    t0 = 19.6 + i * 0.8
-    fx.add(t0, thock(), 0.2)
-    fx.add(t0, felt(hz(n), 2.0), 0.13)
-fx.add(22.0, glass(hz("C6")), 0.06)
-
-# 9 · +100
-fx.add(26.1, rise_tone(1.0), 0.05)
+# 04 · teclear, el resultado y la respuesta de la IA
+for i in range(0, len("reformas de cocina en Palma"), 2):
+    fx.add(23.9 + i * 0.036, key(), 0.07, pan=0.25)
+fx.add(24.9, tick(1900, 0.05), 0.05, pan=0.25)
+fx.add(25.475, chime(hz("E6"), 1.4), 0.035, pan=0.25)
 for i in range(10):
-    fx.add(26.1 + 1.0 * (1 - (1 - i / 10) ** 2), tap(1800 + 60 * i, 0.04), 0.05)
-fx.add(27.1, glass(hz("C6"), 2.2), 0.09)
-fx.add(27.1, thud(), 0.15)
+    fx.add(25.65 + i * 0.1, tick(3000 + 80 * i, 0.03), 0.012, pan=0.25)
 
-# 10 · cierre
-fx.add(28.9, glass(hz("C6"), 2.8), 0.08)
-fx.add(30.15, thud(), 0.12)
-# clic del botón de contacto
-fx.add(31.4, tap(900, 0.1), 0.22)
-fx.add(31.42, received(), 0.07)
+# cómo trabajamos: un paso, una nota; «Acompañamos» con calma
+for i, n in enumerate(("C5", "D5", "E5", "G5")):
+    fx.add(28.35 + i * BEAT, marimba(hz(n), 0.7), 0.08, pan=-0.45 + 0.3 * i)
+fx.add(30.65, chime(hz("C6"), 2.2), 0.04)
 
-music = np.stack([reverb(mus.L, 2.6, 0.45), reverb(mus.R, 2.6, 0.45)], 1)
-sfx = np.stack([reverb(fx.L, 1.4, 0.18), reverb(fx.R, 1.4, 0.18)], 1)
+# tu próximo paso: el cursor llega, pasa por encima y pulsa
+fx.add(37.0, air(0.75, 600, 4000), 0.02, pan=0.4)
+fx.add(37.6, air(0.45, 900, 5000), 0.02, pan=0.1)
+fx.add(38.125, tick(1100, 0.06), 0.09)
+fx.add(38.13, chime(hz("G6"), 1.8), 0.035)
+
+music = np.stack([reverb(mus.L, 2.8, 0.42), reverb(mus.R, 2.8, 0.42)], 1)
+sfx = np.stack([reverb(fx.L, 1.6, 0.25), reverb(fx.R, 1.6, 0.25)], 1)
 mix = sfx + music
 t = np.arange(N) / SR
-mix *= (np.clip((DUR - t) / 2.5, 0, 1) ** 1.5)[:, None]
-mix *= np.clip(t / 0.03, 0, 1)[:, None]
+mix *= (np.clip((DUR - t) / 2.2, 0, 1) ** 1.4)[:, None]
+mix *= np.clip(t / 0.02, 0, 1)[:, None]
 mix /= np.max(np.abs(mix))
-mix = np.tanh(1.8 * mix) / np.tanh(1.8) * 0.9
+mix = np.tanh(1.4 * mix) / np.tanh(1.4) * 0.65  # ≈ -16 LUFS, como el vídeo anterior
 
 out = sys.argv[1] if len(sys.argv) > 1 else "sound.wav"
 with wave.open(out, "wb") as f:
