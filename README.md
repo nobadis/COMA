@@ -53,10 +53,10 @@ Maquetas completas de webs de clientes servidas en `/ejemplos-web/<id>/<proyecto
 
 ## Vídeos promocionales
 
-- `video/coma/` es el vídeo general (34 s) y `video/despachos/` el de COMA para despachos. Cada uno tiene `promo.html` (escenas animadas; abierto en el navegador se reproduce sin sonido) y `sound.py` (banda sonora sintetizada con numpy).
-- El general cuenta la propuesta de COMA con un solo negocio (VOLTA, ficticio) y la coma roja como hilo: «Hacemos que tu empresa se note,» → la web → Google y la IA → «Por fuera, que se note. Por dentro, que funcione,» → agente de IA y automatización → lo que ganas → +100 pymes y marcas → propuesta gratis y precio cerrado → logo y botón de contacto.
+- `video/coma/` es el vídeo general (40 s) y `video/despachos/` el de COMA para despachos. Cada uno tiene `promo.html` (escenas animadas; abierto en el navegador se reproduce sin sonido) y `sound.py` (banda sonora sintetizada con numpy).
+- El general es la versión de cine de la home, con sus frases y en su orden: portada («Hacemos que tu empresa se note,») → zoom dentro de la coma («Menos trabajo repetitivo…») → los cuatro servicios en paneles apilados, cada uno con su demo (la de diseño web usa capturas de esta web, en `video/coma/capturas/`) → cómo trabajamos → quiénes somos → «Tu próximo paso, bien resuelto.». Sin marcas de clientes ni precios. Si cambia la home, conviene revisar el vídeo y rehacer las capturas.
 - Para regenerarlo: `node video/render.cjs video/coma/promo.html <carpeta-fotogramas>` (con `CHROME_PATH=<ruta>` si hay que usar otro Chromium), `python video/coma/sound.py sonido.wav` y montaje con ffmpeg (H.264 + AAC, `-movflags +faststart`). Las salidas locales (`video/*/out/`) no se suben.
-- El vídeo publicado es `public/video/coma-promo.mp4` (con `coma-promo.jpg` de portada). Se abre desde el botón «COMA en 34 segundos» del pie, en un diálogo que solo descarga el MP4 al pulsarlo.
+- El vídeo publicado es `public/video/coma-promo.mp4` (con `coma-promo.jpg` de portada; H.264 en BT.709 para que el rojo salga exacto). Se abre desde el botón «COMA en 40 segundos» del pie, en un diálogo que solo descarga el MP4 al pulsarlo.
 
 ## Analítica y cookies
 
