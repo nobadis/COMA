@@ -626,7 +626,9 @@
   });
 
   // ------------------------------------------------------------------ 4 · la vuelta (12–14.75)
-  S("s4", 12.0, 14.78, 30, (w) => {
+  // empieza un poco antes, debajo de la búsqueda que se desvanece, para que no asome el fondo negro
+  S("s4", 11.85, 14.78, 30, (_, t) => {
+    const w = t - 12.0;
     reveal($("fA"), w, 0.1, 0.42);
     reveal($("fB"), w, 0.26, 0.45);
     const kf = io(p(w, 0.95, 1.55));
