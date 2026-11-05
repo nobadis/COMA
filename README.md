@@ -54,7 +54,8 @@ Maquetas completas de webs de clientes servidas en `/ejemplos-web/<id>/<proyecto
 ## Vídeos promocionales
 
 - `video/coma/` es el vídeo general (34 s) y `video/despachos/` el de COMA para despachos. Cada uno tiene `promo.html` (escenas animadas; abierto en el navegador se reproduce sin sonido) y `sound.py` (banda sonora sintetizada con numpy).
-- Para regenerarlo: `node video/render.cjs video/coma/promo.html <carpeta-fotogramas>`, `python video/coma/sound.py sonido.wav` y montaje con ffmpeg (H.264 + AAC, `-movflags +faststart`). Las salidas locales (`video/*/out/`) no se suben.
+- El general cuenta la propuesta de COMA con un solo negocio (VOLTA, ficticio) y la coma roja como hilo: «Hacemos que tu empresa se note,» → la web → Google y la IA → «Por fuera, que se note. Por dentro, que funcione,» → agente de IA y automatización → lo que ganas → +100 pymes y marcas → propuesta gratis y precio cerrado → logo y botón de contacto.
+- Para regenerarlo: `node video/render.cjs video/coma/promo.html <carpeta-fotogramas>` (con `CHROME_PATH=<ruta>` si hay que usar otro Chromium), `python video/coma/sound.py sonido.wav` y montaje con ffmpeg (H.264 + AAC, `-movflags +faststart`). Las salidas locales (`video/*/out/`) no se suben.
 - El vídeo publicado es `public/video/coma-promo.mp4` (con `coma-promo.jpg` de portada). Se abre desde el botón «COMA en 34 segundos» del pie, en un diálogo que solo descarga el MP4 al pulsarlo.
 
 ## Analítica y cookies

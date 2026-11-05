@@ -4,10 +4,13 @@
 <meta charset="utf-8" />
 <title>COMA · vídeo promocional</title>
 <!--
-  Vídeo promocional general de COMA (34 s, rejilla de 120 BPM). Idea: la tecnología al servicio de
-  las personas. Las máquinas hacen lo repetitivo para que la pyme gane tiempo para sus clientes, su
-  equipo y los suyos. Hilo: el día a día que agobia → la promesa → cuatro servicios con interfaz →
-  lo que ganas → nuestra filosofía → prueba → cierre. Cifras de src/data/site.ts y pricing.ts.
+  Vídeo promocional general de COMA (34 s, rejilla de 120 BPM).
+  Idea: «Hacemos que tu empresa se note,». Por fuera, que se note (web, Google y la IA); por dentro,
+  que funcione (agentes de IA y automatización). Todo con la historia de un mismo negocio (VOLTA,
+  ficticio) y la coma roja de la marca como hilo: abre el vídeo, hace de transición y cierra en el logo.
+  Hilo: la coma → la promesa → se note (web) → se encuentre (Google e IA) → la vuelta (por fuera /
+  por dentro) → atiende y factura sola → lo que ganas → prueba (+100 y marcas) → sin riesgo → cierre.
+  Cifras y textos de src/data/site.ts, pricing.ts y publicidad/03-MENSAJE-Y-TESTS-AB.txt.
   window.render(t) dibuja cada fotograma; video/render.cjs los captura.
 -->
 <style>
@@ -18,51 +21,63 @@
     font-stretch: 62% 125%;
   }
   :root {
-    --paper: #efece4;
+    --paper: #f6f1e8;
+    --paper-2: #ece4d6;
     --ink: #0c0c0c;
-    --muted: #6b665e;
+    --ink-2: #161616;
+    --muted: #5d5851;
     --night-muted: #a8a39b;
-    --line: rgba(12, 12, 12, 0.09);
+    --line: rgba(12, 12, 12, 0.1);
     --red: #e1112d;
     --ok: #2f8f5b;
     --ok-bg: #e3f1e8;
-    --shadow: 0 50px 110px rgba(40, 32, 20, 0.14), 0 10px 30px rgba(40, 32, 20, 0.07);
-    --serif: Georgia, "Times New Roman", serif;
+    --shadow: 0 50px 110px rgba(40, 32, 20, 0.16), 0 10px 30px rgba(40, 32, 20, 0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); }
   body { font-family: "Archivo V", "Segoe UI", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
-  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
-  .sc { position: absolute; inset: 0; display: none; transform-origin: 50% 50%; background: var(--paper); }
-  .sc.dark { background: var(--ink); color: var(--paper); }
-  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  .h { font-weight: 700; font-stretch: 108%; letter-spacing: -0.035em; line-height: 0.98; }
-  .c { color: var(--red); }
-  .eyebrow { font-weight: 700; font-stretch: 120%; text-transform: uppercase; letter-spacing: 0.16em; font-size: 24px; color: var(--red); }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); }
+  #cam { position: absolute; inset: 0; }
+  .sc { position: absolute; inset: 0; display: none; overflow: hidden; background: var(--paper); }
+  .night { background: var(--ink); color: var(--paper); }
+
+  /* tipografía de la marca (la de la web: Archivo ancho, 700, interlineado corto) */
+  .h { font-weight: 700; font-stretch: 125%; letter-spacing: -0.04em; line-height: 0.96; }
+  .r { color: var(--red); }
+  .eb { display: inline-flex; align-items: center; gap: 18px; font-size: 22px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .eb::before { content: ""; width: 46px; height: 3px; background: var(--red); flex: none; }
+  .night .eb { color: var(--night-muted); }
+  /* línea con máscara: el texto sube desde abajo, como en la web */
+  .ln { display: block; overflow: hidden; padding: 0.04em 0 0.1em; margin: -0.04em 0 -0.1em; }
+  .ln > span { display: inline-block; white-space: nowrap; }
   .logo { display: inline-flex; align-items: flex-start; font-weight: 700; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
-  .logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); }
-  .card { background: #fff; border-radius: 26px; box-shadow: var(--shadow); border: 1px solid var(--line); }
-  .slot { position: relative; display: inline-block; }
-  .slot > span { position: absolute; left: 50%; top: 0; white-space: nowrap; }
+  .logo svg { width: 0.32em; height: auto; margin-left: 0.04em; margin-top: -0.18em; color: var(--red); overflow: visible; }
+  .card { background: #fff; border-radius: 22px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .cap { position: absolute; left: 120px; top: 0; bottom: 0; width: 660px; display: flex; flex-direction: column; justify-content: center; }
+  .cap h2 { font-size: 74px; margin-top: 26px; }
+  .cap p { font-size: 29px; line-height: 1.38; margin-top: 28px; color: var(--muted); max-width: 540px; }
+  .night .cap p { color: var(--night-muted); }
 
-  /* 1 · el día a día */
-  #dEb { font-size: 30px; margin-bottom: 40px; }
-  #dWord { font-size: 108px; height: 124px; width: 1800px; }
+  /* marca fija y capas superiores */
+  #bug { position: absolute; left: 70px; top: 52px; font-size: 34px; z-index: 200; opacity: 0; }
+  #bug span { transition: none; }
+  #wipe { position: absolute; left: -1000px; top: 0; width: 3000px; height: 6000px; color: var(--red); z-index: 190; display: none; }
 
-  /* 2 · la promesa */
-  #p1 { font-size: 110px; color: var(--muted); }
-  #p2 { font-size: 110px; margin-top: 20px; max-width: 1600px; }
+  /* 1 · la coma y la promesa */
+  #s1 { background: var(--ink); overflow: visible; }
+  #hkC { position: absolute; left: 870px; top: 350px; width: 180px; height: 360px; color: var(--red); transform-origin: 65% 31.25%; overflow: visible; }
+  #hkRing { position: absolute; left: 960px; top: 540px; width: 360px; height: 360px; margin: -180px 0 0 -180px; border-radius: 50%; border: 4px solid var(--red); opacity: 0; }
+  #hkRed { position: absolute; inset: 0; background: var(--red); opacity: 0; }
+  #hkT { position: absolute; left: 150px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; color: #fff; font-size: 196px; transform-origin: 0 50%; }
+  #hkW { position: relative; height: 1.14em; }
+  #hkW > span { position: absolute; left: 0; top: 0.04em; color: var(--ink); white-space: nowrap; }
+  #s1sh { position: absolute; left: 0; right: 0; bottom: -60px; height: 60px; background: linear-gradient(rgba(0,0,0,.35), transparent); }
 
-  /* servicios: comunes */
-  .cap { position: absolute; left: 150px; top: 0; bottom: 0; width: 700px; display: flex; flex-direction: column; justify-content: center; }
-  .cap h2 { font-size: 96px; margin-top: 24px; }
-  .cap p { font-size: 30px; line-height: 1.35; margin-top: 28px; color: var(--muted); }
-  .ui { position: absolute; left: 920px; right: 120px; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; }
-
-  /* 3 · web espectacular: electricidad y fontanería */
-  #s3 .cap { width: 520px; left: 120px; }
-  #s3 .cap h2 { font-size: 82px; }
-  .br { position: absolute; left: 700px; top: 170px; width: 1080px; height: 690px; border-radius: 22px; overflow: hidden; background: #0b1020; box-shadow: 0 70px 140px rgba(10, 16, 40, .3), 0 14px 34px rgba(10, 16, 40, .14); }
+  /* 2 · se note: la web de VOLTA (ficticia) */
+  #s2 { background: #0b1020; }
+  #s2 .world { position: absolute; inset: 0; perspective: 2400px; perspective-origin: 60% 45%; }
+  #s2 .cap { width: 580px; }
+  .br { position: absolute; left: 700px; top: 170px; width: 1080px; height: 690px; border-radius: 22px; overflow: hidden; background: #0b1020; box-shadow: 0 70px 140px rgba(10, 16, 40, .32), 0 14px 34px rgba(10, 16, 40, .16); transform-origin: 540px 345px; }
   .br .top { height: 46px; background: #161b2b; display: flex; align-items: center; gap: 9px; padding: 0 18px; }
   .br .top i { width: 12px; height: 12px; border-radius: 50%; background: #2d3448; }
   .br .url { margin-left: 16px; background: #222a3d; border-radius: 8px; padding: 5px 16px; font-size: 16px; color: #a9b2c8; width: 360px; }
@@ -71,7 +86,7 @@
   .heroV { position: relative; height: 644px; overflow: hidden; color: #fff; background: radial-gradient(ellipse at 78% 42%, #1d2a52 0%, #0b1020 62%); }
   .heroV .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(120,150,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,.07) 1px, transparent 1px); background-size: 44px 44px; }
   .heroV .lines { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .glow { position: absolute; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,64,.55), rgba(255,190,40,.12) 45%, rgba(255,190,40,0) 70%); }
+  .glow { position: absolute; width: 560px; height: 560px; margin: -280px 0 0 -280px; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,64,.6), rgba(255,190,40,.14) 45%, rgba(255,190,40,0) 70%); }
   .bulb { position: absolute; width: 190px; margin-left: -95px; }
   .navV { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; justify-content: space-between; padding: 24px 44px; font-size: 16px; z-index: 2; }
   .navV b { font-size: 26px; font-weight: 800; font-stretch: 120%; letter-spacing: .02em; }
@@ -100,7 +115,7 @@
   .svc .it b { display: block; font-size: 23px; }
   .svc .it span { display: block; font-size: 17px; color: #5d6474; margin-top: 6px; }
   .svc .it em { display: inline-block; margin-top: 14px; font-style: normal; font-size: 15px; font-weight: 700; color: #0b1020; background: #ffd23f; border-radius: 999px; padding: 6px 12px; }
-  .phone { position: absolute; left: 1560px; top: 400px; width: 290px; height: 600px; border-radius: 46px; background: #0c0c0c; padding: 10px; box-shadow: 0 60px 120px rgba(10,16,40,.38); }
+  .phone { position: absolute; left: 1560px; top: 400px; width: 290px; height: 600px; border-radius: 46px; background: #0c0c0c; padding: 10px; box-shadow: 0 60px 120px rgba(10,16,40,.4); transform-origin: 50% 60%; }
   .phone .scr { position: relative; width: 100%; height: 100%; border-radius: 37px; overflow: hidden; }
   .phone .heroV { height: 100%; }
   .phone .navV { padding: 46px 20px 0; font-size: 12px; }
@@ -111,208 +126,328 @@
   .phone .bulb { width: 100px; margin-left: -50px; }
   .phone .glow { width: 280px; height: 280px; margin: -140px 0 0 -140px; }
   .phone .callM { position: absolute; left: 22px; right: 22px; bottom: 40px; background: #ffd23f; color: #121212; text-align: center; font-weight: 800; border-radius: 999px; padding: 15px; font-size: 17px; z-index: 2; }
-  #price { position: absolute; left: 1490px; top: 120px; background: var(--red); color: #fff; border-radius: 999px; padding: 22px 34px; font-size: 36px; font-weight: 700; box-shadow: 0 20px 40px rgba(225,17,45,.3); z-index: 5; }
-  #price small { font-size: 20px; font-weight: 500; opacity: .85; }
+  /* etiqueta de precio con el estilo de COMA: recta, roja, en mayúsculas */
+  #price { position: absolute; left: 1380px; top: 104px; background: var(--red); color: #fff; padding: 20px 30px 18px; font-weight: 700; font-stretch: 125%; box-shadow: 0 24px 50px rgba(225,17,45,.32); z-index: 5; }
+  #price b { display: block; font-size: 40px; letter-spacing: -0.02em; }
+  #price small { display: block; font-size: 17px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-top: 6px; opacity: .9; }
+  #toast { position: absolute; left: 1010px; top: 892px; display: flex; align-items: center; gap: 16px; padding: 16px 24px 16px 18px; border-radius: 18px; font-size: 21px; z-index: 6; }
+  #toast i { width: 46px; height: 46px; border-radius: 12px; background: var(--ok-bg); display: grid; place-items: center; font-style: normal; font-size: 24px; }
+  #toast b { display: block; font-size: 22px; }
+  #toast span { color: var(--muted); font-size: 18px; }
 
-  /* 4 · seo */
-  .sr { width: 820px; display: flex; flex-direction: column; gap: 26px; }
-  .sr .q { padding: 24px 30px; display: flex; gap: 18px; align-items: center; font-size: 30px; }
-  .sr .q svg { width: 30px; flex: none; }
-  .sr .res { padding: 26px 30px; }
-  .sr .res small { font-size: 18px; color: var(--muted); }
-  .sr .res b { display: block; font-size: 28px; color: #1a4fbf; font-weight: 600; margin: 4px 0; }
-  .sr .res span { font-size: 20px; color: var(--muted); }
-  .sr .ai { padding: 26px 30px; }
-  .sr .ai .who { font-size: 18px; font-weight: 700; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; }
-  .sr .ai .who i { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(var(--red), #f59e0b, var(--red)); }
-  .sr .ai p { font-size: 25px; line-height: 1.4; margin-top: 10px; }
-  .sr .ai mark { background: #fde2e5; color: var(--ink); padding: 0 6px; border-radius: 6px; font-weight: 600; }
+  /* 3 · se encuentre: Google y la IA */
+  #s3 .ui3 { position: absolute; left: 820px; top: 0; bottom: 0; width: 1040px; perspective: 2200px; perspective-origin: 30% 50%; }
+  #st3 { position: absolute; left: 60px; top: 170px; width: 920px; height: 740px; transform-style: preserve-3d; transform-origin: 0 50%; }
+  #st3 > .card { position: absolute; left: 0; right: 0; }
+  #sq { top: 0; padding: 26px 32px; display: flex; gap: 20px; align-items: center; font-size: 34px; border-radius: 999px; }
+  #sq svg { width: 34px; flex: none; }
+  #sqc { display: inline-block; width: 3px; height: 38px; background: var(--ink); margin-left: 2px; vertical-align: middle; }
+  #sres { top: 140px; height: 250px; padding: 30px 34px; display: flex; gap: 30px; }
+  #sres .tx { flex: 1; }
+  #sres small { font-size: 18px; color: var(--muted); }
+  #sres b { display: block; font-size: 31px; color: #1a4fbf; font-weight: 600; margin: 6px 0 10px; line-height: 1.2; }
+  #sres .mt { font-size: 21px; color: var(--muted); line-height: 1.5; }
   .stars { color: #f5a623; }
+  .map { position: relative; width: 250px; flex: none; border-radius: 14px; overflow: hidden; background: #e9efe6; }
+  .map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #pin { position: absolute; left: 112px; top: 58px; width: 30px; height: 42px; }
+  #pinS { position: absolute; left: 115px; top: 96px; width: 24px; height: 8px; border-radius: 50%; background: rgba(0,0,0,.22); }
+  #sai { top: 430px; padding: 30px 34px; }
+  #sai .who { font-size: 18px; font-weight: 700; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; display: flex; gap: 12px; align-items: center; }
+  #sai .who i { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(var(--red), #f59e0b, var(--red)); }
+  #sait { font-size: 29px; line-height: 1.42; margin-top: 14px; min-height: 124px; }
+  #sait mark { background: transparent; color: var(--ink); font-weight: 700; padding: 0 0.15em; margin: 0 -0.15em; border-radius: 6px; -webkit-box-decoration-break: clone; }
 
-  /* 5 · agente */
-  .chat { width: 620px; padding: 30px; background: #f3efe8; }
-  .chat .hd { display: flex; justify-content: space-between; font-size: 19px; color: var(--muted); margin-bottom: 18px; }
-  .chat .hd b { color: var(--ink); }
-  .chat .msgs { display: flex; flex-direction: column; gap: 14px; min-height: 400px; }
-  .bub { max-width: 82%; padding: 16px 20px; border-radius: 22px; font-size: 25px; line-height: 1.34; }
-  .bub.me { align-self: flex-end; background: #ddf4cf; border-bottom-right-radius: 7px; }
-  .bub.them { align-self: flex-start; background: #fff; border-bottom-left-radius: 7px; }
-  .dots { align-self: flex-start; background: #fff; border-radius: 22px; padding: 20px 22px; display: flex; gap: 8px; }
-  .dots i { width: 11px; height: 11px; border-radius: 50%; background: #aaa; }
+  /* 4 · la vuelta: por fuera / por dentro */
+  #s4 { background: var(--red); perspective: 2200px; }
+  #flip { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+  .face.front { background: var(--paper); }
+  .face.back { background: var(--ink); color: var(--paper); transform: rotateY(180deg); }
+  .face .a { font-size: 120px; color: var(--muted); }
+  .face .b { font-size: 186px; margin-top: 14px; }
+  .face.back .a { color: var(--night-muted); }
+  .face .txt { position: relative; z-index: 2; }
+  .face svg.circ { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .chip { position: absolute; z-index: 3; font-size: 28px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--paper); border: 2px solid rgba(246,241,232,.28); background: rgba(22,22,22,.9); padding: 14px 22px; display: flex; gap: 12px; align-items: center; }
+  .chip i { width: 10px; height: 10px; background: var(--red); border-radius: 50%; box-shadow: 0 0 14px var(--red); }
 
-  /* 6 · automatización */
-  .flow { position: relative; width: 820px; height: 600px; }
-  .node { position: absolute; left: 0; width: 820px; padding: 22px 28px; display: flex; align-items: center; gap: 22px; font-size: 28px; font-weight: 600; }
-  .node .ic { width: 58px; height: 58px; border-radius: 16px; background: var(--paper); display: grid; place-items: center; font-size: 28px; flex: none; }
-  .node .st { margin-left: auto; font-size: 20px; font-weight: 600; padding: 7px 16px; border-radius: 999px; background: var(--paper); color: var(--muted); }
-  .node .st.ok { background: var(--ok-bg); color: var(--ok); }
-  .wire { position: absolute; left: 56px; width: 4px; background: rgba(12,12,12,.12); border-radius: 4px; overflow: hidden; }
-  .wire i { display: block; width: 100%; background: var(--red); }
+  /* 5 · por dentro: el agente atiende y la factura sale sola (un solo plano que se desplaza) */
+  #s5 { background: radial-gradient(ellipse at 30% 45%, #1b1416 0%, var(--ink) 60%); }
+  #w5 { position: absolute; left: 0; top: 0; width: 3480px; height: 1080px; transform-origin: 960px 540px; }
+  #w5 .dots5 { position: absolute; inset: 0; background-image: radial-gradient(rgba(246,241,232,.07) 1.5px, transparent 1.5px); background-size: 40px 40px; }
+  #capA { left: 120px; }
+  #capB { left: 1680px; width: 760px; }
+  .chat { position: absolute; left: 860px; top: 190px; width: 640px; border-radius: 26px; overflow: hidden; background: #0b141a; box-shadow: 0 60px 120px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06); }
+  .chat .hd { display: flex; align-items: center; gap: 16px; background: #202c33; padding: 20px 26px; font-size: 21px; color: #e9edef; }
+  .chat .hd .av { width: 50px; height: 50px; border-radius: 50%; background: #11151f; display: grid; place-items: center; font-size: 22px; color: #ffd23f; font-weight: 800; }
+  .chat .hd small { display: block; font-size: 16px; color: #8696a0; margin-top: 2px; }
+  .chat .hd .tm { margin-left: auto; font-size: 18px; color: #8696a0; }
+  .chat .msgs { display: flex; flex-direction: column; gap: 14px; padding: 26px; min-height: 520px; }
+  .bub { max-width: 84%; padding: 15px 19px; border-radius: 16px; font-size: 25px; line-height: 1.34; color: #e9edef; }
+  .bub.me { align-self: flex-end; background: #005c4b; border-top-right-radius: 4px; }
+  .bub.them { align-self: flex-start; background: #202c33; border-top-left-radius: 4px; }
+  .bub small { font-size: 14px; color: rgba(233,237,239,.6); margin-left: 10px; }
+  .bub .ok5 { color: #53bdeb; font-weight: 700; }
+  .tdots { align-self: flex-start; background: #202c33; border-radius: 16px; padding: 20px 22px; display: flex; gap: 8px; }
+  .tdots i { width: 11px; height: 11px; border-radius: 50%; background: #8696a0; }
+  #wire5 { position: absolute; left: 0; top: 0; width: 3480px; height: 1080px; overflow: visible; }
+  .flow { position: absolute; left: 2480px; top: 220px; width: 860px; height: 600px; }
+  .node { position: absolute; left: 0; width: 860px; padding: 22px 28px; display: flex; align-items: center; gap: 22px; font-size: 28px; font-weight: 600; background: #181818; color: var(--paper); border-radius: 20px; border: 1px solid rgba(246,241,232,.1); box-shadow: 0 40px 90px rgba(0,0,0,.45); }
+  .node .ic { width: 58px; height: 58px; border-radius: 16px; background: #262626; display: grid; place-items: center; font-size: 28px; flex: none; }
+  .node .st { margin-left: auto; font-size: 20px; font-weight: 600; padding: 7px 16px; border-radius: 999px; background: #262626; color: var(--night-muted); }
+  .node .st.ok { background: rgba(47,143,91,.2); color: #6fd39a; }
+  .node.on { border-color: rgba(225,17,45,.55); box-shadow: 0 40px 90px rgba(0,0,0,.45), 0 0 40px rgba(225,17,45,.18); }
+  .wire { position: absolute; left: 56px; width: 4px; background: rgba(246,241,232,.12); border-radius: 4px; overflow: hidden; }
+  .wire i { display: block; width: 100%; background: var(--red); box-shadow: 0 0 12px var(--red); }
 
-  /* 7 · lo que ganas */
-  #gEb { font-size: 44px; margin-bottom: 30px; color: var(--paper); letter-spacing: .02em; text-transform: none; font-weight: 600; font-stretch: 100%; }
-  #gWord { font-size: 240px; height: 250px; width: 1800px; }
+  /* 6 · lo que ganas */
+  #s6 { background: radial-gradient(ellipse at 50% 55%, #1a1416 0%, var(--ink) 65%); }
+  #pt { position: absolute; inset: 0; }
+  #pt i { position: absolute; left: 0; top: 0; border-radius: 50%; background: var(--paper); }
+  #gEb { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-size: 44px; font-weight: 600; color: var(--night-muted); letter-spacing: -0.01em; }
+  #gW { position: absolute; left: 0; right: 0; top: 400px; height: 300px; }
+  #gW > span { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-size: 230px; white-space: nowrap; }
 
-  /* 8 · filosofía */
-  #v1 { font-size: 132px; max-width: 1500px; }
-  #v2 { font-size: 34px; margin-top: 46px; color: var(--muted); }
+  /* 7 · prueba */
+  #s7 .in7 { position: absolute; inset: 0; transform-origin: 50% 50%; }
+  #pRow { position: absolute; left: 110px; right: 100px; top: 150px; display: flex; align-items: center; gap: 64px; }
+  #pN { flex: none; font-size: 300px; font-weight: 800; font-stretch: 112%; letter-spacing: -0.05em; line-height: .85; font-variant-numeric: tabular-nums; }
+  #pN .r { margin-right: 0.02em; }
+  #pTx { flex: 1; min-width: 0; }
+  #pL { font-size: 72px; }
+  #pS { font-size: 30px; margin-top: 26px; color: var(--muted); line-height: 1.4; }
+  #lg { position: absolute; left: 110px; right: 110px; top: 600px; }
+  #lgRow { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; height: 190px; border-top: 1px solid var(--line); padding-top: 40px; }
+  #lgRow > div { display: flex; align-items: center; gap: 16px; filter: grayscale(1); }
+  #lgRow img { display: block; }
+  #lgRow span { font-size: 21px; font-weight: 600; line-height: 1.15; color: #333; max-width: 150px; }
 
-  /* 9 · prueba */
-  #pN { font-size: 400px; font-weight: 800; font-stretch: 112%; letter-spacing: -0.05em; line-height: .85; font-variant-numeric: tabular-nums; }
-  #pL { font-size: 64px; margin-top: 30px; }
-  #pS { font-size: 32px; margin-top: 26px; color: var(--night-muted); }
+  /* 8 · sin riesgo */
+  #s8 { background: var(--red); color: #fff; }
+  #s8 .eb { color: rgba(255,255,255,.85); }
+  #s8 .eb::before { background: var(--ink); }
+  #oC { position: absolute; left: 1430px; top: 40px; width: 520px; height: 1040px; color: var(--ink); opacity: 0.13; transform-origin: 65% 31.25%; }
+  #oL { position: absolute; left: 150px; top: 230px; }
+  #oL .ln { font-size: 128px; margin-top: 18px; }
+  #oL .ln > span::after { content: ""; }
+  #oL .k { color: var(--ink); }
+  #oS { position: absolute; left: 150px; bottom: 120px; font-size: 30px; font-weight: 600; color: rgba(255,255,255,.92); }
+  #oS b { color: #fff; }
 
-  /* 10 · cierre */
+  /* 9 · cierre */
+  #s9 .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
   #cLogo { font-size: 220px; }
-  #cEb { margin-top: 26px; font-size: 26px; }
-  #cT { margin-top: 44px; font-size: 56px; }
-  #cB { font-size: 36px; font-weight: 700; background: var(--red); color: #fff; padding: 26px 56px; border-radius: 999px; }
-  #cBw { position: relative; margin-top: 50px; }
-  #cR { position: absolute; inset: 0; border-radius: 999px; border: 4px solid var(--red); opacity: 0; }
-  #cM { margin-top: 22px; font-size: 24px; color: var(--muted); }
+  #cLogo svg { transform-origin: 65% 31.25%; position: relative; z-index: 3; }
+  #cT { margin-top: 40px; font-size: 64px; }
+  #cBw { position: relative; margin-top: 54px; }
+  #cB { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 30px; background: var(--red); color: #fff; padding: 30px 44px; font-size: 30px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+  #cB > span { position: relative; z-index: 2; }
+  #cBf { position: absolute; inset: 0; background: var(--ink); transform: translateY(101%); }
+  #cR { position: absolute; inset: 0; border: 4px solid var(--red); opacity: 0; }
+  #cur { position: absolute; width: 44px; height: 54px; z-index: 6; }
+  #cM { margin-top: 28px; font-size: 25px; color: var(--muted); }
   #cM b { color: var(--ink); font-weight: 600; }
-  #cW { margin-top: 26px; font-size: 26px; color: var(--muted); }
+  #cW { margin-top: 18px; font-size: 34px; font-weight: 700; font-stretch: 115%; letter-spacing: -0.01em; }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="mb" x="-20%" y="0" width="140%" height="100%"><feGaussianBlur id="mbB" stdDeviation="0 0" /></filter>
+    <path id="commaP" d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" />
+  </defs>
+</svg>
 <div id="stage">
+ <div id="cam">
 
-  <!-- 1 · el día a día de una pyme -->
-  <section class="sc dark" id="s1">
-    <div class="center">
-      <div class="eyebrow" id="dEb">Cada día, en tu pyme</div>
-      <div class="h slot" id="dWord">
-        <span>Mensajes sin contestar.</span><span>Facturas por teclear.</span><span>Clientes que no te encuentran.</span><span>Tareas que se repiten<span class="c">.</span></span>
-      </div>
+  <!-- 1 · la coma cae, la cámara entra en ella y aparece la promesa de la marca -->
+  <section class="sc" id="s1">
+    <div id="hkRing"></div>
+    <svg id="hkC" viewBox="0 0 20 40"><use href="#commaP" fill="currentColor" /></svg>
+    <div id="hkRed"></div>
+    <div id="hkT" class="h">
+      <span class="ln"><span>Hacemos que</span></span>
+      <span class="ln"><span>tu empresa se</span></span>
+      <span class="ln" id="hkW"><span>vea,</span><span>encuentre,</span><span>elija,</span><span>note,</span></span>
     </div>
+    <div id="s1sh"></div>
   </section>
 
-  <!-- 2 · la promesa -->
+  <!-- 2 · se note: plano cerrado de la bombilla que se enciende y la cámara se aleja hasta ver la web -->
   <section class="sc" id="s2">
-    <div class="center">
-      <div class="h" id="p1">No necesitas más horas.</div>
-      <div class="h" id="p2">Necesitas tecnología que trabaje para ti<span class="c">,</span></div>
-    </div>
-  </section>
-
-  <!-- 3 · una web que enamora: electricidad y fontanería -->
-  <section class="sc" id="s3">
-    <div class="cap"><div class="eyebrow">Diseño web</div><h2 class="h">Una web que enamora. Desde 99 €<span class="c">,</span></h2><p>Rápida, a medida y lista para que te llamen desde el móvil.</p></div>
-    <div class="br" id="br">
-      <div class="top"><i></i><i></i><i></i><span class="url">volta-instalaciones.es</span></div>
-      <div class="view"><div class="page" id="pg">
-        <div class="heroV">
-          <div class="grid"></div>
-          <svg class="lines" viewBox="0 0 1080 644" preserveAspectRatio="none">
-            <path class="cur" d="M-20 600 C 220 600, 330 470, 520 470 S 760 330, 830 300" fill="none" stroke="#ffd23f" stroke-width="4" stroke-linecap="round" stroke-dasharray="16 22"/>
-            <path class="cur2" d="M-20 640 C 260 640, 380 540, 600 540 S 900 470, 1100 430" fill="none" stroke="#4cc9ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 18"/>
-          </svg>
-          <div class="glow" id="gl" style="left:830px;top:250px"></div>
-          <svg class="bulb" id="bu" style="left:830px;top:120px" viewBox="0 0 100 150"><path d="M50 6 C24 6 8 26 8 48 C8 66 20 76 28 90 C32 97 33 104 33 110 H67 C67 104 68 97 72 90 C80 76 92 66 92 48 C92 26 76 6 50 6 Z" fill="rgba(255,236,170,.18)" stroke="#ffd23f" stroke-width="4"/><path d="M38 110 V70 L46 78 L50 66 L54 78 L62 70 V110" fill="none" stroke="#fff3c4" stroke-width="3" stroke-linejoin="round"/><rect x="33" y="114" width="34" height="8" rx="3" fill="#c9cfdc"/><rect x="35" y="125" width="30" height="8" rx="3" fill="#aab2c4"/><rect x="40" y="136" width="20" height="7" rx="3" fill="#8a93a8"/></svg>
-          <div class="navV"><b><i>⚡</i> VOLTA</b><span>Servicios · Urgencias · Opiniones</span><em>Llamar 24 h</em></div>
-          <div class="copyV" id="cV"><small>Electricidad y fontanería · Palma</small><h3>Luz y agua,<br/><i>sin esperas.</i></h3><p>Un técnico en tu casa hoy mismo. Presupuesto cerrado antes de empezar.</p></div>
-          <div class="badge" id="bd1" style="left:700px;top:420px"><b><span class="st5">★★★★★</span> 4,9</b>212 reseñas en Google</div>
-          <div class="badge" id="bd2" style="left:900px;top:150px"><b>24 h</b>Urgencias</div>
-          <div class="ask" id="ak"><span>¿Qué necesitas?</span><span class="chipV" id="ch1">⚡ Avería eléctrica</span><span class="chipV">💧 Fuga de agua</span><span class="chipV">🔥 Calentador</span><span class="go">Pedir técnico →</span></div>
-        </div>
-        <div class="svc">
-          <h4>Lo arreglamos hoy.</h4>
-          <p>Electricistas y fontaneros de confianza, con garantía por escrito.</p>
-          <div class="grid3">
-            <div class="it"><div class="ico" style="background:#fff4c2">⚡</div><b>Instalaciones eléctricas</b><span>Cuadros, boletines y certificados</span><em>Presupuesto gratis</em></div>
-            <div class="it"><div class="ico" style="background:#d9f2ff">💧</div><b>Fontanería</b><span>Fugas, baños y cocinas</span><em>Presupuesto gratis</em></div>
-            <div class="it"><div class="ico" style="background:#ffe1d6">🔥</div><b>Aerotermia y calderas</b><span>Ahorra en tu factura</span><em>Presupuesto gratis</em></div>
+    <div class="cap" id="cap2"><div class="eb">Diseño web</div><h2 class="h">Una web que<br/>enamora<span class="r">,</span></h2><p>Diseño propio, rápida y hecha para que te llamen.</p></div>
+    <div class="world">
+      <div class="br" id="br">
+        <div class="top"><i></i><i></i><i></i><span class="url">volta-instalaciones.es</span></div>
+        <div class="view"><div class="page" id="pg">
+          <div class="heroV">
+            <div class="grid"></div>
+            <svg class="lines" viewBox="0 0 1080 644" preserveAspectRatio="none">
+              <path class="cur" d="M-20 600 C 220 600, 330 470, 520 470 S 760 330, 830 300" fill="none" stroke="#ffd23f" stroke-width="4" stroke-linecap="round" stroke-dasharray="16 22"/>
+              <path class="cur2" d="M-20 640 C 260 640, 380 540, 600 540 S 900 470, 1100 430" fill="none" stroke="#4cc9ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 18"/>
+            </svg>
+            <div class="glow" id="gl" style="left:830px;top:250px"></div>
+            <svg class="bulb" id="bu" style="left:830px;top:120px" viewBox="0 0 100 150"><path d="M50 6 C24 6 8 26 8 48 C8 66 20 76 28 90 C32 97 33 104 33 110 H67 C67 104 68 97 72 90 C80 76 92 66 92 48 C92 26 76 6 50 6 Z" fill="rgba(255,236,170,.18)" stroke="#ffd23f" stroke-width="4"/><path d="M38 110 V70 L46 78 L50 66 L54 78 L62 70 V110" fill="none" stroke="#fff3c4" stroke-width="3" stroke-linejoin="round"/><rect x="33" y="114" width="34" height="8" rx="3" fill="#c9cfdc"/><rect x="35" y="125" width="30" height="8" rx="3" fill="#aab2c4"/><rect x="40" y="136" width="20" height="7" rx="3" fill="#8a93a8"/></svg>
+            <div class="navV"><b><i>⚡</i> VOLTA</b><span>Servicios · Urgencias · Opiniones</span><em>Llamar 24 h</em></div>
+            <div class="copyV" id="cV"><small>Electricidad y fontanería · Palma</small><h3>Luz y agua,<br/><i>sin esperas.</i></h3><p>Un técnico en tu casa hoy mismo. Presupuesto cerrado antes de empezar.</p></div>
+            <div class="badge" id="bd1" style="left:700px;top:420px"><b><span class="st5">★★★★★</span> 4,9</b>212 reseñas en Google</div>
+            <div class="badge" id="bd2" style="left:900px;top:150px"><b>24 h</b>Urgencias</div>
+            <div class="ask" id="ak"><span>¿Qué necesitas?</span><span class="chipV" id="ch1">⚡ Avería eléctrica</span><span class="chipV">💧 Fuga de agua</span><span class="chipV">🔥 Calentador</span><span class="go">Pedir técnico →</span></div>
           </div>
+          <div class="svc">
+            <h4>Lo arreglamos hoy.</h4>
+            <p>Electricistas y fontaneros de confianza, con garantía por escrito.</p>
+            <div class="grid3">
+              <div class="it"><div class="ico" style="background:#fff4c2">⚡</div><b>Instalaciones eléctricas</b><span>Cuadros, boletines y certificados</span><em>Presupuesto gratis</em></div>
+              <div class="it"><div class="ico" style="background:#d9f2ff">💧</div><b>Fontanería</b><span>Fugas, baños y cocinas</span><em>Presupuesto gratis</em></div>
+              <div class="it"><div class="ico" style="background:#ffe1d6">🔥</div><b>Aerotermia y calderas</b><span>Ahorra en tu factura</span><em>Presupuesto gratis</em></div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="phone" id="ph"><div class="scr"><div class="heroV">
+        <div class="grid"></div>
+        <div class="glow" id="gl2" style="left:135px;top:200px"></div>
+        <svg class="bulb" id="bu2" style="left:135px;top:120px" viewBox="0 0 100 150"><path d="M50 6 C24 6 8 26 8 48 C8 66 20 76 28 90 C32 97 33 104 33 110 H67 C67 104 68 97 72 90 C80 76 92 66 92 48 C92 26 76 6 50 6 Z" fill="rgba(255,236,170,.18)" stroke="#ffd23f" stroke-width="4"/><path d="M38 110 V70 L46 78 L50 66 L54 78 L62 70 V110" fill="none" stroke="#fff3c4" stroke-width="3" stroke-linejoin="round"/><rect x="33" y="114" width="34" height="8" rx="3" fill="#c9cfdc"/><rect x="35" y="125" width="30" height="8" rx="3" fill="#aab2c4"/></svg>
+        <div class="navV"><b><i>⚡</i> VOLTA</b><span>☰</span></div>
+        <div class="copyV"><small>Electricidad y fontanería</small><h3>Luz y agua,<br/><i>sin esperas.</i></h3></div>
+        <div class="callM">📞 Llamar ahora</div>
+      </div></div></div>
+      <div id="price"><b>Web desde 99 €</b><small>+ IVA · precio cerrado</small></div>
+      <div class="card" id="toast"><i>📞</i><div><b>Nueva llamada desde la web</b><span>Avería eléctrica · hace 1 min</span></div></div>
+    </div>
+  </section>
+
+  <!-- 3 · se encuentre: la misma empresa, primera en el mapa y recomendada por la IA -->
+  <section class="sc" id="s3">
+    <div class="cap" id="cap3"><div class="eb">SEO y GEO</div><h2 class="h">Que te<br/>encuentren.<br/>En Google y<br/>en ChatGPT<span class="r">,</span></h2></div>
+    <div class="ui3"><div id="st3">
+      <div class="card" id="sq"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="#5d5851" stroke-width="2"/><path d="M16 16l4 4" stroke="#5d5851" stroke-width="2" stroke-linecap="round"/></svg><span><span id="sqt"></span><i id="sqc"></i></span></div>
+      <div class="card" id="sres">
+        <div class="tx"><small>volta-instalaciones.es</small><b>VOLTA · Electricista y fontanero en Palma</b><div class="mt"><span class="stars">★★★★★</span> 4,9 (212) · Abierto 24 h<br/>Urgencias · Presupuesto cerrado</div></div>
+        <div class="map">
+          <svg viewBox="0 0 250 190" preserveAspectRatio="none"><path d="M-10 60 L 260 30 M-10 140 L 260 120 M 60 -10 L 90 200 M 170 -10 L 150 200" stroke="#fff" stroke-width="10"/><path d="M-10 100 C 80 90, 140 150, 260 100" stroke="#ffd98a" stroke-width="12" fill="none"/><rect x="190" y="140" width="60" height="50" fill="#cfe6c4"/><rect x="0" y="0" width="50" height="40" fill="#cfe6c4"/></svg>
+          <div id="pinS"></div>
+          <svg id="pin" viewBox="0 0 30 42"><path d="M15 0C6.7 0 0 6.6 0 14.8 0 25.9 15 42 15 42s15-16.1 15-27.2C30 6.6 23.3 0 15 0z" fill="#e1112d"/><circle cx="15" cy="14.5" r="5.5" fill="#fff"/></svg>
         </div>
-      </div></div>
-    </div>
-    <div class="phone" id="ph"><div class="scr"><div class="heroV">
-      <div class="grid"></div>
-      <div class="glow" id="gl2" style="left:135px;top:200px"></div>
-      <svg class="bulb" id="bu2" style="left:135px;top:120px" viewBox="0 0 100 150"><path d="M50 6 C24 6 8 26 8 48 C8 66 20 76 28 90 C32 97 33 104 33 110 H67 C67 104 68 97 72 90 C80 76 92 66 92 48 C92 26 76 6 50 6 Z" fill="rgba(255,236,170,.18)" stroke="#ffd23f" stroke-width="4"/><path d="M38 110 V70 L46 78 L50 66 L54 78 L62 70 V110" fill="none" stroke="#fff3c4" stroke-width="3" stroke-linejoin="round"/><rect x="33" y="114" width="34" height="8" rx="3" fill="#c9cfdc"/><rect x="35" y="125" width="30" height="8" rx="3" fill="#aab2c4"/></svg>
-      <div class="navV"><b><i>⚡</i> VOLTA</b><span>☰</span></div>
-      <div class="copyV"><small>Electricidad y fontanería</small><h3>Luz y agua,<br/><i>sin esperas.</i></h3></div>
-      <div class="callM">📞 Llamar ahora</div>
-    </div></div></div>
-    <div id="price">Desde 99 € <small>+ IVA</small></div>
+      </div>
+      <div class="card" id="sai"><div class="who"><i></i>Asistente de IA</div><p id="sait"></p></div>
+    </div></div>
   </section>
 
-  <!-- 4 · SEO y GEO -->
+  <!-- 4 · la vuelta: la tarjeta gira y enseña lo que hay detrás -->
   <section class="sc" id="s4">
-    <div class="cap"><div class="eyebrow">SEO y GEO</div><h2 class="h">Que te encuentren. En Google y en ChatGPT<span class="c">,</span></h2></div>
-    <div class="ui"><div class="sr">
-      <div class="card q" id="sq"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="#6b665e" stroke-width="2"/><path d="M16 16l4 4" stroke="#6b665e" stroke-width="2" stroke-linecap="round"/></svg><span id="sqt"></span></div>
-      <div class="card res" id="sres"><small>tuclinica.es</small><b>Tu Clínica · Dentista en Palma</b><span><span class="stars">★★★★★</span> 4,9 · Abierto ahora · Cita online</span></div>
-      <div class="card ai" id="sai"><div class="who"><i></i>Asistente de IA</div><p>Para un dentista en Palma, te recomiendo <mark>Tu Clínica</mark>: cita online, muy buenas opiniones y abierta por la tarde.</p></div>
-    </div></div>
-  </section>
-
-  <!-- 5 · agente de IA -->
-  <section class="sc" id="s5">
-    <div class="cap"><div class="eyebrow">Agentes de IA</div><h2 class="h">Atiende a las 3:00. Tú, a descansar<span class="c">,</span></h2></div>
-    <div class="ui"><div class="card chat" id="ch">
-      <div class="hd"><b>Tu Clínica · asistente</b><span>03:12</span></div>
-      <div class="msgs">
-        <div class="bub me" id="a1">¿Tenéis cita mañana por la tarde?</div>
-        <div class="dots" id="ad"><i></i><i></i><i></i></div>
-        <div class="bub them" id="a2">¡Sí! A las 17:30 o a las 18:15. ¿Te reservo una?</div>
-        <div class="bub me" id="a3">17:30 👍</div>
-        <div class="bub them" id="a4">Hecho <b style="color:var(--ok)">✓</b> Te llega la confirmación por WhatsApp.</div>
+    <div id="flip">
+      <div class="face front">
+        <div class="txt h"><div class="ln a" id="fA"><span>Por fuera,</span></div><div class="ln b" id="fB"><span>que se <span class="r">note</span>.</span></div></div>
       </div>
-    </div></div>
-  </section>
-
-  <!-- 6 · automatizaciones -->
-  <section class="sc" id="s6">
-    <div class="cap"><div class="eyebrow">Automatizaciones</div><h2 class="h">Lo repetitivo, para las máquinas<span class="c">,</span></h2><p>Terminas el trabajo y la factura sale sola: emitida, enviada y vigilada.</p></div>
-    <div class="ui"><div class="flow" id="fl">
-      <div class="wire" style="top:100px;height:440px"><i id="fw"></i></div>
-      <div class="card node" style="top:0"><span class="ic">🧰</span>Trabajo terminado<span class="st">Nuevo</span></div>
-      <div class="card node" style="top:160px"><span class="ic">🧾</span>Factura emitida · 186,34 €<span class="st">Esperando</span></div>
-      <div class="card node" style="top:320px"><span class="ic">📲</span>Enviada por email y WhatsApp<span class="st">Esperando</span></div>
-      <div class="card node" style="top:480px"><span class="ic">⏰</span>Recordatorio si no se paga<span class="st">Esperando</span></div>
-    </div></div>
-  </section>
-
-  <!-- 7 · lo que ganas -->
-  <section class="sc dark" id="s7">
-    <div class="center">
-      <div class="eyebrow" id="gEb">Y tú ganas tiempo para</div>
-      <div class="h slot" id="gWord">
-        <span>tus clientes.</span><span>tu equipo.</span><span>crecer.</span><span>los tuyos<span class="c">.</span></span>
+      <div class="face back">
+        <svg class="circ" viewBox="0 0 1920 1080">
+          <g fill="none" stroke-linecap="round">
+            <path class="cw" d="M-20 240 H 380 L 470 330 H 760" stroke="rgba(246,241,232,.14)" stroke-width="3"/>
+            <path class="cw" d="M1940 210 H 1500 L 1410 300 H 1180" stroke="rgba(246,241,232,.14)" stroke-width="3"/>
+            <path class="cw" d="M-20 860 H 300 L 400 760 H 700" stroke="rgba(246,241,232,.14)" stroke-width="3"/>
+            <path class="cw" d="M1940 880 H 1620 L 1520 780 H 1240" stroke="rgba(246,241,232,.14)" stroke-width="3"/>
+            <path class="cr" d="M-20 240 H 380 L 470 330 H 760" stroke="#e1112d" stroke-width="4" stroke-dasharray="60 500"/>
+            <path class="cr" d="M1940 210 H 1500 L 1410 300 H 1180" stroke="#e1112d" stroke-width="4" stroke-dasharray="60 500"/>
+            <path class="cr" d="M-20 860 H 300 L 400 760 H 700" stroke="#e1112d" stroke-width="4" stroke-dasharray="60 500"/>
+            <path class="cr" d="M1940 880 H 1620 L 1520 780 H 1240" stroke="#e1112d" stroke-width="4" stroke-dasharray="60 500"/>
+          </g>
+        </svg>
+        <div class="chip" id="k1" style="left:150px;top:150px"><i></i>Agentes de IA</div>
+        <div class="chip" id="k2" style="right:150px;top:120px"><i></i>Automatización</div>
+        <div class="chip" id="k3" style="left:170px;bottom:150px"><i></i>Integraciones</div>
+        <div class="chip" id="k4" style="right:170px;bottom:140px"><i></i>Software a medida</div>
+        <div class="txt h"><div class="ln a"><span>Por dentro,</span></div><div class="ln b"><span>que funcione<span class="r">,</span></span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- 8 · filosofía -->
+  <!-- 5 · por dentro: atiende de madrugada y lo que entra sigue solo hasta la factura -->
+  <section class="sc night" id="s5">
+    <div id="w5">
+      <div class="dots5"></div>
+      <svg id="wire5" viewBox="0 0 3480 1080">
+        <path id="wB" d="M1500 760 C 1640 760, 1650 990, 1820 990 L 2320 990 C 2430 990, 2400 290, 2480 290" fill="none" stroke="rgba(246,241,232,.12)" stroke-width="4"/>
+        <path id="wR" d="M1500 760 C 1640 760, 1650 990, 1820 990 L 2320 990 C 2430 990, 2400 290, 2480 290" fill="none" stroke="#e1112d" stroke-width="5" stroke-linecap="round" style="filter:drop-shadow(0 0 10px #e1112d)"/>
+        <circle id="wP" r="9" fill="#fff" style="filter:drop-shadow(0 0 12px #e1112d)"/>
+      </svg>
+      <div class="cap" id="capA"><div class="eb">Agentes de IA</div><h2 class="h">Atiende<br/>a las 3:00<span class="r">,</span></h2><p>Y tú, a descansar. Con revisión humana donde importa.</p></div>
+      <div class="chat" id="ch">
+        <div class="hd"><div class="av">⚡</div><div><b>VOLTA</b><small>asistente · en línea</small></div><span class="tm">03:12</span></div>
+        <div class="msgs">
+          <div class="bub me" id="a1">Se nos ha ido la luz en casa 😩 ¿Podéis venir mañana?<small>03:12</small></div>
+          <div class="tdots" id="ad"><i></i><i></i><i></i></div>
+          <div class="bub them" id="a2">¡Claro! Un técnico puede estar a las 9:00. ¿Te lo reservo?<small>03:12</small></div>
+          <div class="bub me" id="a3">Sí, por favor 🙏<small>03:13</small></div>
+          <div class="bub them" id="a4">Hecho <span class="ok5">✓</span> Te llega la confirmación por WhatsApp.<small>03:13</small></div>
+        </div>
+      </div>
+      <div class="cap" id="capB"><div class="eb">Automatizaciones</div><h2 class="h">Lo repetitivo,<br/>para las máquinas<span class="r">,</span></h2><p>Facturas, avisos y datos que pasan solos entre tus programas.</p></div>
+      <div class="flow" id="fl">
+        <div class="wire" style="top:100px;height:440px"><i id="fw"></i></div>
+        <div class="node" style="top:0"><span class="ic">🧰</span>Trabajo terminado<span class="st">Nuevo</span></div>
+        <div class="node" style="top:160px"><span class="ic">🧾</span>Factura emitida · 186,34 €<span class="st">Esperando</span></div>
+        <div class="node" style="top:320px"><span class="ic">📲</span>Enviada por email y WhatsApp<span class="st">Esperando</span></div>
+        <div class="node" style="top:480px"><span class="ic">⏰</span>Recordatorio si no se paga<span class="st">Esperando</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · lo que ganas: las palabras vienen hacia ti -->
+  <section class="sc night" id="s6">
+    <div id="pt"></div>
+    <div id="gEb">Y tú ganas tiempo para</div>
+    <div id="gW" class="h"><span>tus clientes.</span><span>tu equipo.</span><span>los tuyos<span class="r">.</span></span></div>
+  </section>
+
+  <!-- 7 · prueba: +100 pymes y marcas que ya han confiado -->
+  <section class="sc" id="s7">
+    <div class="in7" id="in7">
+      <div id="pRow"><div id="pN" class="h"><span class="r">+</span><span id="pNn">0</span></div>
+      <div id="pTx"><div class="h ln" id="pL"><span>pymes ya trabajan<br/>con COMA<span class="r">,</span></span></div><div id="pS">Y marcas e instituciones que confían en nosotros.<br/>En Palma desde 1997: de las revistas a la IA.</div></div></div>
+      <div id="lg">
+        <div class="eb" id="lgE">Han confiado en nosotros</div>
+        <div id="lgRow">
+          <div><img src="../../public/clientes/mallorca-live-occident.png" style="height:84px" alt="" /></div>
+          <div><img src="../../public/clientes/melia.svg" style="height:48px" alt="" /></div>
+          <div><img src="../../public/clientes/rcd-mallorca.svg" style="height:124px" alt="" /></div>
+          <div><img src="../../public/clientes/calvia.svg" style="height:112px" alt="" /><span>Ajuntament de Calvià</span></div>
+          <div><img src="../../public/clientes/andratx.png" style="height:112px" alt="" /><span>Ajuntament d'Andratx</span></div>
+          <div><img src="../../public/clientes/upv.svg" style="height:88px" alt="" /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · sin riesgo: el fondo rojo sube como los botones de la web -->
   <section class="sc" id="s8">
-    <div class="center">
-      <div class="h" id="v1">Tecnología al servicio de las personas<span class="c">,</span></div>
-      <div id="v2">Nuestro oficio desde 1997: de las revistas a la inteligencia artificial.</div>
+    <svg id="oC" viewBox="0 0 20 40"><use href="#commaP" fill="currentColor" /></svg>
+    <div id="oL" class="h">
+      <div class="eb" id="oE">Así trabajamos</div>
+      <div class="ln"><span>Propuesta gratis<span class="k">.</span></span></div>
+      <div class="ln"><span>Precio cerrado<span class="k">.</span></span></div>
+      <div class="ln"><span>De la idea al soporte<span class="k">.</span></span></div>
     </div>
+    <div id="oS"><b>Webs desde 99 € + IVA</b> · IA, automatización y software a medida</div>
   </section>
 
-  <!-- 9 · prueba -->
-  <section class="sc dark" id="s9">
+  <!-- 9 · cierre: el rojo se recoge en la coma del logo -->
+  <section class="sc" id="s9">
     <div class="center">
-      <div id="pN">+0</div>
-      <div class="h" id="pL">pymes ya trabajan con COMA<span class="c">.</span></div>
-      <div id="pS">De Mallorca a toda España</div>
+      <div id="cLogo" class="logo"><span id="cLt">COMA</span><svg id="cLc" viewBox="0 0 20 40"><use href="#commaP" fill="currentColor" /></svg></div>
+      <div id="cT" class="h">Hacemos que tu empresa se <span class="r">note,</span></div>
+      <div id="cBw"><div id="cR"></div><div id="cB"><div id="cBf"></div><span>Cuéntanos qué te quita tiempo</span><span>→</span></div></div>
+      <div id="cM"><b>Propuesta gratis y sin compromiso</b> · Te responde una persona</div>
+      <div id="cW">comunicacionenmallorca.com</div>
     </div>
+    <svg id="cur" viewBox="0 0 44 54"><path d="M4 3 L4 42 L14 33 L21 49 L28 46 L21 30 L35 30 Z" fill="#0c0c0c" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>
   </section>
 
-  <!-- 10 · cierre -->
-  <section class="sc" id="s10">
-    <div class="center">
-      <div id="cLogo" class="logo"><span>COMA</span><svg viewBox="0 0 20 40"><path d="M6 0h14v21c0 10-5 16.5-15 19l-2-5.5c5-1.8 7.5-5.2 8-9.5H6z" fill="currentColor"/></svg></div>
-      <div id="cEb" class="eyebrow">Comunicación, tecnología e IA para pymes</div>
-      <div id="cT" class="h">La tecnología trabaja. Tú, a lo tuyo<span class="c">.</span></div>
-      <div id="cBw"><div id="cR"></div><div id="cB">Cuéntanos qué te quita tiempo →</div></div>
-      <div id="cM"><b>Propuesta gratis y sin compromiso</b> · Te respondemos en persona</div>
-      <div id="cW">comunicacionenmallorca.com/contacto</div>
-    </div>
-  </section>
-
+ </div>
+ <div id="bug" class="logo"><span>COMA</span><svg viewBox="0 0 20 40"><use href="#commaP" fill="currentColor" /></svg></div>
+ <svg id="wipe" viewBox="0 0 20 40"><use href="#commaP" fill="currentColor" /></svg>
 </div>
 
 <script>
@@ -320,166 +455,374 @@
   const $ = (id) => document.getElementById(id);
   const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const p = (x, a, b) => cl((x - a) / (b - a));
-  const ease = (x) => 1 - Math.pow(1 - x, 3.4);
-  const smooth = (x) => x * x * (3 - 2 * x);
+  const ease = (x) => 1 - Math.pow(1 - cl(x), 3.4);
+  const easeIn = (x) => Math.pow(cl(x), 2.6);
+  const io = (x) => { x = cl(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const smooth = (x) => { x = cl(x); return x * x * (3 - 2 * x); };
+  const back = (x, c = 1.9) => { x = cl(x); return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
   const lerp = (a, b, k) => a + (b - a) * k;
+  const mixHex = (a, b, k) => {
+    const A = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
+    const B = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
+    return `rgb(${A.map((v, i) => Math.round(lerp(v, B[i], k))).join(",")})`;
+  };
+  const show = (el, on) => (el.style.display = on ? "" : "none");
 
-  /** Entrada rápida y limpia: sube, se enfoca y gana opacidad. */
+  /** Entrada limpia: sube, se enfoca y gana opacidad. */
   function rise(el, t, at, dur = 0.5, dist = 30) {
     const k = ease(p(t, at, at + dur));
     el.style.opacity = k;
     el.style.transform = `translateY(${(1 - k) * dist}px)`;
     el.style.filter = k < 1 ? `blur(${(1 - k) * 8}px)` : "none";
   }
-  const show = (el, on) => (el.style.display = on ? "" : "none");
-
-  /** Ranura de palabras centradas: cada `step` s entra la siguiente y la anterior sale hacia arriba. */
-  function slot(root, t, at, step) {
-    const items = [...root.children];
-    const i = Math.max(0, Math.min(items.length - 1, Math.floor((t - at) / step)));
-    items.forEach((el, j) => {
-      const local = t - at - j * step;
-      const kin = ease(p(local, 0, 0.24));
-      const kout = j < items.length - 1 ? ease(p(local, step, step + 0.18)) : 0;
-      const o = t < at ? 0 : j === i ? Math.max(kin, 0) : j === i - 1 ? 1 - kout : 0;
-      el.style.opacity = o;
-      el.style.transform = `translateX(-50%) translateY(${(1 - kin) * 70 - kout * 70}px)`;
-      el.style.filter = o < 1 ? `blur(${(1 - o) * 6}px)` : "none";
-    });
+  /** Línea con máscara: el texto sube desde debajo de su caja (como los titulares de la web). */
+  function reveal(line, t, at, dur = 0.45) {
+    const k = ease(p(t, at, at + dur));
+    line.firstElementChild.style.transform = `translateY(${(1 - k) * 110}%)`;
+  }
+  /** Golpe de escala con rebote (precios, sellos). */
+  function slam(el, t, at, dur = 0.35, from = 1.7, rot = 0) {
+    const k = p(t, at, at + dur);
+    el.style.opacity = k > 0 ? cl(k * 3) : 0;
+    el.style.transform = `scale(${lerp(from, 1, back(k))}) rotate(${rot}deg)`;
   }
 
   const scenes = [];
-  const S = (id, a, z, upd) => scenes.push({ el: $(id), a, z, upd });
+  const S = (id, a, z, zi, upd) => scenes.push({ el: $(id), a, z, zi, upd });
 
-  // 1 · el día a día (0–3.6)
-  S("s1", 0, 3.6, (t) => {
-    rise($("dEb"), t, 0.1, 0.45, 14);
-    slot($("dWord"), t, 0.15, 0.85);
-    $("dWord").style.transform = `scale(${1 + 0.025 * t})`;
+  // ------------------------------------------------------------------ 1 · la coma (0–4.6)
+  const hkWords = [...$("hkW").children];
+  S("s1", 0, 4.62, 90, (t) => {
+    // cae la coma (0–0.42), golpe con onda (0.42), se asienta y la cámara entra en ella (0.95–1.4)
+    const fall = easeIn(p(t, 0, 0.42));
+    const land = p(t, 0.42, 0.8);
+    const squash = t < 0.42 ? 1 : 1 - 0.24 * Math.sin(Math.PI * cl(land * 2.2)) * Math.exp(-land * 3);
+    const zoom = easeIn(p(t, 0.98, 1.4));
+    const sc = Math.exp(lerp(0, Math.log(46), zoom));
+    const y = lerp(-900, 0, fall);
+    const c = $("hkC");
+    c.style.display = t < 1.4 ? "" : "none";
+    c.style.transform = `translateY(${y}px) rotate(${lerp(-28, 0, fall)}deg) scale(${sc / Math.sqrt(squash)}, ${sc * squash})`;
+    c.style.filter = t >= 0.42 && t < 1.0 ? `drop-shadow(0 0 ${40 * (1 - p(t, 0.42, 1.0))}px rgba(225,17,45,.8))` : "none";
+    const ring = p(t, 0.42, 1.1);
+    $("hkRing").style.opacity = ring > 0 && ring < 1 ? (1 - ring) * 0.9 : 0;
+    $("hkRing").style.transform = `scale(${0.3 + ring * 3.2})`;
+    $("hkRed").style.opacity = t >= 1.36 ? 1 : 0;
+    // la promesa: titular de la web, palabra a palabra al ritmo
+    const txt = $("hkT");
+    txt.style.opacity = t >= 1.36 ? 1 : 0;
+    txt.style.transform = `scale(${1 + 0.035 * p(t, 1.4, 4.4)})`;
+    const lines = [...txt.children];
+    reveal(lines[0], t, 1.42, 0.42);
+    reveal(lines[1], t, 1.58, 0.42);
+    const at = [2.0, 2.5, 3.0, 3.5];
+    hkWords.forEach((w, i) => {
+      const kin = ease(p(t, at[i], at[i] + 0.3));
+      const kout = i < hkWords.length - 1 ? ease(p(t, at[i + 1], at[i + 1] + 0.26)) : 0;
+      w.style.transform = `translateY(${(1 - kin) * 112 - kout * 112}%)`;
+      w.style.opacity = t >= at[i] ? 1 : 0;
+    });
+    const last = hkWords[3];
+    const punch = p(t, 3.5, 3.9);
+    last.style.transform += ` scale(${1 + 0.06 * Math.sin(Math.PI * punch) * (punch > 0 ? 1 : 0)})`;
+    // la cortina sube y deja ver la siguiente escena
+    const lift = io(p(t, 4.18, 4.62));
+    $("s1").style.transform = `translateY(${-lift * 1140}px)`;
+    $("s1").style.background = t < 1.36 ? "var(--ink)" : "var(--red)";
+    // golpe de cámara al caer
+    const sh = t >= 0.42 && t < 0.75 ? Math.exp(-(t - 0.42) * 14) : 0;
+    $("cam").style.transform = sh ? `translate(${Math.sin(t * 160) * 14 * sh}px, ${Math.cos(t * 130) * 10 * sh}px)` : "";
   });
 
-  // 2 · la promesa (3.6–7)
-  S("s2", 3.6, 7, (t) => {
-    rise($("p1"), t, 0.15, 0.5, 40);
-    rise($("p2"), t, 1.15, 0.55, 40);
-  });
-
-  // 3 · web (7–10.6): se enciende la luz, la corriente y el agua fluyen, la página baja y llega el móvil
+  // ------------------------------------------------------------------ 2 · se note (4.2–8.8)
   /** Bombilla que parpadea al encenderse y luego respira. */
-  function light(t, glow, bulb) {
-    const on = t < 0.55 ? 0.06 : t < 0.62 ? 1 : t < 0.68 ? 0.2 : 1;
+  function light(u, glow, bulb) {
+    const on = u < 0.55 ? 0.04 : u < 0.6 ? 1 : u < 0.66 ? 0.15 : 1;
     glow.style.opacity = on;
-    glow.style.transform = `scale(${1 + 0.05 * Math.sin(t * 4)})`;
+    glow.style.transform = `scale(${1 + 0.05 * Math.sin(u * 4)})`;
     bulb.style.filter = on > 0.5 ? "drop-shadow(0 0 22px rgba(255,214,64,.9))" : "none";
   }
-  S("s3", 7, 10.6, (t) => {
-    rise(document.querySelector("#s3 .cap"), t, 0.05, 0.5, 30);
-    const k = ease(p(t, 0.1, 0.8));
-    $("br").style.opacity = k;
-    $("br").style.transform = `translateY(${(1 - k) * 90}px) scale(${lerp(0.96, 1, k)})`;
-    light(t, $("gl"), $("bu"));
-    light(t, $("gl2"), $("bu2"));
-    document.querySelector("#s3 .cur").style.strokeDashoffset = -t * 160;
-    document.querySelector("#s3 .cur2").style.strokeDashoffset = -t * 110;
-    rise($("cV"), t, 0.45, 0.6, 30);
-    rise($("ak"), t, 0.8, 0.5, 20);
-    rise($("bd1"), t, 0.85, 0.5, 20);
-    rise($("bd2"), t, 1.0, 0.5, 20);
-    $("ch1").classList.toggle("on", t >= 1.25);
-    $("pg").style.transform = `translateY(${-smooth(p(t, 1.6, 2.6)) * 470}px)`;
-    const kp = ease(p(t, 1.3, 1.9));
+  const B2 = { x: 700, y: 170 }, O2 = { x: 540, y: 345 }, P2 = { x: 830, y: 290 };
+  let whip = 0; // desenfoque de movimiento compartido por el barrido 2 → 3
+  S("s2", 4.2, 8.8, 20, (u) => {
+    // plano cerrado de la bombilla → la cámara se aleja hasta ver la web en 3D
+    const k = io(p(u, 0.8, 2.05));
+    const s = Math.exp(lerp(Math.log(2.6), 0, k));
+    const fx = lerp(1300, B2.x + P2.x, k), fy = lerp(560, B2.y + P2.y, k);
+    const tx = fx - B2.x - O2.x - s * (P2.x - O2.x), ty = fy - B2.y - O2.y - s * (P2.y - O2.y);
+    const drift = smooth(p(u, 2.05, 4.6));
+    const ry = lerp(0, -11, k) + 5 * drift, rx = lerp(0, 4, k) - 1.5 * drift;
+    $("br").style.transform = `translate(${tx}px, ${ty + -10 * drift}px) scale(${s}) rotateY(${ry}deg) rotateX(${rx}deg)`;
+    $("s2").style.background = mixHex("#0b1020", "#f6f1e8", smooth(p(u, 1.05, 1.75)));
+    light(u, $("gl"), $("bu"));
+    light(u - 1.9, $("gl2"), $("bu2"));
+    document.querySelector("#s2 .cur").style.strokeDashoffset = -u * 160;
+    document.querySelector("#s2 .cur2").style.strokeDashoffset = -u * 110;
+    rise($("cV"), u, 0.7, 0.6, 30);
+    rise($("ak"), u, 1.5, 0.5, 20);
+    rise($("bd1"), u, 1.6, 0.5, 20);
+    rise($("bd2"), u, 1.75, 0.5, 20);
+    $("ch1").classList.toggle("on", u >= 2.1);
+    $("pg").style.transform = `translateY(${-smooth(p(u, 2.55, 3.45)) * 470}px)`;
+    // el móvil entra girando en 3D
+    const kp = ease(p(u, 1.95, 2.65));
     $("ph").style.opacity = kp;
-    $("ph").style.transform = `translateY(${(1 - kp) * 160}px) rotate(${lerp(6, 2, kp)}deg)`;
-    const kq = p(t, 2.3, 2.65);
-    $("price").style.opacity = cl(kq * 2);
-    $("price").style.transform = `scale(${kq <= 0 ? 0.6 : lerp(0.6, 1, 1 + 2.4 * Math.pow(kq - 1, 3) + 1.4 * Math.pow(kq - 1, 2))}) rotate(-5deg)`;
+    $("ph").style.transform = `translate(${(1 - kp) * 260}px, ${(1 - kp) * 280 - 8 * drift}px) rotateY(${lerp(-40, -10, kp) + 4 * drift}deg) rotateZ(${lerp(10, 2, kp)}deg)`;
+    slam($("price"), u, 2.95, 0.36, 1.8, -4);
+    rise($("toast"), u, 3.55, 0.45, 40);
+    // el texto, cuando ya se ve el fondo claro
+    const cap = $("cap2");
+    rise(cap.children[0], u, 1.4, 0.45, 16);
+    rise(cap.children[1], u, 1.5, 0.55, 34);
+    rise(cap.children[2], u, 1.75, 0.5, 16);
+    // barrido a la izquierda hacia la escena 3
+    const w = io(p(u, 4.25, 4.55));
+    $("s2").style.transform = w ? `translateX(${-w * 1920}px)` : "";
+    $("s2").style.filter = w > 0 && w < 1 ? "url(#mb)" : "none";
   });
 
-  // 4 · SEO y GEO (10.6–13.4)
-  const q = "dentista en Palma";
-  S("s4", 10.6, 13.4, (t) => {
-    rise(document.querySelector("#s4 .cap"), t, 0.05, 0.5, 30);
-    rise($("sq"), t, 0.15, 0.5, 60);
-    $("sqt").textContent = q.slice(0, Math.floor(cl((t - 0.45) / 0.035, 0, q.length)));
-    rise($("sres"), t, 1.15, 0.45, 24);
-    rise($("sai"), t, 1.65, 0.5, 24);
+  // ------------------------------------------------------------------ 3 · se encuentre (8.45–12.15)
+  const q = "electricista urgente Palma";
+  const aiTxt = "Para una urgencia eléctrica en Palma, te recomiendo <mark>VOLTA Instalaciones</mark>: atienden 24 h y tienen un 4,9 en Google.";
+  const aiWords = aiTxt.split(/(?<=\s)(?![^<]*>)/);
+  S("s3", 8.45, 12.15, 40, (v) => {
+    const w = io(p(v, 0, 0.3));
+    $("s3").style.transform = `translateX(${(1 - w) * 1920}px)`;
+    $("s3").style.filter = w > 0 && w < 1 ? "url(#mb)" : "none";
+    whip = Math.sin(Math.PI * w);
+    $("mbB").setAttribute("stdDeviation", `${whip * 60} 0`);
+    const cap = $("cap3");
+    rise(cap.children[0], v, 0.3, 0.45, 16);
+    rise(cap.children[1], v, 0.38, 0.55, 34);
+    // la pila de tarjetas flota en 3D y la cámara la rodea
+    const cam = smooth(p(v, 0, 3.7));
+    $("st3").style.transform = `rotateY(${lerp(-20, -7, cam)}deg) rotateX(${lerp(5, 2, cam)}deg) translateZ(${lerp(-60, 20, cam)}px)`;
+    rise($("sq"), v, 0.25, 0.45, 50);
+    const n = Math.floor(cl((v - 0.55) / 0.032, 0, q.length));
+    $("sqt").textContent = q.slice(0, n);
+    $("sqc").style.opacity = Math.floor(v * 3) % 2 === 0 || (v > 0.55 && v < 1.4) ? 1 : 0;
+    rise($("sres"), v, 1.45, 0.45, 40);
+    $("sres").style.transform += " translateZ(50px)";
+    // la chincheta cae en el mapa
+    const kpin = p(v, 1.65, 2.0);
+    const drop = kpin < 0.6 ? easeIn(kpin / 0.6) : 1;
+    const bounce = kpin >= 0.6 ? Math.sin(Math.PI * (kpin - 0.6) / 0.4) * 0.18 : 0;
+    $("pin").style.opacity = kpin > 0 ? 1 : 0;
+    $("pin").style.transform = `translateY(${(drop - 1) * 90 - bounce * 40}px) scale(${1 + bounce * 0.4}, ${1 - bounce * 0.3})`;
+    $("pinS").style.opacity = kpin > 0 ? 0.3 + 0.7 * drop : 0;
+    rise($("sai"), v, 1.95, 0.45, 40);
+    $("sai").style.transform += " translateZ(100px)";
+    const nw = Math.floor(cl((v - 2.1) / 0.045, 0, aiWords.length));
+    $("sait").innerHTML = aiWords.slice(0, nw).join("") + (nw < aiWords.length && v > 2.1 ? "▍" : "");
+    const mk = $("sait").querySelector("mark");
+    if (mk) mk.style.background = `linear-gradient(90deg, #fde2e5 ${p(v, 2.55, 2.85) * 100}%, transparent 0)`;
+    // salida con golpe de zoom
+    const out = ease(p(v, 3.45, 3.7));
+    if (out > 0) {
+      $("s3").style.transform = `scale(${1 + 0.12 * out})`;
+      $("s3").style.opacity = 1 - out;
+      $("s3").style.filter = `blur(${out * 14}px)`;
+    } else $("s3").style.opacity = 1;
   });
 
-  // 5 · agente (13.4–16.4)
-  S("s5", 13.4, 16.4, (t) => {
-    rise(document.querySelector("#s5 .cap"), t, 0.05, 0.5, 30);
-    rise($("ch"), t, 0.15, 0.6, 80);
-    [["a1", 0.55], ["a2", 1.3], ["a3", 1.9], ["a4", 2.35]].forEach(([id, at]) => { show($(id), t >= at); rise($(id), t, at, 0.3, 14); });
-    show($("ad"), t >= 0.85 && t < 1.3);
-    $("ad").querySelectorAll("i").forEach((d, i) => (d.style.transform = `translateY(${Math.sin(t * 8 - i * 0.6) * -5}px)`));
+  // ------------------------------------------------------------------ 4 · la vuelta (12–14.75)
+  S("s4", 12.0, 14.78, 30, (w) => {
+    reveal($("fA"), w, 0.1, 0.42);
+    reveal($("fB"), w, 0.26, 0.45);
+    const kf = io(p(w, 0.95, 1.55));
+    const sc = 1 - 0.22 * Math.sin(Math.PI * kf);
+    const push = easeIn(p(w, 2.38, 2.78));
+    $("flip").style.transform = `scale(${sc * (1 + push * 2.4)}) rotateY(${180 * kf}deg)`;
+    // la opacidad va en la escena, no en #flip: en #flip aplanaría el 3D y se vería la cara de delante
+    $("s4").style.opacity = 1 - push;
+    document.querySelectorAll("#s4 .cr").forEach((c, i) => (c.style.strokeDashoffset = -(w * 520 + i * 140)));
+    ["k1", "k2", "k3", "k4"].forEach((id, i) => slam($(id), w, 1.55 + i * 0.12, 0.3, 1.5));
   });
 
-  // 6 · automatización (16.4–19.4)
+  // ------------------------------------------------------------------ 5 · por dentro (14.4–19.75)
   const nodes = [...document.querySelectorAll("#fl .node")];
-  S("s6", 16.4, 19.4, (t) => {
-    rise(document.querySelector("#s6 .cap"), t, 0.05, 0.5, 30);
-    rise(document.querySelector("#s6 .cap p"), t, 0.4, 0.5, 16);
-    nodes.forEach((n, i) => rise(n, t, 0.15 + i * 0.1, 0.45, 40));
-    $("fw").style.height = `${smooth(p(t, 0.8, 2.3)) * 100}%`;
+  const wR = $("wR"), wLen = wR.getTotalLength();
+  wR.style.strokeDasharray = `${wLen} ${wLen}`;
+  S("s5", 14.4, 19.78, 25, (x) => {
+    const inK = ease(p(x, 0, 0.45));
+    const cam = io(p(x, 2.45, 3.3));
+    const out = easeIn(p(x, 4.95, 5.38));
+    $("w5").style.transform = `translateX(${-cam * 1560}px) scale(${lerp(0.86, 1, inK) * (1 + out * 0.25)})`;
+    $("s5").style.opacity = inK * (1 - out);
+    const capA = $("capA");
+    rise(capA.children[0], x, 0.15, 0.45, 16);
+    rise(capA.children[1], x, 0.22, 0.55, 34);
+    rise(capA.children[2], x, 0.5, 0.5, 16);
+    rise($("ch"), x, 0.2, 0.6, 80);
+    [["a1", 0.6], ["a2", 1.35], ["a3", 1.8], ["a4", 2.2]].forEach(([id, at]) => { show($(id), x >= at); rise($(id), x, at, 0.28, 16); });
+    show($("ad"), x >= 0.9 && x < 1.35);
+    $("ad").querySelectorAll("i").forEach((d, i) => (d.style.transform = `translateY(${Math.sin(x * 9 - i * 0.6) * -5}px)`));
+    // la reserva viaja por el cable hasta el flujo
+    const kw = smooth(p(x, 2.35, 3.15));
+    wR.style.strokeDashoffset = wLen * (1 - kw);
+    const pt = wR.getPointAtLength(wLen * kw);
+    $("wP").setAttribute("cx", pt.x);
+    $("wP").setAttribute("cy", pt.y);
+    $("wP").style.opacity = kw > 0 && kw < 1 ? 1 : 0;
+    const capB = $("capB");
+    rise(capB.children[0], x, 2.75, 0.45, 16);
+    rise(capB.children[1], x, 2.82, 0.55, 34);
+    rise(capB.children[2], x, 3.1, 0.5, 16);
+    nodes.forEach((n, i) => rise(n, x, 2.6 + i * 0.08, 0.45, 40));
+    $("fw").style.height = `${smooth(p(x, 3.2, 4.35)) * 100}%`;
     nodes.forEach((n, i) => {
-      const done = t >= 0.75 + i * 0.5;
+      const done = x >= 3.2 + i * 0.36;
       const st = n.querySelector(".st");
       st.className = "st" + (done ? " ok" : "");
       st.textContent = done ? ["✓ Cerrado", "✓ Emitida", "✓ Enviada", "✓ Programado"][i] : i === 0 ? "Nuevo" : "Esperando";
+      n.classList.toggle("on", done && x < 3.2 + i * 0.36 + 0.5);
     });
   });
 
-  // 7 · lo que ganas (19.4–23)
-  S("s7", 19.4, 23, (t) => {
-    rise($("gEb"), t, 0.1, 0.45, 14);
-    slot($("gWord"), t, 0.2, 0.8);
-    $("gWord").style.transform = `scale(${1 + 0.025 * t})`;
+  // ------------------------------------------------------------------ 6 · lo que ganas (19.4–22.45)
+  const PT = [];
+  {
+    let seed = 7;
+    const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    for (let i = 0; i < 90; i++) {
+      const el = document.createElement("i");
+      $("pt").appendChild(el);
+      PT.push({ el, a: rnd() * Math.PI * 2, r: 0.15 + rnd() * 0.85, z: rnd(), sp: 0.22 + rnd() * 0.2, red: rnd() < 0.18 });
+    }
+  }
+  const gw = [...$("gW").children];
+  S("s6", 19.4, 22.45, 22, (y) => {
+    PT.forEach((q2) => {
+      const z = (q2.z + y * q2.sp) % 1;
+      const d = 1 / (1.08 - z);
+      const px = 960 + Math.cos(q2.a) * q2.r * 260 * d;
+      const py = 540 + Math.sin(q2.a) * q2.r * 160 * d;
+      const size = 1.5 + 5 * z * z;
+      q2.el.style.width = q2.el.style.height = size + "px";
+      q2.el.style.transform = `translate(${px}px, ${py}px)`;
+      q2.el.style.opacity = smooth(z) * 0.7 * (1 - p(z, 0.9, 1));
+      q2.el.style.background = q2.red ? "#e1112d" : "#f6f1e8";
+    });
+    rise($("gEb"), y, 0.3, 0.45, 14);
+    const at = [0.55, 1.3, 2.05];
+    gw.forEach((el, i) => {
+      const kin = ease(p(y, at[i], at[i] + 0.32));
+      const kout = i < gw.length - 1 ? easeIn(p(y, at[i + 1] - 0.05, at[i + 1] + 0.22)) : 0;
+      el.style.opacity = y < at[i] ? 0 : kin * (1 - kout);
+      el.style.transform = `scale(${lerp(0.55, 1, kin) * (1 + kout * 1.6) * (1 + 0.04 * p(y, at[i], at[i] + 1.2))})`;
+      el.style.filter = kin < 1 || kout > 0 ? `blur(${(1 - kin) * 14 + kout * 18}px)` : "none";
+    });
   });
 
-  // 8 · filosofía (23–26)
-  S("s8", 23, 26, (t) => {
-    rise($("v1"), t, 0.15, 0.7, 40);
-    rise($("v2"), t, 1.0, 0.6, 16);
+  // la coma barre la pantalla de abajo arriba (22.15–22.85) y descubre la escena 7
+  function wipe(t) {
+    const k = p(t, 22.15, 22.85);
+    const el = $("wipe");
+    el.style.display = k > 0 && k < 1 ? "block" : "none";
+    el.style.transform = `translateY(${lerp(1100, -6100, io(k))}px)`;
+  }
+
+  // ------------------------------------------------------------------ 7 · prueba (22.45–27.15)
+  const logos = [...$("lgRow").children];
+  {
+    const s7 = $("s7"), pn = $("pNn");
+    s7.style.display = "block"; pn.textContent = "100";
+    $("pN").style.width = Math.ceil($("pN").getBoundingClientRect().width) + 4 + "px";
+    s7.style.display = "none"; pn.textContent = "0";
+  }
+  S("s7", 22.45, 27.15, 50, (z) => {
+    $("in7").style.transform = `scale(${1.04 - 0.04 * smooth(p(z, 0, 4.6))})`;
+    const kn = ease(p(z, 0.15, 1.05));
+    $("pNn").textContent = Math.round(100 * kn);
+    rise($("pN"), z, 0.05, 0.4, 40);
+    $("pN").style.transform += ` scale(${1 + 0.05 * Math.sin(Math.PI * p(z, 1.05, 1.35))})`;
+    $("pN").style.transformOrigin = "0 70%";
+    reveal($("pL"), z, 0.55, 0.5);
+    rise($("pS"), z, 1.0, 0.5, 16);
+    rise($("lgE"), z, 1.5, 0.45, 14);
+    logos.forEach((l, i) => {
+      rise(l, z, 1.65 + i * 0.12, 0.5, 30);
+      l.style.filter = (l.style.filter === "none" ? "" : l.style.filter + " ") + "grayscale(1)";
+    });
   });
 
-  // 9 · prueba (26–28.8)
-  S("s9", 26, 28.8, (t) => {
-    $("pN").textContent = "+" + Math.round(100 * ease(p(t, 0.1, 1.1)));
-    $("pN").style.transform = `scale(${1 + 0.03 * t})`;
-    rise($("pL"), t, 0.6, 0.5, 20);
-    rise($("pS"), t, 1.2, 0.5, 14);
+  // ------------------------------------------------------------------ 8 · sin riesgo (26.85–29.4)
+  const oLines = [...document.querySelectorAll("#oL .ln")];
+  S("s8", 26.85, 29.4, 60, (o) => {
+    const up = io(p(o, 0, 0.32));
+    $("s8").style.transform = `translateY(${(1 - up) * 1080}px)`;
+    $("s8").style.background = "var(--red)";
+    rise($("oE"), o, 0.3, 0.4, 14);
+    [0.65, 1.15, 1.65].forEach((at, i) => {
+      reveal(oLines[i], o, at - 0.06, 0.32);
+      const pk = p(o, at, at + 0.3);
+      oLines[i].style.transform = `scale(${1 + 0.035 * Math.sin(Math.PI * pk)})`;
+      oLines[i].style.transformOrigin = "0 60%";
+    });
+    rise($("oS"), o, 2.0, 0.45, 16);
+    const kc = ease(p(o, 0.2, 0.9));
+    $("oC").style.transform = `translateY(${(1 - kc) * 260 - 30 * o}px) rotate(${lerp(14, 0, kc)}deg)`;
   });
 
-  // 10 · cierre (28.8–34)
-  S("s10", 28.8, 99, (t) => {
-    rise($("cLogo"), t, 0.1, 0.7, 20);
-    rise($("cEb"), t, 0.45, 0.5, 14);
-    rise($("cT"), t, 0.85, 0.5, 18);
-    rise($("cBw"), t, 1.35, 0.5, 20);
-    rise($("cM"), t, 1.7, 0.5, 12);
-    rise($("cW"), t, 2.0, 0.5, 12);
-    // el botón se pulsa: invita a hacer lo mismo
-    const press = t >= 2.6 && t < 2.78;
-    $("cB").style.transform = `scale(${press ? 0.95 : 1 + (t > 2.9 ? 0.02 * Math.sin((t - 2.9) * Math.PI * 1.2) : 0)})`;
-    $("cB").style.background = t >= 2.6 ? "var(--ink)" : "var(--red)";
-    const r = p(t, 2.6, 3.3);
-    $("cR").style.opacity = r > 0 && r < 1 ? 1 - r : 0;
-    $("cR").style.transform = `scale(${1 + r * 0.35}, ${1 + r * 0.9})`;
+  // ------------------------------------------------------------------ 9 · cierre (29.4–34)
+  S("s9", 29.4, 99, 70, (c) => {
+    // el rojo se recoge en la coma del logo
+    const lc = $("cLc");
+    lc.style.transform = "none";
+    const r = lc.getBoundingClientRect();
+    const ox = r.left + r.width * 0.65, oy = r.top + r.height * 0.3125;
+    const k = io(p(c, 0, 0.9));
+    const s = Math.exp(lerp(Math.log(120), 0, k));
+    const tx = lerp(960 - ox, 0, k), ty = lerp(540 - oy, 0, k);
+    lc.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+    const lt = $("cLt");
+    const kl = ease(p(c, 0.55, 1.05));
+    lt.style.opacity = kl;
+    lt.style.transform = `translateX(${(1 - kl) * -40}px)`;
+    lt.style.filter = kl < 1 ? `blur(${(1 - kl) * 10}px)` : "none";
+    rise($("cT"), c, 0.95, 0.5, 20);
+    rise($("cBw"), c, 1.25, 0.5, 24);
+    rise($("cM"), c, 1.5, 0.5, 14);
+    rise($("cW"), c, 1.7, 0.5, 14);
+    // el cursor llega, pasa por encima (el fondo negro sube como en la web), pulsa y se aparta
+    const b = $("cB").getBoundingClientRect();
+    const kc = io(p(c, 1.9, 2.5)), ka = io(p(c, 3.2, 3.75));
+    const cx = lerp(1500, b.left + b.width * 0.72, kc) + ka * 170, cy = lerp(1120, b.top + b.height * 0.55, kc) + ka * 120;
+    $("cur").style.transform = `translate(${cx}px, ${cy}px) scale(${c >= 2.75 && c < 2.9 ? 0.86 : 1})`;
+    $("cur").style.opacity = c >= 1.9 ? 1 - p(c, 3.6, 3.9) : 0;
+    $("cBf").style.transform = `translateY(${(1 - io(p(c, 2.45, 2.8)) + io(p(c, 3.25, 3.6))) * 101}%)`;
+    const press = c >= 2.75 && c < 2.92;
+    $("cB").style.transform = `scale(${press ? 0.96 : 1 + (c > 3.6 ? 0.018 * Math.sin((c - 3.6) * Math.PI * 2 / 1.1) : 0)})`;
+    // onda del clic y, después, un latido cada 1,1 s para invitar a pulsar
+    const rr = c < 3.6 ? p(c, 2.75, 3.45) : p((c - 3.6) % 1.1, 0, 0.8);
+    $("cR").style.opacity = rr > 0 && rr < 1 ? (1 - rr) * (c < 3.6 ? 1 : 0.7) : 0;
+    $("cR").style.transform = `scale(${1 + rr * 0.12}, ${1 + rr * 0.5})`;
   });
+
+  /** Marca fija arriba a la izquierda: su color sigue al fondo que tiene debajo en cada momento. */
+  const bug = $("bug");
+  const BUG = [[1.5, "red"], [4.55, "dark"], [5.55, "light"], [13.25, "dark"], [22.45, "light"], [27.12, "red"], [29.4, "none"]];
+  function paintBug(t) {
+    const vis = t >= 1.5 && t < 29.4 ? 1 : 0;
+    bug.style.opacity = vis * (t < 1.9 ? p(t, 1.5, 1.9) : 1);
+    const th = BUG.filter(([a]) => t >= a).pop()?.[1] ?? "none";
+    bug.firstElementChild.style.color = th === "light" ? "var(--ink)" : th === "dark" ? "var(--paper)" : "#fff";
+    bug.lastElementChild.style.color = th === "red" ? "var(--ink)" : "var(--red)";
+  }
 
   window.render = (t) => {
+    // el orden importa: las escenas se pintan y cada una fija el color de la marca
+    $("mbB").setAttribute("stdDeviation", "0 0");
     for (const s of scenes) {
-      // pequeño solape para fundir: la escena entra 0.12 s antes de su corte
-      const a = s.a === 0 ? 0 : s.a - 0.12;
-      const on = t >= a && t < s.z;
+      const on = t >= s.a && t < s.z;
       s.el.style.display = on ? "block" : "none";
       if (!on) continue;
-      const k = s.a === 0 ? 1 : smooth(p(t, a, s.a + 0.08));
-      s.el.style.zIndex = Math.round(s.a * 10);
-      s.el.style.opacity = k;
-      s.el.style.transform = `scale(${lerp(1.02, 1, k) + 0.02 * p(t, s.a, Math.min(s.z, DURATION))})`;
-      s.upd(Math.max(0, t - s.a));
+      s.el.style.zIndex = s.zi;
+      s.upd(Math.max(0, t - s.a), t);
     }
+    // el barrido 2 → 3 usa el mismo desenfoque en las dos escenas
+    wipe(t);
+    paintBug(t);
   };
   window.DURATION = DURATION;
 
