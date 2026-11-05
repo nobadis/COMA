@@ -14,6 +14,10 @@ const PAGES = [
   "/aviso-legal/",
   "/cookies/",
   "/privacidad/",
+  "/sectores/",
+  "/sectores/restaurantes/",
+  "/soluciones/",
+  "/soluciones/alternativa-a-wix/",
 ];
 const LEGAL = ["/aviso-legal/", "/cookies/", "/privacidad/"];
 
@@ -102,7 +106,15 @@ test.describe("COMA - Comunicación en Mallorca", () => {
   test("footer con enlaces legales y email", async ({ page }) => {
     await page.goto("/");
     const footer = page.locator("footer");
-    for (const href of LEGAL) await expect(footer.locator(`a[href="${href}"]`)).toBeAttached();
+    for (const href of [
+      ...LEGAL,
+      "/sobre-coma/",
+      "/guias/",
+      "/zonas/",
+      "/sectores/",
+      "/soluciones/",
+    ])
+      await expect(footer.locator(`a[href="${href}"]`)).toBeAttached();
     await expect(
       footer.locator('a[href^="mailto:info@comunicacionenmallorca.com"]').first()
     ).toBeAttached();
@@ -448,6 +460,52 @@ test.describe("SEO / GEO / Ads", () => {
     await expect(page.locator("main")).toContainText(/Paseo Mallorca, 16/);
   });
 
+  test("sectores y soluciones: hubs, nichos con precio calculado y paquete en el presupuesto", async ({
+    page,
+    request,
+  }) => {
+    for (const path of [
+      "/sectores/",
+      "/soluciones/",
+      "/sectores/restaurantes/",
+      "/sectores/residencias-de-mayores/",
+      "/sectores/asesorias-y-gestorias/",
+      "/soluciones/pagina-web-barata/",
+      "/soluciones/automatizar-whatsapp/",
+      "/soluciones/web-accesible-para-mayores/",
+    ]) {
+      const res = await page.goto(path);
+      expect(res?.status(), path).toBe(200);
+      await expect(page.locator("h1"), path).toHaveCount(1);
+      const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+      const types = blocks.flatMap((b) => JSON.parse(b)).flatMap((o) => o["@type"]);
+      expect(types, path).toContain("BreadcrumbList");
+      expect(types, path).toContain("FAQPage");
+    }
+    // El precio del paquete sale de pricing.ts: el schema y la página dicen lo mismo.
+    await page.goto("/sectores/restaurantes/");
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const service = blocks.flatMap((b) => JSON.parse(b)).find((o) => o["@type"] === "Service");
+    expect(service.offers.price).toBeGreaterThan(99);
+    await expect(page.locator("main")).toContainText(
+      `${service.offers.price.toLocaleString("es-ES")} €`
+    );
+    // Honestidad: nada de superlativos ni garantías en las páginas nuevas.
+    await expect(page.locator("main")).not.toContainText(
+      /somos los mejores|número 1|garantizamos el primer/i
+    );
+    // «Ver mi presupuesto» abre /precios/ con el paquete ya marcado.
+    await page.goto(await page.locator('a[href^="/precios/?pack="]').first().getAttribute("href"));
+    await expect(page.locator('input[value="reservas"]')).toBeChecked();
+    await expect(page.locator('input[value="idiomas"]')).toBeChecked();
+    await expect(page.locator('.opt:has(input[value="idiomas"]) [data-qty]')).toHaveText("2");
+    const llms = await (await request.get("/llms.txt")).text();
+    expect(llms).toContain("/sectores/restaurantes/");
+    expect(llms).toContain("/soluciones/pagina-web-barata/");
+    const full = await (await request.get("/llms-full.txt")).text();
+    expect(full).toMatch(/Paquete recomendado: Web Esencial/);
+  });
+
   test("todas las páginas indexables tienen título y descripción únicos", () => {
     const seen = { title: new Map(), desc: new Map() };
     for (const file of htmlFiles(DIST)) {
@@ -478,7 +536,16 @@ test.describe("SEO / GEO / Ads", () => {
     expect(locs.length).toBeGreaterThan(300);
     expect(xml).toMatch(/<lastmod>\d{4}-\d{2}-\d{2}T/);
     expect(locs.some((u) => /\/lp\/|\/gracias\//.test(u))).toBe(false);
-    for (const u of ["/guias/", "/zonas/", "/sobre-coma/", "/seo-geo/palma/"])
+    for (const u of [
+      "/guias/",
+      "/zonas/",
+      "/sobre-coma/",
+      "/seo-geo/palma/",
+      "/sectores/",
+      "/sectores/restaurantes/",
+      "/soluciones/",
+      "/soluciones/pagina-web-barata/",
+    ])
       expect(locs).toContain(`https://comunicacionenmallorca.com${u}`);
   });
 

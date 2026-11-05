@@ -1,0 +1,354 @@
+---
+import Base from "../../layouts/Base.astro";
+import Arrow from "../../components/Arrow.astro";
+import Faq from "../../components/Faq.astro";
+import Cta from "../../components/Cta.astro";
+import Trust from "../../components/Trust.astro";
+import { solutions, solutionBySlug, solutionGroups, type Solution } from "../../data/solutions";
+import { nicheBySlug, type Niche } from "../../data/niches";
+import { services } from "../../data/services";
+import { site } from "../../data/site";
+import { basePlan } from "../../data/pricing";
+
+export function getStaticPaths() {
+  return solutions.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const s = Astro.props.s as Solution;
+const url = `${site.url}/soluciones/${s.slug}/`;
+const group = solutionGroups.find((g) => g.id === s.group)!;
+const service = services.find((x) => x.slug === s.service)!;
+const niches = s.niches.map((x) => nicheBySlug(x)).filter(Boolean) as Niche[];
+const related = s.related.map((x) => solutionBySlug(x)).filter(Boolean) as Solution[];
+const custom = s.price.label === "A medida";
+/** Primer importe del precio (para el schema), si lo hay. */
+const amount = Number(/(\d+(?:[.,]\d+)?)\s*€/.exec(s.price.value)?.[1]?.replace(",", ".") ?? NaN);
+/** Cuota mensual o anual: UnitPriceSpecification con su unidad (UN/CEFACT: MON, ANN). */
+const unit = /€\/mes/.test(s.price.value) ? "MON" : /al año/.test(s.price.value) ? "ANN" : null;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: s.name,
+    serviceType: service.label,
+    description: s.description,
+    url,
+    provider: { "@id": `${site.url}/#org` },
+    areaServed: { "@type": "Country", name: "España" },
+    keywords: s.searches.join(", "),
+    ...(!custom && Number.isFinite(amount)
+      ? {
+          offers: {
+            "@type": "Offer",
+            name: s.price.label,
+            price: amount,
+            priceCurrency: "EUR",
+            priceSpecification: {
+              "@type": unit ? "UnitPriceSpecification" : "PriceSpecification",
+              price: amount,
+              priceCurrency: "EUR",
+              valueAddedTaxIncluded: false,
+              ...(unit ? { unitCode: unit } : {}),
+            },
+            url: `${site.url}/precios/`,
+          },
+        }
+      : {}),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: s.faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title={s.title}
+  description={s.description}
+  schema={schema}
+  crumbs={[
+    { name: "Soluciones", path: "/soluciones/" },
+    { name: s.name, path: `/soluciones/${s.slug}/` },
+  ]}
+>
+  <section class="sl-h">
+    <div class="wrap sl-h__in">
+      <p class="eyebrow" data-reveal>{s.eyebrow}</p>
+      <h1 data-split>{s.h1}<span class="comma">.</span></h1>
+      <p class="lead" data-reveal style="--d:3">{s.lead}</p>
+      <div class="sl-h__cta" data-reveal style="--d:4">
+        <a class="btn btn--red btn--lg" href="/contacto/" data-magnetic data-track="cta_click" data-track-label={`solucion-${s.slug}`}>
+          Pedir propuesta <Arrow />
+        </a>
+        <a class="link-arrow" href={custom ? `/${s.service}/` : "/precios/"}>{custom ? "Cómo trabajamos" : "Ver precios"}</a>
+      </div>
+      <nav class="sl-h__trail" aria-label="Ubicación">
+        <a href="/soluciones/">Soluciones</a><span aria-hidden="true">/</span><a href={`/soluciones/#${s.group}`}>{group.label}</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section sl-why">
+    <div class="wrap sl-why__grid">
+      <div>
+        <p class="eyebrow">Por qué</p>
+        <h2>{s.why.title}</h2>
+      </div>
+      <div class="sl-why__text">
+        {s.why.paragraphs.map((t) => <p>{t}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section night sl-do" data-dark>
+    <div class="wrap">
+      <p class="eyebrow">Qué incluye</p>
+      <h2>{s.name}</h2>
+      <ul class="sl-do__list">
+        {s.points.map((b, i) => (
+          <li>
+            <span aria-hidden="true">0{i + 1}</span>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="sl-price">
+        <p class="sl-price__lab">{s.price.label}</p>
+        <p class="sl-price__val">{s.price.value}</p>
+        <p class="sl-price__note">{s.price.note}</p>
+      </div>
+    </div>
+  </section>
+
+  {
+    s.compare && (
+      <section class="section sl-cmp">
+        <div class="wrap">
+          <h2>{s.compare.caption}</h2>
+          <section class="sl-cmp__scroll" tabindex="0" aria-label={s.compare.caption}>
+            <table>
+              <thead>
+                <tr>
+                  {s.compare.head.map((h, i) => (i === 0 ? <td /> : <th scope="col">{h}</th>))}
+                </tr>
+              </thead>
+              <tbody>
+                {s.compare.rows.map((r) => (
+                  <tr>
+                    {r.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+          <p class="sl-cmp__note">Comparativa orientativa: cada plataforma y cada agencia tiene sus planes y condiciones.</p>
+        </div>
+      </section>
+    )
+  }
+
+  <Trust />
+
+  <section class="section sl-links">
+    <div class="wrap sl-links__grid">
+      {niches.length > 0 && (
+        <div>
+          <h2>Para quién</h2>
+          <ul>
+            {niches.map((n) => (
+              <li><a href={`/sectores/${n.slug}/`}>Web para {n.forWho}</a></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <div>
+        <h2>Relacionado</h2>
+        <ul>
+          {related.map((r) => (
+            <li><a href={`/soluciones/${r.slug}/`}>{r.name}</a></li>
+          ))}
+          <li><a href="/soluciones/">Todas las soluciones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Más de COMA</h2>
+        <ul>
+          <li><a href={`/${service.slug}/`}>{service.label}</a></li>
+          <li><a href="/precios/">Presupuesto en directo, desde {basePlan.price} €</a></li>
+          <li><a href="/sectores/">Webs por sector</a></li>
+          <li><a href="/sobre-coma/">Quiénes somos</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={s.faq} />
+  <Cta title={s.cta} subject={s.name} />
+</Base>
+
+<style>
+  .sl-h {
+    padding-top: clamp(8.5rem, 15vw, 12rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .sl-h__in {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .sl-h h1 {
+    font-size: clamp(1.7rem, 0.6rem + 5vw, 5.2rem);
+    max-width: 20ch;
+    letter-spacing: -0.05em;
+  }
+  .sl-h__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+  .sl-h__trail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .sl-h__trail a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+  .sl-why__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .sl-why__grid {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+    }
+  }
+  .sl-why__text {
+    display: grid;
+    gap: 1.1rem;
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+  .sl-do__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 800px) {
+    .sl-do__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 3rem;
+    }
+  }
+  .sl-do__list li {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--night-line);
+  }
+  .sl-do__list span {
+    color: var(--red);
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+  }
+  .sl-do__list p {
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .sl-price {
+    margin-top: 3rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--night-line);
+    display: grid;
+    gap: 0.5rem;
+    max-width: 40rem;
+  }
+  .sl-price__lab {
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .sl-price__val {
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    font-variation-settings: "wdth" 125;
+  }
+  .sl-price__note {
+    color: var(--muted);
+  }
+  .sl-cmp h2 {
+    font-size: var(--fs-2xl);
+    margin-bottom: 1.5rem;
+  }
+  .sl-cmp__scroll {
+    overflow-x: auto;
+  }
+  .sl-cmp table {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+  }
+  .sl-cmp th,
+  .sl-cmp td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.8rem 1rem 0.8rem 0;
+    border-top: 1px solid var(--ink);
+  }
+  .sl-cmp thead th {
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .sl-cmp thead th:nth-child(2),
+  .sl-cmp tbody td:nth-child(2) {
+    color: var(--red-ink);
+    font-weight: 600;
+  }
+  .sl-cmp__note {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .sl-links {
+    background: var(--paper-2);
+  }
+  .sl-links__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .sl-links__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .sl-links h2 {
+    font-size: var(--fs-xl);
+    margin-bottom: 1rem;
+  }
+  .sl-links ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .sl-links a {
+    text-underline-offset: 0.2em;
+  }
+</style>

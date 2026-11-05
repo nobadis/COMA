@@ -1,0 +1,141 @@
+---
+import Base from "../../layouts/Base.astro";
+import Cta from "../../components/Cta.astro";
+import Faq from "../../components/Faq.astro";
+import { solutions, solutionGroups } from "../../data/solutions";
+import { site } from "../../data/site";
+import { basePlan } from "../../data/pricing";
+
+const groups = solutionGroups.map((g) => ({
+  ...g,
+  items: solutions.filter((s) => s.group === g.id),
+}));
+const faq = [
+  {
+    title: "¿Cuál es la opción más barata para tener web?",
+    text: `La Web Esencial: ${basePlan.price} € ${basePlan.suffix} de pago único, con diseño propio, hasta 4 páginas, formulario, SEO básico y SSL. El resto de extras son opcionales y tienen el precio publicado.`,
+  },
+  {
+    title: "¿Las automatizaciones tienen precio fijo?",
+    text: "No: dependen de los canales, las herramientas que ya usas y el volumen. Tras una llamada te damos alcance, plazos y precio cerrado por escrito.",
+  },
+  {
+    title: "¿Puedo empezar por una cosa y añadir otras después?",
+    text: "Sí. Es lo más habitual: primero la web, luego Google Maps o la IA, y más tarde las automatizaciones que más tiempo te ahorren.",
+  },
+];
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Soluciones: webs baratas, automatizaciones e IA",
+    url: `${site.url}/soluciones/`,
+    isPartOf: { "@id": `${site.url}/#web` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: solutions.map((s, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: s.name,
+        url: `${site.url}/soluciones/${s.slug}/`,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title="Soluciones: web barata, automatizaciones e IA para pymes"
+  description={`Web desde ${basePlan.price} € + IVA, tienda online, reservas, WhatsApp automatizado, chatbot con IA, Google Maps y ChatGPT. Lo que necesitas, con precio claro.`}
+  crumbs={[{ name: "Soluciones", path: "/soluciones/" }]}
+  schema={schema}
+>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-reveal>Soluciones</p>
+    <h1 data-split>Dinos qué necesitas<span class="comma">.</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      Cada necesidad, con lo que incluye y lo que cuesta. Sin rodeos.
+    </p>
+  </section>
+
+  <section class="section so">
+    <div class="wrap so__grid">
+      {groups.map((g) => (
+        <div class="so__col" id={g.id}>
+          <h2>{g.label}</h2>
+          <ul>
+            {g.items.map((s) => (
+              <li>
+                <a href={`/soluciones/${s.slug}/`}>
+                  <strong>{s.name}</strong>
+                  <span>{s.price.label === "A medida" ? "A medida" : s.price.value}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="wrap so__more">
+      ¿Prefieres verlo por tu tipo de negocio? <a href="/sectores/">Webs por sector</a>.
+    </p>
+  </section>
+
+  <Faq items={faq} />
+  <Cta title="¿Por dónde empezamos?" subject="Soluciones" />
+</Base>
+
+<style>
+  .so__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .so__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .so__col {
+    scroll-margin-top: 6rem;
+  }
+  .so__col h2 {
+    font-size: var(--fs-lg);
+    margin-bottom: 0.75rem;
+  }
+  .so__col ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+  .so__col a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--ink);
+    text-decoration: none;
+  }
+  .so__col span {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    text-align: right;
+  }
+  .so__more {
+    margin-top: 3rem;
+    color: var(--muted);
+  }
+  .so__more a {
+    color: var(--ink);
+    text-underline-offset: 0.2em;
+  }
+</style>

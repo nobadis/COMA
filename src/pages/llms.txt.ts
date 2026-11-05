@@ -5,6 +5,8 @@ import { basePlan, extras } from "../data/pricing";
 import { guides } from "../data/guides";
 import { places } from "../data/places";
 import { plans } from "../data/despachos";
+import { niches, nicheGroups, nichePack } from "../data/niches";
+import { solutions, solutionGroups } from "../data/solutions";
 
 /** Resumen en texto plano para asistentes de IA (estándar llms.txt). El detalle está en /llms-full.txt. */
 export const GET: APIRoute = () => {
@@ -47,7 +49,34 @@ export const GET: APIRoute = () => {
     `- [Todas las zonas](${site.url}/zonas/): diseño web, SEO/GEO y agentes de IA en Mallorca, Illes Balears y todas las comunidades autónomas.`,
     ...regions.map((r) => `- [${r.name}](${site.url}/zonas/${r.slug}/)`),
     "",
-    "## Sectores",
+    "## Soluciones por necesidad",
+    `- [Todas las soluciones](${site.url}/soluciones/)`,
+    ...solutionGroups.flatMap((g) => [
+      `### ${g.label}`,
+      ...solutions
+        .filter((x) => x.group === g.id)
+        .map(
+          (x) =>
+            `- [${x.name}](${site.url}/soluciones/${x.slug}/): ${x.price.label === "A medida" ? "a medida, presupuesto cerrado tras una llamada" : x.price.value}. ${x.description}`
+        ),
+    ]),
+    "",
+    "## Webs por sector",
+    `- [Todos los sectores](${site.url}/sectores/): ${niches.length} sectores con funciones, automatizaciones y paquete recomendado con precio.`,
+    ...nicheGroups.flatMap((g) => {
+      const items = niches.filter((n) => n.group === g.id);
+      return items.length
+        ? [
+            `### ${g.label}`,
+            ...items.map(
+              (n) =>
+                `- [Web para ${n.forWho}](${site.url}/sectores/${n.slug}/): paquete recomendado ${nichePack(n).once} € + IVA de pago único. ${n.lead}`
+            ),
+          ]
+        : [];
+    }),
+    "",
+    "## Sectores con experiencia",
     ...sectors.map((s) => `- ${s.name}: ${s.text}`),
     "",
     "## Páginas",

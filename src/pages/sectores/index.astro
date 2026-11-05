@@ -1,0 +1,135 @@
+---
+import Base from "../../layouts/Base.astro";
+import Cta from "../../components/Cta.astro";
+import Faq from "../../components/Faq.astro";
+import { niches, nicheGroups } from "../../data/niches";
+import { site, years } from "../../data/site";
+import { basePlan } from "../../data/pricing";
+
+const groups = nicheGroups
+  .map((g) => ({ ...g, items: niches.filter((n) => n.group === g.id) }))
+  .filter((g) => g.items.length > 0);
+const faq = [
+  {
+    title: "¿Hacéis webs para cualquier sector?",
+    text: `Sí. Estos son los sectores con página propia, pero la Web Esencial (${basePlan.price} € ${basePlan.suffix}) sirve para cualquier negocio. Si el tuyo no está, cuéntanoslo.`,
+  },
+  {
+    title: "¿El precio cambia según el sector?",
+    text: "No. Los precios son los mismos para todos. Lo que cambia es lo que cada negocio necesita: reservas, idiomas, tienda, citas… y eso lo ves sumado en el presupuesto en directo.",
+  },
+  {
+    title: "¿Trabajáis fuera de Mallorca?",
+    text: `Sí. Nuestra sede está en Palma desde ${site.since} y desde ${site.spainSince} trabajamos en remoto con negocios de toda España, al mismo precio.`,
+  },
+];
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Webs, automatización e IA por sector",
+    url: `${site.url}/sectores/`,
+    isPartOf: { "@id": `${site.url}/#web` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: niches.map((n, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: `Web para ${n.forWho}`,
+        url: `${site.url}/sectores/${n.slug}/`,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title="Páginas web por sector: restaurantes, clínicas, oficios…"
+  description={`Webs desde ${basePlan.price} € + IVA pensadas para cada sector: hostelería, turismo, salud, mayores, despachos, oficios y comercio. Con automatizaciones e IA.`}
+  crumbs={[{ name: "Sectores", path: "/sectores/" }]}
+  schema={schema}
+>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-reveal>Sectores</p>
+    <h1 data-split>Una web pensada para lo tuyo<span class="comma">.</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      {niches.length} sectores con lo que cada uno necesita de verdad: funciones, automatizaciones y precio. {years()} años comunicando negocios desde Palma.
+    </p>
+  </section>
+
+  <section class="section sx">
+    <div class="wrap sx__grid">
+      {groups.map((g) => (
+        <div class="sx__card" id={g.id}>
+          <h2>{g.label}</h2>
+          <ul>
+            {g.items.map((n) => (
+              <li><a href={`/sectores/${n.slug}/`}>{n.name}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="wrap sx__more">
+      ¿Buscas algo concreto, como una <a href="/soluciones/pagina-web-barata/">web barata</a>, <a href="/soluciones/automatizar-whatsapp/">automatizar WhatsApp</a> o <a href="/soluciones/aparecer-en-chatgpt/">salir en ChatGPT</a>? Mira <a href="/soluciones/">todas las soluciones</a>.
+    </p>
+  </section>
+
+  <Faq items={faq} />
+  <Cta title="¿No ves tu sector? Cuéntanos el tuyo" subject="Sectores" />
+</Base>
+
+<style>
+  .sx__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 700px) {
+    .sx__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .sx__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .sx__card {
+    border-top: 1px solid var(--ink);
+    padding-top: 1rem;
+    scroll-margin-top: 6rem;
+  }
+  .sx__card h2 {
+    font-size: var(--fs-lg);
+    margin-bottom: 0.75rem;
+  }
+  .sx__card ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+  }
+  .sx__card a {
+    color: var(--muted);
+    text-underline-offset: 0.2em;
+  }
+  .sx__more {
+    margin-top: 3rem;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .sx__more a {
+    color: var(--ink);
+    text-underline-offset: 0.2em;
+  }
+</style>

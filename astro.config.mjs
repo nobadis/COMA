@@ -31,10 +31,10 @@ function priority(path) {
     )
   )
     return 0.9;
-  if (/^\/(sobre-coma|contacto|zonas)\/$/.test(path)) return 0.8;
+  if (/^\/(sobre-coma|contacto|zonas|sectores|soluciones)\/$/.test(path)) return 0.8;
   if (/^\/(zonas\/mallorca|(diseno-web|seo-geo|agentes-ia)\/(mallorca|palma))\/$/.test(path))
     return 0.8;
-  if (/^\/guias\//.test(path)) return 0.7;
+  if (/^\/(guias|sectores|soluciones)\//.test(path)) return 0.7;
   if (/^\/(aviso-legal|cookies|privacidad)\/$/.test(path)) return 0.2;
   return 0.6;
 }
@@ -55,7 +55,7 @@ export default defineConfig({
           ...item,
           lastmod: BUILD_DATE.toISOString(),
           changefreq: /** @type {any} */ (
-            path === "/" || /^\/guias\/$/.test(path) ? "weekly" : "monthly"
+            path === "/" || /^\/(guias|sectores|soluciones)\/$/.test(path) ? "weekly" : "monthly"
           ),
           priority: priority(path),
         };

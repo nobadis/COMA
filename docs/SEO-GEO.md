@@ -6,7 +6,10 @@ El posicionamiento no consiste en alargar lo que ve el visitante. Títulos, desc
 
 ## Ya está en el código
 
-- **~350 URLs indexables**: servicios, `/zonas/` (82 lugares: Mallorca y sus municipios, Menorca, Ibiza, Formentera, 19 comunidades/ciudades autónomas y ciudades clave), `/diseno-web|seo-geo|agentes-ia/<lugar>/` (246 páginas), `/guias/` (7 guías), `/sobre-coma/`.
+- **~420 URLs indexables**: servicios, `/zonas/` (82 lugares: Mallorca y sus municipios, Menorca, Ibiza, Formentera, 19 comunidades/ciudades autónomas y ciudades clave), `/diseno-web|seo-geo|agentes-ia/<lugar>/` (246 páginas), `/sectores/` (~50 nichos), `/soluciones/` (20 necesidades), `/guias/` (7 guías), `/sobre-coma/`.
+- **Nichos por sector** (`/sectores/<slug>/`, datos en `src/data/niches/*.ts`): restaurantes, alquiler vacacional, clínicas, residencias de mayores, abogados, fontaneros, inmobiliarias… Cada uno con funciones de web, automatizaciones, agente de IA, ángulo Mallorca, FAQ propias y un **paquete recomendado cuyo precio se calcula con `pricing.ts`** (sale en la página, en el schema `Offer` y en `llms*.txt`). El botón «Ver mi presupuesto» abre `/precios/?pack=…` con esos extras ya marcados.
+- **Necesidades** (`/soluciones/<slug>/`, datos en `src/data/solutions.ts`): página web barata, web para autónomos, negocios de toda la vida, web accesible para mayores, tienda online barata, multiidioma, reservas, rediseño, mantenimiento, correo, alternativa a Wix, agencia económica, WhatsApp, chatbot, facturas, recordatorios, CRM, ChatGPT, Google Maps y reseñas.
+- **Claims**: estas páginas no dicen «el mejor» ni «el más barato». Responden a esas búsquedas con datos comprobables (precio publicado, pago único, qué incluye, desde cuándo existimos). Un test vigila los superlativos.
 - **Contenido local propio** en `src/data/places.ts` (`local`, `angle`, sectores, idiomas). Un test falla si dos páginas comparten título o descripción.
 - **Honestidad local**: solo Palma figura como sede. El resto se declara "en remoto". Nunca añadas una oficina que no exista (Google lo sanciona y las IA lo detectan).
 - **Schema.org**: MarketingAgency/ProfessionalService (con `areaServed` de todas las comunidades), WebSite, WebPage, BreadcrumbList, Service/Offer, FAQPage, Article, AboutPage, Person y Review (solo si hay datos reales en `site.ts`).
@@ -33,9 +36,11 @@ Cada mes, pregunta a ChatGPT, Gemini, Claude, Copilot y Perplexity lo que pregun
 
 ## Enlazado interno
 
-El menú sigue igual (Inicio, Servicios, Precios, Kit Digital, Contacto). En el pie hay tres enlaces discretos a `/sobre-coma/`, `/guias/` y `/zonas/` para que Google y las IA lleguen a esas páginas desde la home, además del sitemap, IndexNow y `llms.txt`. Las páginas de zona, servicio local y guías se enlazan entre sí.
+El menú sigue igual (Inicio, Servicios, Precios, Kit Digital, Contacto). En el pie hay enlaces discretos a `/sobre-coma/`, `/guias/`, `/zonas/`, `/sectores/` y `/soluciones/` para que Google y las IA lleguen a esas páginas desde la home, además del sitemap, IndexNow y `llms.txt`. Las páginas de zona, servicio local y guías se enlazan entre sí.
 
 ## Mantenimiento
+
+- Añadir un sector: un objeto más en `src/data/niches/<grupo>.ts` siguiendo las reglas de `types.ts` (texto propio del sector, sin cifras ni clientes inventados, 3 `related` válidos). Una solución: un objeto en `solutions.ts`.
 
 - Añadir una zona: añade el objeto en `places.ts` con `local` y `angle` propios y verdaderos. No copies el texto de otra.
 - Al cambiar precios (`pricing.ts`) se actualizan guías, schema, `llms*.txt` y páginas locales.

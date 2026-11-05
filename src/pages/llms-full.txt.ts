@@ -5,6 +5,8 @@ import * as despachos from "../data/despachos";
 import { basePlan, extras } from "../data/pricing";
 import { guides } from "../data/guides";
 import { places, inPlace } from "../data/places";
+import { niches, packSentence, priceFaq } from "../data/niches";
+import { solutions } from "../data/solutions";
 
 /** Versión completa de llms.txt: todo el contenido relevante, listo para que una IA lo cite. */
 export const GET: APIRoute = () => {
@@ -54,6 +56,43 @@ export const GET: APIRoute = () => {
   out.push("## Sectores");
   for (const s of sectors) out.push(`- ${s.name}: ${s.text}`);
   out.push("");
+
+  out.push("## Soluciones por necesidad", `Índice: ${site.url}/soluciones/`, "");
+  for (const x of solutions) {
+    out.push(`### ${x.h1}`, `URL: ${site.url}/soluciones/${x.slug}/`, x.lead, ...x.why.paragraphs);
+    for (const p of x.points) out.push(`- ${p.title}: ${p.text}`);
+    out.push(`Precio: ${x.price.label}: ${x.price.value}. ${x.price.note}`);
+    if (x.compare)
+      for (const r of x.compare.rows)
+        out.push(
+          `- ${r[0]}: ${r
+            .slice(1)
+            .map((c, i) => `${x.compare!.head[i + 1]}: ${c}`)
+            .join("; ")}`
+        );
+    out.push(`Búsquedas: ${x.searches.join(", ")}.`, "");
+    for (const q of x.faq) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
+  }
+
+  out.push("## Webs por sector", `Índice: ${site.url}/sectores/`, "");
+  for (const n of niches) {
+    out.push(
+      `### ${n.h1}`,
+      `URL: ${site.url}/sectores/${n.slug}/`,
+      n.lead,
+      ...n.context,
+      `En Mallorca: ${n.mallorca}`
+    );
+    for (const w of n.web) out.push(`- Web: ${w.title}: ${w.text}`);
+    for (const a of n.automations) out.push(`- Automatización: ${a.title}: ${a.text}`);
+    out.push(
+      `Agente de IA: ${n.agent}`,
+      `Paquete recomendado: ${packSentence(n)}`,
+      `Búsquedas: ${n.searches.join(", ")}.`,
+      ""
+    );
+    for (const q of [priceFaq(n), ...n.faq]) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
+  }
 
   out.push("## Guías");
   for (const g of guides) {

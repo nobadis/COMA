@@ -267,6 +267,19 @@ const priceLabel = (x: (typeof extras)[number]) =>
         params.set("total", `${eur(r.once)} € + IVA${r.month ? ` y ${eur(r.month)} €/mes + IVA` : ""}${r.year ? ` y ${eur(r.year)} €/año + IVA` : ""}`);
       window.location.href = `/contacto/?${params.toString()}`;
     });
+    // ?pack=reservas,idiomas:2 llega desde las páginas de sector y solución con el paquete marcado.
+    const pack = new URLSearchParams(window.location.search).get("pack");
+    for (const token of pack ? pack.split(",") : []) {
+      const [id, n] = token.split(":");
+      const o = opts.find((x) => x.querySelector<HTMLInputElement>("input")?.value === id);
+      if (!o) continue;
+      o.querySelector<HTMLInputElement>("input")!.checked = true;
+      const out = o.querySelector<HTMLElement>("[data-qty]");
+      if (out && n) {
+        const v = Math.min(Number(out.dataset.max), Math.max(Number(out.dataset.min), Number(n) || 1));
+        out.textContent = String(v);
+      }
+    }
     render();
   });
 </script>

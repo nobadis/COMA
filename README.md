@@ -35,7 +35,7 @@ npm run validate     # formato + tipos + lint + build + tests E2E (escritorio y 
 
 ## SEO y GEO
 
-Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). El posicionamiento va en `<head>`, archivos de rastreo y páginas nuevas; el texto visible se mantiene corto. En resumen: ~350 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). El pie enlaza a Sobre COMA, guías y zonas. Contenido local en `src/data/places.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
+Ver [docs/SEO-GEO.md](docs/SEO-GEO.md). El posicionamiento va en `<head>`, archivos de rastreo y páginas nuevas; el texto visible se mantiene corto. En resumen: ~420 páginas (servicios, `/zonas/` con 82 lugares, `/<servicio>/<lugar>/`, `/sectores/` con ~50 nichos, `/soluciones/` con 20 necesidades —web barata, autónomos, mayores, WhatsApp, chatbot, Google Maps, ChatGPT…—, `/guias/`, `/sobre-coma/`), schema.org completo, sitemap con `lastmod`, `robots.txt` con rastreadores de IA, `/llms.txt` y `/llms-full.txt`, IndexNow (`npm run seo:indexnow`). El pie enlaza a Sobre COMA, guías, zonas, sectores y soluciones. Contenido local en `src/data/places.ts`, sectores en `src/data/niches/*.ts` (paquete recomendado calculado con `pricing.ts`), necesidades en `src/data/solutions.ts`, guías en `src/data/guides.ts`, personas y opiniones reales en `src/data/site.ts` (`team`, `testimonials`, `social`).
 
 ## Anuncios y outbound
 
