@@ -33,7 +33,7 @@ export const salud: Niche[] = [
       },
       {
         title: "Datos de centro sanitario",
-        text: "Número de registro sanitario de la clínica y profesionales colegiados a la vista, como pide la publicidad sanitaria.",
+        text: "Número de registro sanitario de la clínica y profesionales colegiados a la vista: transmite confianza y lo exigen muchas normas de publicidad sanitaria.",
       },
     ],
     automations: [
@@ -58,7 +58,7 @@ export const salud: Niche[] = [
     faq: [
       {
         title: "¿Qué tengo que poner en la web por ser centro sanitario?",
-        text: "La publicidad de un centro sanitario debe mostrar su número de registro sanitario, y conviene identificar a cada dentista con su número de colegiado. Lo dejamos visible; ante cualquier duda, consulta con tu colegio de dentistas.",
+        text: "Es lo recomendable: muchas normas de publicidad sanitaria piden el número de registro del centro, y conviene identificar a cada dentista con su número de colegiado. Lo dejamos visible; confirma con tu colegio de dentistas qué te aplica.",
       },
       {
         title: "¿Se puede conectar con Doctoralia o con mi programa de gestión?",
@@ -227,7 +227,7 @@ export const salud: Niche[] = [
       },
       {
         title: "¿Tengo que poner un número de registro sanitario?",
-        text: "Si tu consulta está autorizada como centro sanitario, sí: el número de registro va en la web y en la publicidad, junto a tu número de colegiado. Tu colegio te confirma qué te aplica.",
+        text: "Si tu consulta está autorizada como centro sanitario, lo recomendable es mostrar su número de registro en la web y en la publicidad, junto a tu número de colegiado. Tu colegio te confirma qué te aplica.",
       },
       {
         title: "¿La terapia online se hace desde la web?",
@@ -381,7 +381,7 @@ export const salud: Niche[] = [
     faq: [
       {
         title: "¿Qué no puedo decir en la web?",
-        text: "La publicidad sanitaria no permite garantizar resultados ni sugerirlos, y debe llevar el número de registro sanitario del centro. Escribimos los textos con ese criterio; para dudas concretas, consulta con tu colegio de médicos.",
+        text: "La publicidad sanitaria no permite garantizar resultados ni sugerirlos, y conviene que lleve el número de registro sanitario del centro. Escribimos los textos con ese criterio; para dudas concretas, consulta con tu colegio de médicos.",
       },
       {
         title: "¿Puedo poner fotos de antes y después?",
@@ -708,7 +708,7 @@ export const salud: Niche[] = [
       },
       {
         title: "¿Tengo que poner el número de registro sanitario?",
-        text: "Las ópticas y los establecimientos de audioprótesis son establecimientos sanitarios, así que su publicidad debe llevar el número de registro. Confírmalo con la Conselleria de Salud o con tu colegio.",
+        text: "Las ópticas y los establecimientos de audioprótesis son establecimientos sanitarios autorizados, así que lo recomendable es mostrar su número de registro. Confirma con la Conselleria de Salud o con tu colegio qué te exige.",
       },
       {
         title: "¿Puede pedir la cita un familiar?",

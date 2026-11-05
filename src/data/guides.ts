@@ -514,6 +514,212 @@ export const guides: Guide[] = [
     cta: { label: "Hablemos de tu temporada", href: "/contacto/" },
     related: ["seo-local-google-maps-checklist", "cuanto-cuesta-una-pagina-web"],
   },
+  {
+    slug: "accesibilidad-web-ley-2025-pymes",
+    title: "Accesibilidad web: qué exige la ley desde 2025 a las pymes",
+    h1: "Accesibilidad web en 2025: a quién obliga la ley y qué hacer",
+    description:
+      "La Ley 11/2023 aplica desde el 28 de junio de 2025: qué negocios deben tener una web accesible, la exención de las microempresas y una lista práctica para cumplir.",
+    published: "2026-11-05",
+    modified: "2026-11-05",
+    readMin: 6,
+    intro:
+      "Desde el 28 de junio de 2025, muchas tiendas online y servicios digitales tienen que ser accesibles para personas con discapacidad. Aquí explicamos a quién afecta, a quién no y qué conviene hacer aunque la ley no te obligue, porque una web accesible también es más fácil de usar para tus clientes mayores.",
+    sections: [
+      {
+        h2: "Qué ley es y desde cuándo aplica",
+        paragraphs: [
+          "La Directiva Europea de Accesibilidad (European Accessibility Act) se incorporó en España con la Ley 11/2023, de 8 de mayo. Sus obligaciones para productos y servicios se aplican desde el 28 de junio de 2025.",
+          "Para los servicios que ya se prestaban antes de esa fecha hay periodos de transición. Si tu caso es límite, confírmalo con tu asesor con el texto del BOE delante.",
+        ],
+      },
+      {
+        h2: "A quién afecta",
+        paragraphs: ["La ley se centra en productos y servicios concretos. Entre los servicios:"],
+        list: [
+          "Comercio electrónico: tiendas online que venden a consumidores.",
+          "Servicios bancarios para consumidores.",
+          "Transporte de viajeros: webs, apps, billetes e información.",
+          "Libros electrónicos y comunicaciones electrónicas.",
+        ],
+      },
+      {
+        h2: "Las microempresas de servicios están exentas",
+        paragraphs: [
+          "Las microempresas que prestan servicios —menos de 10 personas y un volumen de negocio o balance que no supera los 2 millones de euros— quedan fuera de las obligaciones de servicios. La exención no alcanza a los productos.",
+          "Que no te obligue no significa que no te convenga: una parte creciente de tus clientes son personas mayores o con alguna dificultad visual, motora o cognitiva, y una web que no pueden usar es una venta que se va a otro.",
+        ],
+      },
+      {
+        h2: "Lista práctica para una web accesible",
+        paragraphs: [
+          "La referencia técnica son las pautas WCAG (y la norma europea EN 301 549 que las recoge). Lo esencial:",
+        ],
+        list: [
+          "Contraste suficiente entre texto y fondo, y tamaño de letra legible sin zoom.",
+          "Todo se puede usar con teclado, con el foco visible.",
+          "Imágenes con texto alternativo y vídeos con subtítulos.",
+          "Títulos y estructura que un lector de pantalla entienda.",
+          "Formularios con etiquetas claras y mensajes de error que expliquen qué corregir.",
+          "Botones grandes y separados, y un lenguaje claro, sin siglas.",
+          "Una declaración de accesibilidad y un canal para avisar de problemas.",
+        ],
+      },
+      {
+        h2: "Cómo lo hacemos en COMA",
+        paragraphs: [
+          `Diseñamos cada web con estas pautas desde el principio, también la ${basePlan.name} de ${basePlan.price} € ${basePlan.suffix}. Si ya tienes web, la revisamos y te decimos qué cambiar o te proponemos rediseñarla.`,
+        ],
+      },
+    ],
+    faq: [
+      {
+        title: "¿Mi web corporativa está obligada a ser accesible?",
+        text: "Depende de lo que hagas en ella. Si vendes a consumidores online o prestas alguno de los servicios incluidos y no eres microempresa, probablemente sí. Una web solo informativa de una pyme suele quedar fuera, pero conviene revisarlo con tu asesor.",
+      },
+      {
+        title: "¿Basta con instalar un plugin de accesibilidad?",
+        text: "No. Las barras y plugins que se superponen a la web no corrigen el código ni el contenido de fondo. La accesibilidad se resuelve en el diseño, el código y los textos.",
+      },
+      {
+        title: "¿Cuánto cuesta hacer accesible mi web?",
+        text: `En una web nueva no tiene coste aparte: va en el diseño. En una web existente depende de cuánto haya que corregir; tras revisarla te damos precio cerrado.`,
+      },
+    ],
+    cta: { label: "Webs accesibles para mayores", href: "/soluciones/web-accesible-para-mayores/" },
+    related: ["checklist-web-que-google-y-la-ia-entienden", "web-a-medida-o-plantilla"],
+  },
+  {
+    slug: "cuanto-cuesta-automatizar-whatsapp-chatbot",
+    title: "Cuánto cuesta automatizar WhatsApp, un chatbot o tus procesos",
+    h1: "Cuánto cuesta automatizar tu negocio y cómo saber si compensa",
+    description:
+      "De qué se compone el precio de una automatización o un chatbot con IA: puesta en marcha, licencias, mensajes de WhatsApp, uso de IA y mantenimiento. Y cómo calcular si compensa.",
+    published: "2026-11-05",
+    modified: "2026-11-05",
+    readMin: 7,
+    intro:
+      "Automatizar no tiene un precio de catálogo como una web, porque cada negocio conecta herramientas distintas. Pero el coste sí se puede desmontar en piezas, y con ellas cualquiera puede comparar presupuestos y calcular si le compensa antes de firmar.",
+    sections: [
+      {
+        h2: "Las cinco piezas del precio",
+        paragraphs: ["Casi cualquier automatización o agente de IA se reduce a esto:"],
+        list: [
+          "Puesta en marcha: entender el proceso, diseñar el flujo, conectarlo y probarlo con casos reales. Es un pago único.",
+          "Licencias de herramientas: la plataforma de automatización (Make, n8n, Zapier…), el CRM o la agenda, si tienen cuota.",
+          "Mensajes de WhatsApp: con la API oficial, Meta cobra por las plantillas que envías (avisos, recordatorios), según el tipo de mensaje y el país.",
+          "Uso de IA: el modelo que entiende y redacta cobra por volumen de texto procesado. En una pyme suele ser un coste pequeño y variable.",
+          "Mantenimiento: vigilar que todo siga funcionando, ajustar respuestas y adaptar el flujo cuando cambian tus herramientas.",
+        ],
+      },
+      {
+        h2: "Qué hace que suba o baje",
+        paragraphs: [
+          "Sube con el número de herramientas que hay que conectar, si alguna no tiene API, el volumen de mensajes, los idiomas y lo delicado de los datos (salud, menores, pagos). Baja cuando el proceso está claro y se empieza por una sola tarea.",
+        ],
+      },
+      {
+        h2: "Cómo calcular si compensa",
+        paragraphs: [
+          "Haz la cuenta antes de pedir presupuesto: horas al mes que dedica tu equipo a la tarea × coste por hora × 12. Súmale lo que pierdes hoy (citas olvidadas, presupuestos sin seguimiento, mensajes sin responder fuera de horario).",
+          "Si el ahorro anual supera con holgura la puesta en marcha más las cuotas del año, compensa. Si no, empieza por una tarea más pequeña o espera.",
+        ],
+      },
+      {
+        h2: "Por dónde empezar",
+        paragraphs: ["Las automatizaciones que antes se pagan en una pyme suelen ser:"],
+        list: [
+          "Recordatorios de cita con confirmación o cancelación.",
+          "Que cada contacto de la web, el email o WhatsApp entre en un mismo sitio y reciba respuesta.",
+          "Facturas que se generan y se envían solas, y avisos de cobro.",
+          "Petición de reseña después del servicio.",
+        ],
+      },
+      {
+        h2: "Cómo lo presupuestamos en COMA",
+        paragraphs: [
+          "Tras una llamada te damos alcance, plazos y precio cerrado por escrito, separando el pago único de las cuotas de terceros, para que sepas qué pagas a quién. Documentamos cada flujo para que no dependas de una caja negra.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        title: "¿Puedo automatizar WhatsApp sin la API oficial?",
+        text: "Hay herramientas no oficiales que automatizan la app normal, pero se arriesga el bloqueo del número. Para un negocio, la API oficial de WhatsApp Business es lo prudente.",
+      },
+      {
+        title: "¿Un chatbot con IA es caro de mantener?",
+        text: "El uso de IA suele ser un coste pequeño en una pyme. Lo que más pesa es revisarlo de vez en cuando y mantener su información al día.",
+      },
+      {
+        title: "¿Necesito cambiar mis programas?",
+        text: "Normalmente no. Se conectan los que ya usas, siempre que permitan integrarse o exportar datos.",
+      },
+    ],
+    cta: { label: "Cuéntanos qué quieres automatizar", href: "/automatizaciones/" },
+    related: ["agentes-ia-para-pymes", "cuanto-cuesta-una-pagina-web"],
+  },
+  {
+    slug: "como-elegir-agencia-diseno-web",
+    title: "Cómo elegir agencia de diseño web: 12 preguntas antes de firmar",
+    h1: "Cómo elegir una agencia de diseño web: 12 preguntas antes de firmar",
+    description:
+      "Las preguntas que separan una buena agencia de diseño web de una mala: propiedad del dominio, precio cerrado, SEO, accesibilidad, soporte y qué pasa si te vas.",
+    published: "2026-11-05",
+    modified: "2026-11-05",
+    readMin: 6,
+    intro: `Todas las agencias dicen ser las mejores, así que los adjetivos no sirven para elegir. Estas son las preguntas que nosotros haríamos, después de ${years()} años en comunicación, y lo que debería responder una agencia seria.`,
+    sections: [
+      {
+        h2: "Sobre lo que compras",
+        paragraphs: [],
+        list: [
+          "¿El dominio estará a mi nombre? Debe estarlo, siempre.",
+          "¿El diseño es propio o una plantilla? Pide ver otras webs suyas y busca si se repiten.",
+          "¿Qué incluye exactamente el precio y qué es un extra? Por escrito, con importes.",
+          "¿Hay cuotas mensuales obligatorias? ¿Qué incluyen y qué pasa si dejo de pagarlas?",
+        ],
+      },
+      {
+        h2: "Sobre la calidad",
+        paragraphs: [],
+        list: [
+          "¿Cómo de rápida carga en el móvil? Pide que te enseñen una web suya en PageSpeed Insights.",
+          "¿Incluye SEO básico y datos estructurados? Títulos, descripciones y schema.org deberían ir de serie.",
+          "¿Es accesible? Contraste, teclado y textos alternativos, y más si vendes online.",
+          "¿Cumple con el RGPD y las cookies? La analítica no debería cargarse antes de que el usuario acepte.",
+        ],
+      },
+      {
+        h2: "Sobre el después",
+        paragraphs: [],
+        list: [
+          "¿Quién me atiende si algo falla, por qué canal y en cuánto tiempo?",
+          "¿Podré cambiar los textos yo, o cuánto cuesta cada cambio?",
+          "Si me voy, ¿me llevo la web, el contenido y los accesos?",
+          "¿Desde cuándo existís y con quién habéis trabajado? Pide referencias que puedas comprobar.",
+        ],
+      },
+      {
+        h2: "Nuestras respuestas",
+        paragraphs: [
+          `Para que puedas compararnos: dominio y contenido a tu nombre, diseño propio, ${basePlan.name} por ${basePlan.price} € ${basePlan.suffix} de pago único con los extras publicados en /precios/, SEO básico y datos estructurados incluidos, analítica solo con consentimiento, y en marcha desde ${site.since} en Palma.`,
+        ],
+      },
+    ],
+    faq: [
+      {
+        title: "¿Es mejor una agencia local o una de fuera?",
+        text: "Lo importante es que responda bien a estas preguntas. Una agencia local suma si tu negocio depende del cliente de la zona y quieres reunirte en persona.",
+      },
+      {
+        title: "¿Una web barata es siempre peor?",
+        text: "No necesariamente. Mira qué incluye, si el diseño es propio y quién es el dueño del dominio. Una web cara con letra pequeña puede salir peor.",
+      },
+    ],
+    cta: { label: "Mira nuestros precios", href: "/precios/" },
+    related: ["cuanto-cuesta-una-pagina-web", "web-a-medida-o-plantilla"],
+  },
 ];
 
 export const guideBySlug = (slug: string) => guides.find((g) => g.slug === slug);

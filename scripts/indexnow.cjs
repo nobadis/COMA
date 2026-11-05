@@ -39,7 +39,11 @@ async function main() {
     }
     const res = await fetch("https://api.indexnow.org/IndexNow", {
       method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
+      // Sin User-Agent propio, Bing responde 403 a algunas peticiones de fetch de Node.
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "User-Agent": "COMA-IndexNow/1.0",
+      },
       body: JSON.stringify(body),
     });
     console.log(`IndexNow ${res.status} (${batch.length} URLs)`);

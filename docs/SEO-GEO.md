@@ -6,7 +6,7 @@ El posicionamiento no consiste en alargar lo que ve el visitante. Títulos, desc
 
 ## Ya está en el código
 
-- **~420 URLs indexables**: servicios, `/zonas/` (82 lugares: Mallorca y sus municipios, Menorca, Ibiza, Formentera, 19 comunidades/ciudades autónomas y ciudades clave), `/diseno-web|seo-geo|agentes-ia/<lugar>/` (246 páginas), `/sectores/` (~50 nichos), `/soluciones/` (20 necesidades), `/guias/` (7 guías), `/sobre-coma/`.
+- **~420 URLs indexables**: servicios, `/zonas/` (82 lugares: Mallorca y sus municipios, Menorca, Ibiza, Formentera, 19 comunidades/ciudades autónomas y ciudades clave), `/diseno-web|seo-geo|agentes-ia/<lugar>/` (246 páginas), `/sectores/` (~50 nichos), `/soluciones/` (20 necesidades), `/guias/` (10 guías), `/sobre-coma/`.
 - **Nichos por sector** (`/sectores/<slug>/`, datos en `src/data/niches/*.ts`): restaurantes, alquiler vacacional, clínicas, residencias de mayores, abogados, fontaneros, inmobiliarias… Cada uno con funciones de web, automatizaciones, agente de IA, ángulo Mallorca, FAQ propias y un **paquete recomendado cuyo precio se calcula con `pricing.ts`** (sale en la página, en el schema `Offer` y en `llms*.txt`). El botón «Ver mi presupuesto» abre `/precios/?pack=…` con esos extras ya marcados.
 - **Necesidades** (`/soluciones/<slug>/`, datos en `src/data/solutions.ts`): página web barata, web para autónomos, negocios de toda la vida, web accesible para mayores, tienda online barata, multiidioma, reservas, rediseño, mantenimiento, correo, alternativa a Wix, agencia económica, WhatsApp, chatbot, facturas, recordatorios, CRM, ChatGPT, Google Maps y reseñas.
 - **Claims**: estas páginas no dicen «el mejor» ni «el más barato». Responden a esas búsquedas con datos comprobables (precio publicado, pago único, qué incluye, desde cuándo existimos). Un test vigila los superlativos.
@@ -18,6 +18,8 @@ El posicionamiento no consiste en alargar lo que ve el visitante. Títulos, desc
 - **Rendimiento**: HTML estático, fuente propia precargada, sin JS de terceros hasta que se acepten las cookies.
 
 ## Lo que depende de ti (esto decide el 70 % del resultado)
+
+Todo lo de esta lista, con textos listos para copiar (ficha de Google, directorios, reseñas, LinkedIn, nota de prensa y preguntas para medir la IA), está en [KIT-VISIBILIDAD.md](KIT-VISIBILIDAD.md).
 
 1. **Search Console y Bing Webmaster Tools**: da de alta el dominio y envía `sitemap-index.xml`. Pon los códigos en `PUBLIC_GSC_VERIFICATION` y `PUBLIC_BING_VERIFICATION`.
 2. **Google Business Profile** (Palma): ficha completa, categoría "Agencia de marketing", fotos reales, servicios, horario, publicaciones mensuales. Pide reseñas reales a clientes y respóndelas todas.
