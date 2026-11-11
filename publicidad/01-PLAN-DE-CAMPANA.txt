@@ -431,4 +431,7 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
   4-opcional-despachos/ ........ piezas para despachos (fuera de este plan)
   5-simulacion/ ................ la simulación y sus resultados
   6-seguimiento/ ............... leads.csv y cuadro-semanal.csv
+  7-linkedin/ .................. página de empresa (logo, cabecera, lema,
+                                 «Acerca de»), primeros posts y nombre del
+                                 correo (LINKEDIN.txt)
   _fuentes/ .................... el código de todas las piezas (LEEME.txt)

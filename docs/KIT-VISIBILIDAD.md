@@ -79,9 +79,11 @@ Con permiso del cliente, copia las mejores en `testimonials` (`src/data/site.ts`
 
 ## 6. LinkedIn de empresa e Instagram
 
-**LinkedIn, «Acerca de»:**
+**LinkedIn**: todo listo en [`publicidad/7-linkedin/LINKEDIN.txt`](../publicidad/7-linkedin/LINKEDIN.txt) (nombre, URL `linkedin.com/company/comunicacionenmallorca`, lema, «Acerca de», especialidades, logo, cabecera y los 7 primeros posts). Lema:
 
-> COMA - Comunicación en Mallorca es una agencia de comunicación, diseño web e IA con sede en Palma desde 1997. Webs con diseño propio desde 99 € + IVA, SEO local y posicionamiento en IA (GEO), agentes de IA, automatizaciones y campañas en medios. Precios publicados y propuesta cerrada por escrito. Trabajamos con pymes y autónomos de toda España. https://comunicacionenmallorca.com/
+> Consultoría tecnológica en Palma desde 1997: soluciones a medida, IA aplicada, diseño web y visibilidad digital.
+
+**Nombre del remitente del correo**: `COMA - Comunicación en Mallorca` en info@ y `Nombre Apellido | COMA` en los buzones personales (motivos en el mismo archivo).
 
 **Instagram, bio:**
 
