@@ -28,13 +28,16 @@
 
   Logo .............. linkedin-logo_800x800.png
   Cabecera .......... linkedin-cabecera_2256x382.png (1128x191 a doble
-                      resolución). En escritorio el logo tapa la esquina
+                      resolución). Titular: «Hacemos que tu empresa se note y
+                      funcione mejor,»: las dos mitades de COMA, hacia fuera
+                      (web, visibilidad, marca, medios) y hacia dentro
+                      (software a medida, IA, automatización). En escritorio el logo tapa la esquina
                       inferior izquierda; el texto está fuera de esa zona.
                       Tras subirla, mírala también en el móvil.
 
-  Lema (103 de 120 caracteres):
+  Lema (117 de 120 caracteres):
 
-    Consultoría tecnológica desde 1997: soluciones a medida, IA aplicada, diseño web y visibilidad digital.
+    Consultoría tecnológica desde 1997: soluciones a medida, IA aplicada, diseño web, visibilidad digital y comunicación.
 
   Botón ............. «Contactar» →
     https://comunicacionenmallorca.com/contacto/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin
@@ -69,9 +72,9 @@
   nombres no coincidan letra a letra.
 
   Versión en inglés (LinkedIn → Editar página → «Añadir idioma»: quien
-  tenga LinkedIn en inglés la ve así). Lema (98 caracteres):
+  tenga LinkedIn en inglés la ve así). Lema (113 caracteres):
 
-    Technology consulting since 1997: custom solutions, applied AI, web design and digital visibility.
+    Technology consulting since 1997: custom solutions, applied AI, web design, digital visibility and communication.
 
   About:
 
