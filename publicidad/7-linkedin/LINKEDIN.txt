@@ -1,0 +1,318 @@
+==============================================================================
+  COMA · PÁGINA DE EMPRESA EN LINKEDIN Y NOMBRE DEL CORREO
+  LinkedIn es la cara nacional de COMA: la marca es COMA, sin «Mallorca» en
+  el nombre. Mallorca se cuenta como origen (nacimos allí en 1997), no como
+  límite. Los textos salen de la web actual (home, servicios y pricing.ts) y
+  del mensaje de 03-MENSAJE-Y-TESTS-AB.txt.
+==============================================================================
+
+1. LA PÁGINA (linkedin.com → Para empresas → Crear página de empresa)
+----------------------------------------------------------------------
+
+  Nombre ............ COMA - Innovación Tecnológica
+                      (el elegido: marca + qué es, sin lugar)
+
+  URL pública ....... linkedin.com/company/coma-innovacion-tecnologica
+                      (ya en `site.social` de src/data/site.ts). Si se
+                      cambia, los enlaces antiguos dejan de funcionar.
+
+  Sitio web ......... https://comunicacionenmallorca.com/
+                      (es el dominio actual; ver la nota del final)
+
+  Sector ............ Servicios y consultoría de TI
+  Tamaño ............ el real (no inflar)
+  Tipo .............. De propiedad privada
+  Fundación ......... 1997
+  Sede .............. Paseo Mallorca, 16, 07012 Palma, Illes Balears
+                      (es la dirección real, no el nombre: se queda)
+
+  Logo .............. linkedin-logo_800x800.png
+  Cabecera .......... linkedin-cabecera_2256x382.png (1128x191 a doble
+                      resolución). Titular: «Hacemos que tu empresa se note y
+                      funcione mejor,»: las dos mitades de COMA, hacia fuera
+                      (web, visibilidad, marca, medios) y hacia dentro
+                      (software a medida, IA, automatización). En escritorio el logo tapa la esquina
+                      inferior izquierda; el texto está fuera de esa zona.
+                      Tras subirla, mírala también en el móvil.
+
+  Lema (117 de 120 caracteres):
+
+    Consultoría tecnológica desde 1997: soluciones a medida, IA aplicada, diseño web, visibilidad digital y comunicación.
+
+  Botón ............. «Contactar» →
+    https://comunicacionenmallorca.com/contacto/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin
+
+  Acerca de (descripción, máx. 2.000 caracteres):
+
+    COMA es una consultoría tecnológica nacida en Mallorca en 1997. Empezamos contando historias de empresas en revistas, radio y televisión. Hoy unimos diseño, desarrollo e IA para mejorar cómo trabajan las empresas.
+
+    Lo que hacemos:
+    → Soluciones a medida: software, integraciones y automatización para quitar tareas, errores y pasos de más.
+    → IA aplicada: agentes que atienden, leen documentos y preparan trabajo, con revisión humana donde importa.
+    → Diseño web: webs con diseño propio, rápidas y pensadas para que te contacten. Desde 99 € + IVA, pago único.
+    → Visibilidad digital: SEO, Google Maps y posicionamiento en las respuestas de ChatGPT, Gemini y Claude (GEO).
+    → Notoriedad y medios: marca, prensa, radio y digital.
+    → COMA para despachos: las facturas de los clientes se leen solas y llegan al programa contable.
+
+    Cómo trabajamos: entendemos el trabajo real, validamos con un piloto cuando hace falta, entregamos y te acompañamos con el soporte. Los precios están publicados en la web y la propuesta llega con alcance, plazos y precio cerrado, por escrito, antes de empezar. Si tiene sentido, lo hacemos posible; si no lo tiene, te lo decimos.
+
+    Más de 100 pymes confían en nosotros. Trabajamos con empresas de toda España, en remoto o en persona, en español, catalán e inglés.
+
+    Cuéntanos qué te quita tiempo: https://comunicacionenmallorca.com/
+
+  Especialidades (una a una):
+    Consultoría tecnológica, Software a medida, Integraciones, Automatización
+    de procesos, Agentes de IA, Inteligencia artificial aplicada, Diseño web,
+    Tiendas online, Webs multiidioma, SEO, GEO (posicionamiento en IA),
+    Notoriedad de marca, Comunicación, Publicidad en medios, Kit Digital,
+    Automatización para despachos, Correo corporativo
+
+  La URL ya está en `site.social` (src/data/site.ts): sale en el `sameAs`
+  del schema y une LinkedIn con la web para Google y las IA, aunque los
+  nombres no coincidan letra a letra.
+
+  Versión en inglés (LinkedIn → Editar página → «Añadir idioma»: quien
+  tenga LinkedIn en inglés la ve así). Lema (113 caracteres):
+
+    Technology consulting since 1997: custom solutions, applied AI, web design, digital visibility and communication.
+
+  About:
+
+    COMA is a technology consultancy founded in Mallorca, Spain, in 1997. We started out telling companies' stories in magazines, radio and television. Today we combine design, development and AI to improve how businesses work.
+
+    What we do:
+    → Custom solutions: software, integrations and automation that remove tasks, errors and unnecessary steps.
+    → Applied AI: agents that answer customers, read documents and prepare work, with human review where it matters.
+    → Web design: fast websites with original design, built to get you contacted. From €99 + VAT, one-off payment.
+    → Digital visibility: SEO, Google Maps and visibility in the answers of ChatGPT, Gemini and Claude (GEO).
+    → Brand awareness and media: branding, press, radio and digital.
+
+    How we work: we understand the real work, validate with a pilot when needed, deliver and stay with you for support. Our prices are published on our website, and every proposal comes in writing with scope, timeline and a fixed price before we start. If it makes sense, we make it happen; if it doesn't, we tell you.
+
+    More than 100 SMEs trust us. We work with companies across Spain, remotely or in person, in Spanish, Catalan and English.
+
+    Tell us what's eating your time: https://comunicacionenmallorca.com/
+
+
+2. EL NOMBRE DEL CORREO
+-----------------------
+
+  Ahora: «COMA | Transformadores Digitales». Se cambia, por tres motivos:
+  · No aparece en ningún sitio. La web, Google, los anuncios y LinkedIn
+    dicen «COMA», «consultoría tecnológica» e «innovación». Quien recibe el correo no lo
+    relaciona con lo que ha visto.
+  · «Transformación digital» es la frase que usan todos y la web no la
+    usa. Además, «transformadores» suena a electricidad.
+  · Que el correo llegue o vaya a spam no depende del nombre: depende de
+    SPF, DKIM y DMARC. El nombre decide si lo reconocen y lo abren.
+
+  Nombres:
+    info@ ........................ COMA
+    buzón de una persona ......... Nombre Apellido | COMA
+                                   (un correo de una persona se abre más que
+                                   uno de una empresa)
+
+  Firma:
+    Nombre Apellido
+    Cargo · COMA
+    Consultoría tecnológica · desde 1997
+    comunicacionenmallorca.com · LinkedIn (enlace a la página)
+    Paseo Mallorca, 16 · 07012 Palma
+
+
+3. CÓMO SE PUBLICA
+------------------
+
+  · Martes y jueves a las 9:00.
+  · El enlace va en el PRIMER COMENTARIO, no en el texto: LinkedIn enseña
+    menos los posts con enlaces externos. En el texto: «Enlace en
+    comentarios».
+  · Enlaces con UTM:
+      ?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-0N
+  · Compártelo desde tu perfil personal el mismo día, con una frase tuya
+    encima. Una página nueva casi no llega a nadie sola.
+  · Responde a cada comentario el mismo día.
+  · Mallorca sale como origen («nacimos en Mallorca en 1997»), nunca como
+    límite («agencia de Mallorca», «para negocios de Mallorca»). Sin
+    #Mallorca.
+  · Los vídeos e imágenes de la campaña de Mallorca (3-redes-sin-pagar/)
+    no van en LinkedIn: terminan en «29 años en Mallorca» y hablan al
+    negocio local. Siguen en Instagram y Facebook según el plan.
+  · Nunca: «barato», plazos que no estén en la propuesta, cifras de
+    resultados, «primer puesto en Google», descuentos, «la IA lo hace todo»,
+    «sustituye a tu equipo». (03-MENSAJE-Y-TESTS-AB.txt)
+
+
+4. LOS PRIMEROS 7 POSTS
+-----------------------
+
+------------------------------------------------------------------ POST 1
+  Jueves 12 nov · Presentación
+  Imagen: 7-linkedin/post-01-historia_1200x627.png
+  Enlace (comentario): https://comunicacionenmallorca.com/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-01
+
+En 1997 empezamos editando revistas en Mallorca.
+
+Después vinieron la radio, los programas de televisión, las webs y más de 100 pymes en internet. Hoy hacemos software a medida, integraciones y agentes de IA para empresas de toda España.
+
+Cada etapa nos dejó un oficio. Una web, una campaña o un agente salen del mismo criterio.
+
+Abrimos esta página para contar lo que hacemos:
+
+→ Soluciones a medida: software, integraciones y automatización para quitar tareas, errores y pasos de más.
+→ IA aplicada: agentes que atienden, leen documentos y preparan trabajo. Con revisión humana donde importa.
+→ Diseño web: diseño propio, rápido y pensado para que te contacten.
+→ Visibilidad digital: que te encuentren en Google y en las respuestas de la IA.
+
+Tecnología al servicio de las personas.
+
+Enlace en comentarios.
+
+#ConsultoriaTecnologica #InteligenciaArtificial #Automatizacion #Pymes
+
+------------------------------------------------------------------ POST 2
+  Martes 17 nov · Acompañamiento
+  Imagen: 7-linkedin/post-02-ideas_1080x1080.png
+  Enlace (comentario): https://comunicacionenmallorca.com/lp/a-medida/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-02
+
+«Tengo ideas, pero no sé por dónde empezar, ni cómo, ni quién me puede ayudar.»
+
+Lo escuchamos mucho. Y es normal: con tanta IA y tanta herramienta nueva, cuesta saber qué tiene sentido para tu empresa.
+
+Así lo hacemos:
+
+01 Ordenamos la idea contigo.
+02 Te decimos con sinceridad qué tiene sentido. Y qué no.
+03 La hacemos funcionar, y seguimos a tu lado.
+
+Con la IA y las herramientas de hoy, soluciones que antes no estaban al alcance de una pyme ahora lo están. Es más asequible de lo que crees.
+
+Si tiene sentido, lo hacemos posible.
+
+Empezamos con un diagnóstico gratis de 30 minutos: sales con lo que conviene hacer primero y una propuesta con precio cerrado.
+
+Enlace en comentarios.
+
+#InteligenciaArtificial #Pymes #Empresas
+
+------------------------------------------------------------------ POST 3
+  Jueves 19 nov · A medida (solo texto)
+  Enlace (comentario): https://comunicacionenmallorca.com/lp/a-medida/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-03
+
+¿Qué tarea se come horas cada semana en tu empresa?
+
+Esto es lo que más nos piden resolver:
+
+→ WhatsApps y emails que se contestan solos, con una persona supervisando.
+→ Presupuestos, facturas e informes que se hacen solos.
+→ Datos que pasan solos entre programas que no se hablan.
+→ Facturas que se leen solas y entran en tu programa.
+
+Partimos de las herramientas que ya usas y las conectamos.
+
+Primero entendemos el trabajo real. Si conviene, probamos con un piloto. Después lo ponemos en marcha y te acompañamos con el soporte.
+
+Menos trabajo repetitivo. Más tiempo para las personas que hacen avanzar tu empresa.
+
+Cuéntanos qué te quita tiempo. Enlace en comentarios.
+
+#Automatizacion #InteligenciaArtificial #Pymes
+
+------------------------------------------------------------------ POST 4
+  Martes 24 nov · GEO (solo texto)
+  Enlace (comentario): https://comunicacionenmallorca.com/guias/que-es-geo-aparecer-en-chatgpt-gemini-claude/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-04
+
+Cada vez más gente pregunta a ChatGPT antes que a Google: «¿qué empresa me recomiendas para…?».
+
+Si el asistente no sabe que existes, no te recomienda.
+
+Eso es el GEO: preparar tu presencia en internet para que ChatGPT, Gemini, Claude o Perplexity entiendan quién eres, qué haces y para quién, y te mencionen en sus respuestas.
+
+Lo que más pesa:
+→ Una web que diga con palabras sencillas qué haces, para quién y a qué precio.
+→ Los mismos datos en tu web, tu ficha de Google y los directorios.
+→ Reseñas reales y menciones en sitios fiables.
+→ Información al día.
+
+Nadie puede garantizar que una IA te recomiende. Desconfía de quien lo prometa. Lo que sí se puede es mejorar las probabilidades y medir cada mes cómo te describen.
+
+Lo explicamos en una guía práctica. Enlace en comentarios.
+
+#GEO #InteligenciaArtificial #MarketingDigital
+
+------------------------------------------------------------------ POST 5
+  Jueves 26 nov · Despachos
+  Imagen: 4-opcional-despachos/L1-despachos_1200x627.png
+  Enlace (comentario): https://comunicacionenmallorca.com/despachos/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-05
+
+Si tienes un despacho, conoces el final de trimestre: facturas por WhatsApp, por email, en foto, en papel… y alguien tecleándolas una a una.
+
+Por eso hemos creado COMA para despachos:
+
+→ Las facturas llegan por WhatsApp, email o foto y caen en el mismo sitio, por cliente y trimestre.
+→ La IA las lee: emisor, NIF, bases, IVA y retenciones.
+→ Se comprueban solas: NIF válido, IVA intracomunitario contra VIES, duplicados y fechas del trimestre.
+→ Van directas a tu programa contable: a3, Sage, Contasol u Holded.
+→ Tu equipo solo revisa lo que se marca.
+
+No cambias de software ni de forma de trabajar.
+
+Diagnóstico gratuito para ver si encaja en tu despacho. Enlace en comentarios.
+
+#Asesorias #Gestorias #Automatizacion
+
+------------------------------------------------------------------ POST 6
+  Martes 1 dic · Precios publicados (solo texto)
+  Enlace (comentario): https://comunicacionenmallorca.com/precios/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-06
+
+¿Cuánto cuesta una web? Casi siempre la respuesta es «depende».
+
+Nosotros publicamos los precios.
+
+La Web Esencial cuesta 99 € + IVA, pago único:
+· Diseño propio, adaptado a tu marca.
+· Hasta 4 páginas, perfecta en el móvil.
+· Formulario y botones de contacto.
+· SEO básico y certificado SSL.
+
+¿Necesitas más? Cada extra tiene su precio a la vista: cada idioma, 49 €; reservas online, 149 €; tienda online, 349 € (+ IVA). Sumas solo lo que te hace falta, y la propuesta llega por escrito con precio cerrado antes de empezar.
+
+Enlace en comentarios.
+
+#DiseñoWeb #Pymes #Autonomos
+
+------------------------------------------------------------------ POST 7
+  Jueves 3 dic · Transparencia (solo texto)
+  Enlace (comentario): https://comunicacionenmallorca.com/guias/cuanto-cuesta-una-pagina-web/?utm_source=linkedin&utm_medium=organic&utm_campaign=linkedin&utm_content=post-07
+
+¿Te han pedido 1.500 € por una web sencilla?
+
+Antes de decidir, conviene saber qué estás pagando.
+
+Hemos escrito una guía sobre cuánto cuesta una página web para una pyme en 2026: de qué se compone el precio, qué extras suelen hacer falta y cómo comparar presupuestos.
+
+Y si quieres la nuestra: desde 99 € + IVA, con diseño propio y precio cerrado.
+
+Guía en comentarios.
+
+#DiseñoWeb #Pymes #Emprendedores
+
+------------------------------------------------------------------ DESPUÉS
+  Un post cada martes y jueves, alternando: un problema real resuelto a
+  medida (sin datos del cliente si no da permiso), el ángulo
+  acompañamiento, IA aplicada y guías de la web (/guias/).
+
+
+5. NOTA: LA WEB SIGUE SIENDO «COMUNICACIÓN EN MALLORCA», A PROPÓSITO
+-------------------------------------------------------------------
+
+  LinkedIn es la cara nacional («COMA - Innovación Tecnológica»). La web
+  mantiene «Comunicación en Mallorca» a propósito (commit 2aa091d, 11 nov):
+  portada «Comunicación en Mallorca (COMA): software a medida, IA y webs» y
+  nombre del sitio para Google, porque es lo que la gente busca y Google aún
+  tiene guardada la web antigua (docs/KIT-VISIBILIDAD.md, punto 0). No se
+  contradicen: el schema une las dos con `sameAs` y `alternateName`.
+
+  Si algún día se quita «Mallorca» también de la web, se hace después de que
+  Google haya cambiado la web antigua por la nueva, y cambiando el dominio
+  con redirecciones 301 de todas las páginas.

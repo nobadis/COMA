@@ -7,6 +7,7 @@ texto, se edita el HTML y se vuelve a generar. Desde la raíz del repo, con
 
   Vídeos (9:16, 4:5 y portadas):   bash publicidad/_fuentes/montar.sh
   Imágenes fijas:                  node publicidad/_fuentes/render-estaticos.cjs
+                                   (con un trozo de ruta, solo esas: … 7-linkedin)
   Panel 00-EMPIEZA-AQUI.html:      python3 publicidad/_fuentes/panel.py
   Textos y CSV de Google:          python3 publicidad/_fuentes/google_ads.py
   Simulación:                      python3 publicidad/5-simulacion/simulacion.py
