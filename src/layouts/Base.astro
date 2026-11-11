@@ -17,6 +17,8 @@ interface Crumb {
 }
 interface Props {
   title?: string;
+  /** Título completo, sin el sufijo " | COMA" (portada). */
+  fullTitleOverride?: string;
   description: string;
   noindex?: boolean;
   schema?: Record<string, unknown>[];
@@ -35,6 +37,7 @@ interface Props {
 
 const {
   title,
+  fullTitleOverride,
   description,
   noindex: noindexProp = false,
   schema = [],
@@ -50,7 +53,8 @@ const noindex = noindexProp || minimal;
 // La intro solo abre la home (si es la primera página de la visita): el resto entra directo.
 const intro = !minimal && Astro.url.pathname === "/";
 const stickyCta = stickyProp && !minimal;
-const fullTitle = title ? `${title} | COMA` : `${site.title} · Consultoría tecnológica, diseño e IA`;
+const fullTitle =
+  fullTitleOverride ?? (title ? `${title} | COMA` : `${site.title} · Consultoría tecnológica, diseño e IA`);
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image ?? "/og-coma.png", site.url).href;
 const orgId = `${site.url}/#org`;
@@ -60,7 +64,14 @@ const org = {
   "@type": ["MarketingAgency", "ProfessionalService"],
   "@id": orgId,
   name: site.brand,
-  alternateName: ["COMA", "Comunicación en Mallorca"],
+  alternateName: [
+    "COMA",
+    "COMA Comunicación en Mallorca",
+    "Comunicación en Mallorca",
+    "Comunicacion en Mallorca",
+    "comunicacionenmallorca.com",
+    "Publicom Marketing 2000",
+  ],
   legalName: site.legalName,
   taxID: site.cif,
   url: site.url,
@@ -177,7 +188,9 @@ const website = {
   "@type": "WebSite",
   "@id": `${site.url}/#web`,
   url: site.url,
-  name: site.title,
+  // Google usa name/alternateName del WebSite para el nombre del sitio en los resultados.
+  name: "Comunicación en Mallorca",
+  alternateName: ["COMA", "COMA - Comunicación en Mallorca", "comunicacionenmallorca.com"],
   inLanguage: "es-ES",
   publisher: { "@id": orgId },
 };

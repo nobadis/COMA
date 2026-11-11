@@ -3,8 +3,13 @@ import { services, type Item } from "./services";
 import { site, years } from "./site";
 import { inPlace, kindLabel, placeBySlug, type Place } from "./places";
 
-/** Servicios con página local. Los otros dos (automatizaciones, notoriedad) viven solo a nivel nacional. */
-export const localServiceSlugs = ["diseno-web", "seo-geo", "agentes-ia"] as const;
+/** Servicios con página local. Notoriedad vive solo a nivel nacional (es de Mallorca). */
+export const localServiceSlugs = [
+  "diseno-web",
+  "seo-geo",
+  "agentes-ia",
+  "automatizaciones",
+] as const;
 export type LocalServiceSlug = (typeof localServiceSlugs)[number];
 
 const seoPrice = extras.find((e) => e.id === "seo")?.price ?? 99;
@@ -172,15 +177,78 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
     };
   }
 
+  if (service === "automatizaciones") {
+    return {
+      title: fit(
+        54,
+        `Software a medida ${where}: integraciones e IA`,
+        `Software a medida ${where}`
+      ),
+      description: desc(
+        `Software a medida ${where}: aplicaciones, integraciones entre programas y automatización con IA para empresas.`,
+        `Alcance, plazos y precio cerrado por escrito.`
+      ),
+      eyebrow: `Software a medida ${where}`,
+      h1: `Software a medida ${where}: que tus programas trabajen juntos`,
+      lead: `Aplicaciones internas, integraciones y automatizaciones con IA para empresas ${where}. Alcance, pruebas y mantenimiento definidos antes de empezar.`,
+      why: {
+        title: `Qué resuelve el software a medida ${where}`,
+        paragraphs: [
+          p.local,
+          `En empresas de ${sectors} hay trabajo que se repite cada día: pasar datos de un programa a otro, preparar presupuestos, perseguir cobros o responder lo mismo. Ahí es donde una integración o una herramienta propia ahorra horas.`,
+          `Elegimos entre desarrollo propio y herramientas existentes (Make, n8n, Zapier o las API de tus programas) según el alcance y lo que cuesta mantenerlo. Si conviene, empezamos por un piloto acotado.`,
+        ],
+      },
+      bullets: [
+        {
+          title: "Integraciones entre programas",
+          text: "CRM, ERP, facturación, tienda y email conectados por API: cada dato se escribe una sola vez.",
+        },
+        {
+          title: "Aplicaciones y paneles a medida",
+          text: "Portales de cliente, herramientas internas y cuadros de mando con los datos de todas tus herramientas.",
+        },
+        {
+          title: "Automatización con IA",
+          text: "Lectura de documentos y facturas, clasificación de emails y respuestas sugeridas, con revisión humana.",
+        },
+        {
+          title: "Entrega y mantenimiento",
+          text: "Pruebas, documentación y soporte acordados por escrito, para que nada dependa de una caja negra.",
+        },
+      ],
+      priceLine:
+        "A medida: alcance, plazos y precio cerrado por escrito tras una llamada. Separamos la puesta en marcha, las cuotas de terceros y el mantenimiento.",
+      faq: [
+        ...common,
+        {
+          title: `¿Cuánto cuesta un software a medida ${where}?`,
+          text: "Depende del alcance y de las herramientas que haya que conectar. Empezamos por un diagnóstico y, cuando conviene, un piloto con precio cerrado antes de ampliar.",
+        },
+        {
+          title: "¿Desarrollo propio o herramientas como Make o n8n?",
+          text: "Lo que tenga más sentido para tu caso. Las herramientas de automatización son rápidas de poner en marcha; el desarrollo propio compensa cuando el proceso es central o el volumen es alto.",
+        },
+        {
+          title: "¿Quién es dueño del desarrollo y de los datos?",
+          text: "La propiedad, los accesos y la documentación se acuerdan por escrito en la propuesta, antes de empezar.",
+        },
+      ],
+      ctaTitle: `¿Qué proceso quieres que funcione solo ${where}?`,
+      subject: `Software a medida ${where}`,
+    };
+  }
+
   return {
     title: fit(
       54,
-      `Agentes de IA ${where}: atención y reservas 24/7`,
+      `Inteligencia artificial para empresas ${where}`,
+      `IA para empresas ${where}: agentes 24/7`,
       `Agentes de IA ${where}: atención 24/7`,
       `Agentes de IA ${where}`
     ),
     description: desc(
-      `Agentes de IA ${where}: atienden clientes, cualifican y reservan 24/7 en web, WhatsApp y email, en varios idiomas.`,
+      `Inteligencia artificial para empresas ${where}: agentes de IA que atienden, cualifican y reservan 24/7 en web, WhatsApp y email.`,
       `Presupuesto a medida.`
     ),
     eyebrow: `Agentes de IA ${where}`,
@@ -238,7 +306,10 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
 export const localPaths = (places: Place[]) =>
   localServiceSlugs.flatMap((service) => places.map((place) => ({ service, place })));
 
-export const serviceLabel = (slug: string) => services.find((s) => s.slug === slug)?.label ?? slug;
+/** Nombre del servicio en las páginas locales («Software a medida en Valencia»). */
+const localLabels: Record<string, string> = { automatizaciones: "Software a medida" };
+export const serviceLabel = (slug: string) =>
+  localLabels[slug] ?? services.find((s) => s.slug === slug)?.label ?? slug;
 
 /** Texto de ruta para migas: Zonas > (comunidad / isla) > lugar. */
 export function placeTrail(p: Place): Place[] {

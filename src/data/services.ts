@@ -204,7 +204,7 @@ export const services: Service[] = [
     tagline: "Tu mejor empleado no duerme.",
     summary:
       "Asistentes inteligentes entrenados con tu negocio que atienden clientes, cualifican oportunidades y reservan, 24/7 y en varios idiomas.",
-    seoTitle: "Agentes de IA para empresas en Mallorca",
+    seoTitle: "Inteligencia artificial para empresas: agentes de IA 24/7",
     seoDescription:
       "Diseñamos agentes de inteligencia artificial para atención al cliente, ventas y reservas en web, WhatsApp y email. Multidioma, integrados con tus herramientas y con supervisión humana.",
     eyebrow: "Agentes de inteligencia artificial",
@@ -287,7 +287,7 @@ export const services: Service[] = [
     tagline: "Lo repetitivo, que lo haga otro.",
     summary:
       "Conectamos tus herramientas para que leads, facturas, emails e informes fluyan solos. Menos tareas manuales, cero olvidos.",
-    seoTitle: "Software a medida e integración de procesos en Mallorca",
+    seoTitle: "Software a medida y automatización de procesos para empresas",
     seoDescription:
       "Software a medida, integraciones y automatización para empresas. Definimos alcance, validamos con pruebas y acordamos entrega, documentación y mantenimiento.",
     eyebrow: "Automatización de procesos",
@@ -376,9 +376,9 @@ export const services: Service[] = [
     tagline: "Que piensen en ti primero.",
     summary:
       "Branding, prensa, radio, redes y publicidad para que tu empresa sea la referencia de su sector en Mallorca.",
-    seoTitle: "Notoriedad de marca y comunicación en Mallorca",
+    seoTitle: "Agencia de comunicación en Mallorca: prensa, radio y marca",
     seoDescription:
-      "Branding, gabinete de prensa, campañas en radio y prensa, redes sociales y publicidad digital para empresas de Mallorca. Comunicación desde 1997: revistas, radio, televisión y digital.",
+      "Agencia de comunicación y publicidad en Mallorca desde 1997: gabinete de prensa, campañas en radio, prensa y televisión, branding, redes sociales y Google Ads.",
     eyebrow: "Notoriedad de empresa",
     h1: "Que tu empresa sea la primera que les venga a la cabeza",
     lead: "Marca, prensa, radio y digital para que te recuerden primero. Lo hacemos desde 1997.",

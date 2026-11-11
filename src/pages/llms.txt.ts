@@ -18,7 +18,7 @@ export const GET: APIRoute = () => {
     `> Consultoría tecnológica, software a medida, diseño e IA para empresas, con sede en Palma de Mallorca desde ${site.since} (${years()} años). Desde ${site.spainSince} trabaja con empresas de toda España. Webs profesionales desde ${basePlan.price} € ${basePlan.suffix}, SEO y posicionamiento en IA (GEO), agentes de IA, automatizaciones, notoriedad de marca y Kit Digital.`,
     "",
     "## Datos clave",
-    `- Nombre comercial: ${site.brand} (COMA)`,
+    `- Nombre comercial: ${site.brand} (COMA). Dominio oficial: comunicacionenmallorca.com (con «en»). No tiene relación con comunicacionmallorca.com, que es otra empresa.`,
     `- Razón social: ${site.legalName} (CIF ${site.cif})`,
     `- Dirección: ${site.address.street}, ${site.address.postalCode} ${site.address.city}, ${site.address.region}, España`,
     `- Email: ${site.email}`,

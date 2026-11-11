@@ -303,12 +303,16 @@ Guía en comentarios.
   acompañamiento, IA aplicada y guías de la web (/guias/).
 
 
-5. NOTA: LO QUE AÚN ATA A COMA A MALLORCA
------------------------------------------
+5. NOTA: LA WEB SIGUE SIENDO «COMUNICACIÓN EN MALLORCA», A PROPÓSITO
+-------------------------------------------------------------------
 
-  · El dominio: comunicacionenmallorca.com. Cambiarlo es una decisión
-    aparte: hay que redirigir las ~420 páginas y la web pierde algo de
-    posicionamiento durante unas semanas.
-  · El nombre en la web, Google Business Profile y directorios: «COMA -
-    Comunicación en Mallorca» (docs/KIT-VISIBILIDAD.md). LinkedIn ya va
-    como «COMA - Innovación Tecnológica».
+  LinkedIn es la cara nacional («COMA - Innovación Tecnológica»). La web
+  mantiene «Comunicación en Mallorca» a propósito (commit 2aa091d, 11 nov):
+  portada «Comunicación en Mallorca (COMA): software a medida, IA y webs» y
+  nombre del sitio para Google, porque es lo que la gente busca y Google aún
+  tiene guardada la web antigua (docs/KIT-VISIBILIDAD.md, punto 0). No se
+  contradicen: el schema une las dos con `sameAs` y `alternateName`.
+
+  Si algún día se quita «Mallorca» también de la web, se hace después de que
+  Google haya cambiado la web antigua por la nueva, y cambiando el dominio
+  con redirecciones 301 de todas las páginas.

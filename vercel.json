@@ -56,5 +56,132 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/portfolio/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio-item/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/proyectos/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/quienes-somos/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/nosotros/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/sobre-nosotros/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/empresa/:path*",
+      "destination": "/sobre-coma/",
+      "permanent": true
+    },
+    {
+      "source": "/trabajos/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/inicio/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/feed/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/servicios/:path*",
+      "destination": "/soluciones/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/guias/",
+      "permanent": true
+    },
+    {
+      "source": "/noticias/:path*",
+      "destination": "/guias/",
+      "permanent": true
+    },
+    {
+      "source": "/category/:path*",
+      "destination": "/guias/",
+      "permanent": true
+    },
+    {
+      "source": "/tag/:path*",
+      "destination": "/guias/",
+      "permanent": true
+    },
+    {
+      "source": "/author/:path*",
+      "destination": "/guias/",
+      "permanent": true
+    },
+    {
+      "source": "/politica-de-privacidad/:path*",
+      "destination": "/privacidad/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/:path*",
+      "destination": "/privacidad/",
+      "permanent": true
+    },
+    {
+      "source": "/politica-de-cookies/:path*",
+      "destination": "/cookies/",
+      "permanent": true
+    },
+    {
+      "source": "/contactar/:path*",
+      "destination": "/contacto/",
+      "permanent": true
+    },
+    {
+      "source": "/contacta/:path*",
+      "destination": "/contacto/",
+      "permanent": true
+    },
+    {
+      "source": "/contact/:path*",
+      "destination": "/contacto/",
+      "permanent": true
+    },
+    {
+      "source": "/tienda/:path*",
+      "destination": "/soluciones/tienda-online-barata/",
+      "permanent": true
+    },
+    {
+      "source": "/shop/:path*",
+      "destination": "/soluciones/tienda-online-barata/",
+      "permanent": true
+    }
   ]
 }

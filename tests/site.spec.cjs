@@ -31,7 +31,8 @@ test.beforeEach(async ({ page }) => {
 test.describe("COMA - Comunicación en Mallorca", () => {
   test("home con branding, hero y servicios", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/Consultoría tecnológica, software a medida e IA/i);
+    // La marca completa en el título: es lo que se busca («comunicación en Mallorca»).
+    await expect(page).toHaveTitle(/^Comunicación en Mallorca \(COMA\): software a medida, IA/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       /Hacemos que tu empresa se note/i
     );
@@ -194,8 +195,9 @@ test.describe("COMA - Comunicación en Mallorca", () => {
     await expect(nav.getByRole("link", { name: /SEO/ })).toHaveCount(0);
     await expect(nav.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
     await expect(page.locator('a[href="/trabajos/"]')).toHaveCount(0);
-    const res = await request.get("/trabajos/");
-    expect(await res.text()).toMatch(/url=\//); // redirige a la home
+    const res = await request.get("/trabajos/", { maxRedirects: 0 });
+    expect(res.status()).toBe(301); // redirige a la home con un 301 real
+    expect(res.headers().location).toBe("/");
   });
 
   test("la home cuenta con intro la primera vez y la retira", async ({ browser }) => {
@@ -506,6 +508,33 @@ test.describe("SEO / GEO / Ads", () => {
     expect(full).toMatch(/Paquete recomendado: Web Esencial/);
   });
 
+  test("marca, software a medida local y URLs antiguas redirigidas", async ({ page, request }) => {
+    // Las URLs de la web antigua (WordPress) no se pierden: 301 a su equivalente.
+    for (const [from, to] of [
+      ["/portfolio/mallorca-confidencial/", "/sobre-coma/"],
+      ["/politica-de-privacidad/", "/privacidad/"],
+      ["/blog/una-entrada/", "/guias/"],
+    ]) {
+      const res = await request.get(from, { maxRedirects: 0 });
+      expect(res.status(), from).toBe(301);
+      expect(res.headers().location, from).toBe(to);
+    }
+    await page.goto("/automatizaciones/palma/");
+    await expect(page).toHaveTitle(/Software a medida en Palma/);
+    await expect(page.locator("main")).toContainText(/Paseo Mallorca, 16/);
+    await page.goto("/agentes-ia/valencia/");
+    await expect(page).toHaveTitle(/Inteligencia artificial para empresas en Valencia/);
+    await page.goto("/soluciones/agencia-de-comunicacion-mallorca/");
+    await expect(page).toHaveTitle(/Agencia de comunicación en Mallorca/);
+    // El sitio se presenta con su nombre de marca (Google lo usa como nombre del sitio).
+    await page.goto("/");
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const web = blocks.flatMap((b) => JSON.parse(b)).find((o) => o["@type"] === "WebSite");
+    expect(web.name).toBe("Comunicación en Mallorca");
+    const llms = await (await request.get("/llms.txt")).text();
+    expect(llms).toContain("Dominio oficial: comunicacionenmallorca.com");
+  });
+
   test("todas las páginas indexables tienen título y descripción únicos", () => {
     const seen = { title: new Map(), desc: new Map() };
     for (const file of htmlFiles(DIST)) {
@@ -545,6 +574,8 @@ test.describe("SEO / GEO / Ads", () => {
       "/sectores/restaurantes/",
       "/soluciones/",
       "/soluciones/pagina-web-barata/",
+      "/automatizaciones/palma/",
+      "/soluciones/desarrollo-software-a-medida/",
     ])
       expect(locs).toContain(`https://comunicacionenmallorca.com${u}`);
   });

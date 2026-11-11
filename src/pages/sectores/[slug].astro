@@ -82,7 +82,7 @@ const schema = [
         <a class="btn btn--red btn--lg" href="/contacto/" data-magnetic data-track="cta_click" data-track-label={`sector-${n.slug}`}>
           Pedir propuesta <Arrow />
         </a>
-        <a class="link-arrow" href={`/precios/?pack=${packQuery}#presupuesto`}>Ver mi presupuesto</a>
+        <a class="link-arrow" rel="nofollow" href={`/precios/?pack=${packQuery}#presupuesto`}>Ver mi presupuesto</a>
       </div>
       <nav class="nx-h__trail" aria-label="Ubicación">
         <a href="/sectores/">Sectores</a><span aria-hidden="true">/</span><a href={`/sectores/#${n.group}`}>{group.label}</a>
@@ -133,7 +133,7 @@ const schema = [
           {pk.year > 0 && <span> · {eur(pk.year)}/año + IVA</span>}
         </p>
         <p class="nx-pack__note">{n.packNote}</p>
-        <a class="link-arrow" href={`/precios/?pack=${packQuery}#presupuesto`}>Ajustarlo en el presupuesto en directo</a>
+        <a class="link-arrow" rel="nofollow" href={`/precios/?pack=${packQuery}#presupuesto`}>Ajustarlo en el presupuesto en directo</a>
       </div>
     </div>
   </section>

@@ -51,5 +51,133 @@
         }
       ]
     }
+  ],
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/portfolio/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/portfolio-item/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/proyectos/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/quienes-somos/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/nosotros/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/sobre-nosotros/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/empresa/**",
+      "destination": "/sobre-coma/",
+      "type": 301
+    },
+    {
+      "source": "/trabajos/**",
+      "destination": "/",
+      "type": 301
+    },
+    {
+      "source": "/home/**",
+      "destination": "/",
+      "type": 301
+    },
+    {
+      "source": "/inicio/**",
+      "destination": "/",
+      "type": 301
+    },
+    {
+      "source": "/feed/**",
+      "destination": "/",
+      "type": 301
+    },
+    {
+      "source": "/servicios/**",
+      "destination": "/soluciones/",
+      "type": 301
+    },
+    {
+      "source": "/blog/**",
+      "destination": "/guias/",
+      "type": 301
+    },
+    {
+      "source": "/noticias/**",
+      "destination": "/guias/",
+      "type": 301
+    },
+    {
+      "source": "/category/**",
+      "destination": "/guias/",
+      "type": 301
+    },
+    {
+      "source": "/tag/**",
+      "destination": "/guias/",
+      "type": 301
+    },
+    {
+      "source": "/author/**",
+      "destination": "/guias/",
+      "type": 301
+    },
+    {
+      "source": "/politica-de-privacidad/**",
+      "destination": "/privacidad/",
+      "type": 301
+    },
+    {
+      "source": "/privacy-policy/**",
+      "destination": "/privacidad/",
+      "type": 301
+    },
+    {
+      "source": "/politica-de-cookies/**",
+      "destination": "/cookies/",
+      "type": 301
+    },
+    {
+      "source": "/contactar/**",
+      "destination": "/contacto/",
+      "type": 301
+    },
+    {
+      "source": "/contacta/**",
+      "destination": "/contacto/",
+      "type": 301
+    },
+    {
+      "source": "/contact/**",
+      "destination": "/contacto/",
+      "type": 301
+    },
+    {
+      "source": "/tienda/**",
+      "destination": "/soluciones/tienda-online-barata/",
+      "type": 301
+    },
+    {
+      "source": "/shop/**",
+      "destination": "/soluciones/tienda-online-barata/",
+      "type": 301
+    }
   ]
 }

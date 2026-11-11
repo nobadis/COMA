@@ -9,7 +9,7 @@ import type { Item } from "./services";
  * Mismas reglas que los sectores (src/data/niches/types.ts): todo verdadero y comprobable,
  * sin superlativos ni garantías, y los importes calculados desde pricing.ts.
  */
-export type SolutionGroup = "web" | "automatiza" | "visibilidad";
+export type SolutionGroup = "software" | "web" | "automatiza" | "visibilidad" | "comunicacion";
 
 export interface Solution {
   slug: string;
@@ -29,7 +29,7 @@ export interface Solution {
   compare?: { caption: string; head: string[]; rows: string[][] };
   faq: Item[];
   /** Servicio principal relacionado (slug de services.ts o "precios"). */
-  service: "diseno-web" | "seo-geo" | "agentes-ia" | "automatizaciones";
+  service: "diseno-web" | "seo-geo" | "agentes-ia" | "automatizaciones" | "notoriedad-de-marca";
   /** Sectores (slugs de niches) donde más se usa. */
   niches: string[];
   /** Otras soluciones relacionadas (slugs). */
@@ -40,9 +40,11 @@ export interface Solution {
 }
 
 export const solutionGroups: { id: SolutionGroup; label: string }[] = [
+  { id: "software", label: "Software a medida e IA" },
   { id: "web", label: "Webs a buen precio" },
-  { id: "automatiza", label: "Automatizaciones e IA" },
+  { id: "automatiza", label: "Automatizaciones" },
   { id: "visibilidad", label: "Que te encuentren" },
+  { id: "comunicacion", label: "Comunicación y medios" },
 ];
 
 const price = (id: string) => extras.find((e) => e.id === id)?.price ?? 0;
@@ -1449,6 +1451,603 @@ export const solutions: Solution[] = [
       "pedir reseñas automáticamente",
       "cómo conseguir reseñas negocio",
       "reseñas google whatsapp",
+    ],
+  },
+
+  /* -------------------------------------------------------- Software e IA */
+  {
+    slug: "desarrollo-software-a-medida",
+    name: "Desarrollo de software a medida",
+    group: "software",
+    title: "Desarrollo de software a medida para empresas",
+    description: `Desarrollo de software a medida para pymes y empresas: aplicaciones internas, portales de cliente, integraciones e IA. Desde Palma para toda España, con precio cerrado.`,
+    eyebrow: "Software a medida",
+    h1: "Software a medida para lo que tus programas no resuelven",
+    lead: "Herramientas internas, portales de cliente e integraciones que encajan con tu forma de trabajar. Con alcance, pruebas, entrega y mantenimiento por escrito.",
+    why: {
+      title: "Cuándo compensa hacerlo a medida",
+      paragraphs: [
+        "Un programa estándar cubre lo que hacen todas las empresas. Lo que te diferencia, o lo que te hace perder horas, suele quedar fuera: el paso que se hace en una hoja de cálculo, el dato que se copia a mano o el informe que alguien monta cada lunes.",
+        "Ahí compensa una pieza a medida, pequeña y bien acotada, conectada con lo que ya usas. Antes de desarrollar comprobamos si una herramienta existente lo resuelve más barato: solo construimos lo que de verdad hace falta.",
+      ],
+    },
+    points: [
+      {
+        title: "Diagnóstico y alcance",
+        text: "Proceso real, sistemas, objetivo y criterios de aceptación antes de escribir una línea.",
+      },
+      {
+        title: "Piloto cuando conviene",
+        text: "Validamos lo importante con un piloto acotado antes de ampliar el proyecto.",
+      },
+      {
+        title: "Integrado con lo que ya usas",
+        text: "ERP, CRM, facturación, tienda, email o WhatsApp, conectados por API.",
+      },
+      {
+        title: "Entrega documentada",
+        text: "Pruebas, documentación, formación y soporte acordados en la propuesta.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Qué tipo de software desarrolláis?",
+        text: "Herramientas internas, paneles de datos, portales para clientes, integraciones entre programas y automatizaciones con IA. Un ejemplo propio es COMA para despachos: recibe facturas por WhatsApp y email, las lee con IA y las exporta al programa contable.",
+      },
+      {
+        title: "¿Cuánto cuesta?",
+        text: "Depende del alcance. Te damos precio cerrado tras el diagnóstico, separando la puesta en marcha, las cuotas de terceros y el mantenimiento.",
+      },
+      {
+        title: "¿Quién es dueño del desarrollo?",
+        text: "La propiedad, los accesos y la documentación se acuerdan por escrito en la propuesta, antes de empezar.",
+      },
+    ],
+    service: "automatizaciones",
+    niches: [
+      "asesorias-y-gestorias",
+      "inmobiliarias",
+      "gestion-alquiler-vacacional",
+      "administradores-de-fincas",
+    ],
+    related: [
+      "aplicaciones-web-a-medida",
+      "integraciones-entre-programas",
+      "consultoria-inteligencia-artificial",
+    ],
+    cta: "¿Qué te gustaría que tu software hiciera solo?",
+    searches: [
+      "desarrollo de software a medida",
+      "software a medida para empresas",
+      "empresa de software a medida",
+      "software a medida Mallorca",
+      "software a medida Palma",
+      "desarrollo de software para pymes",
+    ],
+  },
+  {
+    slug: "consultoria-inteligencia-artificial",
+    name: "Consultoría de inteligencia artificial",
+    group: "software",
+    title: "Consultoría de inteligencia artificial para empresas",
+    description:
+      "Consultoría de IA para pymes y empresas: qué tareas tiene sentido llevar a la inteligencia artificial, piloto con objetivos medibles e implantación con supervisión humana.",
+    eyebrow: "Consultoría de IA",
+    h1: "Inteligencia artificial donde de verdad ahorra trabajo",
+    lead: "Te ayudamos a decidir qué llevar a la IA y qué no, lo probamos con un piloto medible y lo implantamos con límites claros y supervisión humana.",
+    why: {
+      title: "Empezar por el problema, no por la herramienta",
+      paragraphs: [
+        "La pregunta útil no es «¿qué hacemos con la IA?», sino «¿qué tarea nos quita más horas y se repite lo bastante?». Responder emails parecidos, leer documentos, clasificar peticiones o preparar borradores suelen ser buenos candidatos.",
+        "Lo que no conviene delegar en una IA son decisiones con consecuencias legales, médicas o económicas sin revisión. Por eso cada implantación lleva límites, revisión humana y medición.",
+      ],
+    },
+    points: [
+      {
+        title: "Mapa de oportunidades",
+        text: "Qué tareas llevar a la IA, con el ahorro estimado y el riesgo de cada una.",
+      },
+      {
+        title: "Piloto medible",
+        text: "Una tarea, unos datos reales y un objetivo claro antes de invertir más.",
+      },
+      {
+        title: "Implantación segura",
+        text: "Datos mínimos, proveedores con garantías, aviso de que responde una IA y revisión humana.",
+      },
+      {
+        title: "Formación del equipo",
+        text: "Que tu gente sepa usarla bien y detectar cuándo se equivoca.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Qué modelos de IA usáis?",
+        text: "Los que mejor encajen con la tarea, el idioma, el coste y la protección de datos: modelos de OpenAI, Anthropic (Claude), Google u otros. No dependemos de uno solo.",
+      },
+      {
+        title: "¿Mis datos se usan para entrenar la IA?",
+        text: "Usamos servicios de empresa en los que el proveedor se compromete por contrato a no entrenar con tus datos, y enviamos solo lo necesario.",
+      },
+      {
+        title: "¿Cumple con el Reglamento europeo de IA?",
+        text: "Diseñamos cada caso teniendo en cuenta sus obligaciones, como informar a la persona de que habla con una IA. En usos sensibles lo revisamos contigo y con tu asesor.",
+      },
+    ],
+    service: "agentes-ia",
+    niches: ["clinicas-dentales", "abogados", "hoteles", "asesorias-y-gestorias"],
+    related: ["integrar-ia-en-tu-empresa", "chatbot-para-web", "desarrollo-software-a-medida"],
+    cta: "¿Vemos qué puede hacer la IA por tu empresa?",
+    searches: [
+      "consultoría inteligencia artificial",
+      "consultoría ia empresas",
+      "implantar inteligencia artificial en la empresa",
+      "inteligencia artificial para pymes",
+      "consultoría ia Mallorca",
+      "empresa de inteligencia artificial España",
+    ],
+  },
+  {
+    slug: "integrar-ia-en-tu-empresa",
+    name: "Integrar ChatGPT o Claude en tu empresa",
+    group: "software",
+    title: "Integrar ChatGPT o Claude en tu empresa, con tus datos",
+    description:
+      "Un asistente de IA que conoce tus procedimientos, catálogos y documentos, integrado en tus herramientas, con permisos y sin que tus datos entrenen al modelo.",
+    eyebrow: "IA con tus datos",
+    h1: "Un asistente de IA que conoce tu empresa",
+    lead: "Conectamos modelos como ChatGPT o Claude con tus documentos y herramientas para que tu equipo pregunte y obtenga respuestas con fuente, sin copiar y pegar.",
+    why: {
+      title: "Por qué no basta con abrir ChatGPT",
+      paragraphs: [
+        "Un asistente genérico no conoce tus tarifas, tus procedimientos ni tus clientes, y pegarle documentos a mano no escala ni es seguro. Además, cada persona lo usa a su manera.",
+        "Integrarlo bien significa darle acceso controlado a tu información, que cite de dónde saca cada respuesta, que respete quién puede ver qué y que tus datos no se usen para entrenar el modelo.",
+      ],
+    },
+    points: [
+      {
+        title: "Responde con tus documentos",
+        text: "Procedimientos, catálogos, contratos o FAQs, con la fuente de cada respuesta.",
+      },
+      {
+        title: "Dentro de tus herramientas",
+        text: "En Google Workspace, Microsoft 365, Slack, la intranet o una web interna.",
+      },
+      { title: "Permisos", text: "Cada persona ve solo lo que puede ver." },
+      {
+        title: "Datos protegidos",
+        text: "Servicios de empresa, datos en la UE cuando es posible y sin entrenar con tu información.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Es mejor ChatGPT o Claude?",
+        text: "Depende de la tarea, el idioma y el coste. Probamos con tus casos reales y elegimos; podemos cambiar de modelo más adelante sin rehacer el proyecto.",
+      },
+      {
+        title: "¿Se puede equivocar?",
+        text: "Sí, como cualquier IA. Por eso cita la fuente, reconoce cuando no sabe y las decisiones importantes las revisa una persona.",
+      },
+      {
+        title: "¿Cuánto cuesta mantenerlo?",
+        text: "El uso del modelo suele ser un coste pequeño y variable; lo que más pesa es mantener la información al día. Te lo detallamos en la propuesta.",
+      },
+    ],
+    service: "agentes-ia",
+    niches: ["asesorias-y-gestorias", "abogados", "inmobiliarias", "corredurias-de-seguros"],
+    related: [
+      "consultoria-inteligencia-artificial",
+      "chatbot-para-web",
+      "desarrollo-software-a-medida",
+    ],
+    cta: "¿Qué debería saber tu asistente?",
+    searches: [
+      "integrar chatgpt en empresa",
+      "claude para empresas",
+      "chatgpt con documentos de la empresa",
+      "asistente ia interno empresa",
+      "ia con datos propios",
+    ],
+  },
+  {
+    slug: "aplicaciones-web-a-medida",
+    name: "Aplicaciones web y paneles a medida",
+    group: "software",
+    title: "Aplicaciones web a medida: portales, intranets y paneles",
+    description:
+      "Aplicaciones web a medida para empresas: portales de cliente, intranets, reservas complejas y cuadros de mando con los datos de todas tus herramientas.",
+    eyebrow: "Aplicaciones web",
+    h1: "Aplicaciones web a medida que tu equipo sí usa",
+    lead: "Portales para clientes, herramientas internas y paneles de datos, rápidos, seguros y pensados para el móvil.",
+    why: {
+      title: "Cuando una hoja de cálculo ya no da más de sí",
+      paragraphs: [
+        "Muchas empresas funcionan con hojas de cálculo compartidas que nadie se atreve a tocar. Cuando el negocio crece, se convierten en el cuello de botella: versiones distintas, errores y datos que no cuadran.",
+        "Una aplicación web sencilla, hecha para tu proceso y conectada con tus programas, ordena el trabajo sin obligarte a cambiar de herramientas.",
+      ],
+    },
+    points: [
+      {
+        title: "Portales de cliente",
+        text: "Tus clientes consultan pedidos, documentos o citas sin llamarte.",
+      },
+      {
+        title: "Herramientas internas",
+        text: "Partes de trabajo, presupuestos o inventario en una app hecha para tu forma de trabajar.",
+      },
+      {
+        title: "Paneles de datos",
+        text: "Ventas, marketing y operaciones en un cuadro de mando que se actualiza solo.",
+      },
+      {
+        title: "Seguras y rápidas",
+        text: "Acceso por usuario, copias de seguridad y pensadas para el móvil.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Web o app del móvil?",
+        text: "En la mayoría de casos, una aplicación web que funciona bien en el móvil es suficiente y mucho más barata de mantener que una app de tienda.",
+      },
+      {
+        title: "¿Dónde se aloja?",
+        text: "Donde mejor encaje por coste y protección de datos; lo acordamos en la propuesta, con copias de seguridad y mantenimiento.",
+      },
+      {
+        title: "¿Podemos empezar por algo pequeño?",
+        text: "Sí, es lo recomendable: una primera versión con lo esencial y mejoras por fases.",
+      },
+    ],
+    service: "automatizaciones",
+    niches: [
+      "gestion-alquiler-vacacional",
+      "administradores-de-fincas",
+      "empresas-de-limpieza",
+      "academias-y-escuelas-de-idiomas",
+    ],
+    related: ["desarrollo-software-a-medida", "integraciones-entre-programas", "crm-para-pymes"],
+    cta: "¿Qué hoja de cálculo te gustaría jubilar?",
+    searches: [
+      "aplicaciones web a medida",
+      "desarrollo de aplicaciones web",
+      "portal de clientes a medida",
+      "intranet a medida",
+      "cuadro de mando a medida",
+    ],
+  },
+  {
+    slug: "integraciones-entre-programas",
+    name: "Integraciones entre programas (API)",
+    group: "software",
+    title: "Integración de ERP, CRM, tienda y facturación por API",
+    description:
+      "Conectamos tus programas por API: ERP, CRM, tienda online, facturación, email y WhatsApp. Cada dato se escribe una vez y llega solo donde tiene que llegar.",
+    eyebrow: "Integraciones",
+    h1: "Que tus programas hablen entre ellos",
+    lead: "Pedidos que llegan solos a la facturación, contactos que entran en el CRM y stock que se actualiza en la tienda. Sin copiar y pegar.",
+    why: {
+      title: "El coste invisible de copiar datos a mano",
+      paragraphs: [
+        "Cada vez que alguien copia un dato de un programa a otro hay una pérdida de tiempo y una oportunidad de error. Multiplicado por cada pedido, cliente o factura, es mucho dinero al año.",
+        "Integrar los programas por API, o con plataformas como Make, n8n o Zapier cuando encajan, elimina ese trabajo y deja un registro de lo que pasa en cada paso.",
+      ],
+    },
+    points: [
+      {
+        title: "ERP y facturación",
+        text: "Holded, Sage, a3, Contasol u otros, si permiten integración o exportación.",
+      },
+      {
+        title: "CRM y marketing",
+        text: "Contactos de la web, anuncios y WhatsApp en el CRM, sin duplicados.",
+      },
+      {
+        title: "Tienda y stock",
+        text: "Pedidos, stock y envíos sincronizados entre tienda, almacén y facturación.",
+      },
+      {
+        title: "Alertas y registro",
+        text: "Si algo falla, avisa; y cada paso queda registrado y documentado.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Y si mi programa no tiene API?",
+        text: "Buscamos otra vía: exportaciones programadas, correo o lectura de documentos. Te decimos antes de empezar si es viable y cuánto cuesta.",
+      },
+      {
+        title: "¿Make, n8n o desarrollo propio?",
+        text: "Make, n8n o Zapier son rápidos de poner en marcha; el desarrollo propio compensa con volumen alto o procesos críticos. Lo elegimos contigo con números.",
+      },
+      {
+        title: "¿Qué pasa si una integración se rompe?",
+        text: "Monitorizamos los flujos y recibimos alertas. Con el mantenimiento acordado lo arreglamos; y todo queda documentado.",
+      },
+    ],
+    service: "automatizaciones",
+    niches: [
+      "tiendas-y-comercio-local",
+      "productos-de-mallorca",
+      "inmobiliarias",
+      "asesorias-y-gestorias",
+    ],
+    related: ["desarrollo-software-a-medida", "automatizar-facturas", "crm-para-pymes"],
+    cta: "¿Qué programas quieres conectar?",
+    searches: [
+      "integración de sistemas empresa",
+      "integrar erp con tienda online",
+      "integración api crm",
+      "automatizar make n8n zapier",
+      "conectar programas empresa",
+    ],
+  },
+
+  /* ---------------------------------------------------- Comunicación y medios */
+  {
+    slug: "agencia-de-comunicacion-mallorca",
+    name: "Agencia de comunicación en Mallorca",
+    group: "comunicacion",
+    title: `Agencia de comunicación en Mallorca desde ${site.since}`,
+    description: `Comunicación en Mallorca (COMA), agencia de comunicación en Palma desde ${site.since}: prensa, radio, televisión, marca, redes y web, con la tecnología y la IA de hoy.`,
+    eyebrow: `Agencia de comunicación · Palma, ${site.since}`,
+    h1: "La agencia de comunicación que empezó en las revistas y hoy hace IA",
+    lead: `Comunicación en Mallorca nació en ${site.since} editando revistas y produciendo radio y televisión. Hoy unimos esa experiencia con webs, software e inteligencia artificial.`,
+    why: {
+      title: "Comunicación y tecnología en el mismo equipo",
+      paragraphs: [
+        "Una buena historia necesita llegar a alguien, y hoy llega por prensa, radio, redes, Google y asistentes de IA a la vez. Tener la comunicación y la tecnología en el mismo equipo evita mensajes que no cuadran y campañas que acaban en una web que no convierte.",
+        `Trabajamos para pymes, instituciones y grandes eventos de Mallorca, con referencias como ${refs.slice(0, 4).join(", ")}, y desde ${site.spainSince} para empresas de toda España.`,
+      ],
+    },
+    points: [
+      {
+        title: "Gabinete de prensa",
+        text: "Notas, entrevistas y relación con medios locales y sectoriales de Baleares.",
+      },
+      {
+        title: "Radio, prensa y televisión",
+        text: "Campañas y contenidos en medios tradicionales, con la experiencia de haberlos producido.",
+      },
+      {
+        title: "Marca y redes",
+        text: "Posicionamiento, identidad visual, calendario editorial y vídeo corto.",
+      },
+      {
+        title: "Web, SEO e IA",
+        text: "Para que la atención que generas acabe en contactos medibles.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Sois la misma empresa que comunicacionmallorca.com?",
+        text: "No. Somos Comunicación en Mallorca (COMA), Publicom Marketing 2000 SL, con web comunicacionenmallorca.com y sede en Paseo Mallorca, 16, Palma.",
+      },
+      {
+        title: "¿Trabajáis con instituciones y eventos?",
+        text: `Sí. Entre nuestras referencias están ${refs.join(", ")}.`,
+      },
+      {
+        title: "¿Cómo se presupuesta la comunicación?",
+        text: "Con un plan por escrito: mensajes, canales, calendario y presupuesto. Medimos el impacto cada mes y ajustamos.",
+      },
+    ],
+    service: "notoriedad-de-marca",
+    niches: ["restaurantes", "hoteles", "bodegas", "productos-de-mallorca"],
+    related: [
+      "gabinete-de-prensa-mallorca",
+      "publicidad-en-radio-y-prensa-mallorca",
+      "agencia-marketing-digital-mallorca",
+    ],
+    cta: "¿Hacemos que se hable de tu empresa?",
+    searches: [
+      "agencia de comunicación Mallorca",
+      "agencia de comunicación Palma",
+      "comunicación en Mallorca",
+      "comunicación Mallorca",
+      "empresa de comunicación Mallorca",
+      "agencia de publicidad Mallorca",
+    ],
+  },
+  {
+    slug: "gabinete-de-prensa-mallorca",
+    name: "Gabinete de prensa en Mallorca",
+    group: "comunicacion",
+    title: "Gabinete de prensa en Mallorca: notas, medios y entrevistas",
+    description:
+      "Gabinete de prensa externo para empresas e instituciones de Mallorca: notas de prensa, relación con medios de Baleares, entrevistas y seguimiento de impactos.",
+    eyebrow: "Gabinete de prensa",
+    h1: "Que los medios de Mallorca cuenten tu historia",
+    lead: "Notas de prensa que se publican, entrevistas bien preparadas y relación continua con los medios locales y sectoriales de Baleares.",
+    why: {
+      title: "Por qué la prensa importa más que nunca",
+      paragraphs: [
+        "Una mención en un medio independiente da una confianza que ningún anuncio consigue. Y hoy pesa el doble: Google y los asistentes de IA usan esas menciones para decidir de quién fiarse y a quién recomendar.",
+        "Para que un medio publique, la noticia tiene que serlo, estar bien escrita y llegar a la persona adecuada en el momento justo. Eso es lo que hace un gabinete de prensa.",
+      ],
+    },
+    points: [
+      {
+        title: "Noticias que lo son",
+        text: "Detectamos qué de tu empresa interesa a un periodista y cuándo contarlo.",
+      },
+      {
+        title: "Notas de prensa",
+        text: "Escritas como las escribe un medio, con datos, fotos y declaraciones.",
+      },
+      {
+        title: "Relación con medios",
+        text: "Prensa, radio, televisión y digitales de Baleares, también en inglés y alemán.",
+      },
+      { title: "Seguimiento", text: "Impactos publicados y su alcance, recogidos cada mes." },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Garantizáis que se publique?",
+        text: "No: publicar es decisión del medio. Lo que sí hacemos es preparar noticias con interés real y llevarlas a quien puede publicarlas.",
+      },
+      {
+        title: "¿Trabajáis con medios en inglés y alemán?",
+        text: "Sí, cuando tu público lo pide: en Mallorca hay prensa para residentes y visitantes en ambos idiomas.",
+      },
+      {
+        title: "¿Ayuda la prensa a salir en ChatGPT?",
+        text: "Las menciones en medios fiables son una de las señales que más pesan para que los asistentes de IA conozcan y citen una empresa.",
+      },
+    ],
+    service: "notoriedad-de-marca",
+    niches: ["restaurantes", "hoteles", "bodegas", "asociaciones-y-ong"],
+    related: [
+      "agencia-de-comunicacion-mallorca",
+      "publicidad-en-radio-y-prensa-mallorca",
+      "aparecer-en-chatgpt",
+    ],
+    cta: "¿Qué noticia tiene tu empresa?",
+    searches: [
+      "gabinete de prensa Mallorca",
+      "gabinete de prensa externo",
+      "nota de prensa Mallorca",
+      "relación con medios Baleares",
+      "agencia de prensa Palma",
+    ],
+  },
+  {
+    slug: "publicidad-en-radio-y-prensa-mallorca",
+    name: "Publicidad en radio, prensa y TV",
+    group: "comunicacion",
+    title: "Publicidad en radio, prensa y televisión en Mallorca",
+    description:
+      "Campañas de publicidad en radio, prensa y televisión de Mallorca y Baleares: planificación de medios, creatividad, cuñas y anuncios, y medición del resultado.",
+    eyebrow: "Medios tradicionales",
+    h1: "Publicidad en radio, prensa y televisión que se recuerda",
+    lead: "Hemos editado revistas y producido radio y televisión. Planificamos y creamos campañas en medios de Mallorca con foco en resultados.",
+    why: {
+      title: "Los medios locales siguen funcionando",
+      paragraphs: [
+        "En Mallorca, la radio en el coche, la prensa del fin de semana y la televisión autonómica siguen llegando a mucha gente que no ve tus anuncios en redes. Para un negocio local, son una forma de ganar notoriedad y confianza.",
+        "La clave es elegir bien el medio, la franja y el mensaje, y conectar la campaña con una web y un teléfono que conviertan esa atención en clientes.",
+      ],
+    },
+    points: [
+      {
+        title: "Planificación de medios",
+        text: "Qué medios, qué franjas y cuánto, según tu público y tu presupuesto.",
+      },
+      {
+        title: "Creatividad y producción",
+        text: "Cuñas de radio, anuncios de prensa y piezas de vídeo.",
+      },
+      { title: "Campañas mixtas", text: "Medios tradicionales y digitales con un mismo mensaje." },
+      {
+        title: "Medición",
+        text: "Llamadas, visitas a la web y búsquedas de marca durante la campaña.",
+      },
+    ],
+    price: custom,
+    faq: [
+      {
+        title: "¿Cuánto cuesta una campaña en radio?",
+        text: "Depende del medio, la franja y la frecuencia. Te proponemos un plan con el coste de cada medio y la producción por separado.",
+      },
+      {
+        title: "¿Se puede medir la radio?",
+        text: "Sí, de forma indirecta: picos de llamadas, visitas y búsquedas de tu marca mientras dura la campaña, y códigos o páginas específicas.",
+      },
+      {
+        title: "¿Hacéis la cuña completa?",
+        text: "Sí: guion, locución y producción, adaptados a cada emisora.",
+      },
+    ],
+    service: "notoriedad-de-marca",
+    niches: [
+      "tiendas-y-comercio-local",
+      "restaurantes",
+      "talleres-mecanicos",
+      "reformas-y-construccion",
+    ],
+    related: [
+      "agencia-de-comunicacion-mallorca",
+      "gabinete-de-prensa-mallorca",
+      "agencia-marketing-digital-mallorca",
+    ],
+    cta: "¿Te escuchan en la radio de Mallorca?",
+    searches: [
+      "publicidad en radio Mallorca",
+      "anunciarse en radio Mallorca",
+      "publicidad en prensa Mallorca",
+      "cuña de radio precio",
+      "agencia de medios Mallorca",
+    ],
+  },
+  {
+    slug: "agencia-marketing-digital-mallorca",
+    name: "Agencia de marketing digital en Mallorca",
+    group: "comunicacion",
+    title: "Agencia de marketing digital en Mallorca con precios claros",
+    description: `Agencia de marketing digital en Palma: webs desde ${P} € + IVA, SEO local, posicionamiento en IA, Google Ads, Meta Ads y redes. Precios publicados, sin permanencia en el SEO.`,
+    eyebrow: "Marketing digital · Mallorca",
+    h1: "Marketing digital que se mide en clientes, no en «me gusta»",
+    lead: "Web, Google, redes e IA trabajando juntos para que te encuentren y te contacten. Desde Palma, con precios publicados.",
+    why: {
+      title: "Menos acciones sueltas, más sistema",
+      paragraphs: [
+        "Muchas pymes pagan por separado una web, unos anuncios y unas redes que no se hablan entre sí. Cada proveedor mide lo suyo y nadie responde a la pregunta importante: ¿cuántos clientes ha traído?",
+        "Nosotros empezamos por la medición y por una web que convierte, y sobre eso sumamos SEO local, posicionamiento en IA, anuncios y redes según lo que dé resultado.",
+      ],
+    },
+    points: [
+      {
+        title: "Web que convierte",
+        text: `Desde ${P} € + IVA, rápida y preparada para Google y la IA.`,
+      },
+      {
+        title: "SEO local y GEO",
+        text: `Google Maps y asistentes de IA, desde ${seo} €/mes + IVA cada uno.`,
+      },
+      {
+        title: "Google Ads y Meta Ads",
+        text: "Campañas con segmentación local y optimización continua.",
+      },
+      {
+        title: "Redes con criterio",
+        text: "Calendario, diseño y vídeo corto con criterio de marca.",
+      },
+    ],
+    price: {
+      label: "Desde",
+      value: `${P} € + IVA`,
+      note: `La web es pago único. SEO local y GEO: ${seo} €/mes + IVA cada uno, sin permanencia. Anuncios y redes, a medida.`,
+    },
+    faq: [
+      {
+        title: "¿Tenéis permanencia?",
+        text: "En el SEO local y el GEO, no: te quedas porque funciona. Las campañas se acuerdan por periodos.",
+      },
+      {
+        title: "¿Cómo medís los resultados?",
+        text: "Contactos, llamadas y ventas, no solo visitas. Un informe mensual claro con lo que funciona y lo que no.",
+      },
+      {
+        title: "¿Trabajáis fuera de Mallorca?",
+        text: `Sí, desde ${site.spainSince} con empresas de toda España, en remoto y al mismo precio.`,
+      },
+    ],
+    service: "notoriedad-de-marca",
+    niches: ["restaurantes", "hoteles", "clinicas-dentales", "inmobiliarias"],
+    related: ["agencia-de-comunicacion-mallorca", "aparecer-en-google-maps", "aparecer-en-chatgpt"],
+    cta: "¿Hablamos de tus resultados?",
+    searches: [
+      "agencia de marketing digital Mallorca",
+      "agencia marketing Palma",
+      "marketing digital Mallorca",
+      "agencia de marketing online Baleares",
+      "google ads Mallorca",
     ],
   },
 ];
