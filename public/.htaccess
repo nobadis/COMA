@@ -11,6 +11,33 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
+# URLs de la web antigua (WordPress) → páginas actuales. Mismas reglas que serve.json y vercel.json.
+RewriteRule ^portfolio(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^portfolio-item(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^proyectos(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^quienes-somos(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^nosotros(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^sobre-nosotros(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^empresa(/.*)?$ /sobre-coma/ [L,R=301]
+RewriteRule ^trabajos(/.*)?$ / [L,R=301]
+RewriteRule ^home(/.*)?$ / [L,R=301]
+RewriteRule ^inicio(/.*)?$ / [L,R=301]
+RewriteRule ^feed(/.*)?$ / [L,R=301]
+RewriteRule ^servicios(/.*)?$ /soluciones/ [L,R=301]
+RewriteRule ^blog(/.*)?$ /guias/ [L,R=301]
+RewriteRule ^noticias(/.*)?$ /guias/ [L,R=301]
+RewriteRule ^category(/.*)?$ /guias/ [L,R=301]
+RewriteRule ^tag(/.*)?$ /guias/ [L,R=301]
+RewriteRule ^author(/.*)?$ /guias/ [L,R=301]
+RewriteRule ^politica-de-privacidad(/.*)?$ /privacidad/ [L,R=301]
+RewriteRule ^privacy-policy(/.*)?$ /privacidad/ [L,R=301]
+RewriteRule ^politica-de-cookies(/.*)?$ /cookies/ [L,R=301]
+RewriteRule ^contactar(/.*)?$ /contacto/ [L,R=301]
+RewriteRule ^contacta(/.*)?$ /contacto/ [L,R=301]
+RewriteRule ^contact(/.*)?$ /contacto/ [L,R=301]
+RewriteRule ^tienda(/.*)?$ /soluciones/tienda-online-barata/ [L,R=301]
+RewriteRule ^shop(/.*)?$ /soluciones/tienda-online-barata/ [L,R=301]
+
 # Página de inicio
 DirectoryIndex index.html
 

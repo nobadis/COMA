@@ -102,7 +102,7 @@ const schema = [
             </li>
           );
         })}
-        {["automatizaciones", "notoriedad-de-marca"].map((s) => {
+        {["notoriedad-de-marca"].map((s) => {
           const svc = services.find((x) => x.slug === s)!;
           return (
             <li>

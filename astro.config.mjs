@@ -32,7 +32,9 @@ function priority(path) {
   )
     return 0.9;
   if (/^\/(sobre-coma|contacto|zonas|sectores|soluciones)\/$/.test(path)) return 0.8;
-  if (/^\/(zonas\/mallorca|(diseno-web|seo-geo|agentes-ia)\/(mallorca|palma))\/$/.test(path))
+  if (
+    /^\/(zonas\/mallorca|(diseno-web|seo-geo|agentes-ia|automatizaciones)\/(mallorca|palma))\/$/.test(path)
+  )
     return 0.8;
   if (/^\/(guias|sectores|soluciones)\//.test(path)) return 0.7;
   if (/^\/(aviso-legal|cookies|privacidad)\/$/.test(path)) return 0.2;

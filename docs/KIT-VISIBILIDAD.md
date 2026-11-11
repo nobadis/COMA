@@ -13,7 +13,25 @@ Regla de oro: **los mismos datos en todas partes**.
 | Empresa   | Publicom Marketing 2000 SL · CIF B07949647      |
 | Desde     | 1997                                            |
 
-## Ya hecho (5 nov 2026)
+## 0. Urgente: lo que hoy impide que Google os muestre bien
+
+Diagnóstico del 11 nov 2026. Google y los buscadores de las IA todavía tienen guardada **la web antigua de WordPress**: título «kit digital - Comunicación en Mallorca», de hace unos tres años. Hasta que vuelvan a rastrear, da igual lo buena que sea la web nueva. Además:
+
+1. **`www.comunicacionenmallorca.com` está roto.** Apunta a Dinahosting (82.98.135.43), que responde «No se puede redirigir un dominio a si mismo», y por HTTPS ni siquiera conecta. Cualquier enlace con `www` acaba en error. Arreglo (10 minutos):
+   1. Railway → servicio de la web → Settings → Networking → **Custom Domain** → añadir `www.comunicacionenmallorca.com`. Railway te da un destino CNAME.
+   2. Dinahosting → Dominios → comunicacionenmallorca.com → **Zona DNS**: borra el registro `www` actual (A 82.98.135.43) y crea un **CNAME `www`** con el destino que te dio Railway. Quita también cualquier «redirección web» de Dinahosting para ese dominio.
+   3. Cuando Railway marque el dominio en verde, la web ya redirige sola `www` → sin `www` con un 301 (`scripts/server.cjs`).
+   4. Comprueba que `https://www.comunicacionenmallorca.com/sectores/` lleva a `https://comunicacionenmallorca.com/sectores/`.
+2. **Search Console (lo más urgente para Google).** Sigue el punto 1 de abajo y después, en «Inspección de URLs», pide **«Solicitar indexación»** de estas páginas, una a una: `/`, `/sobre-coma/`, `/soluciones/agencia-de-comunicacion-mallorca/`, `/automatizaciones/`, `/agentes-ia/`, `/diseno-web/mallorca/`, `/automatizaciones/palma/`, `/sectores/` y `/soluciones/`. Es la forma más rápida de que Google sustituya la web antigua.
+3. **Un competidor tiene el dominio casi idéntico a vuestra búsqueda de marca** (`comunicacionmallorca.com`, sin «en»). Para ganarle en «comunicación Mallorca» hace falta lo que él tiene y vosotros aún no: ficha de Google con reseñas (punto 2), directorios (punto 4) y menciones en prensa (punto 7). La web ya aclara a Google y a las IA que no sois la misma empresa.
+4. **Facebook**: la web enlaza `facebook.com/comunicacionenmallorca` como perfil oficial (`site.social`). Si no es vuestro, bórralo de `src/data/site.ts`. Si lo es, pon allí la web nueva y la dirección de Paseo Mallorca, 16.
+
+## Ya hecho (5 y 11 nov 2026)
+
+- Portada con la marca en el título: «Comunicación en Mallorca (COMA): software a medida, IA y webs».
+- Nombre del sitio para Google: «Comunicación en Mallorca», con COMA como variante.
+- Redirecciones 301 de las URLs de la web antigua (`/portfolio/…`, `/blog/…`, `/politica-de-privacidad/`…) a las nuevas, y de `www` al dominio sin `www`.
+- Páginas nuevas: software a medida en 82 zonas (`/automatizaciones/<zona>/`), inteligencia artificial para empresas en 82 zonas (`/agentes-ia/<zona>/`), agencia de comunicación, gabinete de prensa, publicidad en radio, marketing digital, consultoría de IA, integrar ChatGPT o Claude, aplicaciones web e integraciones (`/soluciones/`).
 
 - 422 URLs enviadas a IndexNow (Bing, Copilot, Yandex y buscadores asociados). Repetir tras cada despliegue: `npm run seo:indexnow`.
 - `llms.txt` y `llms-full.txt` con precios, sectores y soluciones.

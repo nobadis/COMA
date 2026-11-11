@@ -63,7 +63,7 @@ Microsoft Clarity se inyecta en el HTML con `CLARITY_PROJECT_ID`, y el resto de 
 
 ## Despliegue
 
-- **Railway** (recomendado): ver [docs/DEPLOY-RAILWAY.md](docs/DEPLOY-RAILWAY.md). El `Dockerfile` hace el build de Astro y sirve `dist/`.
+- **Railway** (recomendado): ver [docs/DEPLOY-RAILWAY.md](docs/DEPLOY-RAILWAY.md). El `Dockerfile` hace el build de Astro y `scripts/server.cjs` sirve `dist/` (compresión, cabeceras y redirecciones de `serve.json`, y `www` → sin `www`).
 - **Dinahosting**: ver [docs/DEPLOY-DINAHOSTING.md](docs/DEPLOY-DINAHOSTING.md) (`npm run pack:dinahosting` genera `release/coma-dinahosting.zip`).
 - **Vercel**: `vercel.json` ya define build, salida y cabeceras.
 
