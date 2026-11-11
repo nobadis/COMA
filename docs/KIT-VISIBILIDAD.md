@@ -79,7 +79,7 @@ Con permiso del cliente, copia las mejores en `testimonials` (`src/data/site.ts`
 
 ## 6. LinkedIn de empresa e Instagram
 
-**LinkedIn** es la cara nacional: la página se llama **COMA**, sin «Mallorca» en el nombre, y Mallorca se cuenta como origen. Todo listo en [`publicidad/7-linkedin/LINKEDIN.txt`](../publicidad/7-linkedin/LINKEDIN.txt): URL `linkedin.com/company/somoscoma`, lema, «Acerca de», especialidades, logo, cabecera y los 7 primeros posts. Lema:
+**LinkedIn** es la cara nacional: la página se llama **COMA - Innovación Tecnológica**, sin «Mallorca» en el nombre, y Mallorca se cuenta como origen. Todo listo en [`publicidad/7-linkedin/LINKEDIN.txt`](../publicidad/7-linkedin/LINKEDIN.txt): URL `linkedin.com/company/coma-innovacion-tecnologica` (ya en `site.social`), lema, «Acerca de», especialidades, logo, cabecera y los 7 primeros posts. Lema:
 
 > Consultoría tecnológica desde 1997: soluciones a medida, IA aplicada, diseño web y visibilidad digital.
 

@@ -22,7 +22,7 @@ export const site = {
    * Wikidata…). Se publican en `sameAs` del schema: es la señal que usan Google y la IA para
    * unir todas las menciones de COMA en una sola entidad. Añade aquí las URLs reales.
    */
-  social: [] as string[],
+  social: ["https://www.linkedin.com/company/coma-innovacion-tecnologica/"] as string[],
   /** Idiomas en los que atendemos a clientes. */
   languages: ["es", "ca", "en"],
 };

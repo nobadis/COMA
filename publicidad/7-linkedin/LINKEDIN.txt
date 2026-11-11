@@ -9,15 +9,12 @@
 1. LA PÁGINA (linkedin.com → Para empresas → Crear página de empresa)
 ----------------------------------------------------------------------
 
-  Nombre ............ COMA
-                      El lema va justo debajo del nombre en LinkedIn y en sus
-                      búsquedas: ahí se explica qué es COMA.
+  Nombre ............ COMA - Innovación Tecnológica
+                      (el elegido: marca + qué es, sin lugar)
 
-  URL pública ....... linkedin.com/company/somoscoma
-                      Solo marca, sin lugar. Si /coma estuviera libre, mejor
-                      esa. Usa el mismo nombre de usuario en Instagram,
-                      YouTube y TikTok. Se puede cambiar después, pero los
-                      enlaces antiguos dejan de funcionar.
+  URL pública ....... linkedin.com/company/coma-innovacion-tecnologica
+                      (ya en `site.social` de src/data/site.ts). Si se
+                      cambia, los enlaces antiguos dejan de funcionar.
 
   Sitio web ......... https://comunicacionenmallorca.com/
                       (es el dominio actual; ver la nota del final)
@@ -67,10 +64,31 @@
     Notoriedad de marca, Comunicación, Publicidad en medios, Kit Digital,
     Automatización para despachos, Correo corporativo
 
-  Cuando la página exista: pasar la URL para añadirla a `site.social`
-  (src/data/site.ts). Sale en el `sameAs` del schema y une LinkedIn con la
-  web para Google y las IA, aunque los nombres no coincidan letra a letra.
-  No se añade antes: un enlace roto resta.
+  La URL ya está en `site.social` (src/data/site.ts): sale en el `sameAs`
+  del schema y une LinkedIn con la web para Google y las IA, aunque los
+  nombres no coincidan letra a letra.
+
+  Versión en inglés (LinkedIn → Editar página → «Añadir idioma»: quien
+  tenga LinkedIn en inglés la ve así). Lema (98 caracteres):
+
+    Technology consulting since 1997: custom solutions, applied AI, web design and digital visibility.
+
+  About:
+
+    COMA is a technology consultancy founded in Mallorca, Spain, in 1997. We started out telling companies' stories in magazines, radio and television. Today we combine design, development and AI to improve how businesses work.
+
+    What we do:
+    → Custom solutions: software, integrations and automation that remove tasks, errors and unnecessary steps.
+    → Applied AI: agents that answer customers, read documents and prepare work, with human review where it matters.
+    → Web design: fast websites with original design, built to get you contacted. From €99 + VAT, one-off payment.
+    → Digital visibility: SEO, Google Maps and visibility in the answers of ChatGPT, Gemini and Claude (GEO).
+    → Brand awareness and media: branding, press, radio and digital.
+
+    How we work: we understand the real work, validate with a pilot when needed, deliver and stay with you for support. Our prices are published on our website, and every proposal comes in writing with scope, timeline and a fixed price before we start. If it makes sense, we make it happen; if it doesn't, we tell you.
+
+    More than 100 SMEs trust us. We work with companies across Spain, remotely or in person, in Spanish, Catalan and English.
+
+    Tell us what's eating your time: https://comunicacionenmallorca.com/
 
 
 2. EL NOMBRE DEL CORREO
@@ -78,7 +96,7 @@
 
   Ahora: «COMA | Transformadores Digitales». Se cambia, por tres motivos:
   · No aparece en ningún sitio. La web, Google, los anuncios y LinkedIn
-    dicen «COMA» y «consultoría tecnológica». Quien recibe el correo no lo
+    dicen «COMA», «consultoría tecnológica» e «innovación». Quien recibe el correo no lo
     relaciona con lo que ha visto.
   · «Transformación digital» es la frase que usan todos y la web no la
     usa. Además, «transformadores» suena a electricidad.
@@ -290,4 +308,4 @@ Guía en comentarios.
     posicionamiento durante unas semanas.
   · El nombre en la web, Google Business Profile y directorios: «COMA -
     Comunicación en Mallorca» (docs/KIT-VISIBILIDAD.md). LinkedIn ya va
-    como «COMA».
+    como «COMA - Innovación Tecnológica».
