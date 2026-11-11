@@ -341,10 +341,12 @@ Palabras clave en bloque: 1-google-ads/google-ads-editor.csv (Google Ads Editor
 
   REDES SIN PAGAR
   Los vídeos e imágenes de 3-redes-sin-pagar/ no se pagan: se publican en el
-  Instagram, Facebook y LinkedIn de COMA y en el estado de WhatsApp, y se
+  Instagram y Facebook de COMA y en el estado de WhatsApp, y se
   mandan a clientes y contactos. Cuestan 0 €, alimentan el remarketing de
   enero y sirven de TEST GRATIS de ángulos (03-MENSAJE-Y-TESTS-AB.txt).
-  En LinkedIn, además, una publicación cada 2 semanas, alternando:
+  LinkedIn va aparte, como cara nacional de COMA y sin las piezas de
+  Mallorca: textos y calendario en 7-linkedin/LINKEDIN.txt. La idea de fondo
+  sigue siendo esta, alternando:
   · un problema real resuelto a medida (sin datos del cliente si no da
     permiso), y
   · el ángulo acompañamiento: «¿Tienes ideas y no sabes por dónde

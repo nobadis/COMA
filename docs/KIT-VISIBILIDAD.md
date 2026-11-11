@@ -79,11 +79,11 @@ Con permiso del cliente, copia las mejores en `testimonials` (`src/data/site.ts`
 
 ## 6. LinkedIn de empresa e Instagram
 
-**LinkedIn**: todo listo en [`publicidad/7-linkedin/LINKEDIN.txt`](../publicidad/7-linkedin/LINKEDIN.txt) (nombre, URL `linkedin.com/company/comunicacionenmallorca`, lema, «Acerca de», especialidades, logo, cabecera y los 7 primeros posts). Lema:
+**LinkedIn** es la cara nacional: la página se llama **COMA**, sin «Mallorca» en el nombre, y Mallorca se cuenta como origen. Todo listo en [`publicidad/7-linkedin/LINKEDIN.txt`](../publicidad/7-linkedin/LINKEDIN.txt): URL `linkedin.com/company/somoscoma`, lema, «Acerca de», especialidades, logo, cabecera y los 7 primeros posts. Lema:
 
-> Consultoría tecnológica en Palma desde 1997: soluciones a medida, IA aplicada, diseño web y visibilidad digital.
+> Consultoría tecnológica desde 1997: soluciones a medida, IA aplicada, diseño web y visibilidad digital.
 
-**Nombre del remitente del correo**: `COMA - Comunicación en Mallorca` en info@ y `Nombre Apellido | COMA` en los buzones personales (motivos en el mismo archivo).
+**Nombre del remitente del correo**: `COMA` en info@ y `Nombre Apellido | COMA` en los buzones personales (motivos en el mismo archivo).
 
 **Instagram, bio:**
 
