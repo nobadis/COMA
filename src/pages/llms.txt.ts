@@ -7,6 +7,8 @@ import { places } from "../data/places";
 import { plans } from "../data/despachos";
 import { niches, nicheGroups, nichePack } from "../data/niches";
 import { solutions, solutionGroups } from "../data/solutions";
+import { aiSectors } from "../data/ia";
+import { enPages, enPath } from "../data/en";
 
 /** Resumen en texto plano para asistentes de IA (estándar llms.txt). El detalle está en /llms-full.txt. */
 export const GET: APIRoute = () => {
@@ -60,6 +62,15 @@ export const GET: APIRoute = () => {
             `- [${x.name}](${site.url}/soluciones/${x.slug}/): ${x.price.label === "A medida" ? "a medida, presupuesto cerrado tras una llamada" : x.price.value}. ${x.description}`
         ),
     ]),
+    "",
+    "## Inteligencia artificial por sector",
+    `- [IA por sector](${site.url}/ia/): usos reales de la IA, límites y primer paso en cada sector.`,
+    ...aiSectors.map(
+      (a) => `- [Inteligencia artificial para ${a.forWho}](${site.url}/ia/${a.slug}/): ${a.lead}`
+    ),
+    "",
+    "## In English",
+    ...enPages.map((p) => `- [${p.name}](${site.url}${enPath(p.slug)}): ${p.description}`),
     "",
     "## Webs por sector",
     `- [Todos los sectores](${site.url}/sectores/): ${niches.length} sectores con funciones, automatizaciones y paquete recomendado con precio.`,

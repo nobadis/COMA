@@ -10,6 +10,7 @@ import { places } from "../data/places";
 import { adsEnabled, verification } from "../data/ads";
 import { services } from "../data/services";
 import { basePlan } from "../data/pricing";
+import { alternatesFor } from "../data/en";
 
 interface Crumb {
   name: string;
@@ -33,6 +34,8 @@ interface Props {
   modified?: string;
   /** Landing de anuncios: noindex y sin botón flotante (cabecera y pie van por slots). */
   minimal?: boolean;
+  /** Idioma de la página (las de /en/ son "en"). */
+  lang?: "es" | "en";
 }
 
 const {
@@ -48,7 +51,9 @@ const {
   published,
   modified,
   minimal = false,
+  lang = "es",
 } = Astro.props;
+const locale = lang === "en" ? "en-GB" : "es-ES";
 const noindex = noindexProp || minimal;
 // La intro solo abre la home (si es la primera página de la visita): el resto entra directo.
 const intro = !minimal && Astro.url.pathname === "/";
@@ -202,7 +207,7 @@ const webpage = {
   url: canonical,
   name: fullTitle,
   description,
-  inLanguage: "es-ES",
+  inLanguage: locale,
   isPartOf: { "@id": `${site.url}/#web` },
   about: { "@id": orgId },
   primaryImageOfPage: { "@type": "ImageObject", url: ogImage },
@@ -227,7 +232,7 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
 ---
 
 <!doctype html>
-<html lang="es" data-nointro={intro ? undefined : ""}>
+<html lang={lang} data-nointro={intro ? undefined : ""}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -248,8 +253,14 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
     <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="alternate" hreflang="es-ES" href={canonical} />
-    <link rel="alternate" hreflang="x-default" href={canonical} />
+    {
+      (
+        alternatesFor(Astro.url.pathname) ?? [
+          { hreflang: "es-ES", href: canonical },
+          { hreflang: "x-default", href: canonical },
+        ]
+      ).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)
+    }
     {verification.google && <meta name="google-site-verification" content={verification.google} />}
     {verification.bing && <meta name="msvalidate.01" content={verification.bing} />}
     {verification.meta && <meta name="facebook-domain-verification" content={verification.meta} />}
@@ -259,7 +270,7 @@ const ld = [org, website, webpage, ...(breadcrumb ? [breadcrumb] : []), ...schem
     <link rel="alternate" type="text/plain" href="/llms.txt" title="Resumen para modelos de IA" />
     <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
 
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={lang === "en" ? "en_GB" : "es_ES"} />
     <meta property="og:type" content={type} />
     {type === "article" && published && <meta property="article:published_time" content={published} />}
     {type === "article" && (modified ?? published) && <meta property="article:modified_time" content={modified ?? published} />}

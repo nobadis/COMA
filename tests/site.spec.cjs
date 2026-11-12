@@ -18,6 +18,10 @@ const PAGES = [
   "/sectores/restaurantes/",
   "/soluciones/",
   "/soluciones/alternativa-a-wix/",
+  "/ia/",
+  "/ia/hoteles/",
+  "/en/",
+  "/en/ai-consultancy-mallorca/",
 ];
 const LEGAL = ["/aviso-legal/", "/cookies/", "/privacidad/"];
 
@@ -114,6 +118,8 @@ test.describe("COMA - Comunicación en Mallorca", () => {
       "/zonas/",
       "/sectores/",
       "/soluciones/",
+      "/ia/",
+      "/en/",
     ])
       await expect(footer.locator(`a[href="${href}"]`)).toBeAttached();
     await expect(
@@ -535,6 +541,42 @@ test.describe("SEO / GEO / Ads", () => {
     expect(llms).toContain("Dominio oficial: comunicacionenmallorca.com");
   });
 
+  test("IA por sector e inglés: schema, idioma y hreflang recíproco", async ({ page, request }) => {
+    for (const path of [
+      "/ia/",
+      "/ia/hoteles/",
+      "/ia/abogados/",
+      "/en/",
+      "/en/custom-software-mallorca/",
+    ]) {
+      const res = await page.goto(path);
+      expect(res?.status(), path).toBe(200);
+      await expect(page.locator("h1"), path).toHaveCount(1);
+      const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+      const types = blocks.flatMap((b) => JSON.parse(b)).flatMap((o) => o["@type"]);
+      expect(types, path).toContain("FAQPage");
+      expect(types, path).toContain("BreadcrumbList");
+    }
+    await page.goto("/en/web-design-mallorca/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator('link[rel="alternate"][hreflang="es-ES"]')).toHaveAttribute(
+      "href",
+      "https://comunicacionenmallorca.com/diseno-web/mallorca/"
+    );
+    await page.goto("/diseno-web/mallorca/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "es");
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
+      "href",
+      "https://comunicacionenmallorca.com/en/web-design-mallorca/"
+    );
+    // Las páginas sin versión inglesa solo se declaran en español.
+    await page.goto("/precios/");
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(0);
+    const llms = await (await request.get("/llms.txt")).text();
+    expect(llms).toContain("/ia/hoteles/");
+    expect(llms).toContain("/en/ai-consultancy-mallorca/");
+  });
+
   test("todas las páginas indexables tienen título y descripción únicos", () => {
     const seen = { title: new Map(), desc: new Map() };
     for (const file of htmlFiles(DIST)) {
@@ -576,6 +618,9 @@ test.describe("SEO / GEO / Ads", () => {
       "/soluciones/pagina-web-barata/",
       "/automatizaciones/palma/",
       "/soluciones/desarrollo-software-a-medida/",
+      "/ia/",
+      "/ia/hoteles/",
+      "/en/",
     ])
       expect(locs).toContain(`https://comunicacionenmallorca.com${u}`);
   });

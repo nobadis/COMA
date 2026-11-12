@@ -248,7 +248,7 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
       `Agentes de IA ${where}`
     ),
     description: desc(
-      `Inteligencia artificial para empresas ${where}: agentes de IA que atienden, cualifican y reservan 24/7 en web, WhatsApp y email.`,
+      `Inteligencia artificial para empresas ${where}: consultoría de IA y agentes que atienden, cualifican y reservan 24/7 en web, WhatsApp y email.`,
       `Presupuesto a medida.`
     ),
     eyebrow: `Agentes de IA ${where}`,
@@ -284,6 +284,10 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
       "Presupuesto a medida: depende de canales, integraciones, idiomas y volumen. Tras una llamada te damos un precio cerrado.",
     faq: [
       ...common,
+      {
+        title: `¿Hacéis consultoría de inteligencia artificial ${where}?`,
+        text: "Sí. Empezamos por un diagnóstico de qué tareas tiene sentido llevar a la IA, lo probamos con un piloto medible y lo implantamos con supervisión humana: agentes, automatizaciones o software a medida.",
+      },
       {
         title: "¿La IA puede decir algo que no debe?",
         text: "Definimos límites claros: el agente responde solo con información validada de tu negocio y deriva a una persona cuando no sabe la respuesta o cuando el cliente lo pide.",

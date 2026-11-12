@@ -7,6 +7,8 @@ import { guides } from "../data/guides";
 import { places, inPlace } from "../data/places";
 import { niches, packSentence, priceFaq } from "../data/niches";
 import { solutions } from "../data/solutions";
+import { aiSectors } from "../data/ia";
+import { enPages, enPath } from "../data/en";
 
 /** Versión completa de llms.txt: todo el contenido relevante, listo para que una IA lo cite. */
 export const GET: APIRoute = () => {
@@ -74,6 +76,30 @@ export const GET: APIRoute = () => {
         );
     out.push(`Búsquedas: ${x.searches.join(", ")}.`, "");
     for (const q of x.faq) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
+  }
+
+  out.push("## Inteligencia artificial por sector", `Índice: ${site.url}/ia/`, "");
+  for (const a of aiSectors) {
+    out.push(`### ${a.h1}`, `URL: ${site.url}/ia/${a.slug}/`, a.lead, ...a.context);
+    for (const u of a.useCases) out.push(`- ${u.title}: ${u.text} (${u.gain})`);
+    out.push(
+      `Lo que no se delega en la IA: ${a.limits}`,
+      `Datos: ${a.data}`,
+      `En Mallorca: ${a.mallorca}`,
+      `Por dónde empezar: ${a.start}`,
+      `Búsquedas: ${a.searches.join(", ")}.`,
+      ""
+    );
+    for (const q of a.faq) out.push(`P: ${q.title}`, `R: ${q.text}`, "");
+  }
+
+  out.push("## In English", "");
+  for (const p of enPages) {
+    out.push(`### ${p.h1}`, `URL: ${site.url}${enPath(p.slug)}`, p.lead);
+    for (const s of p.sections) out.push(...s.paragraphs, ...(s.list ?? []).map((l) => `- ${l}`));
+    for (const b of p.points) out.push(`- ${b.title}: ${b.text}`);
+    out.push(`Price: ${p.price.label}: ${p.price.value}. ${p.price.note}`, "");
+    for (const q of p.faq) out.push(`Q: ${q.title}`, `A: ${q.text}`, "");
   }
 
   out.push("## Webs por sector", `Índice: ${site.url}/sectores/`, "");

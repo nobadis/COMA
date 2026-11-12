@@ -15,7 +15,7 @@ Regla de oro: **los mismos datos en todas partes**.
 
 ## 0. Urgente: lo que hoy impide que Google os muestre bien
 
-Diagnóstico del 11 nov 2026. Google y los buscadores de las IA todavía tienen guardada **la web antigua de WordPress**: título «kit digital - Comunicación en Mallorca», de hace unos tres años. Hasta que vuelvan a rastrear, da igual lo buena que sea la web nueva. Además:
+Diagnóstico del 11-12 nov 2026. **Google ya indexa la web nueva** (351 páginas en Search Console a principios de noviembre). Otros índices que usan las IA (como Brave, del que tira Claude) aún guardaban **la web antigua de WordPress**: título «kit digital - Comunicación en Mallorca». Ver el punto 0b para refrescarlos. Además:
 
 1. **`www.comunicacionenmallorca.com` está roto.** Apunta a Dinahosting (82.98.135.43), que responde «No se puede redirigir un dominio a si mismo», y por HTTPS ni siquiera conecta. Cualquier enlace con `www` acaba en error. Arreglo (10 minutos):
    1. Railway → servicio de la web → Settings → Networking → **Custom Domain** → añadir `www.comunicacionenmallorca.com`. Railway te da un destino CNAME.
@@ -26,7 +26,25 @@ Diagnóstico del 11 nov 2026. Google y los buscadores de las IA todavía tienen 
 3. **Un competidor tiene el dominio casi idéntico a vuestra búsqueda de marca** (`comunicacionmallorca.com`, sin «en»). Para ganarle en «comunicación Mallorca» hace falta lo que él tiene y vosotros aún no: ficha de Google con reseñas (punto 2), directorios (punto 4) y menciones en prensa (punto 7). La web ya aclara a Google y a las IA que no sois la misma empresa.
 4. **Facebook**: la web enlaza `facebook.com/comunicacionenmallorca` como perfil oficial (`site.social`). Si no es vuestro, bórralo de `src/data/site.ts`. Si lo es, pon allí la web nueva y la dirección de Paseo Mallorca, 16.
 
-## Ya hecho (5 y 11 nov 2026)
+## 0b. De dónde saca cada IA sus respuestas (y qué hacer en cada una)
+
+| Asistente | Dónde busca cuando responde | Qué hacer |
+| --- | --- | --- |
+| **ChatGPT** (búsqueda) | Su rastreador (OAI-SearchBot, permitido en `robots.txt`) y resultados de **Bing** | **Bing Webmaster Tools** → «Importar desde Google Search Console» (2 minutos). IndexNow ya avisa a Bing de cada cambio. |
+| **Copilot** | **Bing** | Lo mismo: Bing Webmaster Tools y **Bing Places** (importar desde la ficha de Google). |
+| **Gemini** y los resúmenes con IA de Google | **Google** | Search Console (hecho) y ficha de Google Business Profile con reseñas. |
+| **Claude** (búsqueda web) | Se ha publicado que usa resultados de **Brave Search** | Brave no admite envíos: descubre páginas rastreando y con el «Web Discovery Project» de su navegador. Abrid las páginas clave con el navegador **Brave**, con «Web Discovery Project» activado en Ajustes → Privacidad. |
+| **Perplexity** | Su rastreador (PerplexityBot, permitido) y otros índices | Nada especial: menciones en prensa y directorios. |
+| Lo que la IA «sabe» sin buscar | Lo aprendido de la web en su entrenamiento | Menciones constantes y coherentes en medios, directorios y perfiles. Tarda meses y se nota con cada modelo nuevo. |
+
+**Ficha de Google**: además de «Agencia de marketing», añade como categorías secundarias las que existan con estos nombres o parecidos: **Empresa de software**, **Consultor informático** y **Diseñador de sitios web**. Así Google relaciona la ficha con «software a medida» e «IA» en Mallorca.
+
+**Páginas para abrir con Brave y para «Solicitar indexación» en Search Console**: `/`, `/ia/`, `/ia/hoteles/`, `/soluciones/consultoria-inteligencia-artificial/`, `/agentes-ia/mallorca/`, `/automatizaciones/mallorca/`, `/soluciones/agencia-de-comunicacion-mallorca/`, `/en/` y `/en/ai-consultancy-mallorca/`.
+
+## Ya hecho (5, 11 y 12 nov 2026)
+
+- 17 páginas «Inteligencia artificial para <sector>» (`/ia/`) y 8 páginas en inglés (`/en/`: AI consultancy, custom software, web design, AI agents, SEO, holiday rentals, PR) con `hreflang` hacia su versión en español.
+- «Consultoría de IA para empresas en Mallorca y toda España» y FAQ de consultoría en las 82 páginas de IA por zona.
 
 - Portada con la marca en el título: «Comunicación en Mallorca (COMA): software a medida, IA y webs».
 - Nombre del sitio para Google: «Comunicación en Mallorca», con COMA como variante.

@@ -1,0 +1,308 @@
+---
+import Base from "../../layouts/Base.astro";
+import Arrow from "../../components/Arrow.astro";
+import Faq from "../../components/Faq.astro";
+import Cta from "../../components/Cta.astro";
+import Trust from "../../components/Trust.astro";
+import { aiSectors, aiBySlug, type AiSector } from "../../data/ia";
+import { nicheBySlug } from "../../data/niches";
+import { site } from "../../data/site";
+
+export function getStaticPaths() {
+  return aiSectors.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const a = Astro.props.a as AiSector;
+const url = `${site.url}/ia/${a.slug}/`;
+const related = a.related.map((s) => aiBySlug(s)).filter(Boolean) as AiSector[];
+const niche = a.niche ? nicheBySlug(a.niche) : undefined;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: `Inteligencia artificial para ${a.forWho}`,
+    serviceType: "Consultoría e implantación de inteligencia artificial",
+    description: a.description,
+    url,
+    provider: { "@id": `${site.url}/#org` },
+    areaServed: [
+      { "@type": "Country", name: "España" },
+      { "@type": "AdministrativeArea", name: "Illes Balears" },
+    ],
+    audience: { "@type": "BusinessAudience", audienceType: a.name },
+    keywords: a.searches.join(", "),
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `Usos de la IA para ${a.forWho}`,
+      itemListElement: a.useCases.map((u) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: u.title, description: u.text },
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: a.faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title={a.title}
+  description={a.description}
+  schema={schema}
+  crumbs={[
+    { name: "IA por sector", path: "/ia/" },
+    { name: a.name, path: `/ia/${a.slug}/` },
+  ]}
+>
+  <section class="ia-h">
+    <div class="wrap ia-h__in">
+      <p class="eyebrow" data-reveal>Inteligencia artificial · {a.name}</p>
+      <h1 data-split>{a.h1}<span class="comma">.</span></h1>
+      <p class="lead" data-reveal style="--d:3">{a.lead}</p>
+      <div class="ia-h__cta" data-reveal style="--d:4">
+        <a class="btn btn--red btn--lg" href="/contacto/" data-magnetic data-track="cta_click" data-track-label={`ia-${a.slug}`}>
+          Cuéntanos tu caso <Arrow />
+        </a>
+        <a class="link-arrow" href="/soluciones/consultoria-inteligencia-artificial/">Consultoría de IA</a>
+      </div>
+      <nav class="ia-h__trail" aria-label="Ubicación">
+        <a href="/ia/">IA por sector</a><span aria-hidden="true">/</span><span>{a.name}</span>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section ia-why">
+    <div class="wrap ia-why__grid">
+      <div>
+        <p class="eyebrow">El punto de partida</p>
+        <h2>Qué puede hacer la IA, de verdad</h2>
+      </div>
+      <div class="ia-why__text">
+        {a.context.map((t) => <p>{t}</p>)}
+        <p class="ia-why__local"><strong>En Mallorca.</strong> {a.mallorca}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section night ia-uses" data-dark>
+    <div class="wrap">
+      <p class="eyebrow">Casos de uso</p>
+      <h2>Cinco usos de la IA para {a.forWho}</h2>
+      <ol class="ia-uses__list">
+        {a.useCases.map((u, i) => (
+          <li>
+            <span class="ia-uses__n" aria-hidden="true">0{i + 1}</span>
+            <h3>{u.title}</h3>
+            <p>{u.text}</p>
+            <p class="ia-uses__gain"><strong>Qué ganas:</strong> {u.gain}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section ia-care">
+    <div class="wrap ia-care__grid">
+      <div>
+        <h2>Lo que no dejaríamos en manos de la IA</h2>
+        <p>{a.limits}</p>
+      </div>
+      <div>
+        <h2>Tus datos</h2>
+        <p>{a.data}</p>
+      </div>
+      <div class="ia-care__start">
+        <h2>Por dónde empezar</h2>
+        <p>{a.start}</p>
+        <p class="ia-care__how">
+          Primero un diagnóstico; si conviene, un piloto acotado. Alcance, plazos y precio cerrado por escrito antes de empezar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Trust />
+
+  <section class="section ia-links">
+    <div class="wrap ia-links__grid">
+      <div>
+        <h2>IA en otros sectores</h2>
+        <ul>
+          {related.map((r) => (
+            <li><a href={`/ia/${r.slug}/`}>Inteligencia artificial para {r.forWho}</a></li>
+          ))}
+          <li><a href="/ia/">Todos los sectores</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Cómo lo hacemos</h2>
+        <ul>
+          <li><a href="/soluciones/consultoria-inteligencia-artificial/">Consultoría de inteligencia artificial</a></li>
+          <li><a href="/agentes-ia/">Agentes de IA 24/7</a></li>
+          <li><a href="/soluciones/integrar-ia-en-tu-empresa/">Integrar ChatGPT o Claude con tus datos</a></li>
+          <li><a href="/automatizaciones/">Software a medida y automatización</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Más de COMA</h2>
+        <ul>
+          {niche && <li><a href={`/sectores/${niche.slug}/`}>Web para {niche.forWho}</a></li>}
+          <li><a href="/agentes-ia/mallorca/">Inteligencia artificial para empresas en Mallorca</a></li>
+          <li><a href="/automatizaciones/palma/">Software a medida en Palma</a></li>
+          <li><a href="/sobre-coma/">Quiénes somos</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={a.faq} title={`Preguntas sobre IA para ${a.forWho}`} />
+  <Cta title="¿Qué tarea te gustaría que hiciera la IA?" subject={`IA para ${a.forWho}`} />
+</Base>
+
+<style>
+  .ia-h {
+    padding-top: clamp(8.5rem, 15vw, 12rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .ia-h__in {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .ia-h h1 {
+    font-size: clamp(1.7rem, 0.6rem + 5vw, 5.2rem);
+    max-width: 20ch;
+    letter-spacing: -0.05em;
+  }
+  .ia-h__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+  .ia-h__trail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .ia-h__trail a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+  .ia-why__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .ia-why__grid {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+    }
+  }
+  .ia-why__text {
+    display: grid;
+    gap: 1.1rem;
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+  .ia-why__local {
+    border-left: 3px solid var(--red);
+    padding-left: 1rem;
+    color: var(--muted);
+  }
+  .ia-uses__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 800px) {
+    .ia-uses__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 3rem;
+    }
+  }
+  .ia-uses__list li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding-top: 1rem;
+    border-top: 1px solid var(--night-line);
+  }
+  .ia-uses__n {
+    color: var(--red);
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+  }
+  .ia-uses__list p {
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .ia-uses__list .ia-uses__gain {
+    color: inherit;
+    font-size: var(--fs-sm);
+  }
+  .ia-care__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .ia-care__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .ia-care h2 {
+    font-size: var(--fs-xl);
+    margin-bottom: 0.75rem;
+  }
+  .ia-care p {
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+  .ia-care__start {
+    border-left: 3px solid var(--red);
+    padding-left: 1rem;
+  }
+  .ia-care__how {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .ia-links {
+    background: var(--paper-2);
+  }
+  .ia-links__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .ia-links__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .ia-links h2 {
+    font-size: var(--fs-xl);
+    margin-bottom: 1rem;
+  }
+  .ia-links ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .ia-links a {
+    text-underline-offset: 0.2em;
+  }
+</style>

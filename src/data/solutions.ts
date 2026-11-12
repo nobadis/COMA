@@ -1530,7 +1530,7 @@ export const solutions: Solution[] = [
     slug: "consultoria-inteligencia-artificial",
     name: "Consultoría de inteligencia artificial",
     group: "software",
-    title: "Consultoría de inteligencia artificial para empresas",
+    title: "Consultoría de IA para empresas en Mallorca y toda España",
     description:
       "Consultoría de IA para pymes y empresas: qué tareas tiene sentido llevar a la inteligencia artificial, piloto con objetivos medibles e implantación con supervisión humana.",
     eyebrow: "Consultoría de IA",

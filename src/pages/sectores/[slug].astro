@@ -6,6 +6,7 @@ import Cta from "../../components/Cta.astro";
 import Trust from "../../components/Trust.astro";
 import { niches, nicheBySlug, nicheGroups, nichePack, priceFaq, eur, type Niche } from "../../data/niches";
 import { solutions } from "../../data/solutions";
+import { aiForNiche } from "../../data/ia";
 import { site } from "../../data/site";
 import { basePlan } from "../../data/pricing";
 
@@ -19,6 +20,7 @@ const faq = [priceFaq(n), ...n.faq];
 const group = nicheGroups.find((g) => g.id === n.group)!;
 const related = n.related.map((s) => nicheBySlug(s)).filter(Boolean) as Niche[];
 const sols = solutions.filter((s) => s.niches.includes(n.slug)).slice(0, 5);
+const ai = aiForNiche(n.slug);
 const packQuery = n.pack.map((p) => (p.qty && p.qty > 1 ? `${p.id}:${p.qty}` : p.id)).join(",");
 const per = (b: string) => (b === "month" ? "/mes" : b === "year" ? "/año" : "");
 
@@ -170,10 +172,11 @@ const schema = [
           <li><a href="/sectores/">Todos los sectores</a></li>
         </ul>
       </div>
-      {sols.length > 0 && (
+      {(sols.length > 0 || ai) && (
         <div>
           <h2>Te puede interesar</h2>
           <ul>
+            {ai && <li><a href={`/ia/${ai.slug}/`}>Inteligencia artificial para {ai.forWho}</a></li>}
             {sols.map((s) => (
               <li><a href={`/soluciones/${s.slug}/`}>{s.name}</a></li>
             ))}

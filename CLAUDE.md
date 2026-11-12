@@ -16,6 +16,6 @@ La marca de agua de las demos la añade `scripts/build-ejemplos.cjs` al compilar
 
 ## Web de COMA
 
-- El SEO no alarga la página: va en `<head>`, rastreo y páginas nuevas. El texto visible se queda corto. El pie enlaza a `/sobre-coma/`, `/guias/`, `/zonas/`, `/sectores/` y `/soluciones/`; el menú no (docs/SEO-GEO.md).
-- Páginas de nicho: sectores en `src/data/niches/*.ts` y necesidades en `src/data/solutions.ts`. Todo verdadero y específico; los precios salen de `pricing.ts`, nunca a mano.
+- El SEO no alarga la página: va en `<head>`, rastreo y páginas nuevas. El texto visible se queda corto. El pie enlaza a `/sobre-coma/`, `/guias/`, `/zonas/`, `/sectores/`, `/soluciones/`, `/ia/` y `/en/`; el menú no (docs/SEO-GEO.md).
+- Páginas de nicho: sectores en `src/data/niches/*.ts`, necesidades en `src/data/solutions.ts`, IA por sector en `src/data/ia/*.ts` y páginas en inglés en `src/data/en/pages.ts` (hreflang con su equivalente en español). Todo verdadero y específico; los precios salen de `pricing.ts`, nunca a mano.
 - Push a `main` directamente cuando el usuario lo pide ("como siempre").

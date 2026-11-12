@@ -1,0 +1,129 @@
+---
+import Base from "../../layouts/Base.astro";
+import Cta from "../../components/Cta.astro";
+import Faq from "../../components/Faq.astro";
+import { aiSectors } from "../../data/ia";
+import { site, years } from "../../data/site";
+
+const faq = [
+  {
+    title: "¿Por dónde empieza una empresa a usar la IA?",
+    text: "Por la tarea que más horas consume y más se repite: responder lo mismo, leer documentos o pasar datos de un programa a otro. Se prueba con un piloto acotado y se mide antes de ampliar.",
+  },
+  {
+    title: "¿Cuánto cuesta implantar inteligencia artificial?",
+    text: "Depende de la tarea, los canales y las herramientas que haya que conectar. Tras una llamada damos alcance, plazos y precio cerrado por escrito, separando la puesta en marcha de las cuotas de terceros.",
+  },
+  {
+    title: "¿Trabajáis fuera de Mallorca?",
+    text: `Sí. Tenemos sede en Palma desde ${site.since} y desde ${site.spainSince} trabajamos en remoto con empresas de toda España.`,
+  },
+];
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Inteligencia artificial por sector",
+    url: `${site.url}/ia/`,
+    isPartOf: { "@id": `${site.url}/#web` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: aiSectors.map((a, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: `Inteligencia artificial para ${a.forWho}`,
+        url: `${site.url}/ia/${a.slug}/`,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((q) => ({
+      "@type": "Question",
+      name: q.title,
+      acceptedAnswer: { "@type": "Answer", text: q.text },
+    })),
+  },
+];
+---
+
+<Base
+  title="Inteligencia artificial por sector: usos reales en empresas"
+  description="Casos de uso de la inteligencia artificial en hoteles, clínicas, inmobiliarias, despachos, talleres, comercios y más: qué automatizar, qué no y por dónde empezar."
+  crumbs={[{ name: "IA por sector", path: "/ia/" }]}
+  schema={schema}
+>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-reveal>Inteligencia artificial</p>
+    <h1 data-split>La IA que sirve en tu sector<span class="comma">.</span></h1>
+    <p class="lead" data-reveal style="--d:3">
+      {aiSectors.length} sectores con usos concretos, límites claros y un primer paso. {years()} años contando y conectando empresas desde Palma.
+    </p>
+  </section>
+
+  <section class="section iax">
+    <div class="wrap">
+      <ul class="iax__grid">
+        {aiSectors.map((a) => (
+          <li>
+            <a href={`/ia/${a.slug}/`}>
+              <strong>IA para {a.forWho}</strong>
+              <span>{a.lead}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="iax__more">
+        ¿Prefieres empezar por el método? <a href="/soluciones/consultoria-inteligencia-artificial/">Consultoría de IA</a>, <a href="/agentes-ia/">agentes de IA</a> o <a href="/soluciones/desarrollo-software-a-medida/">software a medida</a>.
+      </p>
+    </div>
+  </section>
+
+  <Faq items={faq} />
+  <Cta title="¿Vemos qué puede hacer la IA en tu empresa?" subject="IA por sector" />
+</Base>
+
+<style>
+  .iax__grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0 2.5rem;
+  }
+  @media (min-width: 800px) {
+    .iax__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1200px) {
+    .iax__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .iax__grid a {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--ink);
+    text-decoration: none;
+  }
+  .iax__grid strong {
+    font-size: var(--fs-lg);
+    font-variation-settings: "wdth" 115;
+  }
+  .iax__grid span {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+  }
+  .iax__more {
+    margin-top: 2.5rem;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .iax__more a {
+    color: var(--ink);
+    text-underline-offset: 0.2em;
+  }
+</style>
