@@ -7,7 +7,7 @@ import Trust from "../../components/Trust.astro";
 import { solutions, solutionBySlug, solutionGroups, type Solution } from "../../data/solutions";
 import { nicheBySlug, type Niche } from "../../data/niches";
 import { services } from "../../data/services";
-import { site } from "../../data/site";
+import { site, withProof } from "../../data/site";
 import { basePlan } from "../../data/pricing";
 
 export function getStaticPaths() {
@@ -70,7 +70,7 @@ const schema = [
 
 <Base
   title={s.title}
-  description={s.description}
+  description={withProof(s.description)}
   schema={schema}
   crumbs={[
     { name: "Soluciones", path: "/soluciones/" },

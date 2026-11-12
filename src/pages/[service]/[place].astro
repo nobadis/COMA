@@ -7,7 +7,7 @@ import Trust from "../../components/Trust.astro";
 import { places, placeBySlug, childrenOf, inPlace } from "../../data/places";
 import { localCopy, localPaths, presence, serviceLabel, placeTrail, localServiceSlugs } from "../../data/local";
 import type { LocalServiceSlug } from "../../data/local";
-import { site, years } from "../../data/site";
+import { site, years, withProof } from "../../data/site";
 import { basePlan } from "../../data/pricing";
 
 export function getStaticPaths() {
@@ -66,7 +66,12 @@ const crumbs = [
 ];
 ---
 
-<Base title={copy.title} description={copy.description} schema={schema} crumbs={crumbs}>
+<Base
+  title={copy.title}
+  description={service === "diseno-web" ? copy.description : withProof(copy.description)}
+  schema={schema}
+  crumbs={crumbs}
+>
   <section class="lp-h">
     <div class="wrap lp-h__in">
       <p class="eyebrow" data-reveal>{copy.eyebrow}</p>

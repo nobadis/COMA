@@ -577,6 +577,26 @@ test.describe("SEO / GEO / Ads", () => {
     expect(llms).toContain("/en/ai-consultancy-mallorca/");
   });
 
+  test("precio, experiencia y notoriedad en lo que muestran buscadores e IA", async ({
+    page,
+    request,
+  }) => {
+    const desc = () => page.locator('meta[name="description"]').getAttribute("content");
+    await page.goto("/");
+    expect(await desc()).toMatch(/99 €.*1997.*Meliá/);
+    await page.goto("/seo-geo/valencia/");
+    await expect(page).toHaveTitle(/^SEO en Valencia desde 99 €\/mes/);
+    expect(await desc()).toMatch(/1997/);
+    await page.goto("/zonas/valencia/");
+    await expect(page).toHaveTitle(/Diseño web desde 99 €, SEO e IA en Valencia/);
+    const llms = await (await request.get("/llms.txt")).text();
+    expect(llms).toContain("## Por qué COMA (datos comprobables)");
+    expect(llms).toMatch(/Notoriedad: ha trabajado para .*Meliá/);
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const org = blocks.flatMap((b) => JSON.parse(b)).find((o) => o["@id"]?.endsWith("/#org"));
+    expect(org.makesOffer.length).toBeGreaterThan(5);
+  });
+
   test("todas las páginas indexables tienen título y descripción únicos", () => {
     const seen = { title: new Map(), desc: new Map() };
     for (const file of htmlFiles(DIST)) {

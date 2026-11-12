@@ -34,7 +34,7 @@ export const services: Service[] = [
       "Webs rápidas, bonitas y pensadas para vender. Desde 99 € + IVA para autónomos y pymes, con extras a la carta.",
     seoTitle: "Diseño web desde 99 € para pymes y autónomos",
     seoDescription:
-      "Diseño de páginas web profesionales desde 99 € + IVA para autónomos y pymes en Mallorca y toda España. Webs rápidas, adaptadas a móvil y preparadas para Google y la IA.",
+      "Diseño web desde 99 € + IVA de pago único, sin plantillas: rápida, para móvil y lista para Google y la IA. En Palma desde 1997; clientes como Meliá y RCD Mallorca.",
     eyebrow: "Diseño web · Desde 99 € + IVA",
     h1: "Webs que enamoran a tus clientes. Desde 99 €",
     lead: "Rápidas, con diseño propio y pensadas para que te contacten. Precio cerrado desde el primer día.",
@@ -125,9 +125,9 @@ export const services: Service[] = [
     tagline: "Que te encuentren. En Google y en ChatGPT.",
     summary:
       "Posicionamos tu pyme en Google, Google Maps y en motores de IA como ChatGPT, Gemini o Perplexity.",
-    seoTitle: "SEO y GEO: posiciona tu pyme en Google y en la IA",
+    seoTitle: "SEO y GEO desde 99 €/mes: Google, Maps y la IA",
     seoDescription:
-      "Posicionamiento SEO local y GEO (Generative Engine Optimization) para pymes: aparece en Google, Google Maps y en las respuestas de ChatGPT, Gemini y Perplexity.",
+      "SEO local y GEO desde 99 €/mes + IVA, sin permanencia: aparece en Google, Maps y en las respuestas de ChatGPT, Gemini y Claude. Agencia en Palma desde 1997.",
     eyebrow: "SEO local + GEO (posicionamiento en IA)",
     h1: "Que te encuentren en Google… y en la respuesta de la IA",
     lead: "Preparamos tu web, tu ficha de Google y tu contenido para salir en el buscador y en la respuesta de la IA.",
@@ -206,7 +206,7 @@ export const services: Service[] = [
       "Asistentes inteligentes entrenados con tu negocio que atienden clientes, cualifican oportunidades y reservan, 24/7 y en varios idiomas.",
     seoTitle: "Inteligencia artificial para empresas: agentes de IA 24/7",
     seoDescription:
-      "Diseñamos agentes de inteligencia artificial para atención al cliente, ventas y reservas en web, WhatsApp y email. Multidioma, integrados con tus herramientas y con supervisión humana.",
+      "Agentes de IA que atienden, venden y reservan 24/7 en web, WhatsApp y email, en varios idiomas y con supervisión humana. Consultoría de IA desde Palma, desde 1997.",
     eyebrow: "Agentes de inteligencia artificial",
     h1: "Agentes de IA que atienden, venden y reservan 24/7",
     lead: "Entrenados con tu negocio. Atienden por web, WhatsApp o email y pasan el testigo a tu equipo cuando hace falta.",
@@ -289,7 +289,7 @@ export const services: Service[] = [
       "Conectamos tus herramientas para que leads, facturas, emails e informes fluyan solos. Menos tareas manuales, cero olvidos.",
     seoTitle: "Software a medida y automatización de procesos para empresas",
     seoDescription:
-      "Software a medida, integraciones y automatización para empresas. Definimos alcance, validamos con pruebas y acordamos entrega, documentación y mantenimiento.",
+      "Software a medida, integraciones y automatización con IA para empresas, con alcance, plazos y precio cerrado por escrito. Desde Palma, en marcha desde 1997.",
     eyebrow: "Automatización de procesos",
     h1: "Automatiza lo repetitivo. Dedica tu tiempo a lo que importa",
     lead: "Software y procesos conectados para que tu equipo trabaje mejor. Del diagnóstico y las integraciones a la entrega, documentación y soporte acordados.",
@@ -378,7 +378,7 @@ export const services: Service[] = [
       "Branding, prensa, radio, redes y publicidad para que tu empresa sea la referencia de su sector en Mallorca.",
     seoTitle: "Agencia de comunicación en Mallorca: prensa, radio y marca",
     seoDescription:
-      "Agencia de comunicación y publicidad en Mallorca desde 1997: gabinete de prensa, campañas en radio, prensa y televisión, branding, redes sociales y Google Ads.",
+      "Agencia de comunicación en Mallorca desde 1997: prensa, radio, TV, marca y redes. Clientes como Meliá, RCD Mallorca, Mallorca Live y el Ajuntament de Calvià.",
     eyebrow: "Notoriedad de empresa",
     h1: "Que tu empresa sea la primera que les venga a la cabeza",
     lead: "Marca, prensa, radio y digital para que te recuerden primero. Lo hacemos desde 1997.",

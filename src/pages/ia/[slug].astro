@@ -6,7 +6,7 @@ import Cta from "../../components/Cta.astro";
 import Trust from "../../components/Trust.astro";
 import { aiSectors, aiBySlug, type AiSector } from "../../data/ia";
 import { nicheBySlug } from "../../data/niches";
-import { site } from "../../data/site";
+import { site, withProof } from "../../data/site";
 
 export function getStaticPaths() {
   return aiSectors.map((a) => ({ params: { slug: a.slug }, props: { a } }));
@@ -55,7 +55,7 @@ const schema = [
 
 <Base
   title={a.title}
-  description={a.description}
+  description={withProof(a.description)}
   schema={schema}
   crumbs={[
     { name: "IA por sector", path: "/ia/" },

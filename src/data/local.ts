@@ -122,10 +122,14 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
 
   if (service === "seo-geo") {
     return {
-      title: fit(54, `SEO y posicionamiento en IA ${where}`, `SEO y GEO ${where}`),
+      title: fit(
+        54,
+        `SEO ${where} desde ${seoPrice} €/mes: Google e IA`,
+        `SEO y posicionamiento en IA ${where}`,
+        `SEO y GEO ${where}`
+      ),
       description: desc(
-        `SEO local y GEO ${where}: aparece en Google, Maps y en las respuestas de ChatGPT, Gemini y Claude.`,
-        `Desde ${seoPrice} €/mes + IVA, sin permanencia.`
+        `SEO local y GEO ${where} desde ${seoPrice} €/mes + IVA, sin permanencia: Google, Maps y respuestas de ChatGPT, Gemini y Claude.`
       ),
       eyebrow: `SEO local + GEO ${where}`,
       h1: `Que te encuentren ${where}: en Google y en la IA`,
@@ -185,7 +189,7 @@ export function localCopy(service: LocalServiceSlug, p: Place): LocalCopy {
         `Software a medida ${where}`
       ),
       description: desc(
-        `Software a medida ${where}: aplicaciones, integraciones entre programas y automatización con IA para empresas.`,
+        `Software a medida ${where}: aplicaciones, integraciones y automatización con IA.`,
         `Alcance, plazos y precio cerrado por escrito.`
       ),
       eyebrow: `Software a medida ${where}`,

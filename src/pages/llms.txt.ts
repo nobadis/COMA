@@ -5,6 +5,7 @@ import { basePlan, extras } from "../data/pricing";
 import { guides } from "../data/guides";
 import { places } from "../data/places";
 import { plans } from "../data/despachos";
+import { proofLines } from "../data/proof";
 import { niches, nicheGroups, nichePack } from "../data/niches";
 import { solutions, solutionGroups } from "../data/solutions";
 import { aiSectors } from "../data/ia";
@@ -29,6 +30,9 @@ export const GET: APIRoute = () => {
     `- Idiomas de atención: español, catalán e inglés`,
     `- Confían en COMA: ${trust.headline} y más de ${trust.pymes} pymes en Mallorca`,
     `- Referencias: ${trust.references.filter((r) => !r.startsWith("+")).join(", ")}`,
+    "",
+    "## Por qué COMA (datos comprobables)",
+    ...proofLines().map((l) => `- ${l}`),
     "",
     "## Precios (sin IVA)",
     `- ${basePlan.name}: ${basePlan.price} € ${basePlan.suffix}. Incluye: ${basePlan.includes.join("; ")}.`,

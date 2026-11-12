@@ -57,6 +57,21 @@ export const testimonials: Testimonial[] = [];
 
 export const years = () => new Date().getFullYear() - site.since;
 
+/**
+ * Añade a una meta description la prueba de experiencia y notoriedad que quepa
+ * (los buscadores cortan hacia los 160 caracteres). Solo datos reales de `site` y `trust`.
+ */
+export const withProof = (d: string, max = 160) => {
+  const base = /[.!?]$/.test(d.trim()) ? d.trim() : `${d.trim()}.`;
+  const extras = [
+    ` Desde ${site.since} en Palma; clientes como Meliá y RCD Mallorca.`,
+    base.includes("Palma") ? ` En marcha desde ${site.since}.` : ` En Palma desde ${site.since}.`,
+  ];
+  // La versión corta admite unos caracteres más: lo importante ya va delante.
+  const fit = extras.find((x, i) => (base + x).length <= max + (i ? 12 : 0));
+  return fit ? base + fit : base;
+};
+
 export const mailto = (subject = "Información desde la web", body = "") =>
   `mailto:${site.email}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
 

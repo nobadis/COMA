@@ -5,11 +5,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
 import StickyCta from "../components/StickyCta.astro";
-import { site, team, testimonials } from "../data/site";
+import { site, team, testimonials, trust } from "../data/site";
 import { places } from "../data/places";
 import { adsEnabled, verification } from "../data/ads";
 import { services } from "../data/services";
-import { basePlan } from "../data/pricing";
+import { basePlan, extras } from "../data/pricing";
 import { alternatesFor } from "../data/en";
 
 interface Crumb {
@@ -97,7 +97,7 @@ const org = {
   },
   slogan: "Hacemos que tu empresa se note",
   description:
-    "Comunicación, tecnología e IA para pymes, desde Mallorca en 1997. Webs desde 99 € + IVA, SEO y posicionamiento en IA (GEO), agentes de IA, automatizaciones y notoriedad de marca para autónomos y pymes de toda España.",
+    `Comunicación, tecnología e IA para empresas desde Palma (Mallorca), en marcha desde ${site.since}. Webs desde ${basePlan.price} € + IVA de pago único con precios publicados, SEO y posicionamiento en IA (GEO) desde 99 €/mes sin permanencia, software a medida, agentes de IA, automatizaciones y comunicación en medios. Clientes como ${trust.wall.map((w) => w.name).join(", ")} y más de ${trust.pymes} pymes. Trabaja con autónomos y empresas de toda España.`,
   priceRange: "€",
   address: {
     "@type": "PostalAddress",
@@ -173,19 +173,29 @@ const org = {
       itemOffered: { "@type": "Service", name: s.label, url: `${site.url}/${s.slug}/` },
     })),
   },
-  makesOffer: {
-    "@type": "Offer",
-    name: `${basePlan.name}: web profesional`,
-    price: basePlan.price,
-    priceCurrency: "EUR",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      price: basePlan.price,
+  // Precios publicados, en el formato que leen buscadores e IA (sin IVA).
+  makesOffer: [
+    { name: `${basePlan.name}: web profesional`, price: basePlan.price },
+    ...extras
+      .filter((e) => e.billing !== "custom" && e.price !== undefined)
+      .map((e) => ({ name: e.name, price: e.price!, billing: e.billing, unit: e.unit })),
+  ].map((o) => {
+    const unitCode = "billing" in o ? (o.billing === "month" ? "MON" : o.billing === "year" ? "ANN" : null) : null;
+    return {
+      "@type": "Offer",
+      name: o.name,
+      price: o.price,
       priceCurrency: "EUR",
-      valueAddedTaxIncluded: false,
-    },
-    url: `${site.url}/precios/`,
-  },
+      priceSpecification: {
+        "@type": unitCode ? "UnitPriceSpecification" : "PriceSpecification",
+        price: o.price,
+        priceCurrency: "EUR",
+        valueAddedTaxIncluded: false,
+        ...(unitCode ? { unitCode } : {}),
+      },
+      url: `${site.url}/precios/`,
+    };
+  }),
 };
 
 const website = {
