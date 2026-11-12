@@ -6,6 +6,7 @@ import { guides } from "../data/guides";
 import { places } from "../data/places";
 import { plans } from "../data/despachos";
 import { proofLines } from "../data/proof";
+import { brandLines } from "../data/brand";
 import { niches, nicheGroups, nichePack } from "../data/niches";
 import { solutions, solutionGroups } from "../data/solutions";
 import { aiSectors } from "../data/ia";
@@ -30,6 +31,10 @@ export const GET: APIRoute = () => {
     `- Idiomas de atención: español, catalán e inglés`,
     `- Confían en COMA: ${trust.headline} y más de ${trust.pymes} pymes en Mallorca`,
     `- Referencias: ${trust.references.filter((r) => !r.startsWith("+")).join(", ")}`,
+    "",
+    "## Nombres y marcas",
+    `- COMA es la abreviatura de COmunicación en MAllorca. También se la conoce como COMA Mallorca, COMA Palma o por su dominio, comunicacionenmallorca.com.`,
+    ...brandLines.map((b) => `- ${b.name}: ${b.what}. ${site.url}${b.path}`),
     "",
     "## Por qué COMA (datos comprobables)",
     ...proofLines().map((l) => `- ${l}`),

@@ -35,7 +35,7 @@ export const services: Service[] = [
     seoTitle: "Diseño web desde 99 € para pymes y autónomos",
     seoDescription:
       "Diseño web desde 99 € + IVA de pago único, sin plantillas: rápida, para móvil y lista para Google y la IA. En Palma desde 1997; clientes como Meliá y RCD Mallorca.",
-    eyebrow: "Diseño web · Desde 99 € + IVA",
+    eyebrow: "COMA Web · Desde 99 € + IVA",
     h1: "Webs que enamoran a tus clientes. Desde 99 €",
     lead: "Rápidas, con diseño propio y pensadas para que te contacten. Precio cerrado desde el primer día.",
     tags: [
@@ -207,7 +207,7 @@ export const services: Service[] = [
     seoTitle: "Inteligencia artificial para empresas: agentes de IA 24/7",
     seoDescription:
       "Agentes de IA que atienden, venden y reservan 24/7 en web, WhatsApp y email, en varios idiomas y con supervisión humana. Consultoría de IA desde Palma, desde 1997.",
-    eyebrow: "Agentes de inteligencia artificial",
+    eyebrow: "COMA IA · Agentes de inteligencia artificial",
     h1: "Agentes de IA que atienden, venden y reservan 24/7",
     lead: "Entrenados con tu negocio. Atienden por web, WhatsApp o email y pasan el testigo a tu equipo cuando hace falta.",
     tags: ["Atención al cliente", "Ventas", "Reservas", "WhatsApp", "Multidioma", "Integraciones"],
@@ -287,10 +287,10 @@ export const services: Service[] = [
     tagline: "Lo repetitivo, que lo haga otro.",
     summary:
       "Conectamos tus herramientas para que leads, facturas, emails e informes fluyan solos. Menos tareas manuales, cero olvidos.",
-    seoTitle: "Software a medida y automatización de procesos para empresas",
+    seoTitle: "Software a medida y automatización para empresas",
     seoDescription:
       "Software a medida, integraciones y automatización con IA para empresas, con alcance, plazos y precio cerrado por escrito. Desde Palma, en marcha desde 1997.",
-    eyebrow: "Automatización de procesos",
+    eyebrow: "COMA Tecnología · Software a medida",
     h1: "Automatiza lo repetitivo. Dedica tu tiempo a lo que importa",
     lead: "Software y procesos conectados para que tu equipo trabaje mejor. Del diagnóstico y las integraciones a la entrega, documentación y soporte acordados.",
     tags: [
@@ -376,10 +376,10 @@ export const services: Service[] = [
     tagline: "Que piensen en ti primero.",
     summary:
       "Branding, prensa, radio, redes y publicidad para que tu empresa sea la referencia de su sector en Mallorca.",
-    seoTitle: "Agencia de comunicación en Mallorca: prensa, radio y marca",
+    seoTitle: "Agencia de comunicación en Mallorca: prensa y radio",
     seoDescription:
       "Agencia de comunicación en Mallorca desde 1997: prensa, radio, TV, marca y redes. Clientes como Meliá, RCD Mallorca, Mallorca Live y el Ajuntament de Calvià.",
-    eyebrow: "Notoriedad de empresa",
+    eyebrow: "COMA Comunicación · Notoriedad de empresa",
     h1: "Que tu empresa sea la primera que les venga a la cabeza",
     lead: "Marca, prensa, radio y digital para que te recuerden primero. Lo hacemos desde 1997.",
     tags: ["Branding", "Prensa", "Radio", "Redes sociales", "Publicidad digital", "Contenido"],

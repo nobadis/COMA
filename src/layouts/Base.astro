@@ -11,6 +11,7 @@ import { adsEnabled, verification } from "../data/ads";
 import { services } from "../data/services";
 import { basePlan, extras } from "../data/pricing";
 import { alternatesFor } from "../data/en";
+import { brandFor, brandLines } from "../data/brand";
 
 interface Crumb {
   name: string;
@@ -58,8 +59,13 @@ const noindex = noindexProp || minimal;
 // La intro solo abre la home (si es la primera página de la visita): el resto entra directo.
 const intro = !minimal && Astro.url.pathname === "/";
 const stickyCta = stickyProp && !minimal;
+// Sufijo con la marca de la línea de servicio («| COMA IA»), si cabe; si no, «| COMA».
+const lineBrand = brandFor(Astro.url.pathname);
 const fullTitle =
-  fullTitleOverride ?? (title ? `${title} | COMA` : `${site.title} · Consultoría tecnológica, diseño e IA`);
+  fullTitleOverride ??
+  (title
+    ? `${title} | ${`${title} | ${lineBrand}`.length <= 72 ? lineBrand : "COMA"}`
+    : `${site.title} · Consultoría tecnológica, diseño e IA`);
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image ?? "/og-coma.png", site.url).href;
 const orgId = `${site.url}/#org`;
@@ -74,9 +80,13 @@ const org = {
     "COMA Comunicación en Mallorca",
     "Comunicación en Mallorca",
     "Comunicacion en Mallorca",
+    "COMA Mallorca",
+    "COMA Palma",
     "comunicacionenmallorca.com",
     "Publicom Marketing 2000",
   ],
+  // Líneas de servicio con marca propia: «COMA IA», «COMA Tecnología»…
+  brand: [{ "@type": "Brand", name: "COMA" }, ...brandLines.map((b) => ({ "@type": "Brand", name: b.name, description: b.what, url: `${site.url}${b.path}` }))],
   legalName: site.legalName,
   taxID: site.cif,
   url: site.url,
@@ -205,7 +215,7 @@ const website = {
   url: site.url,
   // Google usa name/alternateName del WebSite para el nombre del sitio en los resultados.
   name: "Comunicación en Mallorca",
-  alternateName: ["COMA", "COMA - Comunicación en Mallorca", "comunicacionenmallorca.com"],
+  alternateName: ["COMA", "COMA Mallorca", "COMA - Comunicación en Mallorca", "comunicacionenmallorca.com"],
   inLanguage: "es-ES",
   publisher: { "@id": orgId },
 };

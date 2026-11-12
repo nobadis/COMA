@@ -41,6 +41,16 @@ Diagnóstico del 11-12 nov 2026. **Google ya indexa la web nueva** (351 páginas
 
 **Páginas para abrir con Brave y para «Solicitar indexación» en Search Console**: `/`, `/ia/`, `/ia/hoteles/`, `/soluciones/consultoria-inteligencia-artificial/`, `/agentes-ia/mallorca/`, `/automatizaciones/mallorca/`, `/soluciones/agencia-de-comunicacion-mallorca/`, `/en/` y `/en/ai-consultancy-mallorca/`.
 
+## 0c. Que os encuentren por «COMA» (coma mallorca, coma ia, coma tecnología…)
+
+«Coma» es una palabra corriente, así que Google necesita ver **COMA siempre junto a lo que hacéis**. La web ya lo hace: cada página firma con su línea (`| COMA IA`, `| COMA Tecnología`, `| COMA Web`, `| COMA Comunicación`, `| COMA Mallorca`), la portada empieza por «COMA - Comunicación en Mallorca» y el schema declara esas marcas. Fuera de la web:
+
+- **Mismo nombre en todas partes**: «COMA - Comunicación en Mallorca» en la ficha de Google, LinkedIn, Instagram, Facebook y directorios. Nunca solo «COMA».
+- **Usuario de redes**: `comamallorca` (o el más parecido libre) en Instagram, LinkedIn, TikTok y YouTube. Añadid cada URL a `site.social` (`src/data/site.ts`).
+- **Firma de email y presupuestos**: «COMA - Comunicación en Mallorca · comunicacionenmallorca.com».
+- **Notas de prensa y colaboraciones**: que el medio escriba «COMA (Comunicación en Mallorca)» y enlace a la web. Es la señal que más pesa para que ChatGPT, Gemini y Claude asocien COMA con IA, tecnología y Mallorca.
+- **Comprobad cada mes** en Google, ChatGPT, Claude y Gemini: «coma mallorca», «coma ia», «coma tecnología», «coma consultoría», «coma palma», «coma comunicación», «coma web».
+
 ## Ya hecho (5, 11 y 12 nov 2026)
 
 - 17 páginas «Inteligencia artificial para <sector>» (`/ia/`) y 8 páginas en inglés (`/en/`: AI consultancy, custom software, web design, AI agents, SEO, holiday rentals, PR) con `hreflang` hacia su versión en español.

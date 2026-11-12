@@ -36,7 +36,7 @@ test.describe("COMA - Comunicación en Mallorca", () => {
   test("home con branding, hero y servicios", async ({ page }) => {
     await page.goto("/");
     // La marca completa en el título: es lo que se busca («comunicación en Mallorca»).
-    await expect(page).toHaveTitle(/^Comunicación en Mallorca \(COMA\): software a medida, IA/);
+    await expect(page).toHaveTitle(/^COMA - Comunicación en Mallorca: consultoría tecnológica/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       /Hacemos que tu empresa se note/i
     );
@@ -595,6 +595,33 @@ test.describe("SEO / GEO / Ads", () => {
     const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
     const org = blocks.flatMap((b) => JSON.parse(b)).find((o) => o["@id"]?.endsWith("/#org"));
     expect(org.makesOffer.length).toBeGreaterThan(5);
+  });
+
+  test("marca COMA por línea: IA, Tecnología, Web, Comunicación y Mallorca", async ({
+    page,
+    request,
+  }) => {
+    for (const [path, brand] of [
+      ["/agentes-ia/", "COMA IA"],
+      ["/ia/hoteles/", "COMA IA"],
+      ["/automatizaciones/palma/", "COMA Tecnología"],
+      ["/diseno-web/", "COMA Web"],
+      ["/notoriedad-de-marca/", "COMA Comunicación"],
+      ["/zonas/palma/", "COMA Mallorca"],
+      ["/zonas/valencia/", "COMA"],
+    ]) {
+      await page.goto(path);
+      expect(await page.title(), path).toMatch(new RegExp(`\\| ${brand}$`));
+    }
+    await page.goto("/");
+    await expect(page.locator(".hero__meta .eyebrow")).toContainText("COMA");
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const org = blocks.flatMap((b) => JSON.parse(b)).find((o) => o["@id"]?.endsWith("/#org"));
+    expect(org.brand.map((b) => b.name)).toEqual(
+      expect.arrayContaining(["COMA IA", "COMA Tecnología"])
+    );
+    const llms = await (await request.get("/llms.txt")).text();
+    expect(llms).toContain("COMA es la abreviatura de COmunicación en MAllorca");
   });
 
   test("todas las páginas indexables tienen título y descripción únicos", () => {

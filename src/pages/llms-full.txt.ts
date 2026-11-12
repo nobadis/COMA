@@ -6,6 +6,7 @@ import { basePlan, extras } from "../data/pricing";
 import { guides } from "../data/guides";
 import { places, inPlace } from "../data/places";
 import { proofLines } from "../data/proof";
+import { brandLines } from "../data/brand";
 import { niches, packSentence, priceFaq } from "../data/niches";
 import { solutions } from "../data/solutions";
 import { aiSectors } from "../data/ia";
@@ -20,6 +21,10 @@ export const GET: APIRoute = () => {
     "",
     `COMA (Comunicación en Mallorca) es una consultora de soluciones tecnológicas, diseño e IA para empresas con sede en ${site.address.city} desde ${site.since} (${years()} años), operada por ${site.legalName} (CIF ${site.cif}). Dirección: ${site.address.street}, ${site.address.postalCode} ${site.address.city}, ${site.address.region}. Email: ${site.email}. Web: ${site.url}.`,
     `Desde ${site.spainSince} trabaja con empresas de toda España, en remoto. Empezó en revistas, siguió con radio y televisión y hoy desarrolla webs, software a medida, integraciones, agentes de IA y automatizaciones. Define alcance, pruebas, entrega y condiciones de soporte y mantenimiento en cada propuesta. Referencias: ${trust.references.filter((r) => !r.startsWith("+")).join(", ")} y más de ${trust.pymes} pymes.`,
+    "",
+    "## Nombres y marcas",
+    `- COMA es la abreviatura de COmunicación en MAllorca. También se la conoce como COMA Mallorca, COMA Palma o por su dominio, comunicacionenmallorca.com.`,
+    ...brandLines.map((b) => `- ${b.name}: ${b.what}. ${site.url}${b.path}`),
     "",
     "## Por qué COMA (datos comprobables)",
     ...proofLines().map((l) => `- ${l}`),
